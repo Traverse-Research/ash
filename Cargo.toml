@@ -5,3 +5,7 @@ members = [
     "ash-window",
     "generator",
 ]
+
+[patch.crates-io]
+vk-parse = { path = "../vk-parse/vk-parse", features = ["vkxml-convert"] }
+vkxml = { path = "../vkxml/" }

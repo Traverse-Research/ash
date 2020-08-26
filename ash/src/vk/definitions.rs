@@ -38640,6 +38640,17 @@ impl ::std::default::Default for PerformanceValueDataINTEL {
         unsafe { ::std::mem::zeroed() }
     }
 }
+impl PerformanceValueDataINTEL {
+    fn format_union(&self, selector: u32) -> &dyn fmt::Debug {
+        match selector {
+            PERFORMANCE_VALUE_TYPE_UINT32_INTEL => &self.value32,
+            PERFORMANCE_VALUE_TYPE_UINT64_INTEL => &self.value64,
+            PERFORMANCE_VALUE_TYPE_FLOAT_INTEL => &self.value_float,
+            PERFORMANCE_VALUE_TYPE_BOOL_INTEL => &self.value_bool,
+            PERFORMANCE_VALUE_TYPE_STRING_INTEL => &self.value_string,
+        }
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone, Default)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkPerformanceValueINTEL.html>"]
@@ -38651,7 +38662,7 @@ impl fmt::Debug for PerformanceValueINTEL {
     fn fmt(&self, fmt: &mut fmt::Formatter) -> fmt::Result {
         fmt.debug_struct("PerformanceValueINTEL")
             .field("ty", &self.ty)
-            .field("data", &"union")
+            .field("data", self.data.format_union(self.ty))
             .finish()
     }
 }
@@ -39991,6 +40002,16 @@ impl ::std::default::Default for PipelineExecutableStatisticValueKHR {
         unsafe { ::std::mem::zeroed() }
     }
 }
+impl PipelineExecutableStatisticValueKHR {
+    fn format_union(&self, selector: u32) -> &dyn fmt::Debug {
+        match selector {
+            PIPELINE_EXECUTABLE_STATISTIC_FORMAT_BOOL32 => &self.b32,
+            PIPELINE_EXECUTABLE_STATISTIC_FORMAT_INT64 => &self.i64,
+            PIPELINE_EXECUTABLE_STATISTIC_FORMAT_UINT64 => &self.u64,
+            PIPELINE_EXECUTABLE_STATISTIC_FORMAT_FLOAT64 => &self.f64,
+        }
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkPipelineExecutableStatisticKHR.html>"]
@@ -40014,7 +40035,7 @@ impl fmt::Debug for PipelineExecutableStatisticKHR {
                 ::std::ffi::CStr::from_ptr(self.description.as_ptr() as *const c_char)
             })
             .field("format", &self.format)
-            .field("value", &"union")
+            .field("value", self.value.format_union(self.format))
             .finish()
     }
 }
@@ -43321,6 +43342,15 @@ impl ::std::default::Default for AccelerationStructureGeometryDataKHR {
         unsafe { ::std::mem::zeroed() }
     }
 }
+impl AccelerationStructureGeometryDataKHR {
+    fn format_union(&self, selector: u32) -> &dyn fmt::Debug {
+        match selector {
+            TRIANGLES => &self.triangles,
+            AABBS => &self.aabbs,
+            INSTANCES => &self.instances,
+        }
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkAccelerationStructureGeometryKHR.html>"]
@@ -43337,7 +43367,7 @@ impl fmt::Debug for AccelerationStructureGeometryKHR {
             .field("s_type", &self.s_type)
             .field("p_next", &self.p_next)
             .field("geometry_type", &self.geometry_type)
-            .field("geometry", &"union")
+            .field("geometry", self.geometry.format_union(self.geometry_type))
             .field("flags", &self.flags)
             .finish()
     }

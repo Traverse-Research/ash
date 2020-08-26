@@ -675,17 +675,21 @@ fn to_type_tokens(type_name: &str, reference: Option<&vkxml::ReferenceType>) -> 
     quote! {#ptr_name #new_name}
 }
 
+fn format_ident(name: &str) -> Ident {
+    let name_corrected = match name {
+        "type" => "ty",
+        _ => name,
+    };
+    Ident::from(name_corrected.to_snake_case().as_str())
+}
+
 impl FieldExt for vkxml::Field {
     fn is_clone(&self) -> bool {
         true
     }
+
     fn param_ident(&self) -> Ident {
-        let name = self.name.as_deref().unwrap_or("field");
-        let name_corrected = match name {
-            "type" => "ty",
-            _ => name,
-        };
-        Ident::from(name_corrected.to_snake_case().as_str())
+        format_ident(self.name.as_deref().unwrap_or("field"))
     }
 
     fn type_tokens(&self, is_ffi_param: bool) -> Tokens {
@@ -1559,7 +1563,14 @@ pub fn derive_debug(
                 &(self.#param_ident.map(|x| x as *const ()))
             }
         } else if union_types.contains(field.basetype.as_str()) {
-            quote!(&"union")
+            if field.selector.is_none() {
+                quote!(&"union")
+            } else {
+                let selector = format_ident(field.selector.as_ref().unwrap());
+                quote! {
+                    self.#param_ident.format_union(self.#selector)
+                }
+            }
         } else {
             quote! {
                 &self.#param_ident
@@ -2034,6 +2045,30 @@ fn generate_union(union: &vkxml::Union) -> Tokens {
             pub #name: #ty
         }
     });
+
+    let format_fields = if union.elements.iter().all(|field| field.selection.is_some()) {
+        let format_fields = union.elements.iter().map(|field| {
+            let name = field.param_ident();
+            // TODO: Need to map from enum flag to EnumType::Member
+            let selection = variant_ident("GEOMETRY_TYPE_KHR", field.selection.as_ref().unwrap());
+            quote! {
+                #selection => &self.#name
+            }
+        });
+
+        quote! {
+            impl #name {
+                fn format_union(&self, selector: u32) -> &dyn fmt::Debug {
+                    match selector {
+                        #(#format_fields),*
+                    }
+                }
+            }
+        }
+    } else {
+        quote! {}
+    };
+
     let khronos_link = khronos_link(&union.name);
     quote! {
         #[repr(C)]
@@ -2047,6 +2082,7 @@ fn generate_union(union: &vkxml::Union) -> Tokens {
                 unsafe { ::std::mem::zeroed() }
             }
         }
+        #format_fields
     }
 }
 pub fn root_struct_names(definitions: &[&vkxml::DefinitionsElement]) -> HashSet<String> {
