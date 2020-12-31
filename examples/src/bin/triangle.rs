@@ -358,7 +358,7 @@ fn main() {
 
         let graphic_pipeline = graphics_pipelines[0];
 
-        base.render_loop(|| {
+        base.render_loop(move |base| {
             let (present_index, _) = base
                 .swapchain_loader
                 .acquire_next_image(

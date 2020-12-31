@@ -9,7 +9,6 @@ use ash::extensions::{
 pub use ash::version::{DeviceV1_0, EntryV1_0, InstanceV1_0};
 use ash::{vk, Device, Entry, Instance};
 use std::borrow::Cow;
-use std::cell::RefCell;
 use std::default::Default;
 use std::ffi::{CStr, CString};
 use std::ops::Drop;
@@ -139,8 +138,8 @@ pub struct ExampleBase {
     pub surface_loader: Surface,
     pub swapchain_loader: Swapchain,
     pub debug_utils_loader: DebugUtils,
-    pub window: winit::Window,
-    pub events_loop: RefCell<winit::EventsLoop>,
+    pub window: winit::window::Window,
+    pub event_loop: Option<winit::event_loop::EventLoop<()>>,
     pub debug_call_back: vk::DebugUtilsMessengerEXT,
 
     pub pdevice: vk::PhysicalDevice,
@@ -172,37 +171,37 @@ pub struct ExampleBase {
 }
 
 impl ExampleBase {
-    pub fn render_loop<F: Fn()>(&self, f: F) {
-        use winit::*;
-        self.events_loop.borrow_mut().run_forever(|event| {
-            f();
-            match event {
-                Event::WindowEvent { event, .. } => match event {
-                    WindowEvent::KeyboardInput { input, .. } => {
-                        if let Some(VirtualKeyCode::Escape) = input.virtual_keycode {
-                            ControlFlow::Break
-                        } else {
-                            ControlFlow::Continue
+    pub fn render_loop<F: Fn(&Self) + 'static>(mut self, f: F) -> ! {
+        self.event_loop
+            .take()
+            .expect("Can't run the render loop twice")
+            .run(move |event, _, control_flow| {
+                f(&self);
+                if let winit::event::Event::WindowEvent { event, .. } = event {
+                    match event {
+                        winit::event::WindowEvent::KeyboardInput { input, .. } => {
+                            if let Some(winit::event::VirtualKeyCode::Escape) =
+                                input.virtual_keycode
+                            {
+                                *control_flow = winit::event_loop::ControlFlow::Exit;
+                            }
                         }
+                        winit::event::WindowEvent::CloseRequested => {
+                            *control_flow = winit::event_loop::ControlFlow::Exit;
+                        }
+                        _ => {}
                     }
-                    WindowEvent::CloseRequested => winit::ControlFlow::Break,
-                    _ => ControlFlow::Continue,
-                },
-                _ => ControlFlow::Continue,
-            }
-        });
+                }
+            });
     }
 
     pub fn new(window_width: u32, window_height: u32) -> Self {
         unsafe {
-            let events_loop = winit::EventsLoop::new();
-            let window = winit::WindowBuilder::new()
+            let event_loop = winit::event_loop::EventLoop::new();
+            let window = winit::window::WindowBuilder::new()
                 .with_title("Ash - Example")
-                .with_dimensions(winit::dpi::LogicalSize::new(
-                    f64::from(window_width),
-                    f64::from(window_height),
-                ))
-                .build(&events_loop)
+                .with_inner_size(winit::dpi::PhysicalSize::new(window_width, window_height))
+                .build(&event_loop)
                 .unwrap();
             let entry = Entry::new().unwrap();
             let app_name = CString::new("VulkanTriangle").unwrap();
@@ -513,7 +512,7 @@ impl ExampleBase {
                 .unwrap();
 
             ExampleBase {
-                events_loop: RefCell::new(events_loop),
+                event_loop: Some(event_loop),
                 entry,
                 instance,
                 device,
