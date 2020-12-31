@@ -9,10 +9,10 @@ use ash::{version::EntryV1_0, vk};
 use std::error::Error;
 
 fn main() -> Result<(), Box<dyn Error>> {
-    let mut events_loop = winit::EventsLoop::new();
-    let window = winit::WindowBuilder::new()
-        .with_dimensions((800, 600).into())
-        .build(&events_loop)?;
+    let event_loop = winit::event_loop::EventLoop::new();
+    let window = winit::window::WindowBuilder::new()
+        .with_inner_size(winit::dpi::PhysicalSize::new(800, 600))
+        .build(&event_loop)?;
 
     unsafe {
         let entry = ash::Entry::new()?;
@@ -33,21 +33,27 @@ fn main() -> Result<(), Box<dyn Error>> {
         let surface_fn = ash::extensions::khr::Surface::new(&entry, &instance);
         println!("surface: {:?}", surface);
 
-        let mut running = true;
-        while running {
-            events_loop.poll_events(|event| {
-                if let winit::Event::WindowEvent {
-                    event: winit::WindowEvent::CloseRequested,
-                    ..
-                } = event
-                {
-                    running = false;
-                }
-            });
-        }
-
-        surface_fn.destroy_surface(surface, None);
+        event_loop.run(move |event, _, control_flow| match event {
+            winit::event::Event::WindowEvent {
+                event: winit::event::WindowEvent::CloseRequested,
+                ..
+            }
+            | winit::event::Event::WindowEvent {
+                event:
+                    winit::event::WindowEvent::KeyboardInput {
+                        input:
+                            winit::event::KeyboardInput {
+                                virtual_keycode: Some(winit::event::VirtualKeyCode::Escape),
+                                ..
+                            },
+                        ..
+                    },
+                ..
+            } => {
+                surface_fn.destroy_surface(surface, None);
+                *control_flow = winit::event_loop::ControlFlow::Exit;
+            }
+            _ => {}
+        });
     }
-
-    Ok(())
 }
