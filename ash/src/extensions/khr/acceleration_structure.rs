@@ -67,22 +67,21 @@ impl AccelerationStructure {
     }
 
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdBuildAccelerationStructuresKHR.html>"]
-    pub unsafe fn cmd_build_acceleration_structures(
+    pub unsafe fn cmd_build_acceleration_structures<'a>(
         &self,
         command_buffer: vk::CommandBuffer,
         infos: &[vk::AccelerationStructureBuildGeometryInfoKHR],
-        build_range_infos: &[&[vk::AccelerationStructureBuildRangeInfoKHR]],
+        build_range_infos: impl Iterator<Item = &'a [vk::AccelerationStructureBuildRangeInfoKHR]>,
     ) {
-        assert_eq!(infos.len(), build_range_infos.len());
-
         let build_range_infos = build_range_infos
-            .iter()
             .zip(infos.iter())
             .map(|(range_info, info)| {
                 assert_eq!(range_info.len(), info.geometry_count as usize);
                 range_info.as_ptr()
             })
             .collect::<Vec<_>>();
+
+        assert_eq!(infos.len(), build_range_infos.len());
 
         self.acceleration_structure_fn
             .cmd_build_acceleration_structures_khr(
@@ -94,26 +93,26 @@ impl AccelerationStructure {
     }
 
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdBuildAccelerationStructuresIndirectKHR.html>"]
-    pub unsafe fn cmd_build_acceleration_structures_indirect(
+    pub unsafe fn cmd_build_acceleration_structures_indirect<'a>(
         &self,
         command_buffer: vk::CommandBuffer,
         infos: &[vk::AccelerationStructureBuildGeometryInfoKHR],
         indirect_device_addresses: &[vk::DeviceAddress],
         indirect_strides: &[u32],
-        max_primitive_counts: &[&[u32]],
+        max_primitive_counts: impl Iterator<Item = &'a [u32]>,
     ) {
         assert_eq!(infos.len(), indirect_device_addresses.len());
         assert_eq!(infos.len(), indirect_strides.len());
-        assert_eq!(infos.len(), max_primitive_counts.len());
 
         let max_primitive_counts = max_primitive_counts
-            .iter()
             .zip(infos.iter())
             .map(|(cnt, info)| {
                 assert_eq!(cnt.len(), info.geometry_count as usize);
                 cnt.as_ptr()
             })
             .collect::<Vec<_>>();
+
+        assert_eq!(infos.len(), max_primitive_counts.len());
 
         self.acceleration_structure_fn
             .cmd_build_acceleration_structures_indirect_khr(
@@ -127,22 +126,21 @@ impl AccelerationStructure {
     }
 
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkBuildAccelerationStructuresKHR.html>"]
-    pub unsafe fn build_acceleration_structures(
+    pub unsafe fn build_acceleration_structures<'a>(
         &self,
         deferred_operation: vk::DeferredOperationKHR,
         infos: &[vk::AccelerationStructureBuildGeometryInfoKHR],
-        build_range_infos: &[&[vk::AccelerationStructureBuildRangeInfoKHR]],
+        build_range_infos: impl Iterator<Item = &'a [vk::AccelerationStructureBuildRangeInfoKHR]>,
     ) -> VkResult<()> {
-        assert_eq!(infos.len(), build_range_infos.len());
-
         let build_range_infos = build_range_infos
-            .iter()
             .zip(infos.iter())
             .map(|(range_info, info)| {
                 assert_eq!(range_info.len(), info.geometry_count as usize);
                 range_info.as_ptr()
             })
             .collect::<Vec<_>>();
+
+        assert_eq!(infos.len(), build_range_infos.len());
 
         self.acceleration_structure_fn
             .build_acceleration_structures_khr(
