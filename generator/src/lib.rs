@@ -1029,7 +1029,7 @@ pub fn generate_extension_constants<'a>(
         .flat_map(|iter| iter);
     let enum_tokens = items.filter_map(|item| match item {
         vk_parse::InterfaceItem::Enum(_enum) => {
-            if const_cache.contains(_enum.name.as_str()) {
+            if !const_cache.insert(_enum.name.as_str()) {
                 return None;
             }
 
@@ -1092,7 +1092,6 @@ pub fn generate_extension_constants<'a>(
                 #impl_block
             };
 
-            const_cache.insert(_enum.name.as_str());
             Some(q)
         }
         _ => None,
@@ -1263,10 +1262,9 @@ pub fn generate_bitmask(
 
     let name = &bitmask.name[2..];
     let ident = format_ident!("{}", name);
-    if bitflags_cache.contains(&ident) {
+    if !bitflags_cache.insert(ident.clone()) {
         return None;
     };
-    bitflags_cache.insert(ident.clone());
     const_values.insert(ident.clone(), Vec::new());
     let khronos_link = khronos_link(&bitmask.name);
     Some(quote! {
@@ -1403,11 +1401,10 @@ pub fn generate_enum<'a>(
         let bit_string = interleave_number('_', 4, &bit_string);
         let all_bits_term = syn::LitInt::new(&format!("0b{}", bit_string), Span::call_site());
 
-        if bitflags_cache.contains(&ident) {
+        if !bitflags_cache.insert(ident.clone()) {
             EnumType::Bitflags(quote! {})
         } else {
             let impl_bitflags = bitflags_impl_block(ident.clone(), &_enum.name, &constants);
-            bitflags_cache.insert(ident.clone());
             let q = quote! {
                 #[repr(transparent)]
                 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
@@ -2368,10 +2365,9 @@ pub fn generate_aliases_of_types(
         })
         .filter_map(|(name, alias)| {
             let name_ident = name_to_tokens(name);
-            if ty_cache.contains(&name_ident) {
+            if !ty_cache.insert(name_ident.clone()) {
                 return None;
             };
-            ty_cache.insert(name_ident.clone());
             let alias_ident = name_to_tokens(alias);
             let tokens = quote! {
                 pub type #name_ident = #alias_ident;
