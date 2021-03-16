@@ -811,9 +811,8 @@ fn generate_function_pointers<'a>(
         let mut cmd_vec: Vec<&vkxml::Command> = Vec::new();
         for cmd in commands {
             let name = cmd.name.as_str();
-            if !cache.contains(name) {
+            if cache.insert(name) {
                 cmd_vec.push(cmd);
-                cache.insert(name);
             }
         }
         cmd_vec
@@ -824,12 +823,7 @@ fn generate_function_pointers<'a>(
         .iter()
         .filter(|cmd| {
             let ident = cmd.name.as_str();
-            if !fn_cache.contains(ident) {
-                fn_cache.insert(ident);
-                true
-            } else {
-                false
-            }
+            fn_cache.insert(ident)
         })
         .collect();
 
