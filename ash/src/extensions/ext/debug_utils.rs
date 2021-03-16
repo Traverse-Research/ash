@@ -55,13 +55,13 @@ impl DebugUtils {
         label: &vk::DebugUtilsLabelEXT,
     ) {
         self.debug_utils_fn
-            .cmd_begin_debug_utils_label_ext(command_buffer, label);
+            .cmd_begin_debug_utils_label_ext(command_buffer, label)
     }
 
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdEndDebugUtilsLabelEXT.html>"]
     pub unsafe fn cmd_end_debug_utils_label(&self, command_buffer: vk::CommandBuffer) {
         self.debug_utils_fn
-            .cmd_end_debug_utils_label_ext(command_buffer);
+            .cmd_end_debug_utils_label_ext(command_buffer)
     }
 
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdInsertDebugUtilsLabelEXT.html>"]
@@ -71,7 +71,7 @@ impl DebugUtils {
         label: &vk::DebugUtilsLabelEXT,
     ) {
         self.debug_utils_fn
-            .cmd_insert_debug_utils_label_ext(command_buffer, label);
+            .cmd_insert_debug_utils_label_ext(command_buffer, label)
     }
 
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkQueueBeginDebugUtilsLabelEXT.html>"]
@@ -81,12 +81,12 @@ impl DebugUtils {
         label: &vk::DebugUtilsLabelEXT,
     ) {
         self.debug_utils_fn
-            .queue_begin_debug_utils_label_ext(queue, label);
+            .queue_begin_debug_utils_label_ext(queue, label)
     }
 
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkQueueEndDebugUtilsLabelEXT.html>"]
     pub unsafe fn queue_end_debug_utils_label(&self, queue: vk::Queue) {
-        self.debug_utils_fn.queue_end_debug_utils_label_ext(queue);
+        self.debug_utils_fn.queue_end_debug_utils_label_ext(queue)
     }
 
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkQueueInsertDebugUtilsLabelEXT.html>"]
@@ -96,7 +96,7 @@ impl DebugUtils {
         label: &vk::DebugUtilsLabelEXT,
     ) {
         self.debug_utils_fn
-            .queue_insert_debug_utils_label_ext(queue, label);
+            .queue_insert_debug_utils_label_ext(queue, label)
     }
 
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCreateDebugUtilsMessengerEXT.html>"]
@@ -126,7 +126,7 @@ impl DebugUtils {
             self.handle,
             messenger,
             allocator.as_raw_ptr(),
-        );
+        )
     }
 
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkSubmitDebugUtilsMessageEXT.html>"]
@@ -142,7 +142,7 @@ impl DebugUtils {
             message_severity,
             message_types,
             callback_data,
-        );
+        )
     }
 
     pub fn fp(&self) -> &vk::ExtDebugUtilsFn {

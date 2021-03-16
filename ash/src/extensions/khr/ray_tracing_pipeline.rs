@@ -56,7 +56,7 @@ impl RayTracingPipeline {
             width,
             height,
             depth,
-        );
+        )
     }
 
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCreateRayTracingPipelinesKHR.html>"]
@@ -143,7 +143,7 @@ impl RayTracingPipeline {
             hit_shader_binding_table.as_ptr(),
             callable_shader_binding_table.as_ptr(),
             indirect_device_address,
-        );
+        )
     }
 
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetRayTracingShaderGroupStackSizeKHR.html>"]
@@ -164,7 +164,7 @@ impl RayTracingPipeline {
         pipeline_stack_size: u32,
     ) {
         self.ray_tracing_fn
-            .cmd_set_ray_tracing_pipeline_stack_size_khr(command_buffer, pipeline_stack_size);
+            .cmd_set_ray_tracing_pipeline_stack_size_khr(command_buffer, pipeline_stack_size)
     }
 
     pub fn name() -> &'static CStr {

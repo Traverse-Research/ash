@@ -43,7 +43,7 @@ impl PushDescriptor {
             set,
             descriptor_writes.len() as u32,
             descriptor_writes.as_ptr(),
-        );
+        )
     }
 
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdPushDescriptorSetWithTemplateKHR.html>"]
@@ -62,7 +62,7 @@ impl PushDescriptor {
                 layout,
                 set,
                 p_data,
-            );
+            )
     }
 
     pub fn fp(&self) -> &vk::KhrPushDescriptorFn {

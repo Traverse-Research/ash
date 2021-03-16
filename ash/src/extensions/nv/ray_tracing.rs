@@ -62,7 +62,7 @@ impl RayTracing {
             self.handle,
             accel_struct,
             allocation_callbacks.as_raw_ptr(),
-        );
+        )
     }
 
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetAccelerationStructureMemoryRequirementsNV.html>"]
@@ -117,7 +117,7 @@ impl RayTracing {
             src,
             scratch,
             scratch_offset,
-        );
+        )
     }
 
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdCopyAccelerationStructureNV.html>"]
@@ -129,7 +129,7 @@ impl RayTracing {
         mode: vk::CopyAccelerationStructureModeNV,
     ) {
         self.ray_tracing_fn
-            .cmd_copy_acceleration_structure_nv(command_buffer, dst, src, mode);
+            .cmd_copy_acceleration_structure_nv(command_buffer, dst, src, mode)
     }
 
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdTraceRaysNV.html>"]
@@ -167,7 +167,7 @@ impl RayTracing {
             width,
             height,
             depth,
-        );
+        )
     }
 
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCreateRayTracingPipelinesNV.html>"]
@@ -244,7 +244,7 @@ impl RayTracing {
                 query_type,
                 query_pool,
                 first_query,
-            );
+            )
     }
 
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCompileDeferredNV.html>"]

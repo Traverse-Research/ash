@@ -46,7 +46,7 @@ fn main() -> Result<(), Box<dyn Error>> {
             });
         }
 
-        surface_fn.destroy_surface(surface, None);
+        surface_fn.destroy_surface(surface, None)
     }
 
     Ok(())

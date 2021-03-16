@@ -80,6 +80,6 @@ mod tests {
                 .map(|ptr| ptr as usize)
                 .collect()
         };
-        assert_eq!(chain, chain2);
+        assert_eq!(chain, chain2)
     }
 }

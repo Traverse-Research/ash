@@ -831,6 +831,6 @@ fn main() {
         for framebuffer in framebuffers {
             base.device.destroy_framebuffer(framebuffer, None);
         }
-        base.device.destroy_render_pass(renderpass, None);
+        base.device.destroy_render_pass(renderpass, None)
     }
 }

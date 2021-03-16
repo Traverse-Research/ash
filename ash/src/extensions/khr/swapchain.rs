@@ -38,7 +38,7 @@ impl Swapchain {
             self.handle,
             swapchain,
             allocation_callbacks.as_raw_ptr(),
-        );
+        )
     }
 
     /// On success, returns the next image's index and whether the swapchain is suboptimal for the surface.

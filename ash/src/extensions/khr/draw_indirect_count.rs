@@ -46,7 +46,7 @@ impl DrawIndirectCount {
                 count_buffer_offset,
                 max_draw_count,
                 stride,
-            );
+            )
     }
 
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdDrawIndirectCountKHR.html>"]
@@ -69,6 +69,6 @@ impl DrawIndirectCount {
                 count_buffer_offset,
                 max_draw_count,
                 stride,
-            );
+            )
     }
 }

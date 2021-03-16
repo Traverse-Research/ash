@@ -118,7 +118,7 @@ pub trait InstanceV1_1: InstanceV1_0 {
         features: &mut vk::PhysicalDeviceFeatures2,
     ) {
         self.fp_v1_1()
-            .get_physical_device_features2(physical_device, features);
+            .get_physical_device_features2(physical_device, features)
     }
 
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetPhysicalDeviceProperties2.html>"]
@@ -128,7 +128,7 @@ pub trait InstanceV1_1: InstanceV1_0 {
         prop: &mut vk::PhysicalDeviceProperties2,
     ) {
         self.fp_v1_1()
-            .get_physical_device_properties2(physical_device, prop);
+            .get_physical_device_properties2(physical_device, prop)
     }
 
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetPhysicalDeviceFormatProperties2.html>"]
@@ -139,7 +139,7 @@ pub trait InstanceV1_1: InstanceV1_0 {
         out: &mut vk::FormatProperties2,
     ) {
         self.fp_v1_1()
-            .get_physical_device_format_properties2(physical_device, format, out);
+            .get_physical_device_format_properties2(physical_device, format, out)
     }
 
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetPhysicalDeviceImageFormatProperties2.html>"]
@@ -182,7 +182,7 @@ pub trait InstanceV1_1: InstanceV1_0 {
             physical_device,
             &mut queue_count,
             queue_family_props.as_mut_ptr(),
-        );
+        )
     }
 
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetPhysicalDeviceMemoryProperties2.html>"]
@@ -192,7 +192,7 @@ pub trait InstanceV1_1: InstanceV1_0 {
         out: &mut vk::PhysicalDeviceMemoryProperties2,
     ) {
         self.fp_v1_1()
-            .get_physical_device_memory_properties2(physical_device, out);
+            .get_physical_device_memory_properties2(physical_device, out)
     }
 
     unsafe fn get_physical_device_sparse_image_format_properties2_len(
@@ -225,7 +225,7 @@ pub trait InstanceV1_1: InstanceV1_0 {
                 format_info,
                 &mut format_count,
                 out.as_mut_ptr(),
-            );
+            )
     }
 
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetPhysicalDeviceExternalBufferProperties.html>"]
@@ -240,7 +240,7 @@ pub trait InstanceV1_1: InstanceV1_0 {
                 physical_device,
                 external_buffer_info,
                 out,
-            );
+            )
     }
 
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetPhysicalDeviceExternalFenceProperties.html>"]
@@ -255,7 +255,7 @@ pub trait InstanceV1_1: InstanceV1_0 {
                 physical_device,
                 external_fence_info,
                 out,
-            );
+            )
     }
 
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetPhysicalDeviceExternalSemaphoreProperties.html>"]
@@ -270,7 +270,7 @@ pub trait InstanceV1_1: InstanceV1_0 {
                 physical_device,
                 external_semaphore_info,
                 out,
-            );
+            )
     }
 }
 
@@ -304,7 +304,7 @@ pub trait InstanceV1_0 {
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkDestroyInstance.html>"]
     unsafe fn destroy_instance(&self, allocation_callbacks: Option<&vk::AllocationCallbacks>) {
         self.fp_v1_0()
-            .destroy_instance(self.handle(), allocation_callbacks.as_raw_ptr());
+            .destroy_instance(self.handle(), allocation_callbacks.as_raw_ptr())
     }
 
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetPhysicalDeviceFormatProperties.html>"]

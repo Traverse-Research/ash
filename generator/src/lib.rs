@@ -31,7 +31,7 @@ impl quote::ToTokens for CType {
             CType::Float => format_ident!("f32"),
             CType::Bool32 => format_ident!("Bool32"),
         };
-        term.to_tokens(tokens);
+        term.to_tokens(tokens)
     }
 }
 
@@ -1393,7 +1393,7 @@ pub fn generate_enum<'a>(
         values.push(ConstantMatchInfo {
             ident: constant.variant_ident(&_enum.name),
             is_alias: false,
-        });
+        })
     }
     const_values.insert(ident.clone(), values);
 

@@ -24,7 +24,7 @@ impl MeshShader {
         first_task: u32,
     ) {
         self.mesh_shader_fn
-            .cmd_draw_mesh_tasks_nv(command_buffer, task_count, first_task);
+            .cmd_draw_mesh_tasks_nv(command_buffer, task_count, first_task)
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdDrawMeshTasksIndirectNV.html>"]
     pub unsafe fn cmd_draw_mesh_tasks_indirect(
@@ -41,7 +41,7 @@ impl MeshShader {
             offset,
             draw_count,
             stride,
-        );
+        )
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdDrawMeshTasksIndirectCountNV.html>"]
     pub unsafe fn cmd_draw_mesh_tasks_indirect_count(
@@ -62,7 +62,7 @@ impl MeshShader {
             count_buffer_offset,
             max_draw_count,
             stride,
-        );
+        )
     }
     pub fn name() -> &'static CStr {
         vk::NvMeshShaderFn::name()

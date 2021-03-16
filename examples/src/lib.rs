@@ -80,7 +80,7 @@ pub fn record_submit_commandbuffer<D: DeviceV1_0, F: FnOnce(&D, vk::CommandBuffe
                 &[submit_info.build()],
                 command_buffer_reuse_fence,
             )
-            .expect("queue submit failed.");
+            .expect("queue submit failed.")
     }
 }
 
@@ -190,7 +190,7 @@ impl ExampleBase {
                 },
                 _ => ControlFlow::Continue,
             }
-        });
+        })
     }
 
     pub fn new(window_width: u32, window_height: u32) -> Self {

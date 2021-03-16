@@ -40,13 +40,13 @@ impl DebugMarker {
         marker_info: &vk::DebugMarkerMarkerInfoEXT,
     ) {
         self.debug_marker_fn
-            .cmd_debug_marker_begin_ext(command_buffer, marker_info);
+            .cmd_debug_marker_begin_ext(command_buffer, marker_info)
     }
 
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdDebugMarkerEndEXT.html>"]
     pub unsafe fn cmd_debug_marker_end(&self, command_buffer: vk::CommandBuffer) {
         self.debug_marker_fn
-            .cmd_debug_marker_end_ext(command_buffer);
+            .cmd_debug_marker_end_ext(command_buffer)
     }
 
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdDebugMarkerInsertEXT.html>"]
@@ -56,7 +56,7 @@ impl DebugMarker {
         marker_info: &vk::DebugMarkerMarkerInfoEXT,
     ) {
         self.debug_marker_fn
-            .cmd_debug_marker_insert_ext(command_buffer, marker_info);
+            .cmd_debug_marker_insert_ext(command_buffer, marker_info)
     }
 
     pub fn fp(&self) -> &vk::ExtDebugMarkerFn {

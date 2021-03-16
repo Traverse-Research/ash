@@ -59,7 +59,7 @@ impl DeferredHostOperations {
                 self.handle,
                 operation,
                 allocation_callbacks.as_raw_ptr(),
-            );
+            )
     }
 
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetDeferredOperationMaxConcurrencyKHR.html>"]

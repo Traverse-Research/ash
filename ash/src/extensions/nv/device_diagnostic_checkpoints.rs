@@ -31,7 +31,7 @@ impl DeviceDiagnosticCheckpoints {
         p_checkpoint_marker: *const c_void,
     ) {
         self.device_diagnostic_checkpoints_fn
-            .cmd_set_checkpoint_nv(command_buffer, p_checkpoint_marker);
+            .cmd_set_checkpoint_nv(command_buffer, p_checkpoint_marker)
     }
 
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetQueueCheckpointDataNV.html>"]

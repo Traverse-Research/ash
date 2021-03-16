@@ -122,11 +122,8 @@ impl Surface {
         surface: vk::SurfaceKHR,
         allocation_callbacks: Option<&vk::AllocationCallbacks>,
     ) {
-        self.surface_fn.destroy_surface_khr(
-            self.handle,
-            surface,
-            allocation_callbacks.as_raw_ptr(),
-        );
+        self.surface_fn
+            .destroy_surface_khr(self.handle, surface, allocation_callbacks.as_raw_ptr())
     }
 
     pub fn fp(&self) -> &vk::KhrSurfaceFn {

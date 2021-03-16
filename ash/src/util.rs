@@ -120,7 +120,7 @@ pub fn read_spv<R: io::Read + io::Seek>(x: &mut R) -> io::Result<Vec<u32>> {
             result.as_mut_ptr() as *mut u8,
             words * 4,
         ))?;
-        result.set_len(words);
+        result.set_len(words)
     }
     const MAGIC_NUMBER: u32 = 0x0723_0203;
     if !result.is_empty() && result[0] == MAGIC_NUMBER.swap_bytes() {
