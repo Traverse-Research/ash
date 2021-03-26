@@ -4,6 +4,8 @@ use crate::vk;
 use std::ffi::CStr;
 use std::mem;
 
+use std::os::unix::io::RawFd;
+
 #[derive(Clone)]
 pub struct ExternalFenceFd {
     handle: vk::Device,
@@ -33,7 +35,7 @@ impl ExternalFenceFd {
     }
 
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetFenceFdKHR.html>"]
-    pub unsafe fn get_fence_fd(&self, get_info: &vk::FenceGetFdInfoKHR) -> VkResult<i32> {
+    pub unsafe fn get_fence_fd(&self, get_info: &vk::FenceGetFdInfoKHR) -> VkResult<RawFd> {
         let mut fd = -1;
 
         self.external_fence_fd_fn

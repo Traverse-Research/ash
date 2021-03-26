@@ -4,6 +4,8 @@ use crate::vk;
 use std::ffi::CStr;
 use std::mem;
 
+use std::os::unix::io::RawFd;
+
 #[derive(Clone)]
 pub struct ExternalSemaphoreFd {
     handle: vk::Device,
@@ -36,7 +38,7 @@ impl ExternalSemaphoreFd {
     }
 
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetSemaphoreFdKHR.html>"]
-    pub unsafe fn get_semaphore_fd(&self, get_info: &vk::SemaphoreGetFdInfoKHR) -> VkResult<i32> {
+    pub unsafe fn get_semaphore_fd(&self, get_info: &vk::SemaphoreGetFdInfoKHR) -> VkResult<RawFd> {
         let mut fd = -1;
 
         self.external_semaphore_fd_fn

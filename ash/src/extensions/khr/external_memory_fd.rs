@@ -4,6 +4,8 @@ use crate::vk;
 use std::ffi::CStr;
 use std::mem;
 
+use std::os::unix::io::RawFd;
+
 #[derive(Clone)]
 pub struct ExternalMemoryFd {
     handle: vk::Device,
@@ -26,7 +28,7 @@ impl ExternalMemoryFd {
     }
 
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetMemoryFdKHR.html>"]
-    pub unsafe fn get_memory_fd(&self, create_info: &vk::MemoryGetFdInfoKHR) -> VkResult<i32> {
+    pub unsafe fn get_memory_fd(&self, create_info: &vk::MemoryGetFdInfoKHR) -> VkResult<RawFd> {
         let mut fd = -1;
 
         self.external_memory_fd_fn
