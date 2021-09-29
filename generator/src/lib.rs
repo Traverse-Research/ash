@@ -1395,19 +1395,15 @@ pub fn variant_ident(enum_name: &str, variant_name: &str, vendor_tags: &HashSet<
     let variant_name = variant_name.to_uppercase();
     let _name = enum_name.replace("FlagBits", "");
     let struct_name = _name.to_shouty_snake_case();
-    let (struct_name, vendor_tag) = vendor_tags
+    let vendor = vendor_tags
         .iter()
-        .find_map(|vendor_tag| {
-            struct_name
-                .strip_suffix(vendor_tag)
-                .and_then(|n| n.strip_suffix('_'))
-                .zip(Some(vendor_tag))
-        })
-        .unwrap_or((struct_name.as_str(), &""));
+        .find(|&&vendor_tag| struct_name.ends_with(vendor_tag))
+        .map(|vendor_tag| format!("_{}", vendor_tag))
+        .unwrap_or("".to_string());
+    let struct_name = struct_name.strip_suffix(&vendor).unwrap();
     let struct_name = TRAILING_NUMBER.replace(struct_name, "_$1");
     let variant_name = variant_name
-        .strip_suffix(vendor_tag)
-        .and_then(|n| n.strip_suffix('_'))
+        .strip_suffix(&vendor)
         .unwrap_or_else(|| variant_name.as_str());
 
     let new_variant_name = variant_name
