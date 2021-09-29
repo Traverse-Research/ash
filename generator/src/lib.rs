@@ -379,8 +379,8 @@ impl ConstVal {
     }
 }
 pub trait ConstantExt {
-    fn constant(&self, enum_name: &str) -> Constant;
-    fn variant_ident(&self, enum_name: &str) -> Ident;
+    fn constant(&self, enum_name: &str, vendor_tags: &HashSet<&str>) -> Constant;
+    fn variant_ident(&self, enum_name: &str, vendor_tags: &HashSet<&str>) -> Ident;
     fn notation(&self) -> Option<&str>;
     fn is_alias(&self) -> bool {
         false
@@ -388,11 +388,11 @@ pub trait ConstantExt {
 }
 
 impl ConstantExt for vkxml::ExtensionEnum {
-    fn constant(&self, _enum_name: &str) -> Constant {
+    fn constant(&self, _enum_name: &str, _vendor_tags: &HashSet<&str>) -> Constant {
         Constant::from_extension_enum(self).unwrap()
     }
-    fn variant_ident(&self, enum_name: &str) -> Ident {
-        variant_ident(enum_name, &self.name)
+    fn variant_ident(&self, enum_name: &str, vendor_tags: &HashSet<&str>) -> Ident {
+        variant_ident(enum_name, &self.name, vendor_tags)
     }
     fn notation(&self) -> Option<&str> {
         self.notation.as_deref()
@@ -400,13 +400,13 @@ impl ConstantExt for vkxml::ExtensionEnum {
 }
 
 impl ConstantExt for vk_parse::Enum {
-    fn constant(&self, enum_name: &str) -> Constant {
-        Constant::from_vk_parse_enum_spec(&self.spec, Some(enum_name), None)
+    fn constant(&self, enum_name: &str, vendor_tags: &HashSet<&str>) -> Constant {
+        Constant::from_vk_parse_enum_spec(&self.spec, Some(enum_name), None, vendor_tags)
             .unwrap()
             .0
     }
-    fn variant_ident(&self, enum_name: &str) -> Ident {
-        variant_ident(enum_name, &self.name)
+    fn variant_ident(&self, enum_name: &str, vendor_tags: &HashSet<&str>) -> Ident {
+        variant_ident(enum_name, &self.name, vendor_tags)
     }
     fn notation(&self) -> Option<&str> {
         self.comment.as_deref()
@@ -417,11 +417,11 @@ impl ConstantExt for vk_parse::Enum {
 }
 
 impl ConstantExt for vkxml::Constant {
-    fn constant(&self, _enum_name: &str) -> Constant {
+    fn constant(&self, _enum_name: &str, _vendor_tags: &HashSet<&str>) -> Constant {
         Constant::from_constant(self)
     }
-    fn variant_ident(&self, enum_name: &str) -> Ident {
-        variant_ident(enum_name, &self.name)
+    fn variant_ident(&self, enum_name: &str, vendor_tags: &HashSet<&str>) -> Ident {
+        variant_ident(enum_name, &self.name, vendor_tags)
     }
     fn notation(&self) -> Option<&str> {
         self.notation.as_deref()
@@ -538,6 +538,7 @@ impl Constant {
         spec: &vk_parse::EnumSpec,
         enum_name: Option<&str>,
         extension_number: Option<i64>,
+        vendor_tags: &HashSet<&str>,
     ) -> Option<(Self, Option<String>, bool)> {
         use vk_parse::EnumSpec;
 
@@ -569,7 +570,7 @@ impl Constant {
             }
             EnumSpec::Alias { alias, extends } => {
                 let base_type = extends.as_deref().or(enum_name)?;
-                let key = variant_ident(base_type, alias);
+                let key = variant_ident(base_type, alias, vendor_tags);
                 if key == "DISPATCH_BASE" {
                     None
                 } else {
@@ -1092,11 +1093,11 @@ pub struct ExtensionConstant<'a> {
     pub constant: Constant,
 }
 impl<'a> ConstantExt for ExtensionConstant<'a> {
-    fn constant(&self, _enum_name: &str) -> Constant {
+    fn constant(&self, _enum_name: &str, _vendor_tags: &HashSet<&str>) -> Constant {
         self.constant.clone()
     }
-    fn variant_ident(&self, enum_name: &str) -> Ident {
-        variant_ident(enum_name, self.name)
+    fn variant_ident(&self, enum_name: &str, vendor_tags: &HashSet<&str>) -> Ident {
+        variant_ident(enum_name, self.name, vendor_tags)
     }
     fn notation(&self) -> Option<&str> {
         None
@@ -1109,6 +1110,7 @@ pub fn generate_extension_constants<'a>(
     extension_items: &'a [vk_parse::ExtensionChild],
     const_cache: &mut HashSet<&'a str, impl BuildHasher>,
     const_values: &mut BTreeMap<Ident, ConstantTypeInfo>,
+    vendor_tags: &HashSet<&str>,
 ) -> TokenStream {
     let items = extension_items
         .iter()
@@ -1123,8 +1125,12 @@ pub fn generate_extension_constants<'a>(
                 return None;
             }
 
-            let (constant, extends, is_alias) =
-                Constant::from_vk_parse_enum_spec(&enum_.spec, None, Some(extension_number))?;
+            let (constant, extends, is_alias) = Constant::from_vk_parse_enum_spec(
+                &enum_.spec,
+                None,
+                Some(extension_number),
+                vendor_tags,
+            )?;
             let extends = extends?;
             let ext_constant = ExtensionConstant {
                 name: &enum_.name,
@@ -1136,10 +1142,10 @@ pub fn generate_extension_constants<'a>(
                 .unwrap()
                 .values
                 .push(ConstantMatchInfo {
-                    ident: ext_constant.variant_ident(&extends),
+                    ident: ext_constant.variant_ident(&extends, vendor_tags),
                     is_alias,
                 });
-            let impl_block = bitflags_impl_block(ident, &extends, &[&ext_constant]);
+            let impl_block = bitflags_impl_block(ident, &extends, &[&ext_constant], vendor_tags);
             let doc_string = format!("Generated from '{}'", extension_name);
             let q = quote! {
                 #[doc = #doc_string]
@@ -1237,6 +1243,7 @@ pub fn generate_extension<'a>(
     const_values: &mut BTreeMap<Ident, ConstantTypeInfo>,
     cmd_aliases: &HashMap<String, String, impl BuildHasher>,
     fn_cache: &mut HashSet<&'a str, impl BuildHasher>,
+    vendor_tags: &HashSet<&str>,
 ) -> Option<TokenStream> {
     // Okay this is a little bit odd. We need to generate all extensions, even disabled ones,
     // because otherwise some StructureTypes won't get generated. But we don't generate extensions
@@ -1250,6 +1257,7 @@ pub fn generate_extension<'a>(
         &extension.children,
         const_cache,
         const_values,
+        vendor_tags,
     );
     let fp = generate_extension_commands(
         &extension.name,
@@ -1383,25 +1391,23 @@ fn is_enum_variant_with_typo(variant_name: &str) -> bool {
 
 static TRAILING_NUMBER: Lazy<Regex> = Lazy::new(|| Regex::new("(\\d+)$").unwrap());
 
-pub fn variant_ident(enum_name: &str, variant_name: &str) -> Ident {
+pub fn variant_ident(enum_name: &str, variant_name: &str, vendor_tags: &HashSet<&str>) -> Ident {
     let variant_name = variant_name.to_uppercase();
     let _name = enum_name.replace("FlagBits", "");
-    // TODO: Should be read from vk.xml id:2
-    // TODO: Also needs to be more robust, vendor names can be substrings from itself, id:4
-    // like NVX and NV
-    let vendors = [
-        "_NVX", "_KHR", "_EXT", "_NV", "_AMD", "_ANDROID", "_GOOGLE", "_INTEL",
-    ];
     let struct_name = _name.to_shouty_snake_case();
-    let vendor = vendors
+    let (struct_name, vendor_tag) = vendor_tags
         .iter()
-        .find(|&vendor| struct_name.ends_with(vendor))
-        .cloned()
-        .unwrap_or("");
-    let struct_name = struct_name.strip_suffix(vendor).unwrap();
+        .find_map(|vendor_tag| {
+            struct_name
+                .strip_suffix(vendor_tag)
+                .and_then(|n| n.strip_suffix('_'))
+                .zip(Some(vendor_tag))
+        })
+        .unwrap_or((struct_name.as_str(), &""));
     let struct_name = TRAILING_NUMBER.replace(struct_name, "_$1");
     let variant_name = variant_name
-        .strip_suffix(vendor)
+        .strip_suffix(vendor_tag)
+        .and_then(|n| n.strip_suffix('_'))
         .unwrap_or_else(|| variant_name.as_str());
 
     let new_variant_name = variant_name
@@ -1438,12 +1444,13 @@ pub fn bitflags_impl_block(
     ident: Ident,
     enum_name: &str,
     constants: &[&impl ConstantExt],
+    vendor_tags: &HashSet<&str>,
 ) -> TokenStream {
     let variants = constants
         .iter()
         .map(|constant| {
-            let variant_ident = constant.variant_ident(enum_name);
-            let constant = constant.constant(enum_name);
+            let variant_ident = constant.variant_ident(enum_name, vendor_tags);
+            let constant = constant.constant(enum_name, vendor_tags);
             let tokens = if let Constant::Alias(_) = &constant {
                 quote!(#constant)
             } else {
@@ -1485,6 +1492,7 @@ pub fn generate_enum<'a>(
     const_cache: &mut HashSet<&'a str, impl BuildHasher>,
     const_values: &mut BTreeMap<Ident, ConstantTypeInfo>,
     bitflags_cache: &mut HashSet<Ident, impl BuildHasher>,
+    vendor_tags: &HashSet<&str>,
 ) -> EnumType {
     let name = enum_.name.as_ref().unwrap();
     let clean_name = name.strip_prefix("Vk").unwrap();
@@ -1502,8 +1510,8 @@ pub fn generate_enum<'a>(
                 // Remove any alias whose name is identical after name de-mangling. For example
                 // the XML contains compatibility aliases for variants without _BIT postfix
                 // which are removed by the generator anyway, after which they become identical.
-                let alias_name = constant.variant_ident(name);
-                let aliases_to = variant_ident(name, alias);
+                let alias_name = constant.variant_ident(name, vendor_tags);
+                let aliases_to = variant_ident(name, alias, vendor_tags);
                 alias_name != aliases_to
             }
             _ => true,
@@ -1514,7 +1522,7 @@ pub fn generate_enum<'a>(
     for constant in &constants {
         const_cache.insert(constant.name.as_str());
         values.push(ConstantMatchInfo {
-            ident: constant.variant_ident(name),
+            ident: constant.variant_ident(name, vendor_tags),
             is_alias: constant.is_alias(),
         });
     }
@@ -1532,7 +1540,7 @@ pub fn generate_enum<'a>(
         let ident = format_ident!("{}", _name.as_str());
         let all_bits = constants
             .iter()
-            .filter_map(|constant| constant.constant(name).value())
+            .filter_map(|constant| constant.constant(name, vendor_tags).value())
             .fold(0, |acc, next| acc | next.bits());
 
         let type_ = if enum_.bitwidth == Some(64u32) {
@@ -1547,7 +1555,7 @@ pub fn generate_enum<'a>(
         if !bitflags_cache.insert(ident.clone()) {
             EnumType::Bitflags(quote! {})
         } else {
-            let impl_bitflags = bitflags_impl_block(ident.clone(), name, &constants);
+            let impl_bitflags = bitflags_impl_block(ident.clone(), name, &constants, vendor_tags);
             let q = quote! {
                 #[repr(transparent)]
                 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
@@ -1565,7 +1573,7 @@ pub fn generate_enum<'a>(
             _ => (quote!(), quote!()),
         };
 
-        let impl_block = bitflags_impl_block(ident.clone(), name, &constants);
+        let impl_block = bitflags_impl_block(ident.clone(), name, &constants, vendor_tags);
         let enum_quote = quote! {
             #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
             #[repr(transparent)]
@@ -1599,7 +1607,11 @@ pub fn generate_result(ident: Ident, enum_: &vk_parse::Enums) -> TokenStream {
             }
         };
 
-        let variant_ident = variant_ident(enum_.name.as_ref().unwrap(), variant_name);
+        let variant_ident = variant_ident(
+            enum_.name.as_ref().unwrap(),
+            variant_name,
+            /* TODO */ &HashSet::new(),
+        );
         Some(quote! {
             #ident::#variant_ident => Some(#notation)
         })
@@ -1632,7 +1644,7 @@ fn is_static_array(field: &vkxml::Field) -> bool {
         .map(|ty| matches!(ty, vkxml::ArrayType::Static))
         .unwrap_or(false)
 }
-pub fn derive_default(_struct: &vkxml::Struct) -> Option<TokenStream> {
+pub fn derive_default(_struct: &vkxml::Struct, vendor_tags: &HashSet<&str>) -> Option<TokenStream> {
     let name = name_to_tokens(&_struct.name);
     let members = _struct.elements.iter().filter_map(|elem| match *elem {
         vkxml::StructElement::Member(ref field) => Some(field),
@@ -1657,7 +1669,7 @@ pub fn derive_default(_struct: &vkxml::Struct) -> Option<TokenStream> {
                 .as_ref()
                 .and_then(|ty| ty.split(',').next());
             if let Some(variant) = ty {
-                let variant_ident = variant_ident("VkStructureType", variant);
+                let variant_ident = variant_ident("VkStructureType", variant, vendor_tags);
 
                 quote! {
                     #param_ident: StructureType::#variant_ident
@@ -2103,6 +2115,7 @@ pub fn generate_struct(
     _struct: &vkxml::Struct,
     root_structs: &HashSet<Ident, impl BuildHasher>,
     union_types: &HashSet<&str, impl BuildHasher>,
+    vendor_tags: &HashSet<&str>,
 ) -> TokenStream {
     let name = name_to_tokens(&_struct.name);
     if &_struct.name == "VkTransformMatrixKHR" {
@@ -2177,7 +2190,7 @@ pub fn generate_struct(
     });
 
     let debug_tokens = derive_debug(_struct, union_types);
-    let default_tokens = derive_default(_struct);
+    let default_tokens = derive_default(_struct, vendor_tags);
     let setter_tokens = derive_setters(_struct, root_structs);
     let manual_derive_tokens = manual_derives(_struct);
     let dbg_str = if debug_tokens.is_none() {
@@ -2296,15 +2309,19 @@ pub fn generate_definition(
     bitflags_cache: &mut HashSet<Ident, impl BuildHasher>,
     const_values: &mut BTreeMap<Ident, ConstantTypeInfo>,
     identifier_renames: &mut BTreeMap<String, Ident>,
+    vendor_tags: &HashSet<&str>,
 ) -> Option<TokenStream> {
     match *definition {
         vkxml::DefinitionsElement::Define(ref define) => {
             Some(generate_define(define, identifier_renames))
         }
         vkxml::DefinitionsElement::Typedef(ref typedef) => Some(generate_typedef(typedef)),
-        vkxml::DefinitionsElement::Struct(ref _struct) => {
-            Some(generate_struct(_struct, root_structs, union_types))
-        }
+        vkxml::DefinitionsElement::Struct(ref _struct) => Some(generate_struct(
+            _struct,
+            root_structs,
+            union_types,
+            vendor_tags,
+        )),
         vkxml::DefinitionsElement::Bitmask(ref mask) => {
             generate_bitmask(mask, bitflags_cache, const_values)
         }
@@ -2423,6 +2440,7 @@ pub fn generate_feature_extension<'a>(
     registry: &'a vk_parse::Registry,
     const_cache: &mut HashSet<&'a str, impl BuildHasher>,
     const_values: &mut BTreeMap<Ident, ConstantTypeInfo>,
+    vendor_tags: &HashSet<&str>,
 ) -> TokenStream {
     let constants = registry.0.iter().filter_map(|item| match item {
         vk_parse::RegistryChild::Feature(feature) => Some(generate_extension_constants(
@@ -2431,6 +2449,7 @@ pub fn generate_feature_extension<'a>(
             &feature.children,
             const_cache,
             const_values,
+            vendor_tags,
         )),
         _ => None,
     });
@@ -2623,6 +2642,20 @@ pub fn write_source_code<P: AsRef<Path>>(vk_headers_dir: &Path, src_dir: P) {
     use std::fs::File;
     use std::io::Write;
     let (spec2, _errors) = vk_parse::parse_file(&vk_xml).expect("Invalid xml file");
+    let spec = vk_parse::parse_file_as_vkxml(&vk_xml).expect("Invalid xml file.");
+
+    let vendor_tags: HashSet<&str> = spec2
+        .0
+        .iter()
+        .filter_map(|item| match item {
+            vk_parse::RegistryChild::Tags(tags) => {
+                Some(tags.children.iter().map(|tag| tag.name.as_str()))
+            }
+            _ => None,
+        })
+        .flatten()
+        .collect();
+
     let extensions: &Vec<vk_parse::Extension> = spec2
         .0
         .iter()
@@ -2644,7 +2677,6 @@ pub fn write_source_code<P: AsRef<Path>>(vk_headers_dir: &Path, src_dir: P) {
         })
         .collect();
 
-    let spec = vk_parse::parse_file_as_vkxml(&vk_xml).expect("Invalid xml file.");
     let cmd_aliases: HashMap<String, String> = spec2
         .0
         .iter()
@@ -2716,7 +2748,15 @@ pub fn write_source_code<P: AsRef<Path>>(vk_headers_dir: &Path, src_dir: P) {
             vk_parse::RegistryChild::Enums(ref enums) if enums.kind.is_some() => Some(enums),
             _ => None,
         })
-        .map(|e| generate_enum(e, &mut const_cache, &mut const_values, &mut bitflags_cache))
+        .map(|e| {
+            generate_enum(
+                e,
+                &mut const_cache,
+                &mut const_values,
+                &mut bitflags_cache,
+                &vendor_tags,
+            )
+        })
         .fold((Vec::new(), Vec::new()), |mut acc, elem| {
             match elem {
                 EnumType::Enum(token) => acc.0.push(token),
@@ -2742,6 +2782,7 @@ pub fn write_source_code<P: AsRef<Path>>(vk_headers_dir: &Path, src_dir: P) {
                 &mut const_values,
                 &cmd_aliases,
                 &mut fn_cache,
+                &vendor_tags,
             )
         })
         .collect_vec();
@@ -2767,6 +2808,7 @@ pub fn write_source_code<P: AsRef<Path>>(vk_headers_dir: &Path, src_dir: P) {
                 &mut bitflags_cache,
                 &mut const_values,
                 &mut identifier_renames,
+                &vendor_tags,
             )
         })
         .collect();
@@ -2776,7 +2818,7 @@ pub fn write_source_code<P: AsRef<Path>>(vk_headers_dir: &Path, src_dir: P) {
         .map(|feature| generate_feature(feature, &commands, &mut fn_cache))
         .collect();
     let feature_extensions_code =
-        generate_feature_extension(&spec2, &mut const_cache, &mut const_values);
+        generate_feature_extension(&spec2, &mut const_cache, &mut const_values, &vendor_tags);
 
     let const_debugs = generate_const_debugs(&const_values);
 
