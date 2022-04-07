@@ -12,3 +12,16 @@ image = "0.23"
 # directly and benefit from the infallible `Entry` constructor.
 ash = { path = "../ash", default-features = false, features = ["linked", "debug"] }
 ash-window = { path = "../ash-window" }
+
+[target.'cfg(target_os = "android")'.dependencies]
+# ndk = "0.3"
+# ndk-sys = "0.2.0"
+ndk-glue = "0.6"
+
+[[example]]
+name = "triangle"
+crate-type = ["cdylib"]
+
+[[example]]
+name = "texture"
+crate-type = ["cdylib"]

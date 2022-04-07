@@ -1,6 +1,6 @@
+use crate::*;
 use ash::util::*;
 use ash::vk;
-use crate::*;
 use std::default::Default;
 use std::ffi::CStr;
 use std::io::Cursor;
@@ -18,7 +18,7 @@ pub fn main() {
         let base = ExampleBase::new(1920, 1080);
         let renderpass_attachments = [
             vk::AttachmentDescription {
-                format: base.surface_format.format,
+                format: swapchain.surface_format.format,
                 samples: vk::SampleCountFlags::TYPE_1,
                 load_op: vk::AttachmentLoadOp::CLEAR,
                 store_op: vk::AttachmentStoreOp::STORE,
@@ -66,7 +66,7 @@ pub fn main() {
             .create_render_pass(&renderpass_create_info, None)
             .unwrap();
 
-        let framebuffers: Vec<vk::Framebuffer> = base
+        let framebuffers: Vec<vk::Framebuffer> = swapchain
             .present_image_views
             .iter()
             .map(|&present_image_view| {
@@ -74,8 +74,8 @@ pub fn main() {
                 let frame_buffer_create_info = vk::FramebufferCreateInfo::default()
                     .render_pass(renderpass)
                     .attachments(&framebuffer_attachments)
-                    .width(base.surface_resolution.width)
-                    .height(base.surface_resolution.height)
+                    .width(swapchain.surface_resolution.width)
+                    .height(swapchain.surface_resolution.height)
                     .layers(1);
 
                 base.device
@@ -272,12 +272,12 @@ pub fn main() {
         let viewports = [vk::Viewport {
             x: 0.0,
             y: 0.0,
-            width: base.surface_resolution.width as f32,
-            height: base.surface_resolution.height as f32,
+            width: swapchain.surface_resolution.width as f32,
+            height: swapchain.surface_resolution.height as f32,
             min_depth: 0.0,
             max_depth: 1.0,
         }];
-        let scissors = [base.surface_resolution.into()];
+        let scissors = [swapchain.surface_resolution.into()];
         let viewport_state_info = vk::PipelineViewportStateCreateInfo::default()
             .scissors(&scissors)
             .viewports(&viewports);
@@ -346,11 +346,11 @@ pub fn main() {
 
         let graphic_pipeline = graphics_pipelines[0];
 
-        base.render_loop(|| {
+        base.render_loop(|swapchain| {
             let (present_index, _) = base
                 .swapchain_loader
                 .acquire_next_image(
-                    base.swapchain,
+                    swapchain.swapchain,
                     std::u64::MAX,
                     base.present_complete_semaphore,
                     vk::Fence::null(),
@@ -373,7 +373,7 @@ pub fn main() {
             let render_pass_begin_info = vk::RenderPassBeginInfo::default()
                 .render_pass(renderpass)
                 .framebuffer(framebuffers[present_index as usize])
-                .render_area(base.surface_resolution.into())
+                .render_area(swapchain.surface_resolution.into())
                 .clear_values(&clear_values);
 
             record_submit_commandbuffer(
@@ -424,11 +424,11 @@ pub fn main() {
             );
             //let mut present_info_err = mem::zeroed();
             let wait_semaphors = [base.rendering_complete_semaphore];
-            let swapchains = [base.swapchain];
+            let swapchains = [swapchain];
             let image_indices = [present_index];
             let present_info = vk::PresentInfoKHR::default()
                 .wait_semaphores(&wait_semaphors) // &base.rendering_complete_semaphore)
-                .swapchains(&swapchains)
+                .swapchains(&swapchain.swapchain)
                 .image_indices(&image_indices);
 
             base.swapchain_loader
