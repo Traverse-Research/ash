@@ -1,0 +1,11 @@
+{
+    "file_format_version": "1.0.0",
+    "layer": {
+        "name": "VK_LAYER_ASH_instance_example",
+        "type": "GLOBAL",
+        "library_path": "../../target/debug/examples/libash_instance_example.so",
+        "api_version": "1.3.210",
+        "implementation_version": "1",
+        "description": "Demonstrates how to wrap instance functions"
+    }
+}

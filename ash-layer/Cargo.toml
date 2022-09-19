@@ -1,0 +1,31 @@
+[package]
+name = "ash-layer"
+version = "0.0.0-dev"
+authors = ["Marijn Suijten <marijn@traverseresearch.nl>"]
+edition = "2021"
+license = "MIT OR Apache-2.0"
+description = "Boilerplate for writing Vulkan layers in Rust"
+documentation = "https://docs.rs/ash-layer"
+repository = "https://github.com/MaikKlein/ash"
+readme = "README.md"
+keywords = ["ash", "graphics"]
+categories = ["game-engines", "graphics"]
+workspace = ".."
+rust-version = "1.59.0"
+
+[dependencies]
+ash = { path = "../ash", version = "0.37", default-features = false, features = ["debug"] }
+
+[dev-dependencies]
+once_cell = "1"
+# ash = { path = "../ash", version = "0.37", default-features = false, features = ["linked"] }
+
+[[example]]
+name = "ash-instance-example"
+path = "examples/instance.rs"
+crate-type = ["cdylib"]
+
+[[example]]
+name = "ash-device-example"
+path = "examples/device.rs"
+crate-type = ["cdylib"]
