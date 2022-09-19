@@ -176,7 +176,7 @@ unsafe extern "system" fn vkGetPhysicalDeviceProperties2(
     println!(
         "Found driver {:?} {:?} ({})",
         driver_id,
-        version_from_vulkan(properties.driver_version),
+        Version::from_vulkan(properties.driver_version),
         properties.driver_version
     );
 

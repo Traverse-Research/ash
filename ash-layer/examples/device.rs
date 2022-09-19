@@ -12,6 +12,8 @@ use ash::vk;
 use ash_layer::*;
 use once_cell::sync::Lazy;
 
+const LAYER_NAME: &[u8] = b"VK_LAYER_ASH_device_example\0";
+
 struct InstanceDispatch {
     get_instance_proc_addr: vk::PFN_vkGetInstanceProcAddr,
 }
@@ -56,6 +58,84 @@ unsafe extern "system" fn vkGetInstanceProcAddr(
     };
     eprintln!("Returning custom function for {:?}", name);
     Some(f)
+}
+
+// Must be available for Android (non-JSON)
+#[no_mangle]
+unsafe extern "system" fn vkEnumerateInstanceLayerProperties(
+    p_property_count: *mut u32,
+    p_properties: *mut vk::LayerProperties,
+) -> vk::Result {
+    // TODO: Call through?
+    *p_property_count = 1;
+
+    if !p_properties.is_null() {
+        let properties = &mut *p_properties;
+        const DESCRIPTION: &[u8] = b"Demonstrates how to wrap device functions\0";
+        properties.layer_name[..LAYER_NAME.len()]
+            .copy_from_slice(std::mem::transmute::<&[u8], &[c_char]>(LAYER_NAME));
+        properties.description[..DESCRIPTION.len()]
+            .copy_from_slice(std::mem::transmute::<&[u8], &[c_char]>(DESCRIPTION));
+        properties.implementation_version = 1;
+        properties.spec_version = Version {
+            major: 1,
+            minor: 3,
+            patch: 216,
+        }
+        .to_vulkan();
+    }
+
+    vk::Result::SUCCESS
+}
+
+// Must be available for Android (non-JSON)
+#[no_mangle]
+unsafe extern "system" fn vkEnumerateDeviceLayerProperties(
+    _physical_device: vk::PhysicalDevice,
+    p_property_count: *mut u32,
+    p_properties: *mut vk::LayerProperties,
+) -> vk::Result {
+    vkEnumerateInstanceLayerProperties(p_property_count, p_properties)
+}
+
+// Must be available for Android (non-JSON)
+#[no_mangle]
+unsafe extern "system" fn vkEnumerateInstanceExtensionProperties(
+    p_layer_name: *const c_char,
+    p_property_count: *mut u32,
+    _p_properties: *mut vk::ExtensionProperties,
+) -> vk::Result {
+    if CStr::from_ptr(p_layer_name) == CStr::from_bytes_with_nul_unchecked(LAYER_NAME) {
+        *p_property_count = 0;
+        vk::Result::SUCCESS
+    } else {
+        vk::Result::ERROR_LAYER_NOT_PRESENT
+    }
+}
+#[no_mangle]
+unsafe extern "system" fn vkEnumerateDeviceExtensionProperties(
+    _physical_device: vk::PhysicalDevice,
+    p_layer_name: *const c_char,
+    p_property_count: *mut u32,
+    p_properties: *mut vk::ExtensionProperties,
+) -> vk::Result {
+    vkEnumerateInstanceExtensionProperties(p_layer_name, p_property_count, p_properties)
+}
+#[no_mangle]
+unsafe extern "system" fn vkNegotiateLoaderLayerInterfaceVersion(
+    p_version_struct: *mut NegotiateLayerInterface,
+) {
+    let version_struct = &mut *p_version_struct;
+    assert_eq!(
+        version_struct.type_,
+        NegotiateLayerStructType::InterfaceStruct
+    );
+
+    if version_struct.loader_layer_interface_version >= 2 {
+        version_struct.pfnGetInstanceProcAddr = vkGetInstanceProcAddr;
+        version_struct.pfnGetDeviceProcAddr = vkGetDeviceProcAddr;
+        // version_struct.pfnGetPhysicalDeviceProcAddr = vkGetPhysicalDeviceProcAddr;
+    }
 }
 
 unsafe extern "system" fn vkCreateInstance(

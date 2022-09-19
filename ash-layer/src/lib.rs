@@ -7,18 +7,24 @@ pub use ash;
 use ash::vk;
 
 // TODO: Move to ash (vk) prelude - or use as replacement type?
-#[derive(Debug, PartialEq, Eq)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub struct Version {
     pub major: u32,
     pub minor: u32,
     pub patch: u32,
 }
 
-pub fn version_from_vulkan(driver_version: u32) -> Version {
-    Version {
-        major: vk::api_version_major(driver_version),
-        minor: vk::api_version_minor(driver_version),
-        patch: vk::api_version_patch(driver_version),
+impl Version {
+    pub fn from_vulkan(driver_version: u32) -> Self {
+        Self {
+            major: vk::api_version_major(driver_version),
+            minor: vk::api_version_minor(driver_version),
+            patch: vk::api_version_patch(driver_version),
+        }
+    }
+
+    pub fn to_vulkan(self) -> u32 {
+        vk::make_api_version(0, self.major, self.minor, self.patch)
     }
 }
 
@@ -106,4 +112,20 @@ pub struct LayerDeviceCreateInfo {
 
 unsafe impl vk::TaggedStructure for LayerDeviceCreateInfo {
     const STRUCTURE_TYPE: vk::StructureType = vk::StructureType::LOADER_DEVICE_CREATE_INFO;
+}
+
+#[derive(Debug, PartialEq, Eq)]
+#[repr(u32)]
+pub enum NegotiateLayerStructType {
+    Uninitialized = 0,
+    InterfaceStruct = 1,
+}
+
+pub struct NegotiateLayerInterface {
+    pub type_: NegotiateLayerStructType,
+    pub p_next: *const c_void,
+    pub loader_layer_interface_version: u32,
+    pub pfnGetInstanceProcAddr: vk::PFN_vkGetInstanceProcAddr,
+    pub pfnGetDeviceProcAddr: vk::PFN_vkGetDeviceProcAddr,
+    pub pfnGetPhysicalDeviceProcAddr: PFN_GetPhysicalDeviceProcAddr,
 }
