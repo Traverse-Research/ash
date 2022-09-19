@@ -213,8 +213,9 @@ unsafe extern "system" fn vkGetDeviceProcAddr(
     Some(f)
 }
 
-static PER_DEVICE_MEM_CONSUMPTION: Lazy<Mutex<HashMap<vk::Device, HashMap<u32, u64>>>> =
-    Lazy::new(|| Mutex::new(HashMap::new()));
+static PER_DEVICE_ALLOCATIONS: Lazy<
+    Mutex<HashMap<vk::Device, HashMap<vk::DeviceMemory, (vk::DeviceSize, u32)>>>,
+> = Lazy::new(|| Mutex::new(HashMap::new()));
 
 unsafe extern "system" fn vkAllocateMemory(
     device: vk::Device,
@@ -231,22 +232,25 @@ unsafe extern "system" fn vkAllocateMemory(
     let ret = (device_dispatch.allocate_memory)(device, p_allocate_info, p_allocator, p_memory);
 
     if ret == vk::Result::SUCCESS {
-        let mut consumption = PER_DEVICE_MEM_CONSUMPTION.lock().unwrap();
-        let device_consumption = consumption.entry(device).or_default();
-        let consumption = {
-            let consumption = device_consumption
-                .entry(allocate_info.memory_type_index)
-                .or_default();
-            *consumption += allocate_info.allocation_size;
-            *consumption
-        };
+        let mut allocations = PER_DEVICE_ALLOCATIONS.lock().unwrap();
+        let device_allocations = allocations.entry(device).or_default();
+        let prev = device_allocations.insert(
+            *p_memory,
+            (
+                allocate_info.allocation_size,
+                allocate_info.memory_type_index,
+            ),
+        );
+        debug_assert!(prev.is_none());
+
+        let total_consumption = device_allocations
+            .values()
+            .map(|(allocation_size, _)| allocation_size)
+            .sum::<vk::DeviceSize>();
 
         println!(
-            "Allocated {} bytes on memory type #{} (total {}, all {})",
-            allocate_info.allocation_size,
-            allocate_info.memory_type_index,
-            consumption,
-            device_consumption.values().sum::<u64>()
+            "Allocated {} bytes on memory type #{} (all heaps: {})",
+            allocate_info.allocation_size, allocate_info.memory_type_index, total_consumption,
         );
     }
 
@@ -262,24 +266,19 @@ unsafe extern "system" fn vkFreeMemory(
     let loader_dispatch_table = *std::mem::transmute::<_, *const usize>(device);
     let device_dispatch = device_dispatch.get(&loader_dispatch_table).unwrap();
 
-    println!("Freeing {:?}", memory);
+    (device_dispatch.free_memory)(device, memory, p_allocator);
 
-    let ret = (device_dispatch.free_memory)(device, memory, p_allocator);
+    let mut allocations = PER_DEVICE_ALLOCATIONS.lock().unwrap();
+    let device_allocations = allocations.entry(device).or_default();
+    let (allocation_size, memory_type_index) = device_allocations.remove(&memory).unwrap();
 
-    ret
+    let total_consumption = device_allocations
+        .values()
+        .map(|(allocation_size, _)| allocation_size)
+        .sum::<vk::DeviceSize>();
 
-    // TODO: Must track all pointers to know allocation size!
-    // if ret == vk::Result::SUCCESS {
-    //     let consumption = PER_DEVICE_MEM_CONSUMPTION.lock().unwrap();
-    //     let consumption = consumption.entry(device).or_default();
-    //     let consumption = consumption
-    //         .entry(allocate_info.memory_type_index)
-    //         .or_default();
-    //     *consumption += allocate_info.allocation_size;
-
-    //     println!(
-    //         "Allocated {} bytes on memory type #{} (total {})",
-    //         allocate_info.allocation_size, allocate_info.memory_type_index, *consumption
-    //     );
-    // }
+    println!(
+        "Freed {} bytes on memory type #{} (remaining {})",
+        allocation_size, memory_type_index, total_consumption
+    );
 }
