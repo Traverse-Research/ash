@@ -10,6 +10,7 @@ use std::{collections::HashMap, ffi::CStr, os::raw::c_char, sync::Mutex};
 
 use ash::vk;
 use ash_layer::*;
+use backtrace::Backtrace;
 use once_cell::sync::Lazy;
 
 const LAYER_NAME: &[u8] = b"VK_LAYER_ASH_device_example\0";
@@ -332,6 +333,9 @@ unsafe extern "system" fn vkAllocateMemory(
             "Allocated {} bytes on memory type #{} (all heaps: {})",
             allocate_info.allocation_size, allocate_info.memory_type_index, total_consumption,
         );
+
+        let bt = Backtrace::new();
+        println!("{:?}", bt);
     }
 
     ret
