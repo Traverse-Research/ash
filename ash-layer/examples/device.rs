@@ -213,6 +213,9 @@ unsafe extern "system" fn vkGetDeviceProcAddr(
     Some(f)
 }
 
+static PER_DEVICE_MEM_CONSUMPTION: Lazy<Mutex<HashMap<vk::Device, HashMap<u32, u64>>>> =
+    Lazy::new(|| Mutex::new(HashMap::new()));
+
 unsafe extern "system" fn vkAllocateMemory(
     device: vk::Device,
     p_allocate_info: *const vk::MemoryAllocateInfo,
@@ -227,10 +230,25 @@ unsafe extern "system" fn vkAllocateMemory(
 
     let ret = (device_dispatch.allocate_memory)(device, p_allocate_info, p_allocator, p_memory);
 
-    println!(
-        "Allocating {} bytes on memory type #{} = {:?}",
-        allocate_info.allocation_size, allocate_info.memory_type_index, *p_memory
-    );
+    if ret == vk::Result::SUCCESS {
+        let mut consumption = PER_DEVICE_MEM_CONSUMPTION.lock().unwrap();
+        let device_consumption = consumption.entry(device).or_default();
+        let consumption = {
+            let consumption = device_consumption
+                .entry(allocate_info.memory_type_index)
+                .or_default();
+            *consumption += allocate_info.allocation_size;
+            *consumption
+        };
+
+        println!(
+            "Allocated {} bytes on memory type #{} (total {}, all {})",
+            allocate_info.allocation_size,
+            allocate_info.memory_type_index,
+            consumption,
+            device_consumption.values().sum::<u64>()
+        );
+    }
 
     ret
 }
@@ -246,5 +264,22 @@ unsafe extern "system" fn vkFreeMemory(
 
     println!("Freeing {:?}", memory);
 
-    (device_dispatch.free_memory)(device, memory, p_allocator)
+    let ret = (device_dispatch.free_memory)(device, memory, p_allocator);
+
+    ret
+
+    // TODO: Must track all pointers to know allocation size!
+    // if ret == vk::Result::SUCCESS {
+    //     let consumption = PER_DEVICE_MEM_CONSUMPTION.lock().unwrap();
+    //     let consumption = consumption.entry(device).or_default();
+    //     let consumption = consumption
+    //         .entry(allocate_info.memory_type_index)
+    //         .or_default();
+    //     *consumption += allocate_info.allocation_size;
+
+    //     println!(
+    //         "Allocated {} bytes on memory type #{} (total {})",
+    //         allocate_info.allocation_size, allocate_info.memory_type_index, *consumption
+    //     );
+    // }
 }
