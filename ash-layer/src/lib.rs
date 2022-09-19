@@ -6,13 +6,6 @@ use std::{ffi::c_void, os::raw::c_char};
 pub use ash;
 use ash::vk;
 
-pub struct InstanceDispatch {
-    pub get_instance_proc_addr: vk::PFN_vkGetInstanceProcAddr,
-    pub create_instance: vk::PFN_vkCreateInstance,
-    pub get_physical_device_properties: vk::PFN_vkGetPhysicalDeviceProperties,
-    pub get_physical_device_properties2: vk::PFN_vkGetPhysicalDeviceProperties2,
-}
-
 // TODO: Move to ash (vk) prelude - or use as replacement type?
 #[derive(Debug, PartialEq, Eq)]
 pub struct Version {
@@ -70,6 +63,7 @@ impl std::fmt::Debug for LayerInstanceCreateInfo_u {
 pub struct LayerInstanceCreateInfo {
     pub s_type: vk::StructureType,
     pub p_next: *const c_void,
+    // TODO: Wrap in safe enum?
     pub function: LayerFunction,
     pub u: LayerInstanceCreateInfo_u,
 }
@@ -78,13 +72,38 @@ unsafe impl vk::TaggedStructure for LayerInstanceCreateInfo {
     const STRUCTURE_TYPE: vk::StructureType = vk::StructureType::LOADER_INSTANCE_CREATE_INFO;
 }
 
-// /// Entrypoint for the ICD
-// #[no_mangle]
-// unsafe extern "system" fn vkGetInstanceProcAddr(
-//     instance: vk::Instance,
-//     p_name: *const c_char,
-// ) -> vk::PFN_vkVoidFunction {
-//     let name = CStr::from_ptr(p_name);
+#[repr(C)]
+// #[derive(Debug)]
+pub struct LayerDeviceLink {
+    pub p_next: *mut LayerDeviceLink,
+    pub pfnNextGetInstanceProcAddr: vk::PFN_vkGetInstanceProcAddr,
+    pub pfnNextGetDeviceProcAddr: vk::PFN_vkGetDeviceProcAddr,
+}
 
-//     // TODO: Make this a helper wrapper function?
-// }
+#[repr(C)]
+pub union LayerDeviceCreateInfo_u {
+    pub layer_info: *mut LayerDeviceLink,
+    pub pfnSetDeviceLoaderData: PFN_vkSetDeviceLoaderData,
+}
+
+impl std::fmt::Debug for LayerDeviceCreateInfo_u {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        f.debug_struct("LayerDeviceCreateInfo_u")
+            // .field("layer_info", &*self.layer_info)
+            .finish()
+    }
+}
+
+#[repr(C)]
+#[derive(Debug)]
+pub struct LayerDeviceCreateInfo {
+    pub s_type: vk::StructureType,
+    pub p_next: *const c_void,
+    // TODO: Wrap in safe enum?
+    pub function: LayerFunction,
+    pub u: LayerDeviceCreateInfo_u,
+}
+
+unsafe impl vk::TaggedStructure for LayerDeviceCreateInfo {
+    const STRUCTURE_TYPE: vk::StructureType = vk::StructureType::LOADER_DEVICE_CREATE_INFO;
+}

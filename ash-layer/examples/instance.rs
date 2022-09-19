@@ -1,4 +1,9 @@
 //! Demonstrates how to wrap instance functions
+//!
+//! ```sh
+//! cargo b -p ash-layer --example ash-instance-example
+//! VK_LAYER_PATH=/usr/share/vulkan/explicit_layer.d/:$(realpath ../ash/ash-layer/examples/) VK_INSTANCE_LAYERS=VK_LAYER_ASH_instance_example your-application
+//! ```
 #![allow(non_camel_case_types, non_snake_case)]
 
 use std::{collections::HashMap, ffi::CStr, os::raw::c_char, sync::Mutex};
@@ -7,10 +12,16 @@ use ash::vk;
 use ash_layer::*;
 use once_cell::sync::Lazy;
 
+struct InstanceDispatch {
+    get_instance_proc_addr: vk::PFN_vkGetInstanceProcAddr,
+    get_physical_device_properties: vk::PFN_vkGetPhysicalDeviceProperties,
+    get_physical_device_properties2: vk::PFN_vkGetPhysicalDeviceProperties2,
+}
+
 // TODO: RWLock for concurrent reading
 /// Maps Vulkan dispatch-table pointers (first value in a handle) to stored instance table.
 /// See `Object Wrapping` under <https://renderdoc.org/vulkan-layer-guide.html>.
-static INSTANCE_DISPATCH: Lazy<Mutex<HashMap<u64, InstanceDispatch>>> =
+static INSTANCE_DISPATCH: Lazy<Mutex<HashMap<usize, InstanceDispatch>>> =
     Lazy::new(|| Mutex::new(HashMap::new()));
 
 /// Entrypoint for the ICD
@@ -22,6 +33,8 @@ unsafe extern "system" fn vkGetInstanceProcAddr(
     let name = CStr::from_ptr(p_name);
     // Example replacement functions
     let f = match name.to_str().unwrap() {
+        // Using `as` casts to aid "type safety" for function signatures
+        // TODO: Do this in a macro or something when providing better wrapper-helpers
         "vkCreateInstance" => std::mem::transmute(vkCreateInstance as vk::PFN_vkCreateInstance),
         "vkGetPhysicalDeviceProperties" => std::mem::transmute(
             vkGetPhysicalDeviceProperties as vk::PFN_vkGetPhysicalDeviceProperties,
@@ -33,8 +46,10 @@ unsafe extern "system" fn vkGetInstanceProcAddr(
         }
         _ => {
             let instance_dispatch = INSTANCE_DISPATCH.lock().unwrap();
-            let loader_dispatch_table = *std::mem::transmute::<_, *const u64>(instance);
-            let instance_dispatch = instance_dispatch.get(&loader_dispatch_table).unwrap();
+            let loader_dispatch_table = *std::mem::transmute::<_, *const usize>(instance);
+            let instance_dispatch = instance_dispatch
+                .get(&loader_dispatch_table)
+                .expect("vkCreateInstance was not yet called");
             return (instance_dispatch.get_instance_proc_addr)(instance, p_name);
         }
     };
@@ -88,7 +103,7 @@ unsafe extern "system" fn vkCreateInstance(
 
     let ret = (create_instance)(p_create_info, p_allocator, p_instance);
 
-    let loader_dispatch_table = *std::mem::transmute::<_, *const u64>(*p_instance);
+    let loader_dispatch_table = *std::mem::transmute::<_, *const usize>(*p_instance);
 
     let mut instance_dispatch = INSTANCE_DISPATCH.lock().unwrap();
     instance_dispatch.insert(
@@ -100,7 +115,6 @@ unsafe extern "system" fn vkCreateInstance(
             //     b"vkGetInstanceProcAddr\0",
             // )),
             get_instance_proc_addr: layer_info.pfnNextGetInstanceProcAddr,
-            create_instance,
             get_physical_device_properties: std::mem::transmute(get_function(
                 layer_info,
                 *p_instance,
@@ -122,7 +136,7 @@ unsafe extern "system" fn vkGetPhysicalDeviceProperties(
     p_properties: *mut vk::PhysicalDeviceProperties,
 ) {
     let instance_dispatch = INSTANCE_DISPATCH.lock().unwrap();
-    let loader_dispatch_table = *std::mem::transmute::<_, *const u64>(physical_device);
+    let loader_dispatch_table = *std::mem::transmute::<_, *const usize>(physical_device);
     let instance_dispatch = instance_dispatch.get(&loader_dispatch_table).unwrap();
 
     (instance_dispatch.get_physical_device_properties)(physical_device, p_properties);
@@ -136,7 +150,7 @@ unsafe extern "system" fn vkGetPhysicalDeviceProperties2(
     p_properties2: *mut vk::PhysicalDeviceProperties2,
 ) {
     let instance_dispatch = INSTANCE_DISPATCH.lock().unwrap();
-    let loader_dispatch_table = *std::mem::transmute::<_, *const u64>(physical_device);
+    let loader_dispatch_table = *std::mem::transmute::<_, *const usize>(physical_device);
     let instance_dispatch = instance_dispatch.get(&loader_dispatch_table).unwrap();
 
     (instance_dispatch.get_physical_device_properties2)(physical_device, p_properties2);
