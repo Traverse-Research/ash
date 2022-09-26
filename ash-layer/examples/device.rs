@@ -113,31 +113,6 @@ unsafe extern "system" fn vkEnumerateInstanceExtensionProperties(
         vk::Result::ERROR_LAYER_NOT_PRESENT
     }
 }
-#[no_mangle]
-unsafe extern "system" fn vkEnumerateDeviceExtensionProperties(
-    _physical_device: vk::PhysicalDevice,
-    p_layer_name: *const c_char,
-    p_property_count: *mut u32,
-    p_properties: *mut vk::ExtensionProperties,
-) -> vk::Result {
-    vkEnumerateInstanceExtensionProperties(p_layer_name, p_property_count, p_properties)
-}
-#[no_mangle]
-unsafe extern "system" fn vkNegotiateLoaderLayerInterfaceVersion(
-    p_version_struct: *mut NegotiateLayerInterface,
-) {
-    let version_struct = &mut *p_version_struct;
-    assert_eq!(
-        version_struct.type_,
-        NegotiateLayerStructType::InterfaceStruct
-    );
-
-    if version_struct.loader_layer_interface_version >= 2 {
-        version_struct.pfnGetInstanceProcAddr = vkGetInstanceProcAddr;
-        version_struct.pfnGetDeviceProcAddr = vkGetDeviceProcAddr;
-        // version_struct.pfnGetPhysicalDeviceProcAddr = vkGetPhysicalDeviceProcAddr;
-    }
-}
 
 unsafe extern "system" fn vkCreateInstance(
     p_create_info: *const vk::InstanceCreateInfo,
