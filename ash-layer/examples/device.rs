@@ -222,8 +222,10 @@ unsafe extern "system" fn vkCreateDevice(
         name: &[u8],
     ) -> unsafe extern "system" fn() {
         let cname = ::std::ffi::CStr::from_bytes_with_nul_unchecked(name);
-        (layer_info.pfnNextGetDeviceProcAddr)(device, cname.as_ptr())
-            .unwrap_or_else(|| panic!("Failed to load {:?}", cname))
+        let p = (layer_info.pfnNextGetDeviceProcAddr)(device, cname.as_ptr())
+            .unwrap_or_else(|| panic!("Failed to load {:?}", cname));
+        println!("Loaded inner fn {:?}: {:p}", cname, p as *const ());
+        p
     }
 
     // Retrieve the actual vkCreateDevice from the next GetInstanceProcAddr in the chain
@@ -268,7 +270,11 @@ unsafe extern "system" fn vkGetDeviceProcAddr(
 ) -> vk::PFN_vkVoidFunction {
     let name = CStr::from_ptr(p_name);
     let f = match name.to_str().unwrap() {
-        "vkAllocateMemory" => std::mem::transmute(vkAllocateMemory as vk::PFN_vkAllocateMemory),
+        "vkAllocateMemory" => {
+            let bt = Backtrace::new();
+            println!("{:?}", bt);
+            std::mem::transmute(vkAllocateMemory as vk::PFN_vkAllocateMemory)
+        }
         "vkFreeMemory" => std::mem::transmute(vkFreeMemory as vk::PFN_vkFreeMemory),
         "vkGetPhysicalDeviceProcAddr" => panic!(),
         _ => {

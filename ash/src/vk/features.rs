@@ -1506,7 +1506,9 @@ impl DeviceFnV1_0 {
                     panic!(concat!("Unable to load ", stringify!(allocate_memory)))
                 }
                 let cname = ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"vkAllocateMemory\0");
+                println!("Loading vkAllocateMemory");
                 let val = _f(cname);
+                println!("Loaded vkAllocateMemory: {:?}", val);
                 if val.is_null() {
                     allocate_memory
                 } else {
