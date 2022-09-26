@@ -48,6 +48,7 @@ unsafe extern "system" fn vkGetInstanceProcAddr(
         }
         "vkCreateDevice" => std::mem::transmute(vkCreateDevice as vk::PFN_vkCreateDevice),
         "vkAllocateMemory" | "vkFreeMemory" => panic!("Use device-optimized loader for this"),
+        "vkGetPhysicalDeviceProcAddr" => panic!(),
         _ => {
             let instance_dispatch = INSTANCE_DISPATCH.lock().unwrap();
             let loader_dispatch_table = *std::mem::transmute::<_, *const usize>(instance);
@@ -57,8 +58,19 @@ unsafe extern "system" fn vkGetInstanceProcAddr(
             return (instance_dispatch.get_instance_proc_addr)(instance, p_name);
         }
     };
-    eprintln!("Returning custom function for {:?}", name);
+    eprintln!(
+        "Returning custom function for {:?}: {:p}",
+        name, f as *const ()
+    );
     Some(f)
+}
+
+#[no_mangle]
+unsafe extern "system" fn vkGetPhysicalDeviceProcAddr(
+    physical_device: vk::PhysicalDevice,
+    p_name: *const c_char,
+) -> vk::PFN_vkVoidFunction {
+    panic!("{:?}", physical_device)
 }
 
 // Must be available for Android (non-JSON)
@@ -258,6 +270,7 @@ unsafe extern "system" fn vkGetDeviceProcAddr(
     let f = match name.to_str().unwrap() {
         "vkAllocateMemory" => std::mem::transmute(vkAllocateMemory as vk::PFN_vkAllocateMemory),
         "vkFreeMemory" => std::mem::transmute(vkFreeMemory as vk::PFN_vkFreeMemory),
+        "vkGetPhysicalDeviceProcAddr" => panic!(),
         _ => {
             let device_dispatch = DEVICE_DISPATCH.lock().unwrap();
             let loader_dispatch_table = *std::mem::transmute::<_, *const usize>(device);
@@ -265,7 +278,10 @@ unsafe extern "system" fn vkGetDeviceProcAddr(
             return (device_dispatch.get_device_proc_addr)(device, p_name);
         }
     };
-    eprintln!("Returning custom DEVICE function for {:?}", name);
+    eprintln!(
+        "Returning custom DEVICE ({:?}) function for {:?}: {:p}",
+        device, name, f as *const ()
+    );
     Some(f)
 }
 
