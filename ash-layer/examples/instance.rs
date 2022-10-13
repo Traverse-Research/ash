@@ -1,7 +1,7 @@
 //! Demonstrates how to wrap instance functions
 //!
 //! ```sh
-//! cargo b -p ash-layer --example ash-instance-example
+//! cargo b -p ash-layer --example VkLayer_ASH_instance_example
 //! VK_LAYER_PATH=/usr/share/vulkan/explicit_layer.d/:$(realpath ../ash/ash-layer/examples/) VK_INSTANCE_LAYERS=VK_LAYER_ASH_instance_example your-application
 //! ```
 #![allow(non_camel_case_types, non_snake_case)]

@@ -21,6 +21,10 @@ backtrace = "0.3"
 once_cell = "1"
 # ash = { path = "../ash", version = "0.37", default-features = false, features = ["linked"] }
 
+# Warning: Libraries must follow this naming scheme, or they won't be picked up by loaders
+# (e.g. on Android) where json is not used but the layer is instead introspected through
+# vkEnumerate*(Layer)Properties.
+
 [[example]]
 name = "VkLayer_ASH_instance_example"
 path = "examples/instance.rs"
