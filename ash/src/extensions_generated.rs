@@ -1028,6 +1028,14 @@ pub mod arm {
             crate::vk::ARM_SHADER_CORE_BUILTINS_SPEC_VERSION as SPEC_VERSION,
         };
     }
+    #[doc = "VK_ARM_pipeline_opacity_micromap"]
+    pub mod pipeline_opacity_micromap {
+        use super::super::*;
+        pub use {
+            crate::vk::ARM_PIPELINE_OPACITY_MICROMAP_NAME as NAME,
+            crate::vk::ARM_PIPELINE_OPACITY_MICROMAP_SPEC_VERSION as SPEC_VERSION,
+        };
+    }
 }
 #[doc = "Extensions tagged EXT"]
 pub mod ext {
@@ -17589,6 +17597,22 @@ pub mod khr {
         pub use {
             crate::vk::KHR_MAINTENANCE7_NAME as NAME,
             crate::vk::KHR_MAINTENANCE7_SPEC_VERSION as SPEC_VERSION,
+        };
+    }
+    #[doc = "VK_KHR_maintenance8"]
+    pub mod maintenance8 {
+        use super::super::*;
+        pub use {
+            crate::vk::KHR_MAINTENANCE8_NAME as NAME,
+            crate::vk::KHR_MAINTENANCE8_SPEC_VERSION as SPEC_VERSION,
+        };
+    }
+    #[doc = "VK_KHR_depth_clamp_zero_one"]
+    pub mod depth_clamp_zero_one {
+        use super::super::*;
+        pub use {
+            crate::vk::KHR_DEPTH_CLAMP_ZERO_ONE_NAME as NAME,
+            crate::vk::KHR_DEPTH_CLAMP_ZERO_ONE_SPEC_VERSION as SPEC_VERSION,
         };
     }
 }

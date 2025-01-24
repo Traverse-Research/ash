@@ -1723,3 +1723,11 @@ impl MemoryUnmapFlags {}
 pub struct WaylandSurfaceCreateFlagsKHR(pub(crate) Flags);
 vk_bitflags_wrapped!(WaylandSurfaceCreateFlagsKHR, Flags);
 impl WaylandSurfaceCreateFlagsKHR {}
+#[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkAccessFlagBits3KHR.html>"]
+pub struct AccessFlags3KHR(pub(crate) Flags64);
+vk_bitflags_wrapped!(AccessFlags3KHR, Flags64);
+impl AccessFlags3KHR {
+    pub const NONE: Self = Self(0);
+}

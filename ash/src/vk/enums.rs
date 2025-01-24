@@ -1894,8 +1894,8 @@ impl DriverId {
     pub const IMAGINATION_OPEN_SOURCE_MESA: Self = Self(25);
     #[doc = "Mesa open source project"]
     pub const MESA_HONEYKRISP: Self = Self(26);
-    #[doc = "Reserved for undisclosed driver project"]
-    pub const RESERVED_27: Self = Self(27);
+    #[doc = "Vulkan SC Emulation on Vulkan"]
+    pub const VULKAN_SC_EMULATION_ON_VULKAN: Self = Self(27);
 }
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]

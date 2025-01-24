@@ -3524,7 +3524,8 @@ impl StructureType {
 }
 #[doc = "Generated from 'VK_EXT_depth_clamp_zero_one'"]
 impl StructureType {
-    pub const PHYSICAL_DEVICE_DEPTH_CLAMP_ZERO_ONE_FEATURES_EXT: Self = Self(1_000_421_000);
+    pub const PHYSICAL_DEVICE_DEPTH_CLAMP_ZERO_ONE_FEATURES_EXT: Self =
+        Self::PHYSICAL_DEVICE_DEPTH_CLAMP_ZERO_ONE_FEATURES_KHR;
 }
 #[doc = "Generated from 'VK_EXT_non_seamless_cube_map'"]
 impl SamplerCreateFlags {
@@ -3876,6 +3877,8 @@ impl PipelineCreateFlags2 {
     pub const RAY_TRACING_DISPLACEMENT_MICROMAP_NV: Self =
         Self(0b1_0000_0000_0000_0000_0000_0000_0000);
     pub const DESCRIPTOR_BUFFER_EXT: Self = Self(0b10_0000_0000_0000_0000_0000_0000_0000);
+    pub const DISALLOW_OPACITY_MICROMAP_ARM: Self =
+        Self(0b10_0000_0000_0000_0000_0000_0000_0000_0000_0000);
 }
 #[doc = "Generated from 'VK_KHR_maintenance5'"]
 impl StructureType {
@@ -4392,6 +4395,19 @@ impl StructureType {
     pub const GENERATED_COMMANDS_PIPELINE_INFO_EXT: Self = Self(1_000_572_013);
     pub const GENERATED_COMMANDS_SHADER_INFO_EXT: Self = Self(1_000_572_014);
 }
+#[doc = "Generated from 'VK_KHR_maintenance8'"]
+impl DependencyFlags {
+    pub const QUEUE_FAMILY_OWNERSHIP_TRANSFER_USE_ALL_STAGES_KHR: Self = Self(0b10_0000);
+}
+#[doc = "Generated from 'VK_KHR_maintenance8'"]
+impl PipelineCacheCreateFlags {
+    pub const INTERNALLY_SYNCHRONIZED_MERGE_KHR: Self = Self(0b1000);
+}
+#[doc = "Generated from 'VK_KHR_maintenance8'"]
+impl StructureType {
+    pub const PHYSICAL_DEVICE_MAINTENANCE_8_FEATURES_KHR: Self = Self(1_000_574_000);
+    pub const MEMORY_BARRIER_ACCESS_FLAGS_3_KHR: Self = Self(1_000_574_002);
+}
 #[doc = "Generated from 'VK_MESA_image_alignment_control'"]
 impl StructureType {
     pub const PHYSICAL_DEVICE_IMAGE_ALIGNMENT_CONTROL_FEATURES_MESA: Self = Self(1_000_575_000);
@@ -4417,6 +4433,14 @@ impl StructureType {
     pub const PHYSICAL_DEVICE_COOPERATIVE_MATRIX_2_FEATURES_NV: Self = Self(1_000_593_000);
     pub const COOPERATIVE_MATRIX_FLEXIBLE_DIMENSIONS_PROPERTIES_NV: Self = Self(1_000_593_001);
     pub const PHYSICAL_DEVICE_COOPERATIVE_MATRIX_2_PROPERTIES_NV: Self = Self(1_000_593_002);
+}
+#[doc = "Generated from 'VK_ARM_pipeline_opacity_micromap'"]
+impl StructureType {
+    pub const PHYSICAL_DEVICE_PIPELINE_OPACITY_MICROMAP_FEATURES_ARM: Self = Self(1_000_596_000);
+}
+#[doc = "Generated from 'VK_KHR_depth_clamp_zero_one'"]
+impl StructureType {
+    pub const PHYSICAL_DEVICE_DEPTH_CLAMP_ZERO_ONE_FEATURES_KHR: Self = Self(1_000_421_000);
 }
 #[doc = "Generated from 'VK_EXT_vertex_attribute_robustness'"]
 impl StructureType {
@@ -8499,6 +8523,9 @@ pub type PFN_vkUpdateIndirectExecutionSetShaderEXT = unsafe extern "system" fn(
     execution_set_write_count: u32,
     p_execution_set_writes: *const WriteIndirectExecutionSetShaderEXT<'_>,
 );
+pub const KHR_MAINTENANCE8_NAME: &CStr =
+    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_KHR_maintenance8\0") };
+pub const KHR_MAINTENANCE8_SPEC_VERSION: u32 = 1u32;
 pub const MESA_IMAGE_ALIGNMENT_CONTROL_NAME: &CStr =
     unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_MESA_image_alignment_control\0") };
 pub const MESA_IMAGE_ALIGNMENT_CONTROL_SPEC_VERSION: u32 = 1u32;
@@ -8518,6 +8545,12 @@ pub type PFN_vkGetPhysicalDeviceCooperativeMatrixFlexibleDimensionsPropertiesNV 
         p_property_count: *mut u32,
         p_properties: *mut CooperativeMatrixFlexibleDimensionsPropertiesNV<'_>,
     ) -> Result;
+pub const ARM_PIPELINE_OPACITY_MICROMAP_NAME: &CStr =
+    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_ARM_pipeline_opacity_micromap\0") };
+pub const ARM_PIPELINE_OPACITY_MICROMAP_SPEC_VERSION: u32 = 1u32;
+pub const KHR_DEPTH_CLAMP_ZERO_ONE_NAME: &CStr =
+    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_KHR_depth_clamp_zero_one\0") };
+pub const KHR_DEPTH_CLAMP_ZERO_ONE_SPEC_VERSION: u32 = 1u32;
 pub const EXT_VERTEX_ATTRIBUTE_ROBUSTNESS_NAME: &CStr =
     unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_vertex_attribute_robustness\0") };
 pub const EXT_VERTEX_ATTRIBUTE_ROBUSTNESS_SPEC_VERSION: u32 = 1u32;

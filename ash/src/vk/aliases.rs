@@ -343,6 +343,8 @@ pub type PhysicalDevicePipelineRobustnessFeaturesEXT<'a> =
 pub type PipelineRobustnessCreateInfoEXT<'a> = PipelineRobustnessCreateInfo<'a>;
 pub type PhysicalDevicePipelineRobustnessPropertiesEXT<'a> =
     PhysicalDevicePipelineRobustnessProperties<'a>;
+pub type PhysicalDeviceDepthClampZeroOneFeaturesEXT<'a> =
+    PhysicalDeviceDepthClampZeroOneFeaturesKHR<'a>;
 pub type DeviceImageSubresourceInfoKHR<'a> = DeviceImageSubresourceInfo<'a>;
 pub type MemoryMapInfoKHR<'a> = MemoryMapInfo<'a>;
 pub type MemoryUnmapInfoKHR<'a> = MemoryUnmapInfo<'a>;

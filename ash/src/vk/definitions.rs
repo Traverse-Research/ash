@@ -60,7 +60,7 @@ pub const API_VERSION_1_3: u32 = make_api_version(0, 1, 3, 0);
 #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_API_VERSION_1_4.html>"]
 pub const API_VERSION_1_4: u32 = make_api_version(0, 1, 4, 0);
 #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_HEADER_VERSION.html>"]
-pub const HEADER_VERSION: u32 = 303;
+pub const HEADER_VERSION: u32 = 305;
 #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_HEADER_VERSION_COMPLETE.html>"]
 pub const HEADER_VERSION_COMPLETE: u32 = make_api_version(0, 1, 4, HEADER_VERSION);
 #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkSampleMask.html>"]
@@ -19581,6 +19581,42 @@ impl<'a> PhysicalDeviceLayeredApiVulkanPropertiesKHR<'a> {
     #[inline]
     pub fn properties(mut self, properties: PhysicalDeviceProperties2<'a>) -> Self {
         self.properties = properties;
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceMaintenance8FeaturesKHR.html>"]
+#[must_use]
+pub struct PhysicalDeviceMaintenance8FeaturesKHR<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub maintenance8: Bool32,
+    pub _marker: PhantomData<&'a ()>,
+}
+unsafe impl Send for PhysicalDeviceMaintenance8FeaturesKHR<'_> {}
+unsafe impl Sync for PhysicalDeviceMaintenance8FeaturesKHR<'_> {}
+impl ::core::default::Default for PhysicalDeviceMaintenance8FeaturesKHR<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::core::ptr::null_mut(),
+            maintenance8: Bool32::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for PhysicalDeviceMaintenance8FeaturesKHR<'a> {
+    const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_MAINTENANCE_8_FEATURES_KHR;
+}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceMaintenance8FeaturesKHR<'_> {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceMaintenance8FeaturesKHR<'_> {}
+impl<'a> PhysicalDeviceMaintenance8FeaturesKHR<'a> {
+    #[inline]
+    pub fn maintenance8(mut self, maintenance8: bool) -> Self {
+        self.maintenance8 = maintenance8.into();
         self
     }
 }
@@ -40565,6 +40601,7 @@ unsafe impl<'a> TaggedStructure for MemoryBarrier2<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::MEMORY_BARRIER_2;
 }
 unsafe impl ExtendsSubpassDependency2 for MemoryBarrier2<'_> {}
+pub unsafe trait ExtendsMemoryBarrier2 {}
 impl<'a> MemoryBarrier2<'a> {
     #[inline]
     pub fn src_stage_mask(mut self, src_stage_mask: PipelineStageFlags2) -> Self {
@@ -40584,6 +40621,20 @@ impl<'a> MemoryBarrier2<'a> {
     #[inline]
     pub fn dst_access_mask(mut self, dst_access_mask: AccessFlags2) -> Self {
         self.dst_access_mask = dst_access_mask;
+        self
+    }
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
+    #[doc = r" chain will look like `A -> D -> B -> C`."]
+    pub fn push_next<T: ExtendsMemoryBarrier2 + ?Sized>(mut self, next: &'a mut T) -> Self {
+        unsafe {
+            let next_ptr = <*const T>::cast(next);
+            let last_next = ptr_chain_iter(next).last().unwrap();
+            (*last_next).p_next = self.p_next as _;
+            self.p_next = next_ptr;
+        }
         self
     }
 }
@@ -40801,6 +40852,50 @@ impl<'a> BufferMemoryBarrier2<'a> {
             (*last_next).p_next = self.p_next as _;
             self.p_next = next_ptr;
         }
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkMemoryBarrierAccessFlags3KHR.html>"]
+#[must_use]
+pub struct MemoryBarrierAccessFlags3KHR<'a> {
+    pub s_type: StructureType,
+    pub p_next: *const c_void,
+    pub src_access_mask3: AccessFlags3KHR,
+    pub dst_access_mask3: AccessFlags3KHR,
+    pub _marker: PhantomData<&'a ()>,
+}
+unsafe impl Send for MemoryBarrierAccessFlags3KHR<'_> {}
+unsafe impl Sync for MemoryBarrierAccessFlags3KHR<'_> {}
+impl ::core::default::Default for MemoryBarrierAccessFlags3KHR<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::core::ptr::null(),
+            src_access_mask3: AccessFlags3KHR::default(),
+            dst_access_mask3: AccessFlags3KHR::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for MemoryBarrierAccessFlags3KHR<'a> {
+    const STRUCTURE_TYPE: StructureType = StructureType::MEMORY_BARRIER_ACCESS_FLAGS_3_KHR;
+}
+unsafe impl ExtendsMemoryBarrier2 for MemoryBarrierAccessFlags3KHR<'_> {}
+unsafe impl ExtendsBufferMemoryBarrier2 for MemoryBarrierAccessFlags3KHR<'_> {}
+unsafe impl ExtendsImageMemoryBarrier2 for MemoryBarrierAccessFlags3KHR<'_> {}
+impl<'a> MemoryBarrierAccessFlags3KHR<'a> {
+    #[inline]
+    pub fn src_access_mask3(mut self, src_access_mask3: AccessFlags3KHR) -> Self {
+        self.src_access_mask3 = src_access_mask3;
+        self
+    }
+    #[inline]
+    pub fn dst_access_mask3(mut self, dst_access_mask3: AccessFlags3KHR) -> Self {
+        self.dst_access_mask3 = dst_access_mask3;
         self
     }
 }
@@ -55470,43 +55565,6 @@ impl<'a> PhysicalDeviceAttachmentFeedbackLoopLayoutFeaturesEXT<'a> {
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
-#[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceDepthClampZeroOneFeaturesEXT.html>"]
-#[must_use]
-pub struct PhysicalDeviceDepthClampZeroOneFeaturesEXT<'a> {
-    pub s_type: StructureType,
-    pub p_next: *mut c_void,
-    pub depth_clamp_zero_one: Bool32,
-    pub _marker: PhantomData<&'a ()>,
-}
-unsafe impl Send for PhysicalDeviceDepthClampZeroOneFeaturesEXT<'_> {}
-unsafe impl Sync for PhysicalDeviceDepthClampZeroOneFeaturesEXT<'_> {}
-impl ::core::default::Default for PhysicalDeviceDepthClampZeroOneFeaturesEXT<'_> {
-    #[inline]
-    fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            depth_clamp_zero_one: Bool32::default(),
-            _marker: PhantomData,
-        }
-    }
-}
-unsafe impl<'a> TaggedStructure for PhysicalDeviceDepthClampZeroOneFeaturesEXT<'a> {
-    const STRUCTURE_TYPE: StructureType =
-        StructureType::PHYSICAL_DEVICE_DEPTH_CLAMP_ZERO_ONE_FEATURES_EXT;
-}
-unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceDepthClampZeroOneFeaturesEXT<'_> {}
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceDepthClampZeroOneFeaturesEXT<'_> {}
-impl<'a> PhysicalDeviceDepthClampZeroOneFeaturesEXT<'a> {
-    #[inline]
-    pub fn depth_clamp_zero_one(mut self, depth_clamp_zero_one: bool) -> Self {
-        self.depth_clamp_zero_one = depth_clamp_zero_one.into();
-        self
-    }
-}
-#[repr(C)]
-#[cfg_attr(feature = "debug", derive(Debug))]
-#[derive(Copy, Clone)]
 #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceAddressBindingReportFeaturesEXT.html>"]
 #[must_use]
 pub struct PhysicalDeviceAddressBindingReportFeaturesEXT<'a> {
@@ -61207,6 +61265,46 @@ impl<'a> RenderPassStripeSubmitInfoARM<'a> {
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
+#[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkPhysicalDevicePipelineOpacityMicromapFeaturesARM.html>"]
+#[must_use]
+pub struct PhysicalDevicePipelineOpacityMicromapFeaturesARM<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub pipeline_opacity_micromap: Bool32,
+    pub _marker: PhantomData<&'a ()>,
+}
+unsafe impl Send for PhysicalDevicePipelineOpacityMicromapFeaturesARM<'_> {}
+unsafe impl Sync for PhysicalDevicePipelineOpacityMicromapFeaturesARM<'_> {}
+impl ::core::default::Default for PhysicalDevicePipelineOpacityMicromapFeaturesARM<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::core::ptr::null_mut(),
+            pipeline_opacity_micromap: Bool32::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for PhysicalDevicePipelineOpacityMicromapFeaturesARM<'a> {
+    const STRUCTURE_TYPE: StructureType =
+        StructureType::PHYSICAL_DEVICE_PIPELINE_OPACITY_MICROMAP_FEATURES_ARM;
+}
+unsafe impl ExtendsPhysicalDeviceFeatures2
+    for PhysicalDevicePipelineOpacityMicromapFeaturesARM<'_>
+{
+}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDevicePipelineOpacityMicromapFeaturesARM<'_> {}
+impl<'a> PhysicalDevicePipelineOpacityMicromapFeaturesARM<'a> {
+    #[inline]
+    pub fn pipeline_opacity_micromap(mut self, pipeline_opacity_micromap: bool) -> Self {
+        self.pipeline_opacity_micromap = pipeline_opacity_micromap.into();
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
 #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceShaderMaximalReconvergenceFeaturesKHR.html>"]
 #[must_use]
 pub struct PhysicalDeviceShaderMaximalReconvergenceFeaturesKHR<'a> {
@@ -62316,6 +62414,43 @@ impl<'a> PhysicalDeviceVertexAttributeRobustnessFeaturesEXT<'a> {
     #[inline]
     pub fn vertex_attribute_robustness(mut self, vertex_attribute_robustness: bool) -> Self {
         self.vertex_attribute_robustness = vertex_attribute_robustness.into();
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceDepthClampZeroOneFeaturesKHR.html>"]
+#[must_use]
+pub struct PhysicalDeviceDepthClampZeroOneFeaturesKHR<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub depth_clamp_zero_one: Bool32,
+    pub _marker: PhantomData<&'a ()>,
+}
+unsafe impl Send for PhysicalDeviceDepthClampZeroOneFeaturesKHR<'_> {}
+unsafe impl Sync for PhysicalDeviceDepthClampZeroOneFeaturesKHR<'_> {}
+impl ::core::default::Default for PhysicalDeviceDepthClampZeroOneFeaturesKHR<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::core::ptr::null_mut(),
+            depth_clamp_zero_one: Bool32::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for PhysicalDeviceDepthClampZeroOneFeaturesKHR<'a> {
+    const STRUCTURE_TYPE: StructureType =
+        StructureType::PHYSICAL_DEVICE_DEPTH_CLAMP_ZERO_ONE_FEATURES_KHR;
+}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceDepthClampZeroOneFeaturesKHR<'_> {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceDepthClampZeroOneFeaturesKHR<'_> {}
+impl<'a> PhysicalDeviceDepthClampZeroOneFeaturesKHR<'a> {
+    #[inline]
+    pub fn depth_clamp_zero_one(mut self, depth_clamp_zero_one: bool) -> Self {
+        self.depth_clamp_zero_one = depth_clamp_zero_one.into();
         self
     }
 }

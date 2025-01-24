@@ -326,6 +326,12 @@ impl fmt::Debug for AccessFlags2 {
         debug_flags(f, KNOWN, self.0)
     }
 }
+impl fmt::Debug for AccessFlags3KHR {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        const KNOWN: &[(Flags64, &str)] = &[(AccessFlags3KHR::NONE.0, "NONE")];
+        debug_flags(f, KNOWN, self.0)
+    }
+}
 impl fmt::Debug for AcquireProfilingLockFlagsKHR {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         const KNOWN: &[(Flags, &str)] = &[];
@@ -1287,6 +1293,10 @@ impl fmt::Debug for DependencyFlags {
         const KNOWN: &[(Flags, &str)] = &[
             (DependencyFlags::BY_REGION.0, "BY_REGION"),
             (DependencyFlags::FEEDBACK_LOOP_EXT.0, "FEEDBACK_LOOP_EXT"),
+            (
+                DependencyFlags::QUEUE_FAMILY_OWNERSHIP_TRANSFER_USE_ALL_STAGES_KHR.0,
+                "QUEUE_FAMILY_OWNERSHIP_TRANSFER_USE_ALL_STAGES_KHR",
+            ),
             (DependencyFlags::DEVICE_GROUP.0, "DEVICE_GROUP"),
             (DependencyFlags::VIEW_LOCAL.0, "VIEW_LOCAL"),
         ];
@@ -1752,7 +1762,7 @@ impl fmt::Debug for DriverId {
             Self::MESA_NVK => Some("MESA_NVK"),
             Self::IMAGINATION_OPEN_SOURCE_MESA => Some("IMAGINATION_OPEN_SOURCE_MESA"),
             Self::MESA_HONEYKRISP => Some("MESA_HONEYKRISP"),
-            Self::RESERVED_27 => Some("RESERVED_27"),
+            Self::VULKAN_SC_EMULATION_ON_VULKAN => Some("VULKAN_SC_EMULATION_ON_VULKAN"),
             _ => None,
         };
         if let Some(x) = name {
@@ -3702,10 +3712,16 @@ impl fmt::Debug for PipelineBindPoint {
 }
 impl fmt::Debug for PipelineCacheCreateFlags {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[(
-            PipelineCacheCreateFlags::EXTERNALLY_SYNCHRONIZED.0,
-            "EXTERNALLY_SYNCHRONIZED",
-        )];
+        const KNOWN: &[(Flags, &str)] = &[
+            (
+                PipelineCacheCreateFlags::INTERNALLY_SYNCHRONIZED_MERGE_KHR.0,
+                "INTERNALLY_SYNCHRONIZED_MERGE_KHR",
+            ),
+            (
+                PipelineCacheCreateFlags::EXTERNALLY_SYNCHRONIZED.0,
+                "EXTERNALLY_SYNCHRONIZED",
+            ),
+        ];
         debug_flags(f, KNOWN, self.0)
     }
 }
@@ -3996,6 +4012,10 @@ impl fmt::Debug for PipelineCreateFlags2 {
             (
                 PipelineCreateFlags2::DESCRIPTOR_BUFFER_EXT.0,
                 "DESCRIPTOR_BUFFER_EXT",
+            ),
+            (
+                PipelineCreateFlags2::DISALLOW_OPACITY_MICROMAP_ARM.0,
+                "DISALLOW_OPACITY_MICROMAP_ARM",
             ),
             (PipelineCreateFlags2::CAPTURE_DATA_KHR.0, "CAPTURE_DATA_KHR"),
             (
@@ -6415,9 +6435,6 @@ impl fmt::Debug for StructureType {
             Self::DESCRIPTOR_SET_LAYOUT_HOST_MAPPING_INFO_VALVE => {
                 Some("DESCRIPTOR_SET_LAYOUT_HOST_MAPPING_INFO_VALVE")
             }
-            Self::PHYSICAL_DEVICE_DEPTH_CLAMP_ZERO_ONE_FEATURES_EXT => {
-                Some("PHYSICAL_DEVICE_DEPTH_CLAMP_ZERO_ONE_FEATURES_EXT")
-            }
             Self::PHYSICAL_DEVICE_NON_SEAMLESS_CUBE_MAP_FEATURES_EXT => {
                 Some("PHYSICAL_DEVICE_NON_SEAMLESS_CUBE_MAP_FEATURES_EXT")
             }
@@ -6848,6 +6865,10 @@ impl fmt::Debug for StructureType {
                 Some("GENERATED_COMMANDS_PIPELINE_INFO_EXT")
             }
             Self::GENERATED_COMMANDS_SHADER_INFO_EXT => Some("GENERATED_COMMANDS_SHADER_INFO_EXT"),
+            Self::PHYSICAL_DEVICE_MAINTENANCE_8_FEATURES_KHR => {
+                Some("PHYSICAL_DEVICE_MAINTENANCE_8_FEATURES_KHR")
+            }
+            Self::MEMORY_BARRIER_ACCESS_FLAGS_3_KHR => Some("MEMORY_BARRIER_ACCESS_FLAGS_3_KHR"),
             Self::PHYSICAL_DEVICE_IMAGE_ALIGNMENT_CONTROL_FEATURES_MESA => {
                 Some("PHYSICAL_DEVICE_IMAGE_ALIGNMENT_CONTROL_FEATURES_MESA")
             }
@@ -6875,6 +6896,12 @@ impl fmt::Debug for StructureType {
             }
             Self::PHYSICAL_DEVICE_COOPERATIVE_MATRIX_2_PROPERTIES_NV => {
                 Some("PHYSICAL_DEVICE_COOPERATIVE_MATRIX_2_PROPERTIES_NV")
+            }
+            Self::PHYSICAL_DEVICE_PIPELINE_OPACITY_MICROMAP_FEATURES_ARM => {
+                Some("PHYSICAL_DEVICE_PIPELINE_OPACITY_MICROMAP_FEATURES_ARM")
+            }
+            Self::PHYSICAL_DEVICE_DEPTH_CLAMP_ZERO_ONE_FEATURES_KHR => {
+                Some("PHYSICAL_DEVICE_DEPTH_CLAMP_ZERO_ONE_FEATURES_KHR")
             }
             Self::PHYSICAL_DEVICE_VERTEX_ATTRIBUTE_ROBUSTNESS_FEATURES_EXT => {
                 Some("PHYSICAL_DEVICE_VERTEX_ATTRIBUTE_ROBUSTNESS_FEATURES_EXT")
