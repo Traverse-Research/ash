@@ -60,7 +60,7 @@ pub const API_VERSION_1_3: u32 = make_api_version(0, 1, 3, 0);
 #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_API_VERSION_1_4.html>"]
 pub const API_VERSION_1_4: u32 = make_api_version(0, 1, 4, 0);
 #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_HEADER_VERSION.html>"]
-pub const HEADER_VERSION: u32 = 305;
+pub const HEADER_VERSION: u32 = 306;
 #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_HEADER_VERSION_COMPLETE.html>"]
 pub const HEADER_VERSION_COMPLETE: u32 = make_api_version(0, 1, 4, HEADER_VERSION);
 #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkSampleMask.html>"]
@@ -13036,6 +13036,123 @@ impl<'a> Win32KeyedMutexAcquireReleaseInfoKHR<'a> {
     pub fn release_keys(mut self, release_keys: &'a [u64]) -> Self {
         self.release_count = release_keys.len() as _;
         self.p_release_keys = release_keys.as_ptr();
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkImportMemoryMetalHandleInfoEXT.html>"]
+#[must_use]
+pub struct ImportMemoryMetalHandleInfoEXT<'a> {
+    pub s_type: StructureType,
+    pub p_next: *const c_void,
+    pub handle_type: ExternalMemoryHandleTypeFlags,
+    pub handle: *mut c_void,
+    pub _marker: PhantomData<&'a ()>,
+}
+unsafe impl Send for ImportMemoryMetalHandleInfoEXT<'_> {}
+unsafe impl Sync for ImportMemoryMetalHandleInfoEXT<'_> {}
+impl ::core::default::Default for ImportMemoryMetalHandleInfoEXT<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::core::ptr::null(),
+            handle_type: ExternalMemoryHandleTypeFlags::default(),
+            handle: ::core::ptr::null_mut(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for ImportMemoryMetalHandleInfoEXT<'a> {
+    const STRUCTURE_TYPE: StructureType = StructureType::IMPORT_MEMORY_METAL_HANDLE_INFO_EXT;
+}
+unsafe impl ExtendsMemoryAllocateInfo for ImportMemoryMetalHandleInfoEXT<'_> {}
+impl<'a> ImportMemoryMetalHandleInfoEXT<'a> {
+    #[inline]
+    pub fn handle_type(mut self, handle_type: ExternalMemoryHandleTypeFlags) -> Self {
+        self.handle_type = handle_type;
+        self
+    }
+    #[inline]
+    pub fn handle(mut self, handle: *mut c_void) -> Self {
+        self.handle = handle;
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkMemoryMetalHandlePropertiesEXT.html>"]
+#[must_use]
+pub struct MemoryMetalHandlePropertiesEXT<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub memory_type_bits: u32,
+    pub _marker: PhantomData<&'a ()>,
+}
+unsafe impl Send for MemoryMetalHandlePropertiesEXT<'_> {}
+unsafe impl Sync for MemoryMetalHandlePropertiesEXT<'_> {}
+impl ::core::default::Default for MemoryMetalHandlePropertiesEXT<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::core::ptr::null_mut(),
+            memory_type_bits: u32::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for MemoryMetalHandlePropertiesEXT<'a> {
+    const STRUCTURE_TYPE: StructureType = StructureType::MEMORY_METAL_HANDLE_PROPERTIES_EXT;
+}
+impl<'a> MemoryMetalHandlePropertiesEXT<'a> {
+    #[inline]
+    pub fn memory_type_bits(mut self, memory_type_bits: u32) -> Self {
+        self.memory_type_bits = memory_type_bits;
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkMemoryGetMetalHandleInfoEXT.html>"]
+#[must_use]
+pub struct MemoryGetMetalHandleInfoEXT<'a> {
+    pub s_type: StructureType,
+    pub p_next: *const c_void,
+    pub memory: DeviceMemory,
+    pub handle_type: ExternalMemoryHandleTypeFlags,
+    pub _marker: PhantomData<&'a ()>,
+}
+unsafe impl Send for MemoryGetMetalHandleInfoEXT<'_> {}
+unsafe impl Sync for MemoryGetMetalHandleInfoEXT<'_> {}
+impl ::core::default::Default for MemoryGetMetalHandleInfoEXT<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::core::ptr::null(),
+            memory: DeviceMemory::default(),
+            handle_type: ExternalMemoryHandleTypeFlags::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for MemoryGetMetalHandleInfoEXT<'a> {
+    const STRUCTURE_TYPE: StructureType = StructureType::MEMORY_GET_METAL_HANDLE_INFO_EXT;
+}
+impl<'a> MemoryGetMetalHandleInfoEXT<'a> {
+    #[inline]
+    pub fn memory(mut self, memory: DeviceMemory) -> Self {
+        self.memory = memory;
+        self
+    }
+    #[inline]
+    pub fn handle_type(mut self, handle_type: ExternalMemoryHandleTypeFlags) -> Self {
+        self.handle_type = handle_type;
         self
     }
 }
@@ -43258,6 +43375,43 @@ impl<'a> PhysicalDeviceVideoMaintenance1FeaturesKHR<'a> {
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
+#[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceVideoMaintenance2FeaturesKHR.html>"]
+#[must_use]
+pub struct PhysicalDeviceVideoMaintenance2FeaturesKHR<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub video_maintenance2: Bool32,
+    pub _marker: PhantomData<&'a ()>,
+}
+unsafe impl Send for PhysicalDeviceVideoMaintenance2FeaturesKHR<'_> {}
+unsafe impl Sync for PhysicalDeviceVideoMaintenance2FeaturesKHR<'_> {}
+impl ::core::default::Default for PhysicalDeviceVideoMaintenance2FeaturesKHR<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::core::ptr::null_mut(),
+            video_maintenance2: Bool32::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for PhysicalDeviceVideoMaintenance2FeaturesKHR<'a> {
+    const STRUCTURE_TYPE: StructureType =
+        StructureType::PHYSICAL_DEVICE_VIDEO_MAINTENANCE_2_FEATURES_KHR;
+}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceVideoMaintenance2FeaturesKHR<'_> {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceVideoMaintenance2FeaturesKHR<'_> {}
+impl<'a> PhysicalDeviceVideoMaintenance2FeaturesKHR<'a> {
+    #[inline]
+    pub fn video_maintenance2(mut self, video_maintenance2: bool) -> Self {
+        self.video_maintenance2 = video_maintenance2.into();
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
 #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkVideoInlineQueryInfoKHR.html>"]
 #[must_use]
 pub struct VideoInlineQueryInfoKHR<'a> {
@@ -43495,6 +43649,49 @@ impl<'a> VideoDecodeH264SessionParametersCreateInfoKHR<'a> {
         parameters_add_info: &'a VideoDecodeH264SessionParametersAddInfoKHR<'a>,
     ) -> Self {
         self.p_parameters_add_info = parameters_add_info;
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkVideoDecodeH264InlineSessionParametersInfoKHR.html>"]
+#[must_use]
+pub struct VideoDecodeH264InlineSessionParametersInfoKHR<'a> {
+    pub s_type: StructureType,
+    pub p_next: *const c_void,
+    pub p_std_sps: *const StdVideoH264SequenceParameterSet,
+    pub p_std_pps: *const StdVideoH264PictureParameterSet,
+    pub _marker: PhantomData<&'a ()>,
+}
+unsafe impl Send for VideoDecodeH264InlineSessionParametersInfoKHR<'_> {}
+unsafe impl Sync for VideoDecodeH264InlineSessionParametersInfoKHR<'_> {}
+impl ::core::default::Default for VideoDecodeH264InlineSessionParametersInfoKHR<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::core::ptr::null(),
+            p_std_sps: ::core::ptr::null(),
+            p_std_pps: ::core::ptr::null(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for VideoDecodeH264InlineSessionParametersInfoKHR<'a> {
+    const STRUCTURE_TYPE: StructureType =
+        StructureType::VIDEO_DECODE_H264_INLINE_SESSION_PARAMETERS_INFO_KHR;
+}
+unsafe impl ExtendsVideoDecodeInfoKHR for VideoDecodeH264InlineSessionParametersInfoKHR<'_> {}
+impl<'a> VideoDecodeH264InlineSessionParametersInfoKHR<'a> {
+    #[inline]
+    pub fn std_sps(mut self, std_sps: &'a StdVideoH264SequenceParameterSet) -> Self {
+        self.p_std_sps = std_sps;
+        self
+    }
+    #[inline]
+    pub fn std_pps(mut self, std_pps: &'a StdVideoH264PictureParameterSet) -> Self {
+        self.p_std_pps = std_pps;
         self
     }
 }
@@ -43780,6 +43977,56 @@ impl<'a> VideoDecodeH265SessionParametersCreateInfoKHR<'a> {
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
+#[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkVideoDecodeH265InlineSessionParametersInfoKHR.html>"]
+#[must_use]
+pub struct VideoDecodeH265InlineSessionParametersInfoKHR<'a> {
+    pub s_type: StructureType,
+    pub p_next: *const c_void,
+    pub p_std_vps: *const StdVideoH265VideoParameterSet,
+    pub p_std_sps: *const StdVideoH265SequenceParameterSet,
+    pub p_std_pps: *const StdVideoH265PictureParameterSet,
+    pub _marker: PhantomData<&'a ()>,
+}
+unsafe impl Send for VideoDecodeH265InlineSessionParametersInfoKHR<'_> {}
+unsafe impl Sync for VideoDecodeH265InlineSessionParametersInfoKHR<'_> {}
+impl ::core::default::Default for VideoDecodeH265InlineSessionParametersInfoKHR<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::core::ptr::null(),
+            p_std_vps: ::core::ptr::null(),
+            p_std_sps: ::core::ptr::null(),
+            p_std_pps: ::core::ptr::null(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for VideoDecodeH265InlineSessionParametersInfoKHR<'a> {
+    const STRUCTURE_TYPE: StructureType =
+        StructureType::VIDEO_DECODE_H265_INLINE_SESSION_PARAMETERS_INFO_KHR;
+}
+unsafe impl ExtendsVideoDecodeInfoKHR for VideoDecodeH265InlineSessionParametersInfoKHR<'_> {}
+impl<'a> VideoDecodeH265InlineSessionParametersInfoKHR<'a> {
+    #[inline]
+    pub fn std_vps(mut self, std_vps: &'a StdVideoH265VideoParameterSet) -> Self {
+        self.p_std_vps = std_vps;
+        self
+    }
+    #[inline]
+    pub fn std_sps(mut self, std_sps: &'a StdVideoH265SequenceParameterSet) -> Self {
+        self.p_std_sps = std_sps;
+        self
+    }
+    #[inline]
+    pub fn std_pps(mut self, std_pps: &'a StdVideoH265PictureParameterSet) -> Self {
+        self.p_std_pps = std_pps;
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
 #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkVideoDecodeH265PictureInfoKHR.html>"]
 #[must_use]
 pub struct VideoDecodeH265PictureInfoKHR<'a> {
@@ -43971,6 +44218,45 @@ unsafe impl ExtendsVideoSessionParametersCreateInfoKHR
 {
 }
 impl<'a> VideoDecodeAV1SessionParametersCreateInfoKHR<'a> {
+    #[inline]
+    pub fn std_sequence_header(
+        mut self,
+        std_sequence_header: &'a StdVideoAV1SequenceHeader,
+    ) -> Self {
+        self.p_std_sequence_header = std_sequence_header;
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkVideoDecodeAV1InlineSessionParametersInfoKHR.html>"]
+#[must_use]
+pub struct VideoDecodeAV1InlineSessionParametersInfoKHR<'a> {
+    pub s_type: StructureType,
+    pub p_next: *const c_void,
+    pub p_std_sequence_header: *const StdVideoAV1SequenceHeader,
+    pub _marker: PhantomData<&'a ()>,
+}
+unsafe impl Send for VideoDecodeAV1InlineSessionParametersInfoKHR<'_> {}
+unsafe impl Sync for VideoDecodeAV1InlineSessionParametersInfoKHR<'_> {}
+impl ::core::default::Default for VideoDecodeAV1InlineSessionParametersInfoKHR<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::core::ptr::null(),
+            p_std_sequence_header: ::core::ptr::null(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for VideoDecodeAV1InlineSessionParametersInfoKHR<'a> {
+    const STRUCTURE_TYPE: StructureType =
+        StructureType::VIDEO_DECODE_AV1_INLINE_SESSION_PARAMETERS_INFO_KHR;
+}
+unsafe impl ExtendsVideoDecodeInfoKHR for VideoDecodeAV1InlineSessionParametersInfoKHR<'_> {}
+impl<'a> VideoDecodeAV1InlineSessionParametersInfoKHR<'a> {
     #[inline]
     pub fn std_sequence_header(
         mut self,

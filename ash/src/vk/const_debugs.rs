@@ -2005,6 +2005,15 @@ impl fmt::Debug for ExternalMemoryHandleTypeFlags {
                 ExternalMemoryHandleTypeFlags::SCREEN_BUFFER_QNX.0,
                 "SCREEN_BUFFER_QNX",
             ),
+            (
+                ExternalMemoryHandleTypeFlags::MTLBUFFER_EXT.0,
+                "MTLBUFFER_EXT",
+            ),
+            (
+                ExternalMemoryHandleTypeFlags::MTLTEXTURE_EXT.0,
+                "MTLTEXTURE_EXT",
+            ),
+            (ExternalMemoryHandleTypeFlags::MTLHEAP_EXT.0, "MTLHEAP_EXT"),
         ];
         debug_flags(f, KNOWN, self.0)
     }
@@ -6884,6 +6893,18 @@ impl fmt::Debug for StructureType {
             Self::PIPELINE_VIEWPORT_DEPTH_CLAMP_CONTROL_CREATE_INFO_EXT => {
                 Some("PIPELINE_VIEWPORT_DEPTH_CLAMP_CONTROL_CREATE_INFO_EXT")
             }
+            Self::PHYSICAL_DEVICE_VIDEO_MAINTENANCE_2_FEATURES_KHR => {
+                Some("PHYSICAL_DEVICE_VIDEO_MAINTENANCE_2_FEATURES_KHR")
+            }
+            Self::VIDEO_DECODE_H264_INLINE_SESSION_PARAMETERS_INFO_KHR => {
+                Some("VIDEO_DECODE_H264_INLINE_SESSION_PARAMETERS_INFO_KHR")
+            }
+            Self::VIDEO_DECODE_H265_INLINE_SESSION_PARAMETERS_INFO_KHR => {
+                Some("VIDEO_DECODE_H265_INLINE_SESSION_PARAMETERS_INFO_KHR")
+            }
+            Self::VIDEO_DECODE_AV1_INLINE_SESSION_PARAMETERS_INFO_KHR => {
+                Some("VIDEO_DECODE_AV1_INLINE_SESSION_PARAMETERS_INFO_KHR")
+            }
             Self::PHYSICAL_DEVICE_HDR_VIVID_FEATURES_HUAWEI => {
                 Some("PHYSICAL_DEVICE_HDR_VIVID_FEATURES_HUAWEI")
             }
@@ -6900,6 +6921,11 @@ impl fmt::Debug for StructureType {
             Self::PHYSICAL_DEVICE_PIPELINE_OPACITY_MICROMAP_FEATURES_ARM => {
                 Some("PHYSICAL_DEVICE_PIPELINE_OPACITY_MICROMAP_FEATURES_ARM")
             }
+            Self::IMPORT_MEMORY_METAL_HANDLE_INFO_EXT => {
+                Some("IMPORT_MEMORY_METAL_HANDLE_INFO_EXT")
+            }
+            Self::MEMORY_METAL_HANDLE_PROPERTIES_EXT => Some("MEMORY_METAL_HANDLE_PROPERTIES_EXT"),
+            Self::MEMORY_GET_METAL_HANDLE_INFO_EXT => Some("MEMORY_GET_METAL_HANDLE_INFO_EXT"),
             Self::PHYSICAL_DEVICE_DEPTH_CLAMP_ZERO_ONE_FEATURES_KHR => {
                 Some("PHYSICAL_DEVICE_DEPTH_CLAMP_ZERO_ONE_FEATURES_KHR")
             }
@@ -8446,6 +8472,10 @@ impl fmt::Debug for VideoSessionCreateFlagsKHR {
             (
                 VideoSessionCreateFlagsKHR::ALLOW_ENCODE_EMPHASIS_MAP.0,
                 "ALLOW_ENCODE_EMPHASIS_MAP",
+            ),
+            (
+                VideoSessionCreateFlagsKHR::INLINE_SESSION_PARAMETERS.0,
+                "INLINE_SESSION_PARAMETERS",
             ),
         ];
         debug_flags(f, KNOWN, self.0)

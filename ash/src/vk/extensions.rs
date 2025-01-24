@@ -4423,6 +4423,17 @@ impl StructureType {
     pub const PHYSICAL_DEVICE_DEPTH_CLAMP_CONTROL_FEATURES_EXT: Self = Self(1_000_582_000);
     pub const PIPELINE_VIEWPORT_DEPTH_CLAMP_CONTROL_CREATE_INFO_EXT: Self = Self(1_000_582_001);
 }
+#[doc = "Generated from 'VK_KHR_video_maintenance2'"]
+impl StructureType {
+    pub const PHYSICAL_DEVICE_VIDEO_MAINTENANCE_2_FEATURES_KHR: Self = Self(1_000_586_000);
+    pub const VIDEO_DECODE_H264_INLINE_SESSION_PARAMETERS_INFO_KHR: Self = Self(1_000_586_001);
+    pub const VIDEO_DECODE_H265_INLINE_SESSION_PARAMETERS_INFO_KHR: Self = Self(1_000_586_002);
+    pub const VIDEO_DECODE_AV1_INLINE_SESSION_PARAMETERS_INFO_KHR: Self = Self(1_000_586_003);
+}
+#[doc = "Generated from 'VK_KHR_video_maintenance2'"]
+impl VideoSessionCreateFlagsKHR {
+    pub const INLINE_SESSION_PARAMETERS: Self = Self(0b10_0000);
+}
 #[doc = "Generated from 'VK_HUAWEI_hdr_vivid'"]
 impl StructureType {
     pub const PHYSICAL_DEVICE_HDR_VIVID_FEATURES_HUAWEI: Self = Self(1_000_590_000);
@@ -4437,6 +4448,18 @@ impl StructureType {
 #[doc = "Generated from 'VK_ARM_pipeline_opacity_micromap'"]
 impl StructureType {
     pub const PHYSICAL_DEVICE_PIPELINE_OPACITY_MICROMAP_FEATURES_ARM: Self = Self(1_000_596_000);
+}
+#[doc = "Generated from 'VK_EXT_external_memory_metal'"]
+impl ExternalMemoryHandleTypeFlags {
+    pub const MTLBUFFER_EXT: Self = Self(0b1_0000_0000_0000_0000);
+    pub const MTLTEXTURE_EXT: Self = Self(0b10_0000_0000_0000_0000);
+    pub const MTLHEAP_EXT: Self = Self(0b100_0000_0000_0000_0000);
+}
+#[doc = "Generated from 'VK_EXT_external_memory_metal'"]
+impl StructureType {
+    pub const IMPORT_MEMORY_METAL_HANDLE_INFO_EXT: Self = Self(1_000_602_000);
+    pub const MEMORY_METAL_HANDLE_PROPERTIES_EXT: Self = Self(1_000_602_001);
+    pub const MEMORY_GET_METAL_HANDLE_INFO_EXT: Self = Self(1_000_602_002);
 }
 #[doc = "Generated from 'VK_KHR_depth_clamp_zero_one'"]
 impl StructureType {
@@ -8532,6 +8555,9 @@ pub const MESA_IMAGE_ALIGNMENT_CONTROL_SPEC_VERSION: u32 = 1u32;
 pub const EXT_DEPTH_CLAMP_CONTROL_NAME: &CStr =
     unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_depth_clamp_control\0") };
 pub const EXT_DEPTH_CLAMP_CONTROL_SPEC_VERSION: u32 = 1u32;
+pub const KHR_VIDEO_MAINTENANCE2_NAME: &CStr =
+    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_KHR_video_maintenance2\0") };
+pub const KHR_VIDEO_MAINTENANCE2_SPEC_VERSION: u32 = 1u32;
 pub const HUAWEI_HDR_VIVID_NAME: &CStr =
     unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_HUAWEI_hdr_vivid\0") };
 pub const HUAWEI_HDR_VIVID_SPEC_VERSION: u32 = 1u32;
@@ -8548,6 +8574,22 @@ pub type PFN_vkGetPhysicalDeviceCooperativeMatrixFlexibleDimensionsPropertiesNV 
 pub const ARM_PIPELINE_OPACITY_MICROMAP_NAME: &CStr =
     unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_ARM_pipeline_opacity_micromap\0") };
 pub const ARM_PIPELINE_OPACITY_MICROMAP_SPEC_VERSION: u32 = 1u32;
+pub const EXT_EXTERNAL_MEMORY_METAL_NAME: &CStr =
+    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_external_memory_metal\0") };
+pub const EXT_EXTERNAL_MEMORY_METAL_SPEC_VERSION: u32 = 1u32;
+#[allow(non_camel_case_types)]
+pub type PFN_vkGetMemoryMetalHandleEXT = unsafe extern "system" fn(
+    device: crate::vk::Device,
+    p_get_metal_handle_info: *const MemoryGetMetalHandleInfoEXT<'_>,
+    p_handle: *mut *mut c_void,
+) -> Result;
+#[allow(non_camel_case_types)]
+pub type PFN_vkGetMemoryMetalHandlePropertiesEXT = unsafe extern "system" fn(
+    device: crate::vk::Device,
+    handle_type: ExternalMemoryHandleTypeFlags,
+    p_handle: *const c_void,
+    p_memory_metal_handle_properties: *mut MemoryMetalHandlePropertiesEXT<'_>,
+) -> Result;
 pub const KHR_DEPTH_CLAMP_ZERO_ONE_NAME: &CStr =
     unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_KHR_depth_clamp_zero_one\0") };
 pub const KHR_DEPTH_CLAMP_ZERO_ONE_SPEC_VERSION: u32 = 1u32;

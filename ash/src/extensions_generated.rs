@@ -8868,6 +8868,98 @@ pub mod ext {
             }
         }
     }
+    #[doc = "VK_EXT_external_memory_metal"]
+    pub mod external_memory_metal {
+        use super::super::*;
+        pub use {
+            crate::vk::EXT_EXTERNAL_MEMORY_METAL_NAME as NAME,
+            crate::vk::EXT_EXTERNAL_MEMORY_METAL_SPEC_VERSION as SPEC_VERSION,
+        };
+        #[doc = "VK_EXT_external_memory_metal device-level functions"]
+        #[derive(Clone)]
+        pub struct Device {
+            pub(crate) fp: DeviceFn,
+            pub(crate) handle: crate::vk::Device,
+        }
+        impl Device {
+            pub fn new(instance: &crate::Instance, device: &crate::Device) -> Self {
+                let handle = device.handle();
+                let fp = DeviceFn::load(|name| unsafe {
+                    core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
+                });
+                Self { handle, fp }
+            }
+            #[inline]
+            pub fn fp(&self) -> &DeviceFn {
+                &self.fp
+            }
+            #[inline]
+            pub fn device(&self) -> crate::vk::Device {
+                self.handle
+            }
+        }
+        #[derive(Clone)]
+        #[doc = "Raw VK_EXT_external_memory_metal device-level function pointers"]
+        pub struct DeviceFn {
+            pub get_memory_metal_handle_ext: PFN_vkGetMemoryMetalHandleEXT,
+            pub get_memory_metal_handle_properties_ext: PFN_vkGetMemoryMetalHandlePropertiesEXT,
+        }
+        unsafe impl Send for DeviceFn {}
+        unsafe impl Sync for DeviceFn {}
+        impl DeviceFn {
+            pub fn load<F: FnMut(&CStr) -> *const c_void>(mut f: F) -> Self {
+                Self::load_erased(&mut f)
+            }
+            fn load_erased(_f: &mut dyn FnMut(&CStr) -> *const c_void) -> Self {
+                Self {
+                    get_memory_metal_handle_ext: unsafe {
+                        unsafe extern "system" fn get_memory_metal_handle_ext(
+                            _device: crate::vk::Device,
+                            _p_get_metal_handle_info: *const MemoryGetMetalHandleInfoEXT<'_>,
+                            _p_handle: *mut *mut c_void,
+                        ) -> Result {
+                            panic!(concat!(
+                                "Unable to load ",
+                                stringify!(get_memory_metal_handle_ext)
+                            ))
+                        }
+                        let cname =
+                            CStr::from_bytes_with_nul_unchecked(b"vkGetMemoryMetalHandleEXT\0");
+                        let val = _f(cname);
+                        if val.is_null() {
+                            get_memory_metal_handle_ext
+                        } else {
+                            ::core::mem::transmute(val)
+                        }
+                    },
+                    get_memory_metal_handle_properties_ext: unsafe {
+                        unsafe extern "system" fn get_memory_metal_handle_properties_ext(
+                            _device: crate::vk::Device,
+                            _handle_type: ExternalMemoryHandleTypeFlags,
+                            _p_handle: *const c_void,
+                            _p_memory_metal_handle_properties: *mut MemoryMetalHandlePropertiesEXT<
+                                '_,
+                            >,
+                        ) -> Result {
+                            panic!(concat!(
+                                "Unable to load ",
+                                stringify!(get_memory_metal_handle_properties_ext)
+                            ))
+                        }
+                        let cname = CStr::from_bytes_with_nul_unchecked(
+                            b"vkGetMemoryMetalHandlePropertiesEXT\0",
+                        );
+                        let val = _f(cname);
+                        if val.is_null() {
+                            get_memory_metal_handle_properties_ext
+                        } else {
+                            ::core::mem::transmute(val)
+                        }
+                    },
+                }
+            }
+        }
+    }
     #[doc = "VK_EXT_vertex_attribute_robustness"]
     pub mod vertex_attribute_robustness {
         use super::super::*;
@@ -17605,6 +17697,14 @@ pub mod khr {
         pub use {
             crate::vk::KHR_MAINTENANCE8_NAME as NAME,
             crate::vk::KHR_MAINTENANCE8_SPEC_VERSION as SPEC_VERSION,
+        };
+    }
+    #[doc = "VK_KHR_video_maintenance2"]
+    pub mod video_maintenance2 {
+        use super::super::*;
+        pub use {
+            crate::vk::KHR_VIDEO_MAINTENANCE2_NAME as NAME,
+            crate::vk::KHR_VIDEO_MAINTENANCE2_SPEC_VERSION as SPEC_VERSION,
         };
     }
     #[doc = "VK_KHR_depth_clamp_zero_one"]
