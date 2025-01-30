@@ -1104,6 +1104,42 @@ impl RayTracingInvocationReorderModeNV {
 }
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
+#[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkRayTracingLssIndexingModeNV.html>"]
+pub struct RayTracingLssIndexingModeNV(pub(crate) i32);
+impl RayTracingLssIndexingModeNV {
+    #[inline]
+    pub const fn from_raw(x: i32) -> Self {
+        Self(x)
+    }
+    #[inline]
+    pub const fn as_raw(self) -> i32 {
+        self.0
+    }
+}
+impl RayTracingLssIndexingModeNV {
+    pub const LIST: Self = Self(0);
+    pub const SUCCESSIVE: Self = Self(1);
+}
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
+#[repr(transparent)]
+#[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkRayTracingLssPrimitiveEndCapsModeNV.html>"]
+pub struct RayTracingLssPrimitiveEndCapsModeNV(pub(crate) i32);
+impl RayTracingLssPrimitiveEndCapsModeNV {
+    #[inline]
+    pub const fn from_raw(x: i32) -> Self {
+        Self(x)
+    }
+    #[inline]
+    pub const fn as_raw(self) -> i32 {
+        self.0
+    }
+}
+impl RayTracingLssPrimitiveEndCapsModeNV {
+    pub const NONE: Self = Self(0);
+    pub const CHAINED: Self = Self(1);
+}
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
+#[repr(transparent)]
 #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkDirectDriverLoadingModeLUNARG.html>"]
 pub struct DirectDriverLoadingModeLUNARG(pub(crate) i32);
 impl DirectDriverLoadingModeLUNARG {
@@ -1338,6 +1374,65 @@ impl RasterizationOrderAMD {
 impl RasterizationOrderAMD {
     pub const STRICT: Self = Self(0);
     pub const RELAXED: Self = Self(1);
+}
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
+#[repr(transparent)]
+#[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkClusterAccelerationStructureTypeNV.html>"]
+pub struct ClusterAccelerationStructureTypeNV(pub(crate) i32);
+impl ClusterAccelerationStructureTypeNV {
+    #[inline]
+    pub const fn from_raw(x: i32) -> Self {
+        Self(x)
+    }
+    #[inline]
+    pub const fn as_raw(self) -> i32 {
+        self.0
+    }
+}
+impl ClusterAccelerationStructureTypeNV {
+    pub const CLUSTERS_BOTTOM_LEVEL: Self = Self(0);
+    pub const TRIANGLE_CLUSTER: Self = Self(1);
+    pub const TRIANGLE_CLUSTER_TEMPLATE: Self = Self(2);
+}
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
+#[repr(transparent)]
+#[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkClusterAccelerationStructureOpTypeNV.html>"]
+pub struct ClusterAccelerationStructureOpTypeNV(pub(crate) i32);
+impl ClusterAccelerationStructureOpTypeNV {
+    #[inline]
+    pub const fn from_raw(x: i32) -> Self {
+        Self(x)
+    }
+    #[inline]
+    pub const fn as_raw(self) -> i32 {
+        self.0
+    }
+}
+impl ClusterAccelerationStructureOpTypeNV {
+    pub const MOVE_OBJECTS: Self = Self(0);
+    pub const BUILD_CLUSTERS_BOTTOM_LEVEL: Self = Self(1);
+    pub const BUILD_TRIANGLE_CLUSTER: Self = Self(2);
+    pub const BUILD_TRIANGLE_CLUSTER_TEMPLATE: Self = Self(3);
+    pub const INSTANTIATE_TRIANGLE_CLUSTER: Self = Self(4);
+}
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
+#[repr(transparent)]
+#[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkClusterAccelerationStructureOpModeNV.html>"]
+pub struct ClusterAccelerationStructureOpModeNV(pub(crate) i32);
+impl ClusterAccelerationStructureOpModeNV {
+    #[inline]
+    pub const fn from_raw(x: i32) -> Self {
+        Self(x)
+    }
+    #[inline]
+    pub const fn as_raw(self) -> i32 {
+        self.0
+    }
+}
+impl ClusterAccelerationStructureOpModeNV {
+    pub const IMPLICIT_DESTINATIONS: Self = Self(0);
+    pub const EXPLICIT_DESTINATIONS: Self = Self(1);
+    pub const COMPUTE_SIZES: Self = Self(2);
 }
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
@@ -2565,6 +2660,25 @@ impl VideoEncodeTuningModeKHR {
 }
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
+#[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkPartitionedAccelerationStructureOpTypeNV.html>"]
+pub struct PartitionedAccelerationStructureOpTypeNV(pub(crate) i32);
+impl PartitionedAccelerationStructureOpTypeNV {
+    #[inline]
+    pub const fn from_raw(x: i32) -> Self {
+        Self(x)
+    }
+    #[inline]
+    pub const fn as_raw(self) -> i32 {
+        self.0
+    }
+}
+impl PartitionedAccelerationStructureOpTypeNV {
+    pub const WRITE_INSTANCE: Self = Self(0);
+    pub const UPDATE_INSTANCE: Self = Self(1);
+    pub const WRITE_PARTITION_TRANSLATION: Self = Self(2);
+}
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
+#[repr(transparent)]
 #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkVideoEncodeAV1PredictionModeKHR.html>"]
 pub struct VideoEncodeAV1PredictionModeKHR(pub(crate) i32);
 impl VideoEncodeAV1PredictionModeKHR {
@@ -3107,6 +3221,26 @@ impl DepthClampModeEXT {
 impl DepthClampModeEXT {
     pub const VIEWPORT_RANGE: Self = Self(0);
     pub const USER_DEFINED_RANGE: Self = Self(1);
+}
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
+#[repr(transparent)]
+#[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkCooperativeVectorMatrixLayoutNV.html>"]
+pub struct CooperativeVectorMatrixLayoutNV(pub(crate) i32);
+impl CooperativeVectorMatrixLayoutNV {
+    #[inline]
+    pub const fn from_raw(x: i32) -> Self {
+        Self(x)
+    }
+    #[inline]
+    pub const fn as_raw(self) -> i32 {
+        self.0
+    }
+}
+impl CooperativeVectorMatrixLayoutNV {
+    pub const ROW_MAJOR: Self = Self(0);
+    pub const COLUMN_MAJOR: Self = Self(1);
+    pub const INFERENCING_OPTIMAL: Self = Self(2);
+    pub const TRAINING_OPTIMAL: Self = Self(3);
 }
 impl fmt::Debug for ObjectType {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {

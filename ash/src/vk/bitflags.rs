@@ -644,6 +644,47 @@ impl ExternalMemoryFeatureFlagsNV {
 }
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkClusterAccelerationStructureIndexFormatFlagBitsNV.html>"]
+pub struct ClusterAccelerationStructureIndexFormatFlagsNV(pub(crate) Flags);
+vk_bitflags_wrapped!(ClusterAccelerationStructureIndexFormatFlagsNV, Flags);
+impl ClusterAccelerationStructureIndexFormatFlagsNV {
+    pub const TYPE_8BIT: Self = Self(0b1);
+    pub const TYPE_16BIT: Self = Self(0b10);
+    pub const TYPE_32BIT: Self = Self(0b100);
+}
+#[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkClusterAccelerationStructureClusterFlagBitsNV.html>"]
+pub struct ClusterAccelerationStructureClusterFlagsNV(pub(crate) Flags);
+vk_bitflags_wrapped!(ClusterAccelerationStructureClusterFlagsNV, Flags);
+impl ClusterAccelerationStructureClusterFlagsNV {
+    pub const ALLOW_DISABLE_OPACITY_MICROMAPS: Self = Self(0b1);
+}
+#[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkClusterAccelerationStructureGeometryFlagBitsNV.html>"]
+pub struct ClusterAccelerationStructureGeometryFlagsNV(pub(crate) Flags);
+vk_bitflags_wrapped!(ClusterAccelerationStructureGeometryFlagsNV, Flags);
+impl ClusterAccelerationStructureGeometryFlagsNV {
+    pub const CULL_DISABLE: Self = Self(0b1);
+    pub const NO_DUPLICATE_ANYHIT_INVOCATION: Self = Self(0b10);
+    pub const OPAQUE: Self = Self(0b100);
+}
+#[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkClusterAccelerationStructureAddressResolutionFlagBitsNV.html>"]
+pub struct ClusterAccelerationStructureAddressResolutionFlagsNV(pub(crate) Flags);
+vk_bitflags_wrapped!(ClusterAccelerationStructureAddressResolutionFlagsNV, Flags);
+impl ClusterAccelerationStructureAddressResolutionFlagsNV {
+    pub const INDIRECTED_DST_IMPLICIT_DATA: Self = Self(0b1);
+    pub const INDIRECTED_SCRATCH_DATA: Self = Self(0b10);
+    pub const INDIRECTED_DST_ADDRESS_ARRAY: Self = Self(0b100);
+    pub const INDIRECTED_DST_SIZES_ARRAY: Self = Self(0b1000);
+    pub const INDIRECTED_SRC_INFOS_ARRAY: Self = Self(0b1_0000);
+    pub const INDIRECTED_SRC_INFOS_COUNT: Self = Self(0b10_0000);
+}
+#[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkSubgroupFeatureFlagBits.html>"]
 pub struct SubgroupFeatureFlags(pub(crate) Flags);
 vk_bitflags_wrapped!(SubgroupFeatureFlags, Flags);
@@ -1372,6 +1413,18 @@ pub struct HostImageCopyFlags(pub(crate) Flags);
 vk_bitflags_wrapped!(HostImageCopyFlags, Flags);
 impl HostImageCopyFlags {
     pub const MEMCPY: Self = Self(0b1);
+}
+#[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkPartitionedAccelerationStructureInstanceFlagBitsNV.html>"]
+pub struct PartitionedAccelerationStructureInstanceFlagsNV(pub(crate) Flags);
+vk_bitflags_wrapped!(PartitionedAccelerationStructureInstanceFlagsNV, Flags);
+impl PartitionedAccelerationStructureInstanceFlagsNV {
+    pub const FLAG_TRIANGLE_FACING_CULL_DISABLE: Self = Self(0b1);
+    pub const FLAG_TRIANGLE_FLIP_FACING: Self = Self(0b10);
+    pub const FLAG_FORCE_OPAQUE: Self = Self(0b100);
+    pub const FLAG_FORCE_NO_OPAQUE: Self = Self(0b1000);
+    pub const FLAG_ENABLE_EXPLICIT_BOUNDING_BOX: Self = Self(0b1_0000);
 }
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]

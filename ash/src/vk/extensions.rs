@@ -1214,6 +1214,10 @@ impl PipelineCreateFlags {
         Self(0b1000_0000_0000_0000_0000);
 }
 #[doc = "Generated from 'VK_KHR_ray_tracing_pipeline'"]
+impl PipelineCreateFlags2 {
+    pub const RAY_TRACING_SKIP_BUILT_IN_PRIMITIVES_KHR: Self = Self::RAY_TRACING_SKIP_TRIANGLES_KHR;
+}
+#[doc = "Generated from 'VK_KHR_ray_tracing_pipeline'"]
 impl PipelineStageFlags {
     pub const RAY_TRACING_SHADER_KHR: Self = Self(0b10_0000_0000_0000_0000_0000);
 }
@@ -3580,6 +3584,29 @@ impl StructureType {
     pub const COMPUTE_PIPELINE_INDIRECT_BUFFER_INFO_NV: Self = Self(1_000_428_001);
     pub const PIPELINE_INDIRECT_DEVICE_ADDRESS_INFO_NV: Self = Self(1_000_428_002);
 }
+#[doc = "Generated from 'VK_NV_ray_tracing_linear_swept_spheres'"]
+impl FormatFeatureFlags2 {
+    pub const ACCELERATION_STRUCTURE_RADIUS_BUFFER_NV: Self =
+        Self(0b1000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000);
+}
+#[doc = "Generated from 'VK_NV_ray_tracing_linear_swept_spheres'"]
+impl GeometryTypeKHR {
+    pub const SPHERES_NV: Self = Self(1_000_429_004);
+    pub const LINEAR_SWEPT_SPHERES_NV: Self = Self(1_000_429_005);
+}
+#[doc = "Generated from 'VK_NV_ray_tracing_linear_swept_spheres'"]
+impl PipelineCreateFlags2 {
+    pub const RAY_TRACING_ALLOW_SPHERES_AND_LINEAR_SWEPT_SPHERES_NV: Self =
+        Self(0b10_0000_0000_0000_0000_0000_0000_0000_0000);
+}
+#[doc = "Generated from 'VK_NV_ray_tracing_linear_swept_spheres'"]
+impl StructureType {
+    pub const PHYSICAL_DEVICE_RAY_TRACING_LINEAR_SWEPT_SPHERES_FEATURES_NV: Self =
+        Self(1_000_429_008);
+    pub const ACCELERATION_STRUCTURE_GEOMETRY_LINEAR_SWEPT_SPHERES_DATA_NV: Self =
+        Self(1_000_429_009);
+    pub const ACCELERATION_STRUCTURE_GEOMETRY_SPHERES_DATA_NV: Self = Self(1_000_429_010);
+}
 #[doc = "Generated from 'VK_NV_linear_color_attachment'"]
 impl FormatFeatureFlags2 {
     #[doc = "Format support linear image as render target, it cannot be mixed with non linear attachment"]
@@ -3981,6 +4008,25 @@ impl StructureType {
     pub const PHYSICAL_DEVICE_RAY_TRACING_INVOCATION_REORDER_PROPERTIES_NV: Self =
         Self(1_000_490_001);
 }
+#[doc = "Generated from 'VK_NV_cooperative_vector'"]
+impl ComponentTypeKHR {
+    pub const SINT8_PACKED_NV: Self = Self(1_000_491_000);
+    pub const UINT8_PACKED_NV: Self = Self(1_000_491_001);
+    pub const FLOAT_E4M3_NV: Self = Self(1_000_491_002);
+    pub const FLOAT_E5M2_NV: Self = Self(1_000_491_003);
+}
+#[doc = "Generated from 'VK_NV_cooperative_vector'"]
+impl PipelineStageFlags2 {
+    pub const CONVERT_COOPERATIVE_VECTOR_MATRIX_NV: Self =
+        Self(0b1_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000);
+}
+#[doc = "Generated from 'VK_NV_cooperative_vector'"]
+impl StructureType {
+    pub const PHYSICAL_DEVICE_COOPERATIVE_VECTOR_FEATURES_NV: Self = Self(1_000_491_000);
+    pub const PHYSICAL_DEVICE_COOPERATIVE_VECTOR_PROPERTIES_NV: Self = Self(1_000_491_001);
+    pub const COOPERATIVE_VECTOR_PROPERTIES_NV: Self = Self(1_000_491_002);
+    pub const CONVERT_COOPERATIVE_VECTOR_MATRIX_INFO_NV: Self = Self(1_000_491_004);
+}
 #[doc = "Generated from 'VK_NV_extended_sparse_address_space'"]
 impl StructureType {
     pub const PHYSICAL_DEVICE_EXTENDED_SPARSE_ADDRESS_SPACE_FEATURES_NV: Self = Self(1_000_492_000);
@@ -4350,6 +4396,41 @@ impl StructureType {
 #[doc = "Generated from 'VK_NV_ray_tracing_validation'"]
 impl StructureType {
     pub const PHYSICAL_DEVICE_RAY_TRACING_VALIDATION_FEATURES_NV: Self = Self(1_000_568_000);
+}
+#[doc = "Generated from 'VK_NV_cluster_acceleration_structure'"]
+impl OpacityMicromapSpecialIndexEXT {
+    pub const CLUSTER_GEOMETRY_DISABLE_OPACITY_MICROMAP_NV: Self = Self(-5);
+}
+#[doc = "Generated from 'VK_NV_cluster_acceleration_structure'"]
+impl StructureType {
+    pub const PHYSICAL_DEVICE_CLUSTER_ACCELERATION_STRUCTURE_FEATURES_NV: Self =
+        Self(1_000_569_000);
+    pub const PHYSICAL_DEVICE_CLUSTER_ACCELERATION_STRUCTURE_PROPERTIES_NV: Self =
+        Self(1_000_569_001);
+    pub const CLUSTER_ACCELERATION_STRUCTURE_CLUSTERS_BOTTOM_LEVEL_INPUT_NV: Self =
+        Self(1_000_569_002);
+    pub const CLUSTER_ACCELERATION_STRUCTURE_TRIANGLE_CLUSTER_INPUT_NV: Self = Self(1_000_569_003);
+    pub const CLUSTER_ACCELERATION_STRUCTURE_MOVE_OBJECTS_INPUT_NV: Self = Self(1_000_569_004);
+    pub const CLUSTER_ACCELERATION_STRUCTURE_INPUT_INFO_NV: Self = Self(1_000_569_005);
+    pub const CLUSTER_ACCELERATION_STRUCTURE_COMMANDS_INFO_NV: Self = Self(1_000_569_006);
+    pub const RAY_TRACING_PIPELINE_CLUSTER_ACCELERATION_STRUCTURE_CREATE_INFO_NV: Self =
+        Self(1_000_569_007);
+}
+#[doc = "Generated from 'VK_NV_partitioned_acceleration_structure'"]
+impl DescriptorType {
+    pub const PARTITIONED_ACCELERATION_STRUCTURE_NV: Self = Self(1_000_570_000);
+}
+#[doc = "Generated from 'VK_NV_partitioned_acceleration_structure'"]
+impl StructureType {
+    pub const PHYSICAL_DEVICE_PARTITIONED_ACCELERATION_STRUCTURE_FEATURES_NV: Self =
+        Self(1_000_570_000);
+    pub const PHYSICAL_DEVICE_PARTITIONED_ACCELERATION_STRUCTURE_PROPERTIES_NV: Self =
+        Self(1_000_570_001);
+    pub const WRITE_DESCRIPTOR_SET_PARTITIONED_ACCELERATION_STRUCTURE_NV: Self =
+        Self(1_000_570_002);
+    pub const PARTITIONED_ACCELERATION_STRUCTURE_INSTANCES_INPUT_NV: Self = Self(1_000_570_003);
+    pub const BUILD_PARTITIONED_ACCELERATION_STRUCTURE_INFO_NV: Self = Self(1_000_570_004);
+    pub const PARTITIONED_ACCELERATION_STRUCTURE_FLAGS_NV: Self = Self(1_000_570_005);
 }
 #[doc = "Generated from 'VK_EXT_device_generated_commands'"]
 impl AccessFlags {
@@ -7929,6 +8010,9 @@ pub type PFN_vkGetPipelineIndirectDeviceAddressNV = unsafe extern "system" fn(
     device: crate::vk::Device,
     p_info: *const PipelineIndirectDeviceAddressInfoNV<'_>,
 ) -> DeviceAddress;
+pub const NV_RAY_TRACING_LINEAR_SWEPT_SPHERES_NAME: &CStr =
+    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_NV_ray_tracing_linear_swept_spheres\0") };
+pub const NV_RAY_TRACING_LINEAR_SWEPT_SPHERES_SPEC_VERSION: u32 = 1u32;
 pub const NV_LINEAR_COLOR_ATTACHMENT_NAME: &CStr =
     unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_NV_linear_color_attachment\0") };
 pub const NV_LINEAR_COLOR_ATTACHMENT_SPEC_VERSION: u32 = 1u32;
@@ -8293,6 +8377,27 @@ pub const QCOM_MULTIVIEW_PER_VIEW_VIEWPORTS_SPEC_VERSION: u32 = 1u32;
 pub const NV_RAY_TRACING_INVOCATION_REORDER_NAME: &CStr =
     unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_NV_ray_tracing_invocation_reorder\0") };
 pub const NV_RAY_TRACING_INVOCATION_REORDER_SPEC_VERSION: u32 = 1u32;
+pub const NV_COOPERATIVE_VECTOR_NAME: &CStr =
+    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_NV_cooperative_vector\0") };
+pub const NV_COOPERATIVE_VECTOR_SPEC_VERSION: u32 = 4u32;
+#[allow(non_camel_case_types)]
+pub type PFN_vkGetPhysicalDeviceCooperativeVectorPropertiesNV = unsafe extern "system" fn(
+    physical_device: PhysicalDevice,
+    p_property_count: *mut u32,
+    p_properties: *mut CooperativeVectorPropertiesNV<'_>,
+)
+    -> Result;
+#[allow(non_camel_case_types)]
+pub type PFN_vkConvertCooperativeVectorMatrixNV = unsafe extern "system" fn(
+    device: crate::vk::Device,
+    p_info: *const ConvertCooperativeVectorMatrixInfoNV<'_>,
+) -> Result;
+#[allow(non_camel_case_types)]
+pub type PFN_vkCmdConvertCooperativeVectorMatrixNV = unsafe extern "system" fn(
+    command_buffer: CommandBuffer,
+    info_count: u32,
+    p_infos: *const ConvertCooperativeVectorMatrixInfoNV<'_>,
+);
 pub const NV_EXTENDED_SPARSE_ADDRESS_SPACE_NAME: &CStr =
     unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_NV_extended_sparse_address_space\0") };
 pub const NV_EXTENDED_SPARSE_ADDRESS_SPACE_SPEC_VERSION: u32 = 1u32;
@@ -8485,6 +8590,34 @@ pub const EXT_SHADER_REPLICATED_COMPOSITES_SPEC_VERSION: u32 = 1u32;
 pub const NV_RAY_TRACING_VALIDATION_NAME: &CStr =
     unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_NV_ray_tracing_validation\0") };
 pub const NV_RAY_TRACING_VALIDATION_SPEC_VERSION: u32 = 1u32;
+pub const NV_CLUSTER_ACCELERATION_STRUCTURE_NAME: &CStr =
+    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_NV_cluster_acceleration_structure\0") };
+pub const NV_CLUSTER_ACCELERATION_STRUCTURE_SPEC_VERSION: u32 = 2u32;
+#[allow(non_camel_case_types)]
+pub type PFN_vkGetClusterAccelerationStructureBuildSizesNV = unsafe extern "system" fn(
+    device: crate::vk::Device,
+    p_info: *const ClusterAccelerationStructureInputInfoNV<'_>,
+    p_size_info: *mut AccelerationStructureBuildSizesInfoKHR<'_>,
+);
+#[allow(non_camel_case_types)]
+pub type PFN_vkCmdBuildClusterAccelerationStructureIndirectNV = unsafe extern "system" fn(
+    command_buffer: CommandBuffer,
+    p_command_infos: *const ClusterAccelerationStructureCommandsInfoNV<'_>,
+);
+pub const NV_PARTITIONED_ACCELERATION_STRUCTURE_NAME: &CStr =
+    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_NV_partitioned_acceleration_structure\0") };
+pub const NV_PARTITIONED_ACCELERATION_STRUCTURE_SPEC_VERSION: u32 = 1u32;
+#[allow(non_camel_case_types)]
+pub type PFN_vkGetPartitionedAccelerationStructuresBuildSizesNV = unsafe extern "system" fn(
+    device: crate::vk::Device,
+    p_info: *const PartitionedAccelerationStructureInstancesInputNV<'_>,
+    p_size_info: *mut AccelerationStructureBuildSizesInfoKHR<'_>,
+);
+#[allow(non_camel_case_types)]
+pub type PFN_vkCmdBuildPartitionedAccelerationStructuresNV = unsafe extern "system" fn(
+    command_buffer: CommandBuffer,
+    p_build_info: *const BuildPartitionedAccelerationStructureInfoNV<'_>,
+);
 pub const EXT_DEVICE_GENERATED_COMMANDS_NAME: &CStr =
     unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_device_generated_commands\0") };
 pub const EXT_DEVICE_GENERATED_COMMANDS_SPEC_VERSION: u32 = 1u32;

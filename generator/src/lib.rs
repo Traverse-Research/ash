@@ -2441,9 +2441,12 @@ pub fn generate_struct(
     if &struct_.name == "VkTransformMatrixKHR" {
         return quote! {
             #[repr(C)]
-            #[derive(Copy, Clone)]
+            #[cfg_attr(feature = "debug", derive(Debug))]
+            #[derive(Copy, Clone, Default)]
+            #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkTransformMatrixKHR.html>"]
+            #[must_use]
             pub struct TransformMatrixKHR {
-                pub matrix: [f32; 12],
+                pub matrix: [[f32; 3]; 4],
             }
         };
     }
@@ -2452,6 +2455,7 @@ pub fn generate_struct(
         return quote! {
             #[repr(C)]
             #[derive(Copy, Clone)]
+            #[must_use]
             pub union AccelerationStructureReferenceKHR {
                 pub device_handle: DeviceAddress,
                 pub host_handle: AccelerationStructureKHR,
@@ -2459,6 +2463,7 @@ pub fn generate_struct(
             #[repr(C)]
             #[derive(Copy, Clone)]
             #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkAccelerationStructureInstanceKHR.html>"]
+            #[must_use]
             pub struct AccelerationStructureInstanceKHR {
                 pub transform: TransformMatrixKHR,
                 /// Use [`Packed24_8::new(instance_custom_index, mask)`][Packed24_8::new()] to construct this field
@@ -2475,6 +2480,7 @@ pub fn generate_struct(
             #[repr(C)]
             #[derive(Copy, Clone)]
             #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkAccelerationStructureSRTMotionInstanceNV.html>"]
+            #[must_use]
             pub struct AccelerationStructureSRTMotionInstanceNV {
                 pub transform_t0: SRTDataNV,
                 pub transform_t1: SRTDataNV,
@@ -2492,6 +2498,7 @@ pub fn generate_struct(
             #[repr(C)]
             #[derive(Copy, Clone)]
             #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/AccelerationStructureMatrixMotionInstanceNV.html>"]
+            #[must_use]
             pub struct AccelerationStructureMatrixMotionInstanceNV {
                 pub transform_t0: TransformMatrixKHR,
                 pub transform_t1: TransformMatrixKHR,
