@@ -2404,8 +2404,8 @@ impl StructureType {
 }
 #[doc = "Generated from 'VK_NV_device_generated_commands'"]
 impl AccessFlags {
-    pub const COMMAND_PREPROCESS_READ_NV: Self = Self(0b10_0000_0000_0000_0000);
-    pub const COMMAND_PREPROCESS_WRITE_NV: Self = Self(0b100_0000_0000_0000_0000);
+    pub const COMMAND_PREPROCESS_READ_NV: Self = Self::COMMAND_PREPROCESS_READ_EXT;
+    pub const COMMAND_PREPROCESS_WRITE_NV: Self = Self::COMMAND_PREPROCESS_WRITE_EXT;
 }
 #[doc = "Generated from 'VK_NV_device_generated_commands'"]
 impl ObjectType {
@@ -2417,7 +2417,7 @@ impl PipelineCreateFlags {
 }
 #[doc = "Generated from 'VK_NV_device_generated_commands'"]
 impl PipelineStageFlags {
-    pub const COMMAND_PREPROCESS_NV: Self = Self(0b10_0000_0000_0000_0000);
+    pub const COMMAND_PREPROCESS_NV: Self = Self::COMMAND_PREPROCESS_EXT;
 }
 #[doc = "Generated from 'VK_NV_device_generated_commands'"]
 impl StructureType {
@@ -2691,10 +2691,10 @@ impl AccessFlags2 {
         Self(0b1000_0000_0000_0000_0000_0000_0000);
     #[doc = "read access flag for reading conditional rendering predicate"]
     pub const CONDITIONAL_RENDERING_READ_EXT: Self = Self(0b1_0000_0000_0000_0000_0000);
-    pub const COMMAND_PREPROCESS_READ_NV: Self = Self(0b10_0000_0000_0000_0000);
-    pub const COMMAND_PREPROCESS_WRITE_NV: Self = Self(0b100_0000_0000_0000_0000);
-    pub const COMMAND_PREPROCESS_READ_EXT: Self = Self::COMMAND_PREPROCESS_READ_NV;
-    pub const COMMAND_PREPROCESS_WRITE_EXT: Self = Self::COMMAND_PREPROCESS_WRITE_NV;
+    pub const COMMAND_PREPROCESS_READ_NV: Self = Self::COMMAND_PREPROCESS_READ_EXT;
+    pub const COMMAND_PREPROCESS_WRITE_NV: Self = Self::COMMAND_PREPROCESS_WRITE_EXT;
+    pub const COMMAND_PREPROCESS_READ_EXT: Self = Self(0b10_0000_0000_0000_0000);
+    pub const COMMAND_PREPROCESS_WRITE_EXT: Self = Self(0b100_0000_0000_0000_0000);
     pub const FRAGMENT_SHADING_RATE_ATTACHMENT_READ_KHR: Self =
         Self(0b1000_0000_0000_0000_0000_0000);
     pub const SHADING_RATE_IMAGE_READ_NV: Self = Self::FRAGMENT_SHADING_RATE_ATTACHMENT_READ_KHR;
@@ -2749,8 +2749,8 @@ impl PipelineStageFlags2 {
     pub const TRANSFORM_FEEDBACK_EXT: Self = Self(0b1_0000_0000_0000_0000_0000_0000);
     #[doc = "A pipeline stage for conditional rendering predicate fetch"]
     pub const CONDITIONAL_RENDERING_EXT: Self = Self(0b100_0000_0000_0000_0000);
-    pub const COMMAND_PREPROCESS_NV: Self = Self(0b10_0000_0000_0000_0000);
-    pub const COMMAND_PREPROCESS_EXT: Self = Self::COMMAND_PREPROCESS_NV;
+    pub const COMMAND_PREPROCESS_NV: Self = Self::COMMAND_PREPROCESS_EXT;
+    pub const COMMAND_PREPROCESS_EXT: Self = Self(0b10_0000_0000_0000_0000);
     pub const FRAGMENT_SHADING_RATE_ATTACHMENT_KHR: Self = Self(0b100_0000_0000_0000_0000_0000);
     pub const SHADING_RATE_IMAGE_NV: Self = Self::FRAGMENT_SHADING_RATE_ATTACHMENT_KHR;
     pub const ACCELERATION_STRUCTURE_BUILD_KHR: Self = Self(0b10_0000_0000_0000_0000_0000_0000);
@@ -4434,8 +4434,8 @@ impl StructureType {
 }
 #[doc = "Generated from 'VK_EXT_device_generated_commands'"]
 impl AccessFlags {
-    pub const COMMAND_PREPROCESS_READ_EXT: Self = Self::COMMAND_PREPROCESS_READ_NV;
-    pub const COMMAND_PREPROCESS_WRITE_EXT: Self = Self::COMMAND_PREPROCESS_WRITE_NV;
+    pub const COMMAND_PREPROCESS_READ_EXT: Self = Self(0b10_0000_0000_0000_0000);
+    pub const COMMAND_PREPROCESS_WRITE_EXT: Self = Self(0b100_0000_0000_0000_0000);
 }
 #[doc = "Generated from 'VK_EXT_device_generated_commands'"]
 impl BufferUsageFlags2 {
@@ -4453,7 +4453,7 @@ impl PipelineCreateFlags2 {
 }
 #[doc = "Generated from 'VK_EXT_device_generated_commands'"]
 impl PipelineStageFlags {
-    pub const COMMAND_PREPROCESS_EXT: Self = Self::COMMAND_PREPROCESS_NV;
+    pub const COMMAND_PREPROCESS_EXT: Self = Self(0b10_0000_0000_0000_0000);
 }
 #[doc = "Generated from 'VK_EXT_device_generated_commands'"]
 impl ShaderCreateFlagsEXT {
@@ -4549,6 +4549,11 @@ impl StructureType {
 #[doc = "Generated from 'VK_EXT_vertex_attribute_robustness'"]
 impl StructureType {
     pub const PHYSICAL_DEVICE_VERTEX_ATTRIBUTE_ROBUSTNESS_FEATURES_EXT: Self = Self(1_000_608_000);
+}
+#[doc = "Generated from 'VK_NV_present_metering'"]
+impl StructureType {
+    pub const SET_PRESENT_CONFIG_NV: Self = Self(1_000_613_000);
+    pub const PHYSICAL_DEVICE_PRESENT_METERING_FEATURES_NV: Self = Self(1_000_613_001);
 }
 pub const KHR_SURFACE_NAME: &CStr =
     unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_KHR_surface\0") };
@@ -8729,3 +8734,6 @@ pub const KHR_DEPTH_CLAMP_ZERO_ONE_SPEC_VERSION: u32 = 1u32;
 pub const EXT_VERTEX_ATTRIBUTE_ROBUSTNESS_NAME: &CStr =
     unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_vertex_attribute_robustness\0") };
 pub const EXT_VERTEX_ATTRIBUTE_ROBUSTNESS_SPEC_VERSION: u32 = 1u32;
+pub const NV_PRESENT_METERING_NAME: &CStr =
+    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_NV_present_metering\0") };
+pub const NV_PRESENT_METERING_SPEC_VERSION: u32 = 1u32;

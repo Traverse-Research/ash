@@ -60,7 +60,7 @@ pub const API_VERSION_1_3: u32 = make_api_version(0, 1, 3, 0);
 #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_API_VERSION_1_4.html>"]
 pub const API_VERSION_1_4: u32 = make_api_version(0, 1, 4, 0);
 #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_HEADER_VERSION.html>"]
-pub const HEADER_VERSION: u32 = 307;
+pub const HEADER_VERSION: u32 = 310;
 #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_HEADER_VERSION_COMPLETE.html>"]
 pub const HEADER_VERSION_COMPLETE: u32 = make_api_version(0, 1, 4, HEADER_VERSION);
 #[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkSampleMask.html>"]
@@ -36280,6 +36280,10 @@ unsafe impl<'a> TaggedStructure for AccelerationStructureGeometryLinearSweptSphe
     const STRUCTURE_TYPE: StructureType =
         StructureType::ACCELERATION_STRUCTURE_GEOMETRY_LINEAR_SWEPT_SPHERES_DATA_NV;
 }
+unsafe impl ExtendsAccelerationStructureGeometryKHR
+    for AccelerationStructureGeometryLinearSweptSpheresDataNV<'_>
+{
+}
 impl<'a> AccelerationStructureGeometryLinearSweptSpheresDataNV<'a> {
     #[inline]
     pub fn vertex_format(mut self, vertex_format: Format) -> Self {
@@ -36398,6 +36402,10 @@ unsafe impl<'a> TaggedStructure for AccelerationStructureGeometrySpheresDataNV<'
     const STRUCTURE_TYPE: StructureType =
         StructureType::ACCELERATION_STRUCTURE_GEOMETRY_SPHERES_DATA_NV;
 }
+unsafe impl ExtendsAccelerationStructureGeometryKHR
+    for AccelerationStructureGeometrySpheresDataNV<'_>
+{
+}
 impl<'a> AccelerationStructureGeometrySpheresDataNV<'a> {
     #[inline]
     pub fn vertex_format(mut self, vertex_format: Format) -> Self {
@@ -36501,6 +36509,7 @@ impl ::core::default::Default for AccelerationStructureGeometryKHR<'_> {
 unsafe impl<'a> TaggedStructure for AccelerationStructureGeometryKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::ACCELERATION_STRUCTURE_GEOMETRY_KHR;
 }
+pub unsafe trait ExtendsAccelerationStructureGeometryKHR {}
 impl<'a> AccelerationStructureGeometryKHR<'a> {
     #[inline]
     pub fn geometry_type(mut self, geometry_type: GeometryTypeKHR) -> Self {
@@ -36515,6 +36524,23 @@ impl<'a> AccelerationStructureGeometryKHR<'a> {
     #[inline]
     pub fn flags(mut self, flags: GeometryFlagsKHR) -> Self {
         self.flags = flags;
+        self
+    }
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
+    #[doc = r" chain will look like `A -> D -> B -> C`."]
+    pub fn push_next<T: ExtendsAccelerationStructureGeometryKHR + ?Sized>(
+        mut self,
+        next: &'a mut T,
+    ) -> Self {
+        unsafe {
+            let next_ptr = <*const T>::cast(next);
+            let last_next = ptr_chain_iter(next).last().unwrap();
+            (*last_next).p_next = self.p_next as _;
+            self.p_next = next_ptr;
+        }
         self
     }
 }
@@ -42396,7 +42422,6 @@ unsafe impl<'a> TaggedStructure for MemoryBarrier2<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::MEMORY_BARRIER_2;
 }
 unsafe impl ExtendsSubpassDependency2 for MemoryBarrier2<'_> {}
-pub unsafe trait ExtendsMemoryBarrier2 {}
 impl<'a> MemoryBarrier2<'a> {
     #[inline]
     pub fn src_stage_mask(mut self, src_stage_mask: PipelineStageFlags2) -> Self {
@@ -42416,20 +42441,6 @@ impl<'a> MemoryBarrier2<'a> {
     #[inline]
     pub fn dst_access_mask(mut self, dst_access_mask: AccessFlags2) -> Self {
         self.dst_access_mask = dst_access_mask;
-        self
-    }
-    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
-    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
-    #[doc = r" valid extension structs can be pushed into the chain."]
-    #[doc = r" If the chain looks like `A -> B -> C`, and you call `x.push_next(&mut D)`, then the"]
-    #[doc = r" chain will look like `A -> D -> B -> C`."]
-    pub fn push_next<T: ExtendsMemoryBarrier2 + ?Sized>(mut self, next: &'a mut T) -> Self {
-        unsafe {
-            let next_ptr = <*const T>::cast(next);
-            let last_next = ptr_chain_iter(next).last().unwrap();
-            (*last_next).p_next = self.p_next as _;
-            self.p_next = next_ptr;
-        }
         self
     }
 }
@@ -42679,7 +42690,7 @@ impl ::core::default::Default for MemoryBarrierAccessFlags3KHR<'_> {
 unsafe impl<'a> TaggedStructure for MemoryBarrierAccessFlags3KHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::MEMORY_BARRIER_ACCESS_FLAGS_3_KHR;
 }
-unsafe impl ExtendsMemoryBarrier2 for MemoryBarrierAccessFlags3KHR<'_> {}
+unsafe impl ExtendsSubpassDependency2 for MemoryBarrierAccessFlags3KHR<'_> {}
 unsafe impl ExtendsBufferMemoryBarrier2 for MemoryBarrierAccessFlags3KHR<'_> {}
 unsafe impl ExtendsImageMemoryBarrier2 for MemoryBarrierAccessFlags3KHR<'_> {}
 impl<'a> MemoryBarrierAccessFlags3KHR<'a> {
@@ -64779,6 +64790,85 @@ impl<'a> ConvertCooperativeVectorMatrixInfoNV<'a> {
     #[inline]
     pub fn dst_stride(mut self, dst_stride: usize) -> Self {
         self.dst_stride = dst_stride;
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkSetPresentConfigNV.html>"]
+#[must_use]
+pub struct SetPresentConfigNV<'a> {
+    pub s_type: StructureType,
+    pub p_next: *const c_void,
+    pub num_frames_per_batch: u32,
+    pub present_config_feedback: u32,
+    pub _marker: PhantomData<&'a ()>,
+}
+unsafe impl Send for SetPresentConfigNV<'_> {}
+unsafe impl Sync for SetPresentConfigNV<'_> {}
+impl ::core::default::Default for SetPresentConfigNV<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::core::ptr::null(),
+            num_frames_per_batch: u32::default(),
+            present_config_feedback: u32::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for SetPresentConfigNV<'a> {
+    const STRUCTURE_TYPE: StructureType = StructureType::SET_PRESENT_CONFIG_NV;
+}
+unsafe impl ExtendsPresentInfoKHR for SetPresentConfigNV<'_> {}
+impl<'a> SetPresentConfigNV<'a> {
+    #[inline]
+    pub fn num_frames_per_batch(mut self, num_frames_per_batch: u32) -> Self {
+        self.num_frames_per_batch = num_frames_per_batch;
+        self
+    }
+    #[inline]
+    pub fn present_config_feedback(mut self, present_config_feedback: u32) -> Self {
+        self.present_config_feedback = present_config_feedback;
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkPhysicalDevicePresentMeteringFeaturesNV.html>"]
+#[must_use]
+pub struct PhysicalDevicePresentMeteringFeaturesNV<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub present_metering: Bool32,
+    pub _marker: PhantomData<&'a ()>,
+}
+unsafe impl Send for PhysicalDevicePresentMeteringFeaturesNV<'_> {}
+unsafe impl Sync for PhysicalDevicePresentMeteringFeaturesNV<'_> {}
+impl ::core::default::Default for PhysicalDevicePresentMeteringFeaturesNV<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::core::ptr::null_mut(),
+            present_metering: Bool32::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure for PhysicalDevicePresentMeteringFeaturesNV<'a> {
+    const STRUCTURE_TYPE: StructureType =
+        StructureType::PHYSICAL_DEVICE_PRESENT_METERING_FEATURES_NV;
+}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDevicePresentMeteringFeaturesNV<'_> {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDevicePresentMeteringFeaturesNV<'_> {}
+impl<'a> PhysicalDevicePresentMeteringFeaturesNV<'a> {
+    #[inline]
+    pub fn present_metering(mut self, present_metering: bool) -> Self {
+        self.present_metering = present_metering.into();
         self
     }
 }

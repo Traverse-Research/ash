@@ -20953,6 +20953,14 @@ pub mod nv {
             }
         }
     }
+    #[doc = "VK_NV_present_metering"]
+    pub mod present_metering {
+        use super::super::*;
+        pub use {
+            crate::vk::NV_PRESENT_METERING_NAME as NAME,
+            crate::vk::NV_PRESENT_METERING_SPEC_VERSION as SPEC_VERSION,
+        };
+    }
 }
 #[doc = "Extensions tagged NVX"]
 pub mod nvx {

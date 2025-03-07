@@ -186,12 +186,12 @@ impl fmt::Debug for AccessFlags {
                 "FRAGMENT_SHADING_RATE_ATTACHMENT_READ_KHR",
             ),
             (
-                AccessFlags::COMMAND_PREPROCESS_READ_NV.0,
-                "COMMAND_PREPROCESS_READ_NV",
+                AccessFlags::COMMAND_PREPROCESS_READ_EXT.0,
+                "COMMAND_PREPROCESS_READ_EXT",
             ),
             (
-                AccessFlags::COMMAND_PREPROCESS_WRITE_NV.0,
-                "COMMAND_PREPROCESS_WRITE_NV",
+                AccessFlags::COMMAND_PREPROCESS_WRITE_EXT.0,
+                "COMMAND_PREPROCESS_WRITE_EXT",
             ),
             (AccessFlags::NONE.0, "NONE"),
         ];
@@ -276,12 +276,12 @@ impl fmt::Debug for AccessFlags2 {
                 "CONDITIONAL_RENDERING_READ_EXT",
             ),
             (
-                AccessFlags2::COMMAND_PREPROCESS_READ_NV.0,
-                "COMMAND_PREPROCESS_READ_NV",
+                AccessFlags2::COMMAND_PREPROCESS_READ_EXT.0,
+                "COMMAND_PREPROCESS_READ_EXT",
             ),
             (
-                AccessFlags2::COMMAND_PREPROCESS_WRITE_NV.0,
-                "COMMAND_PREPROCESS_WRITE_NV",
+                AccessFlags2::COMMAND_PREPROCESS_WRITE_EXT.0,
+                "COMMAND_PREPROCESS_WRITE_EXT",
             ),
             (
                 AccessFlags2::FRAGMENT_SHADING_RATE_ATTACHMENT_READ_KHR.0,
@@ -4439,12 +4439,12 @@ impl fmt::Debug for PipelineStageFlags {
                 PipelineStageFlags::FRAGMENT_SHADING_RATE_ATTACHMENT_KHR.0,
                 "FRAGMENT_SHADING_RATE_ATTACHMENT_KHR",
             ),
-            (
-                PipelineStageFlags::COMMAND_PREPROCESS_NV.0,
-                "COMMAND_PREPROCESS_NV",
-            ),
             (PipelineStageFlags::TASK_SHADER_EXT.0, "TASK_SHADER_EXT"),
             (PipelineStageFlags::MESH_SHADER_EXT.0, "MESH_SHADER_EXT"),
+            (
+                PipelineStageFlags::COMMAND_PREPROCESS_EXT.0,
+                "COMMAND_PREPROCESS_EXT",
+            ),
             (PipelineStageFlags::NONE.0, "NONE"),
         ];
         debug_flags(f, KNOWN, self.0)
@@ -4510,8 +4510,8 @@ impl fmt::Debug for PipelineStageFlags2 {
                 "CONDITIONAL_RENDERING_EXT",
             ),
             (
-                PipelineStageFlags2::COMMAND_PREPROCESS_NV.0,
-                "COMMAND_PREPROCESS_NV",
+                PipelineStageFlags2::COMMAND_PREPROCESS_EXT.0,
+                "COMMAND_PREPROCESS_EXT",
             ),
             (
                 PipelineStageFlags2::FRAGMENT_SHADING_RATE_ATTACHMENT_KHR.0,
@@ -7227,6 +7227,10 @@ impl fmt::Debug for StructureType {
             }
             Self::PHYSICAL_DEVICE_VERTEX_ATTRIBUTE_ROBUSTNESS_FEATURES_EXT => {
                 Some("PHYSICAL_DEVICE_VERTEX_ATTRIBUTE_ROBUSTNESS_FEATURES_EXT")
+            }
+            Self::SET_PRESENT_CONFIG_NV => Some("SET_PRESENT_CONFIG_NV"),
+            Self::PHYSICAL_DEVICE_PRESENT_METERING_FEATURES_NV => {
+                Some("PHYSICAL_DEVICE_PRESENT_METERING_FEATURES_NV")
             }
             Self::PHYSICAL_DEVICE_SUBGROUP_PROPERTIES => {
                 Some("PHYSICAL_DEVICE_SUBGROUP_PROPERTIES")
