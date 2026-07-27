@@ -696,7 +696,7 @@ pub type PFN_vkGetInstanceProcAddrLUNARG = Option<
 >;
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
-#[derive(Copy, Clone)]
+#[derive(Copy, Clone, Default)]
 #[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkBaseOutStructure.html>"]
 #[must_use]
 pub struct BaseOutStructure<'a> {
@@ -706,19 +706,9 @@ pub struct BaseOutStructure<'a> {
 }
 unsafe impl Send for BaseOutStructure<'_> {}
 unsafe impl Sync for BaseOutStructure<'_> {}
-impl ::core::default::Default for BaseOutStructure<'_> {
-    #[inline]
-    fn default() -> Self {
-        Self {
-            s_type: unsafe { ::core::mem::zeroed() },
-            p_next: ::core::ptr::null_mut(),
-            _marker: PhantomData,
-        }
-    }
-}
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
-#[derive(Copy, Clone)]
+#[derive(Copy, Clone, Default)]
 #[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkBaseInStructure.html>"]
 #[must_use]
 pub struct BaseInStructure<'a> {
@@ -728,16 +718,6 @@ pub struct BaseInStructure<'a> {
 }
 unsafe impl Send for BaseInStructure<'_> {}
 unsafe impl Sync for BaseInStructure<'_> {}
-impl ::core::default::Default for BaseInStructure<'_> {
-    #[inline]
-    fn default() -> Self {
-        Self {
-            s_type: unsafe { ::core::mem::zeroed() },
-            p_next: ::core::ptr::null(),
-            _marker: PhantomData,
-        }
-    }
-}
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone, Default, PartialEq, Eq, Hash)]
@@ -994,17 +974,7 @@ impl fmt::Debug for PhysicalDeviceProperties {
 impl ::core::default::Default for PhysicalDeviceProperties {
     #[inline]
     fn default() -> Self {
-        Self {
-            api_version: u32::default(),
-            driver_version: u32::default(),
-            vendor_id: u32::default(),
-            device_id: u32::default(),
-            device_type: PhysicalDeviceType::default(),
-            device_name: unsafe { ::core::mem::zeroed() },
-            pipeline_cache_uuid: unsafe { ::core::mem::zeroed() },
-            limits: PhysicalDeviceLimits::default(),
-            sparse_properties: PhysicalDeviceSparseProperties::default(),
-        }
+        unsafe { ::core::mem::zeroed() }
     }
 }
 impl PhysicalDeviceProperties {
@@ -1080,10 +1050,7 @@ impl fmt::Debug for ExtensionProperties {
 impl ::core::default::Default for ExtensionProperties {
     #[inline]
     fn default() -> Self {
-        Self {
-            extension_name: unsafe { ::core::mem::zeroed() },
-            spec_version: u32::default(),
-        }
+        unsafe { ::core::mem::zeroed() }
     }
 }
 impl ExtensionProperties {
@@ -1128,12 +1095,7 @@ impl fmt::Debug for LayerProperties {
 impl ::core::default::Default for LayerProperties {
     #[inline]
     fn default() -> Self {
-        Self {
-            layer_name: unsafe { ::core::mem::zeroed() },
-            spec_version: u32::default(),
-            implementation_version: u32::default(),
-            description: unsafe { ::core::mem::zeroed() },
-        }
+        unsafe { ::core::mem::zeroed() }
     }
 }
 impl LayerProperties {
@@ -1190,16 +1152,7 @@ unsafe impl Sync for ApplicationInfo<'_> {}
 impl ::core::default::Default for ApplicationInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            p_application_name: ::core::ptr::null(),
-            application_version: u32::default(),
-            p_engine_name: ::core::ptr::null(),
-            engine_version: u32::default(),
-            api_version: u32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ApplicationInfo<'a> {
@@ -1290,14 +1243,7 @@ impl fmt::Debug for AllocationCallbacks {
 impl ::core::default::Default for AllocationCallbacks {
     #[inline]
     fn default() -> Self {
-        Self {
-            p_user_data: ::core::ptr::null_mut(),
-            pfn_allocation: PFN_vkAllocationFunction::default(),
-            pfn_reallocation: PFN_vkReallocationFunction::default(),
-            pfn_free: PFN_vkFreeFunction::default(),
-            pfn_internal_allocation: PFN_vkInternalAllocationNotification::default(),
-            pfn_internal_free: PFN_vkInternalFreeNotification::default(),
-        }
+        unsafe { ::core::mem::zeroed() }
     }
 }
 impl AllocationCallbacks {
@@ -1354,15 +1300,7 @@ unsafe impl Sync for DeviceQueueCreateInfo<'_> {}
 impl ::core::default::Default for DeviceQueueCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            flags: DeviceQueueCreateFlags::default(),
-            queue_family_index: u32::default(),
-            queue_count: u32::default(),
-            p_queue_priorities: ::core::ptr::null(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DeviceQueueCreateInfo<'a> {
@@ -1411,20 +1349,7 @@ unsafe impl Sync for DeviceCreateInfo<'_> {}
 impl ::core::default::Default for DeviceCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        #[allow(deprecated)]
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            flags: DeviceCreateFlags::default(),
-            queue_create_info_count: u32::default(),
-            p_queue_create_infos: ::core::ptr::null(),
-            enabled_layer_count: u32::default(),
-            pp_enabled_layer_names: ::core::ptr::null(),
-            enabled_extension_count: u32::default(),
-            pp_enabled_extension_names: ::core::ptr::null(),
-            p_enabled_features: ::core::ptr::null(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DeviceCreateInfo<'a> {
@@ -1486,17 +1411,7 @@ unsafe impl Sync for InstanceCreateInfo<'_> {}
 impl ::core::default::Default for InstanceCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            flags: InstanceCreateFlags::default(),
-            p_application_info: ::core::ptr::null(),
-            enabled_layer_count: u32::default(),
-            pp_enabled_layer_names: ::core::ptr::null(),
-            enabled_extension_count: u32::default(),
-            pp_enabled_extension_names: ::core::ptr::null(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for InstanceCreateInfo<'a> {
@@ -1586,12 +1501,7 @@ impl fmt::Debug for PhysicalDeviceMemoryProperties {
 impl ::core::default::Default for PhysicalDeviceMemoryProperties {
     #[inline]
     fn default() -> Self {
-        Self {
-            memory_type_count: u32::default(),
-            memory_types: unsafe { ::core::mem::zeroed() },
-            memory_heap_count: u32::default(),
-            memory_heaps: unsafe { ::core::mem::zeroed() },
-        }
+        unsafe { ::core::mem::zeroed() }
     }
 }
 impl PhysicalDeviceMemoryProperties {
@@ -1633,13 +1543,7 @@ unsafe impl Sync for MemoryAllocateInfo<'_> {}
 impl ::core::default::Default for MemoryAllocateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            allocation_size: DeviceSize::default(),
-            memory_type_index: u32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for MemoryAllocateInfo<'a> {
@@ -1810,14 +1714,7 @@ unsafe impl Sync for MappedMemoryRange<'_> {}
 impl ::core::default::Default for MappedMemoryRange<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            memory: DeviceMemory::default(),
-            offset: DeviceSize::default(),
-            size: DeviceSize::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for MappedMemoryRange<'a> {
@@ -1983,19 +1880,7 @@ unsafe impl Sync for WriteDescriptorSet<'_> {}
 impl ::core::default::Default for WriteDescriptorSet<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            dst_set: DescriptorSet::default(),
-            dst_binding: u32::default(),
-            dst_array_element: u32::default(),
-            descriptor_count: u32::default(),
-            descriptor_type: DescriptorType::default(),
-            p_image_info: ::core::ptr::null(),
-            p_buffer_info: ::core::ptr::null(),
-            p_texel_buffer_view: ::core::ptr::null(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for WriteDescriptorSet<'a> {
@@ -2068,18 +1953,7 @@ unsafe impl Sync for CopyDescriptorSet<'_> {}
 impl ::core::default::Default for CopyDescriptorSet<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            src_set: DescriptorSet::default(),
-            src_binding: u32::default(),
-            src_array_element: u32::default(),
-            dst_set: DescriptorSet::default(),
-            dst_binding: u32::default(),
-            dst_array_element: u32::default(),
-            descriptor_count: u32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for CopyDescriptorSet<'a> {
@@ -2138,12 +2012,7 @@ unsafe impl Sync for BufferUsageFlags2CreateInfo<'_> {}
 impl ::core::default::Default for BufferUsageFlags2CreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            usage: BufferUsageFlags2::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for BufferUsageFlags2CreateInfo<'a> {
@@ -2181,17 +2050,7 @@ unsafe impl Sync for BufferCreateInfo<'_> {}
 impl ::core::default::Default for BufferCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            flags: BufferCreateFlags::default(),
-            size: DeviceSize::default(),
-            usage: BufferUsageFlags::default(),
-            sharing_mode: SharingMode::default(),
-            queue_family_index_count: u32::default(),
-            p_queue_family_indices: ::core::ptr::null(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for BufferCreateInfo<'a> {
@@ -2245,16 +2104,7 @@ unsafe impl Sync for BufferViewCreateInfo<'_> {}
 impl ::core::default::Default for BufferViewCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            flags: BufferViewCreateFlags::default(),
-            buffer: Buffer::default(),
-            format: Format::default(),
-            offset: DeviceSize::default(),
-            range: DeviceSize::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for BufferViewCreateInfo<'a> {
@@ -2403,13 +2253,7 @@ unsafe impl Sync for MemoryBarrier<'_> {}
 impl ::core::default::Default for MemoryBarrier<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            src_access_mask: AccessFlags::default(),
-            dst_access_mask: AccessFlags::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for MemoryBarrier<'a> {
@@ -2449,18 +2293,7 @@ unsafe impl Sync for BufferMemoryBarrier<'_> {}
 impl ::core::default::Default for BufferMemoryBarrier<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            src_access_mask: AccessFlags::default(),
-            dst_access_mask: AccessFlags::default(),
-            src_queue_family_index: u32::default(),
-            dst_queue_family_index: u32::default(),
-            buffer: Buffer::default(),
-            offset: DeviceSize::default(),
-            size: DeviceSize::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for BufferMemoryBarrier<'a> {
@@ -2526,19 +2359,7 @@ unsafe impl Sync for ImageMemoryBarrier<'_> {}
 impl ::core::default::Default for ImageMemoryBarrier<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            src_access_mask: AccessFlags::default(),
-            dst_access_mask: AccessFlags::default(),
-            old_layout: ImageLayout::default(),
-            new_layout: ImageLayout::default(),
-            src_queue_family_index: u32::default(),
-            dst_queue_family_index: u32::default(),
-            image: Image::default(),
-            subresource_range: ImageSubresourceRange::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ImageMemoryBarrier<'a> {
@@ -2614,24 +2435,7 @@ unsafe impl Sync for ImageCreateInfo<'_> {}
 impl ::core::default::Default for ImageCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            flags: ImageCreateFlags::default(),
-            image_type: ImageType::default(),
-            format: Format::default(),
-            extent: Extent3D::default(),
-            mip_levels: u32::default(),
-            array_layers: u32::default(),
-            samples: SampleCountFlags::default(),
-            tiling: ImageTiling::default(),
-            usage: ImageUsageFlags::default(),
-            sharing_mode: SharingMode::default(),
-            queue_family_index_count: u32::default(),
-            p_queue_family_indices: ::core::ptr::null(),
-            initial_layout: ImageLayout::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ImageCreateInfo<'a> {
@@ -2760,17 +2564,7 @@ unsafe impl Sync for ImageViewCreateInfo<'_> {}
 impl ::core::default::Default for ImageViewCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            flags: ImageViewCreateFlags::default(),
-            image: Image::default(),
-            view_type: ImageViewType::default(),
-            format: Format::default(),
-            components: ComponentMapping::default(),
-            subresource_range: ImageSubresourceRange::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ImageViewCreateInfo<'a> {
@@ -2935,12 +2729,7 @@ unsafe impl Sync for SparseBufferMemoryBindInfo<'_> {}
 impl ::core::default::Default for SparseBufferMemoryBindInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            buffer: Buffer::default(),
-            bind_count: u32::default(),
-            p_binds: ::core::ptr::null(),
-            _marker: PhantomData,
-        }
+        unsafe { ::core::mem::zeroed() }
     }
 }
 impl<'a> SparseBufferMemoryBindInfo<'a> {
@@ -2972,12 +2761,7 @@ unsafe impl Sync for SparseImageOpaqueMemoryBindInfo<'_> {}
 impl ::core::default::Default for SparseImageOpaqueMemoryBindInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            image: Image::default(),
-            bind_count: u32::default(),
-            p_binds: ::core::ptr::null(),
-            _marker: PhantomData,
-        }
+        unsafe { ::core::mem::zeroed() }
     }
 }
 impl<'a> SparseImageOpaqueMemoryBindInfo<'a> {
@@ -3009,12 +2793,7 @@ unsafe impl Sync for SparseImageMemoryBindInfo<'_> {}
 impl ::core::default::Default for SparseImageMemoryBindInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            image: Image::default(),
-            bind_count: u32::default(),
-            p_binds: ::core::ptr::null(),
-            _marker: PhantomData,
-        }
+        unsafe { ::core::mem::zeroed() }
     }
 }
 impl<'a> SparseImageMemoryBindInfo<'a> {
@@ -3055,21 +2834,7 @@ unsafe impl Sync for BindSparseInfo<'_> {}
 impl ::core::default::Default for BindSparseInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            wait_semaphore_count: u32::default(),
-            p_wait_semaphores: ::core::ptr::null(),
-            buffer_bind_count: u32::default(),
-            p_buffer_binds: ::core::ptr::null(),
-            image_opaque_bind_count: u32::default(),
-            p_image_opaque_binds: ::core::ptr::null(),
-            image_bind_count: u32::default(),
-            p_image_binds: ::core::ptr::null(),
-            signal_semaphore_count: u32::default(),
-            p_signal_semaphores: ::core::ptr::null(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for BindSparseInfo<'a> {
@@ -3163,12 +2928,7 @@ pub struct ImageBlit {
 impl ::core::default::Default for ImageBlit {
     #[inline]
     fn default() -> Self {
-        Self {
-            src_subresource: ImageSubresourceLayers::default(),
-            src_offsets: unsafe { ::core::mem::zeroed() },
-            dst_subresource: ImageSubresourceLayers::default(),
-            dst_offsets: unsafe { ::core::mem::zeroed() },
-        }
+        unsafe { ::core::mem::zeroed() }
     }
 }
 impl ImageBlit {
@@ -3311,15 +3071,7 @@ unsafe impl Sync for CopyMemoryIndirectInfoKHR<'_> {}
 impl ::core::default::Default for CopyMemoryIndirectInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            src_copy_flags: AddressCopyFlagsKHR::default(),
-            dst_copy_flags: AddressCopyFlagsKHR::default(),
-            copy_count: u32::default(),
-            copy_address_range: StridedDeviceAddressRangeKHR::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for CopyMemoryIndirectInfoKHR<'a> {
@@ -3413,17 +3165,7 @@ unsafe impl Sync for CopyMemoryToImageIndirectInfoKHR<'_> {}
 impl ::core::default::Default for CopyMemoryToImageIndirectInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            src_copy_flags: AddressCopyFlagsKHR::default(),
-            copy_count: u32::default(),
-            copy_address_range: StridedDeviceAddressRangeKHR::default(),
-            dst_image: Image::default(),
-            dst_image_layout: ImageLayout::default(),
-            p_image_subresources: ::core::ptr::null(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for CopyMemoryToImageIndirectInfoKHR<'a> {
@@ -3514,14 +3256,7 @@ unsafe impl Sync for ShaderModuleCreateInfo<'_> {}
 impl ::core::default::Default for ShaderModuleCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            flags: ShaderModuleCreateFlags::default(),
-            code_size: usize::default(),
-            p_code: ::core::ptr::null(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ShaderModuleCreateInfo<'a> {
@@ -3560,14 +3295,7 @@ unsafe impl Sync for DescriptorSetLayoutBinding<'_> {}
 impl ::core::default::Default for DescriptorSetLayoutBinding<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            binding: u32::default(),
-            descriptor_type: DescriptorType::default(),
-            descriptor_count: u32::default(),
-            stage_flags: ShaderStageFlags::default(),
-            p_immutable_samplers: ::core::ptr::null(),
-            _marker: PhantomData,
-        }
+        unsafe { ::core::mem::zeroed() }
     }
 }
 impl<'a> DescriptorSetLayoutBinding<'a> {
@@ -3616,14 +3344,7 @@ unsafe impl Sync for DescriptorSetLayoutCreateInfo<'_> {}
 impl ::core::default::Default for DescriptorSetLayoutCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            flags: DescriptorSetLayoutCreateFlags::default(),
-            binding_count: u32::default(),
-            p_bindings: ::core::ptr::null(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DescriptorSetLayoutCreateInfo<'a> {
@@ -3682,15 +3403,7 @@ unsafe impl Sync for DescriptorPoolCreateInfo<'_> {}
 impl ::core::default::Default for DescriptorPoolCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            flags: DescriptorPoolCreateFlags::default(),
-            max_sets: u32::default(),
-            pool_size_count: u32::default(),
-            p_pool_sizes: ::core::ptr::null(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DescriptorPoolCreateInfo<'a> {
@@ -3732,14 +3445,7 @@ unsafe impl Sync for DescriptorSetAllocateInfo<'_> {}
 impl ::core::default::Default for DescriptorSetAllocateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            descriptor_pool: DescriptorPool::default(),
-            descriptor_set_count: u32::default(),
-            p_set_layouts: ::core::ptr::null(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DescriptorSetAllocateInfo<'a> {
@@ -3802,13 +3508,7 @@ unsafe impl Sync for SpecializationInfo<'_> {}
 impl ::core::default::Default for SpecializationInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            map_entry_count: u32::default(),
-            p_map_entries: ::core::ptr::null(),
-            data_size: usize::default(),
-            p_data: ::core::ptr::null(),
-            _marker: PhantomData,
-        }
+        unsafe { ::core::mem::zeroed() }
     }
 }
 impl<'a> SpecializationInfo<'a> {
@@ -3845,16 +3545,7 @@ unsafe impl Sync for PipelineShaderStageCreateInfo<'_> {}
 impl ::core::default::Default for PipelineShaderStageCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            flags: PipelineShaderStageCreateFlags::default(),
-            stage: ShaderStageFlags::default(),
-            module: ShaderModule::default(),
-            p_name: ::core::ptr::null(),
-            p_specialization_info: ::core::ptr::null(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PipelineShaderStageCreateInfo<'a> {
@@ -3915,16 +3606,7 @@ unsafe impl Sync for ComputePipelineCreateInfo<'_> {}
 impl ::core::default::Default for ComputePipelineCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            flags: PipelineCreateFlags::default(),
-            stage: PipelineShaderStageCreateInfo::default(),
-            layout: PipelineLayout::default(),
-            base_pipeline_handle: Pipeline::default(),
-            base_pipeline_index: i32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ComputePipelineCreateInfo<'a> {
@@ -3975,14 +3657,7 @@ unsafe impl Sync for ComputePipelineIndirectBufferInfoNV<'_> {}
 impl ::core::default::Default for ComputePipelineIndirectBufferInfoNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            device_address: DeviceAddress::default(),
-            size: DeviceSize::default(),
-            pipeline_device_address_capture_replay: DeviceAddress::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ComputePipelineIndirectBufferInfoNV<'a> {
@@ -4025,12 +3700,7 @@ unsafe impl Sync for PipelineCreateFlags2CreateInfo<'_> {}
 impl ::core::default::Default for PipelineCreateFlags2CreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            flags: PipelineCreateFlags2::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PipelineCreateFlags2CreateInfo<'a> {
@@ -4127,16 +3797,7 @@ unsafe impl Sync for PipelineVertexInputStateCreateInfo<'_> {}
 impl ::core::default::Default for PipelineVertexInputStateCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            flags: PipelineVertexInputStateCreateFlags::default(),
-            vertex_binding_description_count: u32::default(),
-            p_vertex_binding_descriptions: ::core::ptr::null(),
-            vertex_attribute_description_count: u32::default(),
-            p_vertex_attribute_descriptions: ::core::ptr::null(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PipelineVertexInputStateCreateInfo<'a> {
@@ -4185,14 +3846,7 @@ unsafe impl Sync for PipelineInputAssemblyStateCreateInfo<'_> {}
 impl ::core::default::Default for PipelineInputAssemblyStateCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            flags: PipelineInputAssemblyStateCreateFlags::default(),
-            topology: PrimitiveTopology::default(),
-            primitive_restart_enable: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PipelineInputAssemblyStateCreateInfo<'a> {
@@ -4232,13 +3886,7 @@ unsafe impl Sync for PipelineTessellationStateCreateInfo<'_> {}
 impl ::core::default::Default for PipelineTessellationStateCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            flags: PipelineTessellationStateCreateFlags::default(),
-            patch_control_points: u32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PipelineTessellationStateCreateInfo<'a> {
@@ -4276,16 +3924,7 @@ unsafe impl Sync for PipelineViewportStateCreateInfo<'_> {}
 impl ::core::default::Default for PipelineViewportStateCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            flags: PipelineViewportStateCreateFlags::default(),
-            viewport_count: u32::default(),
-            p_viewports: ::core::ptr::null(),
-            scissor_count: u32::default(),
-            p_scissors: ::core::ptr::null(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PipelineViewportStateCreateInfo<'a> {
@@ -4346,22 +3985,7 @@ unsafe impl Sync for PipelineRasterizationStateCreateInfo<'_> {}
 impl ::core::default::Default for PipelineRasterizationStateCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            flags: PipelineRasterizationStateCreateFlags::default(),
-            depth_clamp_enable: Bool32::default(),
-            rasterizer_discard_enable: Bool32::default(),
-            polygon_mode: PolygonMode::default(),
-            cull_mode: CullModeFlags::default(),
-            front_face: FrontFace::default(),
-            depth_bias_enable: Bool32::default(),
-            depth_bias_constant_factor: f32::default(),
-            depth_bias_clamp: f32::default(),
-            depth_bias_slope_factor: f32::default(),
-            line_width: f32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PipelineRasterizationStateCreateInfo<'a> {
@@ -4446,18 +4070,7 @@ unsafe impl Sync for PipelineMultisampleStateCreateInfo<'_> {}
 impl ::core::default::Default for PipelineMultisampleStateCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            flags: PipelineMultisampleStateCreateFlags::default(),
-            rasterization_samples: SampleCountFlags::default(),
-            sample_shading_enable: Bool32::default(),
-            min_sample_shading: f32::default(),
-            p_sample_mask: ::core::ptr::null(),
-            alpha_to_coverage_enable: Bool32::default(),
-            alpha_to_one_enable: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PipelineMultisampleStateCreateInfo<'a> {
@@ -4587,17 +4200,7 @@ unsafe impl Sync for PipelineColorBlendStateCreateInfo<'_> {}
 impl ::core::default::Default for PipelineColorBlendStateCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            flags: PipelineColorBlendStateCreateFlags::default(),
-            logic_op_enable: Bool32::default(),
-            logic_op: LogicOp::default(),
-            attachment_count: u32::default(),
-            p_attachments: ::core::ptr::null(),
-            blend_constants: unsafe { ::core::mem::zeroed() },
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PipelineColorBlendStateCreateInfo<'a> {
@@ -4649,14 +4252,7 @@ unsafe impl Sync for PipelineDynamicStateCreateInfo<'_> {}
 impl ::core::default::Default for PipelineDynamicStateCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            flags: PipelineDynamicStateCreateFlags::default(),
-            dynamic_state_count: u32::default(),
-            p_dynamic_states: ::core::ptr::null(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PipelineDynamicStateCreateInfo<'a> {
@@ -4751,21 +4347,7 @@ unsafe impl Sync for PipelineDepthStencilStateCreateInfo<'_> {}
 impl ::core::default::Default for PipelineDepthStencilStateCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            flags: PipelineDepthStencilStateCreateFlags::default(),
-            depth_test_enable: Bool32::default(),
-            depth_write_enable: Bool32::default(),
-            depth_compare_op: CompareOp::default(),
-            depth_bounds_test_enable: Bool32::default(),
-            stencil_test_enable: Bool32::default(),
-            front: StencilOpState::default(),
-            back: StencilOpState::default(),
-            min_depth_bounds: f32::default(),
-            max_depth_bounds: f32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PipelineDepthStencilStateCreateInfo<'a> {
@@ -4855,28 +4437,7 @@ unsafe impl Sync for GraphicsPipelineCreateInfo<'_> {}
 impl ::core::default::Default for GraphicsPipelineCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            flags: PipelineCreateFlags::default(),
-            stage_count: u32::default(),
-            p_stages: ::core::ptr::null(),
-            p_vertex_input_state: ::core::ptr::null(),
-            p_input_assembly_state: ::core::ptr::null(),
-            p_tessellation_state: ::core::ptr::null(),
-            p_viewport_state: ::core::ptr::null(),
-            p_rasterization_state: ::core::ptr::null(),
-            p_multisample_state: ::core::ptr::null(),
-            p_depth_stencil_state: ::core::ptr::null(),
-            p_color_blend_state: ::core::ptr::null(),
-            p_dynamic_state: ::core::ptr::null(),
-            layout: PipelineLayout::default(),
-            render_pass: RenderPass::default(),
-            subpass: u32::default(),
-            base_pipeline_handle: Pipeline::default(),
-            base_pipeline_index: i32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for GraphicsPipelineCreateInfo<'a> {
@@ -5007,14 +4568,7 @@ unsafe impl Sync for PipelineCacheCreateInfo<'_> {}
 impl ::core::default::Default for PipelineCacheCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            flags: PipelineCacheCreateFlags::default(),
-            initial_data_size: usize::default(),
-            p_initial_data: ::core::ptr::null(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PipelineCacheCreateInfo<'a> {
@@ -5048,13 +4602,7 @@ pub struct PipelineCacheHeaderVersionOne {
 impl ::core::default::Default for PipelineCacheHeaderVersionOne {
     #[inline]
     fn default() -> Self {
-        Self {
-            header_size: u32::default(),
-            header_version: PipelineCacheHeaderVersion::default(),
-            vendor_id: u32::default(),
-            device_id: u32::default(),
-            pipeline_cache_uuid: unsafe { ::core::mem::zeroed() },
-        }
+        unsafe { ::core::mem::zeroed() }
     }
 }
 impl PipelineCacheHeaderVersionOne {
@@ -5099,13 +4647,7 @@ pub struct PipelineCacheHeaderVersionDataGraphQCOM {
 impl ::core::default::Default for PipelineCacheHeaderVersionDataGraphQCOM {
     #[inline]
     fn default() -> Self {
-        Self {
-            header_size: u32::default(),
-            header_version: PipelineCacheHeaderVersion::default(),
-            cache_type: DataGraphModelCacheTypeQCOM::default(),
-            cache_version: u32::default(),
-            toolchain_version: unsafe { ::core::mem::zeroed() },
-        }
+        unsafe { ::core::mem::zeroed() }
     }
 }
 impl PipelineCacheHeaderVersionDataGraphQCOM {
@@ -5183,14 +4725,7 @@ unsafe impl Sync for PipelineBinaryCreateInfoKHR<'_> {}
 impl ::core::default::Default for PipelineBinaryCreateInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            p_keys_and_data_info: ::core::ptr::null(),
-            pipeline: Pipeline::default(),
-            p_pipeline_create_info: ::core::ptr::null(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PipelineBinaryCreateInfoKHR<'a> {
@@ -5236,13 +4771,7 @@ unsafe impl Sync for PipelineBinaryHandlesInfoKHR<'_> {}
 impl ::core::default::Default for PipelineBinaryHandlesInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            pipeline_binary_count: u32::default(),
-            p_pipeline_binaries: ::core::ptr::null_mut(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PipelineBinaryHandlesInfoKHR<'a> {
@@ -5271,11 +4800,7 @@ unsafe impl Sync for PipelineBinaryDataKHR<'_> {}
 impl ::core::default::Default for PipelineBinaryDataKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            data_size: usize::default(),
-            p_data: ::core::ptr::null_mut(),
-            _marker: PhantomData,
-        }
+        unsafe { ::core::mem::zeroed() }
     }
 }
 impl<'a> PipelineBinaryDataKHR<'a> {
@@ -5302,12 +4827,7 @@ unsafe impl Sync for PipelineBinaryKeysAndDataKHR<'_> {}
 impl ::core::default::Default for PipelineBinaryKeysAndDataKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            binary_count: u32::default(),
-            p_pipeline_binary_keys: ::core::ptr::null(),
-            p_pipeline_binary_data: ::core::ptr::null(),
-            _marker: PhantomData,
-        }
+        unsafe { ::core::mem::zeroed() }
     }
 }
 impl<'a> PipelineBinaryKeysAndDataKHR<'a> {
@@ -5347,13 +4867,7 @@ unsafe impl Sync for PipelineBinaryKeyKHR<'_> {}
 impl ::core::default::Default for PipelineBinaryKeyKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            key_size: u32::default(),
-            key: unsafe { ::core::mem::zeroed() },
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PipelineBinaryKeyKHR<'a> {
@@ -5388,13 +4902,7 @@ unsafe impl Sync for PipelineBinaryInfoKHR<'_> {}
 impl ::core::default::Default for PipelineBinaryInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            binary_count: u32::default(),
-            p_pipeline_binaries: ::core::ptr::null(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PipelineBinaryInfoKHR<'a> {
@@ -5427,12 +4935,7 @@ unsafe impl Sync for ReleaseCapturedPipelineDataInfoKHR<'_> {}
 impl ::core::default::Default for ReleaseCapturedPipelineDataInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            pipeline: Pipeline::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ReleaseCapturedPipelineDataInfoKHR<'a> {
@@ -5461,12 +4964,7 @@ unsafe impl Sync for PipelineBinaryDataInfoKHR<'_> {}
 impl ::core::default::Default for PipelineBinaryDataInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            pipeline_binary: PipelineBinaryKHR::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PipelineBinaryDataInfoKHR<'a> {
@@ -5494,11 +4992,7 @@ unsafe impl Sync for PipelineCreateInfoKHR<'_> {}
 impl ::core::default::Default for PipelineCreateInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PipelineCreateInfoKHR<'a> {
@@ -5525,16 +5019,7 @@ unsafe impl Sync for PipelineLayoutCreateInfo<'_> {}
 impl ::core::default::Default for PipelineLayoutCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            flags: PipelineLayoutCreateFlags::default(),
-            set_layout_count: u32::default(),
-            p_set_layouts: ::core::ptr::null(),
-            push_constant_range_count: u32::default(),
-            p_push_constant_ranges: ::core::ptr::null(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PipelineLayoutCreateInfo<'a> {
@@ -5600,27 +5085,7 @@ unsafe impl Sync for SamplerCreateInfo<'_> {}
 impl ::core::default::Default for SamplerCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            flags: SamplerCreateFlags::default(),
-            mag_filter: Filter::default(),
-            min_filter: Filter::default(),
-            mipmap_mode: SamplerMipmapMode::default(),
-            address_mode_u: SamplerAddressMode::default(),
-            address_mode_v: SamplerAddressMode::default(),
-            address_mode_w: SamplerAddressMode::default(),
-            mip_lod_bias: f32::default(),
-            anisotropy_enable: Bool32::default(),
-            max_anisotropy: f32::default(),
-            compare_enable: Bool32::default(),
-            compare_op: CompareOp::default(),
-            min_lod: f32::default(),
-            max_lod: f32::default(),
-            border_color: BorderColor::default(),
-            unnormalized_coordinates: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for SamplerCreateInfo<'a> {
@@ -5725,13 +5190,7 @@ unsafe impl Sync for CommandPoolCreateInfo<'_> {}
 impl ::core::default::Default for CommandPoolCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            flags: CommandPoolCreateFlags::default(),
-            queue_family_index: u32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for CommandPoolCreateInfo<'a> {
@@ -5767,14 +5226,7 @@ unsafe impl Sync for CommandBufferAllocateInfo<'_> {}
 impl ::core::default::Default for CommandBufferAllocateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            command_pool: CommandPool::default(),
-            level: CommandBufferLevel::default(),
-            command_buffer_count: u32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for CommandBufferAllocateInfo<'a> {
@@ -5818,17 +5270,7 @@ unsafe impl Sync for CommandBufferInheritanceInfo<'_> {}
 impl ::core::default::Default for CommandBufferInheritanceInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            render_pass: RenderPass::default(),
-            subpass: u32::default(),
-            framebuffer: Framebuffer::default(),
-            occlusion_query_enable: Bool32::default(),
-            query_flags: QueryControlFlags::default(),
-            pipeline_statistics: QueryPipelineStatisticFlags::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for CommandBufferInheritanceInfo<'a> {
@@ -5883,13 +5325,7 @@ unsafe impl Sync for CommandBufferBeginInfo<'_> {}
 impl ::core::default::Default for CommandBufferBeginInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            flags: CommandBufferUsageFlags::default(),
-            p_inheritance_info: ::core::ptr::null(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for CommandBufferBeginInfo<'a> {
@@ -5943,16 +5379,7 @@ impl fmt::Debug for RenderPassBeginInfo<'_> {
 impl ::core::default::Default for RenderPassBeginInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            render_pass: RenderPass::default(),
-            framebuffer: Framebuffer::default(),
-            render_area: Rect2D::default(),
-            clear_value_count: u32::default(),
-            p_clear_values: ::core::ptr::null(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for RenderPassBeginInfo<'a> {
@@ -6172,19 +5599,7 @@ unsafe impl Sync for SubpassDescription<'_> {}
 impl ::core::default::Default for SubpassDescription<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            flags: SubpassDescriptionFlags::default(),
-            pipeline_bind_point: PipelineBindPoint::default(),
-            input_attachment_count: u32::default(),
-            p_input_attachments: ::core::ptr::null(),
-            color_attachment_count: u32::default(),
-            p_color_attachments: ::core::ptr::null(),
-            p_resolve_attachments: ::core::ptr::null(),
-            p_depth_stencil_attachment: ::core::ptr::null(),
-            preserve_attachment_count: u32::default(),
-            p_preserve_attachments: ::core::ptr::null(),
-            _marker: PhantomData,
-        }
+        unsafe { ::core::mem::zeroed() }
     }
 }
 impl<'a> SubpassDescription<'a> {
@@ -6304,18 +5719,7 @@ unsafe impl Sync for RenderPassCreateInfo<'_> {}
 impl ::core::default::Default for RenderPassCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            flags: RenderPassCreateFlags::default(),
-            attachment_count: u32::default(),
-            p_attachments: ::core::ptr::null(),
-            subpass_count: u32::default(),
-            p_subpasses: ::core::ptr::null(),
-            dependency_count: u32::default(),
-            p_dependencies: ::core::ptr::null(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for RenderPassCreateInfo<'a> {
@@ -6362,12 +5766,7 @@ unsafe impl Sync for EventCreateInfo<'_> {}
 impl ::core::default::Default for EventCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            flags: EventCreateFlags::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for EventCreateInfo<'a> {
@@ -6396,12 +5795,7 @@ unsafe impl Sync for FenceCreateInfo<'_> {}
 impl ::core::default::Default for FenceCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            flags: FenceCreateFlags::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for FenceCreateInfo<'a> {
@@ -6955,114 +6349,7 @@ pub struct PhysicalDeviceLimits {
 impl ::core::default::Default for PhysicalDeviceLimits {
     #[inline]
     fn default() -> Self {
-        Self {
-            max_image_dimension1_d: u32::default(),
-            max_image_dimension2_d: u32::default(),
-            max_image_dimension3_d: u32::default(),
-            max_image_dimension_cube: u32::default(),
-            max_image_array_layers: u32::default(),
-            max_texel_buffer_elements: u32::default(),
-            max_uniform_buffer_range: u32::default(),
-            max_storage_buffer_range: u32::default(),
-            max_push_constants_size: u32::default(),
-            max_memory_allocation_count: u32::default(),
-            max_sampler_allocation_count: u32::default(),
-            buffer_image_granularity: DeviceSize::default(),
-            sparse_address_space_size: DeviceSize::default(),
-            max_bound_descriptor_sets: u32::default(),
-            max_per_stage_descriptor_samplers: u32::default(),
-            max_per_stage_descriptor_uniform_buffers: u32::default(),
-            max_per_stage_descriptor_storage_buffers: u32::default(),
-            max_per_stage_descriptor_sampled_images: u32::default(),
-            max_per_stage_descriptor_storage_images: u32::default(),
-            max_per_stage_descriptor_input_attachments: u32::default(),
-            max_per_stage_resources: u32::default(),
-            max_descriptor_set_samplers: u32::default(),
-            max_descriptor_set_uniform_buffers: u32::default(),
-            max_descriptor_set_uniform_buffers_dynamic: u32::default(),
-            max_descriptor_set_storage_buffers: u32::default(),
-            max_descriptor_set_storage_buffers_dynamic: u32::default(),
-            max_descriptor_set_sampled_images: u32::default(),
-            max_descriptor_set_storage_images: u32::default(),
-            max_descriptor_set_input_attachments: u32::default(),
-            max_vertex_input_attributes: u32::default(),
-            max_vertex_input_bindings: u32::default(),
-            max_vertex_input_attribute_offset: u32::default(),
-            max_vertex_input_binding_stride: u32::default(),
-            max_vertex_output_components: u32::default(),
-            max_tessellation_generation_level: u32::default(),
-            max_tessellation_patch_size: u32::default(),
-            max_tessellation_control_per_vertex_input_components: u32::default(),
-            max_tessellation_control_per_vertex_output_components: u32::default(),
-            max_tessellation_control_per_patch_output_components: u32::default(),
-            max_tessellation_control_total_output_components: u32::default(),
-            max_tessellation_evaluation_input_components: u32::default(),
-            max_tessellation_evaluation_output_components: u32::default(),
-            max_geometry_shader_invocations: u32::default(),
-            max_geometry_input_components: u32::default(),
-            max_geometry_output_components: u32::default(),
-            max_geometry_output_vertices: u32::default(),
-            max_geometry_total_output_components: u32::default(),
-            max_fragment_input_components: u32::default(),
-            max_fragment_output_attachments: u32::default(),
-            max_fragment_dual_src_attachments: u32::default(),
-            max_fragment_combined_output_resources: u32::default(),
-            max_compute_shared_memory_size: u32::default(),
-            max_compute_work_group_count: unsafe { ::core::mem::zeroed() },
-            max_compute_work_group_invocations: u32::default(),
-            max_compute_work_group_size: unsafe { ::core::mem::zeroed() },
-            sub_pixel_precision_bits: u32::default(),
-            sub_texel_precision_bits: u32::default(),
-            mipmap_precision_bits: u32::default(),
-            max_draw_indexed_index_value: u32::default(),
-            max_draw_indirect_count: u32::default(),
-            max_sampler_lod_bias: f32::default(),
-            max_sampler_anisotropy: f32::default(),
-            max_viewports: u32::default(),
-            max_viewport_dimensions: unsafe { ::core::mem::zeroed() },
-            viewport_bounds_range: unsafe { ::core::mem::zeroed() },
-            viewport_sub_pixel_bits: u32::default(),
-            min_memory_map_alignment: usize::default(),
-            min_texel_buffer_offset_alignment: DeviceSize::default(),
-            min_uniform_buffer_offset_alignment: DeviceSize::default(),
-            min_storage_buffer_offset_alignment: DeviceSize::default(),
-            min_texel_offset: i32::default(),
-            max_texel_offset: u32::default(),
-            min_texel_gather_offset: i32::default(),
-            max_texel_gather_offset: u32::default(),
-            min_interpolation_offset: f32::default(),
-            max_interpolation_offset: f32::default(),
-            sub_pixel_interpolation_offset_bits: u32::default(),
-            max_framebuffer_width: u32::default(),
-            max_framebuffer_height: u32::default(),
-            max_framebuffer_layers: u32::default(),
-            framebuffer_color_sample_counts: SampleCountFlags::default(),
-            framebuffer_depth_sample_counts: SampleCountFlags::default(),
-            framebuffer_stencil_sample_counts: SampleCountFlags::default(),
-            framebuffer_no_attachments_sample_counts: SampleCountFlags::default(),
-            max_color_attachments: u32::default(),
-            sampled_image_color_sample_counts: SampleCountFlags::default(),
-            sampled_image_integer_sample_counts: SampleCountFlags::default(),
-            sampled_image_depth_sample_counts: SampleCountFlags::default(),
-            sampled_image_stencil_sample_counts: SampleCountFlags::default(),
-            storage_image_sample_counts: SampleCountFlags::default(),
-            max_sample_mask_words: u32::default(),
-            timestamp_compute_and_graphics: Bool32::default(),
-            timestamp_period: f32::default(),
-            max_clip_distances: u32::default(),
-            max_cull_distances: u32::default(),
-            max_combined_clip_and_cull_distances: u32::default(),
-            discrete_queue_priorities: u32::default(),
-            point_size_range: unsafe { ::core::mem::zeroed() },
-            line_width_range: unsafe { ::core::mem::zeroed() },
-            point_size_granularity: f32::default(),
-            line_width_granularity: f32::default(),
-            strict_lines: Bool32::default(),
-            standard_sample_locations: Bool32::default(),
-            optimal_buffer_copy_offset_alignment: DeviceSize::default(),
-            optimal_buffer_copy_row_pitch_alignment: DeviceSize::default(),
-            non_coherent_atom_size: DeviceSize::default(),
-        }
+        unsafe { ::core::mem::zeroed() }
     }
 }
 impl PhysicalDeviceLimits {
@@ -7745,12 +7032,7 @@ unsafe impl Sync for SemaphoreCreateInfo<'_> {}
 impl ::core::default::Default for SemaphoreCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            flags: SemaphoreCreateFlags::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for SemaphoreCreateInfo<'a> {
@@ -7782,15 +7064,7 @@ unsafe impl Sync for QueryPoolCreateInfo<'_> {}
 impl ::core::default::Default for QueryPoolCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            flags: QueryPoolCreateFlags::default(),
-            query_type: QueryType::default(),
-            query_count: u32::default(),
-            pipeline_statistics: QueryPipelineStatisticFlags::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for QueryPoolCreateInfo<'a> {
@@ -7840,18 +7114,7 @@ unsafe impl Sync for FramebufferCreateInfo<'_> {}
 impl ::core::default::Default for FramebufferCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            flags: FramebufferCreateFlags::default(),
-            render_pass: RenderPass::default(),
-            attachment_count: u32::default(),
-            p_attachments: ::core::ptr::null(),
-            width: u32::default(),
-            height: u32::default(),
-            layers: u32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for FramebufferCreateInfo<'a> {
@@ -8064,18 +7327,7 @@ unsafe impl Sync for SubmitInfo<'_> {}
 impl ::core::default::Default for SubmitInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            wait_semaphore_count: u32::default(),
-            p_wait_semaphores: ::core::ptr::null(),
-            p_wait_dst_stage_mask: ::core::ptr::null(),
-            command_buffer_count: u32::default(),
-            p_command_buffers: ::core::ptr::null(),
-            signal_semaphore_count: u32::default(),
-            p_signal_semaphores: ::core::ptr::null(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for SubmitInfo<'a> {
@@ -8127,16 +7379,7 @@ unsafe impl Sync for DisplayPropertiesKHR<'_> {}
 impl ::core::default::Default for DisplayPropertiesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            display: DisplayKHR::default(),
-            display_name: ::core::ptr::null(),
-            physical_dimensions: Extent2D::default(),
-            physical_resolution: Extent2D::default(),
-            supported_transforms: SurfaceTransformFlagsKHR::default(),
-            plane_reorder_possible: Bool32::default(),
-            persistent_content: Bool32::default(),
-            _marker: PhantomData,
-        }
+        unsafe { ::core::mem::zeroed() }
     }
 }
 impl<'a> DisplayPropertiesKHR<'a> {
@@ -8264,13 +7507,7 @@ unsafe impl Sync for DisplayModeCreateInfoKHR<'_> {}
 impl ::core::default::Default for DisplayModeCreateInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            flags: DisplayModeCreateFlagsKHR::default(),
-            parameters: DisplayModeParametersKHR::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DisplayModeCreateInfoKHR<'a> {
@@ -8374,19 +7611,7 @@ unsafe impl Sync for DisplaySurfaceCreateInfoKHR<'_> {}
 impl ::core::default::Default for DisplaySurfaceCreateInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            flags: DisplaySurfaceCreateFlagsKHR::default(),
-            display_mode: DisplayModeKHR::default(),
-            plane_index: u32::default(),
-            plane_stack_index: u32::default(),
-            transform: SurfaceTransformFlagsKHR::default(),
-            global_alpha: f32::default(),
-            alpha_mode: DisplayPlaneAlphaFlagsKHR::default(),
-            image_extent: Extent2D::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DisplaySurfaceCreateInfoKHR<'a> {
@@ -8450,12 +7675,7 @@ unsafe impl Sync for DisplaySurfaceStereoCreateInfoNV<'_> {}
 impl ::core::default::Default for DisplaySurfaceStereoCreateInfoNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            stereo_type: DisplaySurfaceStereoTypeNV::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DisplaySurfaceStereoCreateInfoNV<'a> {
@@ -8487,14 +7707,7 @@ unsafe impl Sync for DisplayPresentInfoKHR<'_> {}
 impl ::core::default::Default for DisplayPresentInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            src_rect: Rect2D::default(),
-            dst_rect: Rect2D::default(),
-            persistent: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DisplayPresentInfoKHR<'a> {
@@ -8607,13 +7820,7 @@ unsafe impl Sync for AndroidSurfaceCreateInfoKHR<'_> {}
 impl ::core::default::Default for AndroidSurfaceCreateInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            flags: AndroidSurfaceCreateFlagsKHR::default(),
-            window: ::core::ptr::null_mut(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for AndroidSurfaceCreateInfoKHR<'a> {
@@ -8648,13 +7855,7 @@ unsafe impl Sync for ViSurfaceCreateInfoNN<'_> {}
 impl ::core::default::Default for ViSurfaceCreateInfoNN<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            flags: ViSurfaceCreateFlagsNN::default(),
-            window: ::core::ptr::null_mut(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ViSurfaceCreateInfoNN<'a> {
@@ -8690,14 +7891,7 @@ unsafe impl Sync for WaylandSurfaceCreateInfoKHR<'_> {}
 impl ::core::default::Default for WaylandSurfaceCreateInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            flags: WaylandSurfaceCreateFlagsKHR::default(),
-            display: ::core::ptr::null_mut(),
-            surface: ::core::ptr::null_mut(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for WaylandSurfaceCreateInfoKHR<'a> {
@@ -8738,14 +7932,7 @@ unsafe impl Sync for UbmSurfaceCreateInfoSEC<'_> {}
 impl ::core::default::Default for UbmSurfaceCreateInfoSEC<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            flags: UbmSurfaceCreateFlagsSEC::default(),
-            device: ::core::ptr::null_mut(),
-            surface: ::core::ptr::null_mut(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for UbmSurfaceCreateInfoSEC<'a> {
@@ -8786,14 +7973,7 @@ unsafe impl Sync for Win32SurfaceCreateInfoKHR<'_> {}
 impl ::core::default::Default for Win32SurfaceCreateInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            flags: Win32SurfaceCreateFlagsKHR::default(),
-            hinstance: unsafe { ::core::mem::zeroed() },
-            hwnd: unsafe { ::core::mem::zeroed() },
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for Win32SurfaceCreateInfoKHR<'a> {
@@ -8834,14 +8014,7 @@ unsafe impl Sync for XlibSurfaceCreateInfoKHR<'_> {}
 impl ::core::default::Default for XlibSurfaceCreateInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            flags: XlibSurfaceCreateFlagsKHR::default(),
-            dpy: ::core::ptr::null_mut(),
-            window: Window::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for XlibSurfaceCreateInfoKHR<'a> {
@@ -8882,14 +8055,7 @@ unsafe impl Sync for XcbSurfaceCreateInfoKHR<'_> {}
 impl ::core::default::Default for XcbSurfaceCreateInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            flags: XcbSurfaceCreateFlagsKHR::default(),
-            connection: ::core::ptr::null_mut(),
-            window: xcb_window_t::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for XcbSurfaceCreateInfoKHR<'a> {
@@ -8930,14 +8096,7 @@ unsafe impl Sync for DirectFBSurfaceCreateInfoEXT<'_> {}
 impl ::core::default::Default for DirectFBSurfaceCreateInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            flags: DirectFBSurfaceCreateFlagsEXT::default(),
-            dfb: ::core::ptr::null_mut(),
-            surface: ::core::ptr::null_mut(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DirectFBSurfaceCreateInfoEXT<'a> {
@@ -8977,13 +8136,7 @@ unsafe impl Sync for ImagePipeSurfaceCreateInfoFUCHSIA<'_> {}
 impl ::core::default::Default for ImagePipeSurfaceCreateInfoFUCHSIA<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            flags: ImagePipeSurfaceCreateFlagsFUCHSIA::default(),
-            image_pipe_handle: zx_handle_t::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ImagePipeSurfaceCreateInfoFUCHSIA<'a> {
@@ -9018,13 +8171,7 @@ unsafe impl Sync for StreamDescriptorSurfaceCreateInfoGGP<'_> {}
 impl ::core::default::Default for StreamDescriptorSurfaceCreateInfoGGP<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            flags: StreamDescriptorSurfaceCreateFlagsGGP::default(),
-            stream_descriptor: GgpStreamDescriptor::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for StreamDescriptorSurfaceCreateInfoGGP<'a> {
@@ -9060,14 +8207,7 @@ unsafe impl Sync for ScreenSurfaceCreateInfoQNX<'_> {}
 impl ::core::default::Default for ScreenSurfaceCreateInfoQNX<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            flags: ScreenSurfaceCreateFlagsQNX::default(),
-            context: ::core::ptr::null_mut(),
-            window: ::core::ptr::null_mut(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ScreenSurfaceCreateInfoQNX<'a> {
@@ -9142,27 +8282,7 @@ unsafe impl Sync for SwapchainCreateInfoKHR<'_> {}
 impl ::core::default::Default for SwapchainCreateInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            flags: SwapchainCreateFlagsKHR::default(),
-            surface: SurfaceKHR::default(),
-            min_image_count: u32::default(),
-            image_format: Format::default(),
-            image_color_space: ColorSpaceKHR::default(),
-            image_extent: Extent2D::default(),
-            image_array_layers: u32::default(),
-            image_usage: ImageUsageFlags::default(),
-            image_sharing_mode: SharingMode::default(),
-            queue_family_index_count: u32::default(),
-            p_queue_family_indices: ::core::ptr::null(),
-            pre_transform: SurfaceTransformFlagsKHR::default(),
-            composite_alpha: CompositeAlphaFlagsKHR::default(),
-            present_mode: PresentModeKHR::default(),
-            clipped: Bool32::default(),
-            old_swapchain: SwapchainKHR::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for SwapchainCreateInfoKHR<'a> {
@@ -9267,17 +8387,7 @@ unsafe impl Sync for PresentInfoKHR<'_> {}
 impl ::core::default::Default for PresentInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            wait_semaphore_count: u32::default(),
-            p_wait_semaphores: ::core::ptr::null(),
-            swapchain_count: u32::default(),
-            p_swapchains: ::core::ptr::null(),
-            p_image_indices: ::core::ptr::null(),
-            p_results: ::core::ptr::null_mut(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PresentInfoKHR<'a> {
@@ -9338,14 +8448,7 @@ impl fmt::Debug for DebugReportCallbackCreateInfoEXT<'_> {
 impl ::core::default::Default for DebugReportCallbackCreateInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            flags: DebugReportFlagsEXT::default(),
-            pfn_callback: PFN_vkDebugReportCallbackEXT::default(),
-            p_user_data: ::core::ptr::null_mut(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DebugReportCallbackCreateInfoEXT<'a> {
@@ -9386,13 +8489,7 @@ unsafe impl Sync for ValidationFlagsEXT<'_> {}
 impl ::core::default::Default for ValidationFlagsEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            disabled_validation_check_count: u32::default(),
-            p_disabled_validation_checks: ::core::ptr::null(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ValidationFlagsEXT<'a> {
@@ -9429,15 +8526,7 @@ unsafe impl Sync for ValidationFeaturesEXT<'_> {}
 impl ::core::default::Default for ValidationFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            enabled_validation_feature_count: u32::default(),
-            p_enabled_validation_features: ::core::ptr::null(),
-            disabled_validation_feature_count: u32::default(),
-            p_disabled_validation_features: ::core::ptr::null(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ValidationFeaturesEXT<'a> {
@@ -9483,13 +8572,7 @@ unsafe impl Sync for LayerSettingsCreateInfoEXT<'_> {}
 impl ::core::default::Default for LayerSettingsCreateInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            setting_count: u32::default(),
-            p_settings: ::core::ptr::null(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for LayerSettingsCreateInfoEXT<'a> {
@@ -9522,14 +8605,7 @@ unsafe impl Sync for LayerSettingEXT<'_> {}
 impl ::core::default::Default for LayerSettingEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            p_layer_name: ::core::ptr::null(),
-            p_setting_name: ::core::ptr::null(),
-            ty: LayerSettingTypeEXT::default(),
-            value_count: u32::default(),
-            p_values: ::core::ptr::null(),
-            _marker: PhantomData,
-        }
+        unsafe { ::core::mem::zeroed() }
     }
 }
 impl<'a> LayerSettingEXT<'a> {
@@ -9587,12 +8663,7 @@ unsafe impl Sync for PipelineRasterizationStateRasterizationOrderAMD<'_> {}
 impl ::core::default::Default for PipelineRasterizationStateRasterizationOrderAMD<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            rasterization_order: RasterizationOrderAMD::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PipelineRasterizationStateRasterizationOrderAMD<'a> {
@@ -9628,14 +8699,7 @@ unsafe impl Sync for DebugMarkerObjectNameInfoEXT<'_> {}
 impl ::core::default::Default for DebugMarkerObjectNameInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            object_type: DebugReportObjectTypeEXT::default(),
-            object: u64::default(),
-            p_object_name: ::core::ptr::null(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DebugMarkerObjectNameInfoEXT<'a> {
@@ -9686,16 +8750,7 @@ unsafe impl Sync for DebugMarkerObjectTagInfoEXT<'_> {}
 impl ::core::default::Default for DebugMarkerObjectTagInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            object_type: DebugReportObjectTypeEXT::default(),
-            object: u64::default(),
-            tag_name: u64::default(),
-            tag_size: usize::default(),
-            p_tag: ::core::ptr::null(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DebugMarkerObjectTagInfoEXT<'a> {
@@ -9741,13 +8796,7 @@ unsafe impl Sync for DebugMarkerMarkerInfoEXT<'_> {}
 impl ::core::default::Default for DebugMarkerMarkerInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            p_marker_name: ::core::ptr::null(),
-            color: unsafe { ::core::mem::zeroed() },
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DebugMarkerMarkerInfoEXT<'a> {
@@ -9789,12 +8838,7 @@ unsafe impl Sync for DedicatedAllocationImageCreateInfoNV<'_> {}
 impl ::core::default::Default for DedicatedAllocationImageCreateInfoNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            dedicated_allocation: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DedicatedAllocationImageCreateInfoNV<'a> {
@@ -9824,12 +8868,7 @@ unsafe impl Sync for DedicatedAllocationBufferCreateInfoNV<'_> {}
 impl ::core::default::Default for DedicatedAllocationBufferCreateInfoNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            dedicated_allocation: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DedicatedAllocationBufferCreateInfoNV<'a> {
@@ -9860,13 +8899,7 @@ unsafe impl Sync for DedicatedAllocationMemoryAllocateInfoNV<'_> {}
 impl ::core::default::Default for DedicatedAllocationMemoryAllocateInfoNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            image: Image::default(),
-            buffer: Buffer::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DedicatedAllocationMemoryAllocateInfoNV<'a> {
@@ -9947,12 +8980,7 @@ unsafe impl Sync for ExternalMemoryImageCreateInfoNV<'_> {}
 impl ::core::default::Default for ExternalMemoryImageCreateInfoNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            handle_types: ExternalMemoryHandleTypeFlagsNV::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ExternalMemoryImageCreateInfoNV<'a> {
@@ -9982,12 +9010,7 @@ unsafe impl Sync for ExportMemoryAllocateInfoNV<'_> {}
 impl ::core::default::Default for ExportMemoryAllocateInfoNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            handle_types: ExternalMemoryHandleTypeFlagsNV::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ExportMemoryAllocateInfoNV<'a> {
@@ -10018,13 +9041,7 @@ unsafe impl Sync for ImportMemoryWin32HandleInfoNV<'_> {}
 impl ::core::default::Default for ImportMemoryWin32HandleInfoNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            handle_type: ExternalMemoryHandleTypeFlagsNV::default(),
-            handle: unsafe { ::core::mem::zeroed() },
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ImportMemoryWin32HandleInfoNV<'a> {
@@ -10060,13 +9077,7 @@ unsafe impl Sync for ExportMemoryWin32HandleInfoNV<'_> {}
 impl ::core::default::Default for ExportMemoryWin32HandleInfoNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            p_attributes: ::core::ptr::null(),
-            dw_access: DWORD::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ExportMemoryWin32HandleInfoNV<'a> {
@@ -10107,18 +9118,7 @@ unsafe impl Sync for Win32KeyedMutexAcquireReleaseInfoNV<'_> {}
 impl ::core::default::Default for Win32KeyedMutexAcquireReleaseInfoNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            acquire_count: u32::default(),
-            p_acquire_syncs: ::core::ptr::null(),
-            p_acquire_keys: ::core::ptr::null(),
-            p_acquire_timeout_milliseconds: ::core::ptr::null(),
-            release_count: u32::default(),
-            p_release_syncs: ::core::ptr::null(),
-            p_release_keys: ::core::ptr::null(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for Win32KeyedMutexAcquireReleaseInfoNV<'a> {
@@ -10174,12 +9174,7 @@ unsafe impl Sync for PhysicalDeviceDeviceGeneratedCommandsFeaturesNV<'_> {}
 impl ::core::default::Default for PhysicalDeviceDeviceGeneratedCommandsFeaturesNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            device_generated_commands: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceDeviceGeneratedCommandsFeaturesNV<'a> {
@@ -10214,12 +9209,7 @@ unsafe impl Sync for PushConstantBankInfoNV<'_> {}
 impl ::core::default::Default for PushConstantBankInfoNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            bank: u32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PushConstantBankInfoNV<'a> {
@@ -10252,12 +9242,7 @@ unsafe impl Sync for PhysicalDevicePushConstantBankFeaturesNV<'_> {}
 impl ::core::default::Default for PhysicalDevicePushConstantBankFeaturesNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            push_constant_bank: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDevicePushConstantBankFeaturesNV<'a> {
@@ -10292,15 +9277,7 @@ unsafe impl Sync for PhysicalDevicePushConstantBankPropertiesNV<'_> {}
 impl ::core::default::Default for PhysicalDevicePushConstantBankPropertiesNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            max_graphics_push_constant_banks: u32::default(),
-            max_compute_push_constant_banks: u32::default(),
-            max_graphics_push_data_banks: u32::default(),
-            max_compute_push_data_banks: u32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDevicePushConstantBankPropertiesNV<'a> {
@@ -10354,14 +9331,7 @@ unsafe impl Sync for PhysicalDeviceDeviceGeneratedCommandsComputeFeaturesNV<'_> 
 impl ::core::default::Default for PhysicalDeviceDeviceGeneratedCommandsComputeFeaturesNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            device_generated_compute: Bool32::default(),
-            device_generated_compute_pipelines: Bool32::default(),
-            device_generated_compute_capture_replay: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceDeviceGeneratedCommandsComputeFeaturesNV<'a> {
@@ -10416,12 +9386,7 @@ unsafe impl Sync for DevicePrivateDataCreateInfo<'_> {}
 impl ::core::default::Default for DevicePrivateDataCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            private_data_slot_request_count: u32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DevicePrivateDataCreateInfo<'a> {
@@ -10451,12 +9416,7 @@ unsafe impl Sync for PrivateDataSlotCreateInfo<'_> {}
 impl ::core::default::Default for PrivateDataSlotCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            flags: PrivateDataSlotCreateFlags::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PrivateDataSlotCreateInfo<'a> {
@@ -10485,12 +9445,7 @@ unsafe impl Sync for PhysicalDevicePrivateDataFeatures<'_> {}
 impl ::core::default::Default for PhysicalDevicePrivateDataFeatures<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            private_data: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDevicePrivateDataFeatures<'a> {
@@ -10529,20 +9484,7 @@ unsafe impl Sync for PhysicalDeviceDeviceGeneratedCommandsPropertiesNV<'_> {}
 impl ::core::default::Default for PhysicalDeviceDeviceGeneratedCommandsPropertiesNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            max_graphics_shader_group_count: u32::default(),
-            max_indirect_sequence_count: u32::default(),
-            max_indirect_commands_token_count: u32::default(),
-            max_indirect_commands_stream_count: u32::default(),
-            max_indirect_commands_token_offset: u32::default(),
-            max_indirect_commands_stream_stride: u32::default(),
-            min_sequences_count_buffer_offset_alignment: u32::default(),
-            min_sequences_index_buffer_offset_alignment: u32::default(),
-            min_indirect_commands_buffer_offset_alignment: u32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceDeviceGeneratedCommandsPropertiesNV<'a> {
@@ -10640,12 +9582,7 @@ unsafe impl Sync for PhysicalDeviceClusterAccelerationStructureFeaturesNV<'_> {}
 impl ::core::default::Default for PhysicalDeviceClusterAccelerationStructureFeaturesNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            cluster_acceleration_structure: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceClusterAccelerationStructureFeaturesNV<'a> {
@@ -10690,19 +9627,7 @@ unsafe impl Sync for PhysicalDeviceClusterAccelerationStructurePropertiesNV<'_> 
 impl ::core::default::Default for PhysicalDeviceClusterAccelerationStructurePropertiesNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            max_vertices_per_cluster: u32::default(),
-            max_triangles_per_cluster: u32::default(),
-            cluster_scratch_byte_alignment: u32::default(),
-            cluster_byte_alignment: u32::default(),
-            cluster_template_byte_alignment: u32::default(),
-            cluster_bottom_level_byte_alignment: u32::default(),
-            cluster_template_bounds_byte_alignment: u32::default(),
-            max_cluster_geometry_index: u32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceClusterAccelerationStructurePropertiesNV<'a> {
@@ -10798,12 +9723,7 @@ unsafe impl Sync for RayTracingPipelineClusterAccelerationStructureCreateInfoNV<
 impl ::core::default::Default for RayTracingPipelineClusterAccelerationStructureCreateInfoNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            allow_cluster_acceleration_structure: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a>
@@ -10966,13 +9886,7 @@ unsafe impl Sync for ClusterAccelerationStructureClustersBottomLevelInputNV<'_> 
 impl ::core::default::Default for ClusterAccelerationStructureClustersBottomLevelInputNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            max_total_cluster_count: u32::default(),
-            max_cluster_count_per_acceleration_structure: u32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ClusterAccelerationStructureClustersBottomLevelInputNV<'a> {
@@ -11018,19 +9932,7 @@ unsafe impl Sync for ClusterAccelerationStructureTriangleClusterInputNV<'_> {}
 impl ::core::default::Default for ClusterAccelerationStructureTriangleClusterInputNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            vertex_format: Format::default(),
-            max_geometry_index_value: u32::default(),
-            max_cluster_unique_geometry_count: u32::default(),
-            max_cluster_triangle_count: u32::default(),
-            max_cluster_vertex_count: u32::default(),
-            max_total_triangle_count: u32::default(),
-            max_total_vertex_count: u32::default(),
-            min_position_truncate_bit_count: u32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ClusterAccelerationStructureTriangleClusterInputNV<'a> {
@@ -11100,14 +10002,7 @@ unsafe impl Sync for ClusterAccelerationStructureMoveObjectsInputNV<'_> {}
 impl ::core::default::Default for ClusterAccelerationStructureMoveObjectsInputNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            ty: ClusterAccelerationStructureTypeNV::default(),
-            no_move_overlap: Bool32::default(),
-            max_moved_bytes: DeviceSize::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ClusterAccelerationStructureMoveObjectsInputNV<'a> {
@@ -11181,16 +10076,7 @@ impl fmt::Debug for ClusterAccelerationStructureInputInfoNV<'_> {
 impl ::core::default::Default for ClusterAccelerationStructureInputInfoNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            max_acceleration_structure_count: u32::default(),
-            flags: BuildAccelerationStructureFlagsKHR::default(),
-            op_type: ClusterAccelerationStructureOpTypeNV::default(),
-            op_mode: ClusterAccelerationStructureOpModeNV::default(),
-            op_input: ClusterAccelerationStructureOpInputNV::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ClusterAccelerationStructureInputInfoNV<'a> {
@@ -11250,20 +10136,7 @@ unsafe impl Sync for ClusterAccelerationStructureCommandsInfoNV<'_> {}
 impl ::core::default::Default for ClusterAccelerationStructureCommandsInfoNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            input: ClusterAccelerationStructureInputInfoNV::default(),
-            dst_implicit_data: DeviceAddress::default(),
-            scratch_data: DeviceAddress::default(),
-            dst_addresses_array: StridedDeviceAddressRegionKHR::default(),
-            dst_sizes_array: StridedDeviceAddressRegionKHR::default(),
-            src_infos_array: StridedDeviceAddressRegionKHR::default(),
-            src_infos_count: DeviceAddress::default(),
-            address_resolution_flags: ClusterAccelerationStructureAddressResolutionFlagsNV::default(
-            ),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ClusterAccelerationStructureCommandsInfoNV<'a> {
@@ -11334,12 +10207,7 @@ unsafe impl Sync for PhysicalDeviceMultiDrawPropertiesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceMultiDrawPropertiesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            max_multi_draw_count: u32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceMultiDrawPropertiesEXT<'a> {
@@ -11372,15 +10240,7 @@ unsafe impl Sync for GraphicsShaderGroupCreateInfoNV<'_> {}
 impl ::core::default::Default for GraphicsShaderGroupCreateInfoNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            stage_count: u32::default(),
-            p_stages: ::core::ptr::null(),
-            p_vertex_input_state: ::core::ptr::null(),
-            p_tessellation_state: ::core::ptr::null(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for GraphicsShaderGroupCreateInfoNV<'a> {
@@ -11429,15 +10289,7 @@ unsafe impl Sync for GraphicsPipelineShaderGroupsCreateInfoNV<'_> {}
 impl ::core::default::Default for GraphicsPipelineShaderGroupsCreateInfoNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            group_count: u32::default(),
-            p_groups: ::core::ptr::null(),
-            pipeline_count: u32::default(),
-            p_pipelines: ::core::ptr::null(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for GraphicsPipelineShaderGroupsCreateInfoNV<'a> {
@@ -11595,24 +10447,7 @@ unsafe impl Sync for IndirectCommandsLayoutTokenNV<'_> {}
 impl ::core::default::Default for IndirectCommandsLayoutTokenNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            token_type: IndirectCommandsTokenTypeNV::default(),
-            stream: u32::default(),
-            offset: u32::default(),
-            vertex_binding_unit: u32::default(),
-            vertex_dynamic_stride: Bool32::default(),
-            pushconstant_pipeline_layout: PipelineLayout::default(),
-            pushconstant_shader_stage_flags: ShaderStageFlags::default(),
-            pushconstant_offset: u32::default(),
-            pushconstant_size: u32::default(),
-            indirect_state_flags: IndirectStateFlagsNV::default(),
-            index_type_count: u32::default(),
-            p_index_types: ::core::ptr::null(),
-            p_index_type_values: ::core::ptr::null(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for IndirectCommandsLayoutTokenNV<'a> {
@@ -11709,17 +10544,7 @@ unsafe impl Sync for IndirectCommandsLayoutCreateInfoNV<'_> {}
 impl ::core::default::Default for IndirectCommandsLayoutCreateInfoNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            flags: IndirectCommandsLayoutUsageFlagsNV::default(),
-            pipeline_bind_point: PipelineBindPoint::default(),
-            token_count: u32::default(),
-            p_tokens: ::core::ptr::null(),
-            stream_count: u32::default(),
-            p_stream_strides: ::core::ptr::null(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for IndirectCommandsLayoutCreateInfoNV<'a> {
@@ -11777,24 +10602,7 @@ unsafe impl Sync for GeneratedCommandsInfoNV<'_> {}
 impl ::core::default::Default for GeneratedCommandsInfoNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            pipeline_bind_point: PipelineBindPoint::default(),
-            pipeline: Pipeline::default(),
-            indirect_commands_layout: IndirectCommandsLayoutNV::default(),
-            stream_count: u32::default(),
-            p_streams: ::core::ptr::null(),
-            sequences_count: u32::default(),
-            preprocess_buffer: Buffer::default(),
-            preprocess_offset: DeviceSize::default(),
-            preprocess_size: DeviceSize::default(),
-            sequences_count_buffer: Buffer::default(),
-            sequences_count_offset: DeviceSize::default(),
-            sequences_index_buffer: Buffer::default(),
-            sequences_index_offset: DeviceSize::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for GeneratedCommandsInfoNV<'a> {
@@ -11885,15 +10693,7 @@ unsafe impl Sync for GeneratedCommandsMemoryRequirementsInfoNV<'_> {}
 impl ::core::default::Default for GeneratedCommandsMemoryRequirementsInfoNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            pipeline_bind_point: PipelineBindPoint::default(),
-            pipeline: Pipeline::default(),
-            indirect_commands_layout: IndirectCommandsLayoutNV::default(),
-            max_sequences_count: u32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for GeneratedCommandsMemoryRequirementsInfoNV<'a> {
@@ -11942,13 +10742,7 @@ unsafe impl Sync for PipelineIndirectDeviceAddressInfoNV<'_> {}
 impl ::core::default::Default for PipelineIndirectDeviceAddressInfoNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            pipeline_bind_point: PipelineBindPoint::default(),
-            pipeline: Pipeline::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PipelineIndirectDeviceAddressInfoNV<'a> {
@@ -11997,12 +10791,7 @@ unsafe impl Sync for PhysicalDeviceFeatures2<'_> {}
 impl ::core::default::Default for PhysicalDeviceFeatures2<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            features: PhysicalDeviceFeatures::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceFeatures2<'a> {
@@ -12032,12 +10821,7 @@ unsafe impl Sync for PhysicalDeviceProperties2<'_> {}
 impl ::core::default::Default for PhysicalDeviceProperties2<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            properties: PhysicalDeviceProperties::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceProperties2<'a> {
@@ -12066,12 +10850,7 @@ unsafe impl Sync for FormatProperties2<'_> {}
 impl ::core::default::Default for FormatProperties2<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            format_properties: FormatProperties::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for FormatProperties2<'a> {
@@ -12100,12 +10879,7 @@ unsafe impl Sync for ImageFormatProperties2<'_> {}
 impl ::core::default::Default for ImageFormatProperties2<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            image_format_properties: ImageFormatProperties::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ImageFormatProperties2<'a> {
@@ -12141,16 +10915,7 @@ unsafe impl Sync for PhysicalDeviceImageFormatInfo2<'_> {}
 impl ::core::default::Default for PhysicalDeviceImageFormatInfo2<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            format: Format::default(),
-            ty: ImageType::default(),
-            tiling: ImageTiling::default(),
-            usage: ImageUsageFlags::default(),
-            flags: ImageCreateFlags::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceImageFormatInfo2<'a> {
@@ -12199,12 +10964,7 @@ unsafe impl Sync for QueueFamilyProperties2<'_> {}
 impl ::core::default::Default for QueueFamilyProperties2<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            queue_family_properties: QueueFamilyProperties::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for QueueFamilyProperties2<'a> {
@@ -12236,12 +10996,7 @@ unsafe impl Sync for PhysicalDeviceMemoryProperties2<'_> {}
 impl ::core::default::Default for PhysicalDeviceMemoryProperties2<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            memory_properties: PhysicalDeviceMemoryProperties::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceMemoryProperties2<'a> {
@@ -12270,12 +11025,7 @@ unsafe impl Sync for SparseImageFormatProperties2<'_> {}
 impl ::core::default::Default for SparseImageFormatProperties2<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            properties: SparseImageFormatProperties::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for SparseImageFormatProperties2<'a> {
@@ -12308,16 +11058,7 @@ unsafe impl Sync for PhysicalDeviceSparseImageFormatInfo2<'_> {}
 impl ::core::default::Default for PhysicalDeviceSparseImageFormatInfo2<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            format: Format::default(),
-            ty: ImageType::default(),
-            samples: SampleCountFlags::default(),
-            usage: ImageUsageFlags::default(),
-            tiling: ImageTiling::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceSparseImageFormatInfo2<'a> {
@@ -12366,12 +11107,7 @@ unsafe impl Sync for PhysicalDevicePushDescriptorProperties<'_> {}
 impl ::core::default::Default for PhysicalDevicePushDescriptorProperties<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            max_push_descriptors: u32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDevicePushDescriptorProperties<'a> {
@@ -12449,15 +11185,7 @@ impl fmt::Debug for PhysicalDeviceDriverProperties<'_> {
 impl ::core::default::Default for PhysicalDeviceDriverProperties<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            driver_id: DriverId::default(),
-            driver_name: unsafe { ::core::mem::zeroed() },
-            driver_info: unsafe { ::core::mem::zeroed() },
-            conformance_version: ConformanceVersion::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceDriverProperties<'a> {
@@ -12515,13 +11243,7 @@ unsafe impl Sync for PresentRegionsKHR<'_> {}
 impl ::core::default::Default for PresentRegionsKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            swapchain_count: u32::default(),
-            p_regions: ::core::ptr::null(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PresentRegionsKHR<'a> {
@@ -12551,11 +11273,7 @@ unsafe impl Sync for PresentRegionKHR<'_> {}
 impl ::core::default::Default for PresentRegionKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            rectangle_count: u32::default(),
-            p_rectangles: ::core::ptr::null(),
-            _marker: PhantomData,
-        }
+        unsafe { ::core::mem::zeroed() }
     }
 }
 impl<'a> PresentRegionKHR<'a> {
@@ -12610,13 +11328,7 @@ unsafe impl Sync for PhysicalDeviceVariablePointersFeatures<'_> {}
 impl ::core::default::Default for PhysicalDeviceVariablePointersFeatures<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            variable_pointers_storage_buffer: Bool32::default(),
-            variable_pointers: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceVariablePointersFeatures<'a> {
@@ -12691,12 +11403,7 @@ unsafe impl Sync for PhysicalDeviceExternalImageFormatInfo<'_> {}
 impl ::core::default::Default for PhysicalDeviceExternalImageFormatInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            handle_type: ExternalMemoryHandleTypeFlags::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceExternalImageFormatInfo<'a> {
@@ -12729,12 +11436,7 @@ unsafe impl Sync for ExternalImageFormatProperties<'_> {}
 impl ::core::default::Default for ExternalImageFormatProperties<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            external_memory_properties: ExternalMemoryProperties::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ExternalImageFormatProperties<'a> {
@@ -12769,14 +11471,7 @@ unsafe impl Sync for PhysicalDeviceExternalBufferInfo<'_> {}
 impl ::core::default::Default for PhysicalDeviceExternalBufferInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            flags: BufferCreateFlags::default(),
-            usage: BufferUsageFlags::default(),
-            handle_type: ExternalMemoryHandleTypeFlags::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceExternalBufferInfo<'a> {
@@ -12815,12 +11510,7 @@ unsafe impl Sync for ExternalBufferProperties<'_> {}
 impl ::core::default::Default for ExternalBufferProperties<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            external_memory_properties: ExternalMemoryProperties::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ExternalBufferProperties<'a> {
@@ -12856,16 +11546,7 @@ unsafe impl Sync for PhysicalDeviceIDProperties<'_> {}
 impl ::core::default::Default for PhysicalDeviceIDProperties<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            device_uuid: unsafe { ::core::mem::zeroed() },
-            driver_uuid: unsafe { ::core::mem::zeroed() },
-            device_luid: unsafe { ::core::mem::zeroed() },
-            device_node_mask: u32::default(),
-            device_luid_valid: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceIDProperties<'a> {
@@ -12915,12 +11596,7 @@ unsafe impl Sync for ExternalMemoryImageCreateInfo<'_> {}
 impl ::core::default::Default for ExternalMemoryImageCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            handle_types: ExternalMemoryHandleTypeFlags::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ExternalMemoryImageCreateInfo<'a> {
@@ -12950,12 +11626,7 @@ unsafe impl Sync for ExternalMemoryBufferCreateInfo<'_> {}
 impl ::core::default::Default for ExternalMemoryBufferCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            handle_types: ExternalMemoryHandleTypeFlags::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ExternalMemoryBufferCreateInfo<'a> {
@@ -12985,12 +11656,7 @@ unsafe impl Sync for ExportMemoryAllocateInfo<'_> {}
 impl ::core::default::Default for ExportMemoryAllocateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            handle_types: ExternalMemoryHandleTypeFlags::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ExportMemoryAllocateInfo<'a> {
@@ -13022,14 +11688,7 @@ unsafe impl Sync for ImportMemoryWin32HandleInfoKHR<'_> {}
 impl ::core::default::Default for ImportMemoryWin32HandleInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            handle_type: ExternalMemoryHandleTypeFlags::default(),
-            handle: unsafe { ::core::mem::zeroed() },
-            name: unsafe { ::core::mem::zeroed() },
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ImportMemoryWin32HandleInfoKHR<'a> {
@@ -13071,14 +11730,7 @@ unsafe impl Sync for ExportMemoryWin32HandleInfoKHR<'_> {}
 impl ::core::default::Default for ExportMemoryWin32HandleInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            p_attributes: ::core::ptr::null(),
-            dw_access: DWORD::default(),
-            name: unsafe { ::core::mem::zeroed() },
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ExportMemoryWin32HandleInfoKHR<'a> {
@@ -13119,13 +11771,7 @@ unsafe impl Sync for ImportMemoryZirconHandleInfoFUCHSIA<'_> {}
 impl ::core::default::Default for ImportMemoryZirconHandleInfoFUCHSIA<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            handle_type: ExternalMemoryHandleTypeFlags::default(),
-            handle: zx_handle_t::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ImportMemoryZirconHandleInfoFUCHSIA<'a> {
@@ -13160,12 +11806,7 @@ unsafe impl Sync for MemoryZirconHandlePropertiesFUCHSIA<'_> {}
 impl ::core::default::Default for MemoryZirconHandlePropertiesFUCHSIA<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            memory_type_bits: u32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for MemoryZirconHandlePropertiesFUCHSIA<'a> {
@@ -13195,13 +11836,7 @@ unsafe impl Sync for MemoryGetZirconHandleInfoFUCHSIA<'_> {}
 impl ::core::default::Default for MemoryGetZirconHandleInfoFUCHSIA<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            memory: DeviceMemory::default(),
-            handle_type: ExternalMemoryHandleTypeFlags::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for MemoryGetZirconHandleInfoFUCHSIA<'a> {
@@ -13235,12 +11870,7 @@ unsafe impl Sync for MemoryWin32HandlePropertiesKHR<'_> {}
 impl ::core::default::Default for MemoryWin32HandlePropertiesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            memory_type_bits: u32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for MemoryWin32HandlePropertiesKHR<'a> {
@@ -13270,13 +11900,7 @@ unsafe impl Sync for MemoryGetWin32HandleInfoKHR<'_> {}
 impl ::core::default::Default for MemoryGetWin32HandleInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            memory: DeviceMemory::default(),
-            handle_type: ExternalMemoryHandleTypeFlags::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for MemoryGetWin32HandleInfoKHR<'a> {
@@ -13311,13 +11935,7 @@ unsafe impl Sync for ImportMemoryFdInfoKHR<'_> {}
 impl ::core::default::Default for ImportMemoryFdInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            handle_type: ExternalMemoryHandleTypeFlags::default(),
-            fd: c_int::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ImportMemoryFdInfoKHR<'a> {
@@ -13352,12 +11970,7 @@ unsafe impl Sync for MemoryFdPropertiesKHR<'_> {}
 impl ::core::default::Default for MemoryFdPropertiesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            memory_type_bits: u32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for MemoryFdPropertiesKHR<'a> {
@@ -13387,13 +12000,7 @@ unsafe impl Sync for MemoryGetFdInfoKHR<'_> {}
 impl ::core::default::Default for MemoryGetFdInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            memory: DeviceMemory::default(),
-            handle_type: ExternalMemoryHandleTypeFlags::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for MemoryGetFdInfoKHR<'a> {
@@ -13433,18 +12040,7 @@ unsafe impl Sync for Win32KeyedMutexAcquireReleaseInfoKHR<'_> {}
 impl ::core::default::Default for Win32KeyedMutexAcquireReleaseInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            acquire_count: u32::default(),
-            p_acquire_syncs: ::core::ptr::null(),
-            p_acquire_keys: ::core::ptr::null(),
-            p_acquire_timeouts: ::core::ptr::null(),
-            release_count: u32::default(),
-            p_release_syncs: ::core::ptr::null(),
-            p_release_keys: ::core::ptr::null(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for Win32KeyedMutexAcquireReleaseInfoKHR<'a> {
@@ -13501,13 +12097,7 @@ unsafe impl Sync for ImportMemoryMetalHandleInfoEXT<'_> {}
 impl ::core::default::Default for ImportMemoryMetalHandleInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            handle_type: ExternalMemoryHandleTypeFlags::default(),
-            handle: ::core::ptr::null_mut(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ImportMemoryMetalHandleInfoEXT<'a> {
@@ -13542,12 +12132,7 @@ unsafe impl Sync for MemoryMetalHandlePropertiesEXT<'_> {}
 impl ::core::default::Default for MemoryMetalHandlePropertiesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            memory_type_bits: u32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for MemoryMetalHandlePropertiesEXT<'a> {
@@ -13577,13 +12162,7 @@ unsafe impl Sync for MemoryGetMetalHandleInfoEXT<'_> {}
 impl ::core::default::Default for MemoryGetMetalHandleInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            memory: DeviceMemory::default(),
-            handle_type: ExternalMemoryHandleTypeFlags::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for MemoryGetMetalHandleInfoEXT<'a> {
@@ -13617,12 +12196,7 @@ unsafe impl Sync for PhysicalDeviceExternalSemaphoreInfo<'_> {}
 impl ::core::default::Default for PhysicalDeviceExternalSemaphoreInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            handle_type: ExternalSemaphoreHandleTypeFlags::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceExternalSemaphoreInfo<'a> {
@@ -13653,14 +12227,7 @@ unsafe impl Sync for ExternalSemaphoreProperties<'_> {}
 impl ::core::default::Default for ExternalSemaphoreProperties<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            export_from_imported_handle_types: ExternalSemaphoreHandleTypeFlags::default(),
-            compatible_handle_types: ExternalSemaphoreHandleTypeFlags::default(),
-            external_semaphore_features: ExternalSemaphoreFeatureFlags::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ExternalSemaphoreProperties<'a> {
@@ -13708,12 +12275,7 @@ unsafe impl Sync for ExportSemaphoreCreateInfo<'_> {}
 impl ::core::default::Default for ExportSemaphoreCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            handle_types: ExternalSemaphoreHandleTypeFlags::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ExportSemaphoreCreateInfo<'a> {
@@ -13747,16 +12309,7 @@ unsafe impl Sync for ImportSemaphoreWin32HandleInfoKHR<'_> {}
 impl ::core::default::Default for ImportSemaphoreWin32HandleInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            semaphore: Semaphore::default(),
-            flags: SemaphoreImportFlags::default(),
-            handle_type: ExternalSemaphoreHandleTypeFlags::default(),
-            handle: unsafe { ::core::mem::zeroed() },
-            name: unsafe { ::core::mem::zeroed() },
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ImportSemaphoreWin32HandleInfoKHR<'a> {
@@ -13807,14 +12360,7 @@ unsafe impl Sync for ExportSemaphoreWin32HandleInfoKHR<'_> {}
 impl ::core::default::Default for ExportSemaphoreWin32HandleInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            p_attributes: ::core::ptr::null(),
-            dw_access: DWORD::default(),
-            name: unsafe { ::core::mem::zeroed() },
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ExportSemaphoreWin32HandleInfoKHR<'a> {
@@ -13857,15 +12403,7 @@ unsafe impl Sync for D3D12FenceSubmitInfoKHR<'_> {}
 impl ::core::default::Default for D3D12FenceSubmitInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            wait_semaphore_values_count: u32::default(),
-            p_wait_semaphore_values: ::core::ptr::null(),
-            signal_semaphore_values_count: u32::default(),
-            p_signal_semaphore_values: ::core::ptr::null(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for D3D12FenceSubmitInfoKHR<'a> {
@@ -13903,13 +12441,7 @@ unsafe impl Sync for SemaphoreGetWin32HandleInfoKHR<'_> {}
 impl ::core::default::Default for SemaphoreGetWin32HandleInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            semaphore: Semaphore::default(),
-            handle_type: ExternalSemaphoreHandleTypeFlags::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for SemaphoreGetWin32HandleInfoKHR<'a> {
@@ -13946,15 +12478,7 @@ unsafe impl Sync for ImportSemaphoreFdInfoKHR<'_> {}
 impl ::core::default::Default for ImportSemaphoreFdInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            semaphore: Semaphore::default(),
-            flags: SemaphoreImportFlags::default(),
-            handle_type: ExternalSemaphoreHandleTypeFlags::default(),
-            fd: c_int::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ImportSemaphoreFdInfoKHR<'a> {
@@ -13999,13 +12523,7 @@ unsafe impl Sync for SemaphoreGetFdInfoKHR<'_> {}
 impl ::core::default::Default for SemaphoreGetFdInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            semaphore: Semaphore::default(),
-            handle_type: ExternalSemaphoreHandleTypeFlags::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for SemaphoreGetFdInfoKHR<'a> {
@@ -14042,15 +12560,7 @@ unsafe impl Sync for ImportSemaphoreZirconHandleInfoFUCHSIA<'_> {}
 impl ::core::default::Default for ImportSemaphoreZirconHandleInfoFUCHSIA<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            semaphore: Semaphore::default(),
-            flags: SemaphoreImportFlags::default(),
-            handle_type: ExternalSemaphoreHandleTypeFlags::default(),
-            zircon_handle: zx_handle_t::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ImportSemaphoreZirconHandleInfoFUCHSIA<'a> {
@@ -14096,13 +12606,7 @@ unsafe impl Sync for SemaphoreGetZirconHandleInfoFUCHSIA<'_> {}
 impl ::core::default::Default for SemaphoreGetZirconHandleInfoFUCHSIA<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            semaphore: Semaphore::default(),
-            handle_type: ExternalSemaphoreHandleTypeFlags::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for SemaphoreGetZirconHandleInfoFUCHSIA<'a> {
@@ -14136,12 +12640,7 @@ unsafe impl Sync for PhysicalDeviceExternalFenceInfo<'_> {}
 impl ::core::default::Default for PhysicalDeviceExternalFenceInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            handle_type: ExternalFenceHandleTypeFlags::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceExternalFenceInfo<'a> {
@@ -14172,14 +12671,7 @@ unsafe impl Sync for ExternalFenceProperties<'_> {}
 impl ::core::default::Default for ExternalFenceProperties<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            export_from_imported_handle_types: ExternalFenceHandleTypeFlags::default(),
-            compatible_handle_types: ExternalFenceHandleTypeFlags::default(),
-            external_fence_features: ExternalFenceFeatureFlags::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ExternalFenceProperties<'a> {
@@ -14227,12 +12719,7 @@ unsafe impl Sync for ExportFenceCreateInfo<'_> {}
 impl ::core::default::Default for ExportFenceCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            handle_types: ExternalFenceHandleTypeFlags::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ExportFenceCreateInfo<'a> {
@@ -14266,16 +12753,7 @@ unsafe impl Sync for ImportFenceWin32HandleInfoKHR<'_> {}
 impl ::core::default::Default for ImportFenceWin32HandleInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            fence: Fence::default(),
-            flags: FenceImportFlags::default(),
-            handle_type: ExternalFenceHandleTypeFlags::default(),
-            handle: unsafe { ::core::mem::zeroed() },
-            name: unsafe { ::core::mem::zeroed() },
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ImportFenceWin32HandleInfoKHR<'a> {
@@ -14326,14 +12804,7 @@ unsafe impl Sync for ExportFenceWin32HandleInfoKHR<'_> {}
 impl ::core::default::Default for ExportFenceWin32HandleInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            p_attributes: ::core::ptr::null(),
-            dw_access: DWORD::default(),
-            name: unsafe { ::core::mem::zeroed() },
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ExportFenceWin32HandleInfoKHR<'a> {
@@ -14374,13 +12845,7 @@ unsafe impl Sync for FenceGetWin32HandleInfoKHR<'_> {}
 impl ::core::default::Default for FenceGetWin32HandleInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            fence: Fence::default(),
-            handle_type: ExternalFenceHandleTypeFlags::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for FenceGetWin32HandleInfoKHR<'a> {
@@ -14417,15 +12882,7 @@ unsafe impl Sync for ImportFenceFdInfoKHR<'_> {}
 impl ::core::default::Default for ImportFenceFdInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            fence: Fence::default(),
-            flags: FenceImportFlags::default(),
-            handle_type: ExternalFenceHandleTypeFlags::default(),
-            fd: c_int::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ImportFenceFdInfoKHR<'a> {
@@ -14470,13 +12927,7 @@ unsafe impl Sync for FenceGetFdInfoKHR<'_> {}
 impl ::core::default::Default for FenceGetFdInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            fence: Fence::default(),
-            handle_type: ExternalFenceHandleTypeFlags::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for FenceGetFdInfoKHR<'a> {
@@ -14512,14 +12963,7 @@ unsafe impl Sync for PhysicalDeviceMultiviewFeatures<'_> {}
 impl ::core::default::Default for PhysicalDeviceMultiviewFeatures<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            multiview: Bool32::default(),
-            multiview_geometry_shader: Bool32::default(),
-            multiview_tessellation_shader: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceMultiviewFeatures<'a> {
@@ -14561,13 +13005,7 @@ unsafe impl Sync for PhysicalDeviceMultiviewProperties<'_> {}
 impl ::core::default::Default for PhysicalDeviceMultiviewProperties<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            max_multiview_view_count: u32::default(),
-            max_multiview_instance_index: u32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceMultiviewProperties<'a> {
@@ -14607,17 +13045,7 @@ unsafe impl Sync for RenderPassMultiviewCreateInfo<'_> {}
 impl ::core::default::Default for RenderPassMultiviewCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            subpass_count: u32::default(),
-            p_view_masks: ::core::ptr::null(),
-            dependency_count: u32::default(),
-            p_view_offsets: ::core::ptr::null(),
-            correlation_mask_count: u32::default(),
-            p_correlation_masks: ::core::ptr::null(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for RenderPassMultiviewCreateInfo<'a> {
@@ -14670,22 +13098,7 @@ unsafe impl Sync for SurfaceCapabilities2EXT<'_> {}
 impl ::core::default::Default for SurfaceCapabilities2EXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            min_image_count: u32::default(),
-            max_image_count: u32::default(),
-            current_extent: Extent2D::default(),
-            min_image_extent: Extent2D::default(),
-            max_image_extent: Extent2D::default(),
-            max_image_array_layers: u32::default(),
-            supported_transforms: SurfaceTransformFlagsKHR::default(),
-            current_transform: SurfaceTransformFlagsKHR::default(),
-            supported_composite_alpha: CompositeAlphaFlagsKHR::default(),
-            supported_usage_flags: ImageUsageFlags::default(),
-            supported_surface_counters: SurfaceCounterFlagsEXT::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for SurfaceCapabilities2EXT<'a> {
@@ -14770,12 +13183,7 @@ unsafe impl Sync for DisplayPowerInfoEXT<'_> {}
 impl ::core::default::Default for DisplayPowerInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            power_state: DisplayPowerStateEXT::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DisplayPowerInfoEXT<'a> {
@@ -14804,12 +13212,7 @@ unsafe impl Sync for DeviceEventInfoEXT<'_> {}
 impl ::core::default::Default for DeviceEventInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            device_event: DeviceEventTypeEXT::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DeviceEventInfoEXT<'a> {
@@ -14838,12 +13241,7 @@ unsafe impl Sync for DisplayEventInfoEXT<'_> {}
 impl ::core::default::Default for DisplayEventInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            display_event: DisplayEventTypeEXT::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DisplayEventInfoEXT<'a> {
@@ -14872,12 +13270,7 @@ unsafe impl Sync for SwapchainCounterCreateInfoEXT<'_> {}
 impl ::core::default::Default for SwapchainCounterCreateInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            surface_counters: SurfaceCounterFlagsEXT::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for SwapchainCounterCreateInfoEXT<'a> {
@@ -14920,14 +13313,7 @@ impl fmt::Debug for PhysicalDeviceGroupProperties<'_> {
 impl ::core::default::Default for PhysicalDeviceGroupProperties<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            physical_device_count: u32::default(),
-            physical_devices: unsafe { ::core::mem::zeroed() },
-            subset_allocation: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceGroupProperties<'a> {
@@ -14967,13 +13353,7 @@ unsafe impl Sync for MemoryAllocateFlagsInfo<'_> {}
 impl ::core::default::Default for MemoryAllocateFlagsInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            flags: MemoryAllocateFlags::default(),
-            device_mask: u32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for MemoryAllocateFlagsInfo<'a> {
@@ -15010,14 +13390,7 @@ unsafe impl Sync for BindBufferMemoryInfo<'_> {}
 impl ::core::default::Default for BindBufferMemoryInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            buffer: Buffer::default(),
-            memory: DeviceMemory::default(),
-            memory_offset: DeviceSize::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for BindBufferMemoryInfo<'a> {
@@ -15057,13 +13430,7 @@ unsafe impl Sync for BindBufferMemoryDeviceGroupInfo<'_> {}
 impl ::core::default::Default for BindBufferMemoryDeviceGroupInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            device_index_count: u32::default(),
-            p_device_indices: ::core::ptr::null(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for BindBufferMemoryDeviceGroupInfo<'a> {
@@ -15096,14 +13463,7 @@ unsafe impl Sync for BindImageMemoryInfo<'_> {}
 impl ::core::default::Default for BindImageMemoryInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            image: Image::default(),
-            memory: DeviceMemory::default(),
-            memory_offset: DeviceSize::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for BindImageMemoryInfo<'a> {
@@ -15145,15 +13505,7 @@ unsafe impl Sync for BindImageMemoryDeviceGroupInfo<'_> {}
 impl ::core::default::Default for BindImageMemoryDeviceGroupInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            device_index_count: u32::default(),
-            p_device_indices: ::core::ptr::null(),
-            split_instance_bind_region_count: u32::default(),
-            p_split_instance_bind_regions: ::core::ptr::null(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for BindImageMemoryDeviceGroupInfo<'a> {
@@ -15195,14 +13547,7 @@ unsafe impl Sync for DeviceGroupRenderPassBeginInfo<'_> {}
 impl ::core::default::Default for DeviceGroupRenderPassBeginInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            device_mask: u32::default(),
-            device_render_area_count: u32::default(),
-            p_device_render_areas: ::core::ptr::null(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DeviceGroupRenderPassBeginInfo<'a> {
@@ -15239,12 +13584,7 @@ unsafe impl Sync for DeviceGroupCommandBufferBeginInfo<'_> {}
 impl ::core::default::Default for DeviceGroupCommandBufferBeginInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            device_mask: u32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DeviceGroupCommandBufferBeginInfo<'a> {
@@ -15279,17 +13619,7 @@ unsafe impl Sync for DeviceGroupSubmitInfo<'_> {}
 impl ::core::default::Default for DeviceGroupSubmitInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            wait_semaphore_count: u32::default(),
-            p_wait_semaphore_device_indices: ::core::ptr::null(),
-            command_buffer_count: u32::default(),
-            p_command_buffer_device_masks: ::core::ptr::null(),
-            signal_semaphore_count: u32::default(),
-            p_signal_semaphore_device_indices: ::core::ptr::null(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DeviceGroupSubmitInfo<'a> {
@@ -15339,13 +13669,7 @@ unsafe impl Sync for DeviceGroupBindSparseInfo<'_> {}
 impl ::core::default::Default for DeviceGroupBindSparseInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            resource_device_index: u32::default(),
-            memory_device_index: u32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DeviceGroupBindSparseInfo<'a> {
@@ -15381,13 +13705,7 @@ unsafe impl Sync for DeviceGroupPresentCapabilitiesKHR<'_> {}
 impl ::core::default::Default for DeviceGroupPresentCapabilitiesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            present_mask: unsafe { ::core::mem::zeroed() },
-            modes: DeviceGroupPresentModeFlagsKHR::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DeviceGroupPresentCapabilitiesKHR<'a> {
@@ -15421,12 +13739,7 @@ unsafe impl Sync for ImageSwapchainCreateInfoKHR<'_> {}
 impl ::core::default::Default for ImageSwapchainCreateInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            swapchain: SwapchainKHR::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ImageSwapchainCreateInfoKHR<'a> {
@@ -15457,13 +13770,7 @@ unsafe impl Sync for BindImageMemorySwapchainInfoKHR<'_> {}
 impl ::core::default::Default for BindImageMemorySwapchainInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            swapchain: SwapchainKHR::default(),
-            image_index: u32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for BindImageMemorySwapchainInfoKHR<'a> {
@@ -15502,16 +13809,7 @@ unsafe impl Sync for AcquireNextImageInfoKHR<'_> {}
 impl ::core::default::Default for AcquireNextImageInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            swapchain: SwapchainKHR::default(),
-            timeout: u64::default(),
-            semaphore: Semaphore::default(),
-            fence: Fence::default(),
-            device_mask: u32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for AcquireNextImageInfoKHR<'a> {
@@ -15562,14 +13860,7 @@ unsafe impl Sync for DeviceGroupPresentInfoKHR<'_> {}
 impl ::core::default::Default for DeviceGroupPresentInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            swapchain_count: u32::default(),
-            p_device_masks: ::core::ptr::null(),
-            mode: DeviceGroupPresentModeFlagsKHR::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DeviceGroupPresentInfoKHR<'a> {
@@ -15606,13 +13897,7 @@ unsafe impl Sync for DeviceGroupDeviceCreateInfo<'_> {}
 impl ::core::default::Default for DeviceGroupDeviceCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            physical_device_count: u32::default(),
-            p_physical_devices: ::core::ptr::null(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DeviceGroupDeviceCreateInfo<'a> {
@@ -15643,12 +13928,7 @@ unsafe impl Sync for DeviceGroupSwapchainCreateInfoKHR<'_> {}
 impl ::core::default::Default for DeviceGroupSwapchainCreateInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            modes: DeviceGroupPresentModeFlagsKHR::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DeviceGroupSwapchainCreateInfoKHR<'a> {
@@ -15730,19 +14010,7 @@ unsafe impl Sync for DescriptorUpdateTemplateCreateInfo<'_> {}
 impl ::core::default::Default for DescriptorUpdateTemplateCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            flags: DescriptorUpdateTemplateCreateFlags::default(),
-            descriptor_update_entry_count: u32::default(),
-            p_descriptor_update_entries: ::core::ptr::null(),
-            template_type: DescriptorUpdateTemplateType::default(),
-            descriptor_set_layout: DescriptorSetLayout::default(),
-            pipeline_bind_point: PipelineBindPoint::default(),
-            pipeline_layout: PipelineLayout::default(),
-            set: u32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DescriptorUpdateTemplateCreateInfo<'a> {
@@ -15826,12 +14094,7 @@ unsafe impl Sync for PhysicalDevicePresentIdFeaturesKHR<'_> {}
 impl ::core::default::Default for PhysicalDevicePresentIdFeaturesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            present_id: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDevicePresentIdFeaturesKHR<'a> {
@@ -15863,13 +14126,7 @@ unsafe impl Sync for PresentIdKHR<'_> {}
 impl ::core::default::Default for PresentIdKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            swapchain_count: u32::default(),
-            p_present_ids: ::core::ptr::null(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PresentIdKHR<'a> {
@@ -15900,12 +14157,7 @@ unsafe impl Sync for PhysicalDevicePresentId2FeaturesKHR<'_> {}
 impl ::core::default::Default for PhysicalDevicePresentId2FeaturesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            present_id2: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDevicePresentId2FeaturesKHR<'a> {
@@ -15937,13 +14189,7 @@ unsafe impl Sync for PresentId2KHR<'_> {}
 impl ::core::default::Default for PresentId2KHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            swapchain_count: u32::default(),
-            p_present_ids: ::core::ptr::null(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PresentId2KHR<'a> {
@@ -15975,13 +14221,7 @@ unsafe impl Sync for PresentWait2InfoKHR<'_> {}
 impl ::core::default::Default for PresentWait2InfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            present_id: u64::default(),
-            timeout: u64::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PresentWait2InfoKHR<'a> {
@@ -16015,12 +14255,7 @@ unsafe impl Sync for PhysicalDevicePresentWaitFeaturesKHR<'_> {}
 impl ::core::default::Default for PhysicalDevicePresentWaitFeaturesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            present_wait: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDevicePresentWaitFeaturesKHR<'a> {
@@ -16051,12 +14286,7 @@ unsafe impl Sync for PhysicalDevicePresentWait2FeaturesKHR<'_> {}
 impl ::core::default::Default for PhysicalDevicePresentWait2FeaturesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            present_wait2: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDevicePresentWait2FeaturesKHR<'a> {
@@ -16090,14 +14320,7 @@ unsafe impl Sync for PhysicalDevicePresentTimingFeaturesEXT<'_> {}
 impl ::core::default::Default for PhysicalDevicePresentTimingFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            present_timing: Bool32::default(),
-            present_at_absolute_time: Bool32::default(),
-            present_at_relative_time: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDevicePresentTimingFeaturesEXT<'a> {
@@ -16142,15 +14365,7 @@ unsafe impl Sync for PresentTimingSurfaceCapabilitiesEXT<'_> {}
 impl ::core::default::Default for PresentTimingSurfaceCapabilitiesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            present_timing_supported: Bool32::default(),
-            present_at_absolute_time_supported: Bool32::default(),
-            present_at_relative_time_supported: Bool32::default(),
-            present_stage_queries: PresentStageFlagsEXT::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PresentTimingSurfaceCapabilitiesEXT<'a> {
@@ -16202,13 +14417,7 @@ unsafe impl Sync for SwapchainTimingPropertiesEXT<'_> {}
 impl ::core::default::Default for SwapchainTimingPropertiesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            refresh_duration: u64::default(),
-            refresh_interval: u64::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for SwapchainTimingPropertiesEXT<'a> {
@@ -16244,14 +14453,7 @@ unsafe impl Sync for SwapchainTimeDomainPropertiesEXT<'_> {}
 impl ::core::default::Default for SwapchainTimeDomainPropertiesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            time_domain_count: u32::default(),
-            p_time_domains: ::core::ptr::null_mut(),
-            p_time_domain_ids: ::core::ptr::null_mut(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for SwapchainTimeDomainPropertiesEXT<'a> {
@@ -16309,13 +14511,7 @@ unsafe impl Sync for PastPresentationTimingInfoEXT<'_> {}
 impl ::core::default::Default for PastPresentationTimingInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            flags: PastPresentationTimingFlagsEXT::default(),
-            swapchain: SwapchainKHR::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PastPresentationTimingInfoEXT<'a> {
@@ -16352,15 +14548,7 @@ unsafe impl Sync for PastPresentationTimingPropertiesEXT<'_> {}
 impl ::core::default::Default for PastPresentationTimingPropertiesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            timing_properties_counter: u64::default(),
-            time_domains_counter: u64::default(),
-            presentation_timing_count: u32::default(),
-            p_presentation_timings: ::core::ptr::null_mut(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PastPresentationTimingPropertiesEXT<'a> {
@@ -16409,18 +14597,7 @@ unsafe impl Sync for PastPresentationTimingEXT<'_> {}
 impl ::core::default::Default for PastPresentationTimingEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            present_id: u64::default(),
-            target_time: u64::default(),
-            present_stage_count: u32::default(),
-            p_present_stages: ::core::ptr::null_mut(),
-            time_domain: TimeDomainKHR::default(),
-            time_domain_id: u64::default(),
-            report_complete: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PastPresentationTimingEXT<'a> {
@@ -16476,13 +14653,7 @@ unsafe impl Sync for PresentTimingsInfoEXT<'_> {}
 impl ::core::default::Default for PresentTimingsInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            swapchain_count: u32::default(),
-            p_timing_infos: ::core::ptr::null(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PresentTimingsInfoEXT<'a> {
@@ -16517,16 +14688,7 @@ unsafe impl Sync for PresentTimingInfoEXT<'_> {}
 impl ::core::default::Default for PresentTimingInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            flags: PresentTimingInfoFlagsEXT::default(),
-            target_time: u64::default(),
-            time_domain_id: u64::default(),
-            present_stage_queries: PresentStageFlagsEXT::default(),
-            target_time_domain_present_stage: PresentStageFlagsEXT::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PresentTimingInfoEXT<'a> {
@@ -16580,14 +14742,7 @@ unsafe impl Sync for SwapchainCalibratedTimestampInfoEXT<'_> {}
 impl ::core::default::Default for SwapchainCalibratedTimestampInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            swapchain: SwapchainKHR::default(),
-            present_stage: PresentStageFlagsEXT::default(),
-            time_domain_id: u64::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for SwapchainCalibratedTimestampInfoEXT<'a> {
@@ -16634,19 +14789,7 @@ unsafe impl Sync for HdrMetadataEXT<'_> {}
 impl ::core::default::Default for HdrMetadataEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            display_primary_red: XYColorEXT::default(),
-            display_primary_green: XYColorEXT::default(),
-            display_primary_blue: XYColorEXT::default(),
-            white_point: XYColorEXT::default(),
-            max_luminance: f32::default(),
-            min_luminance: f32::default(),
-            max_content_light_level: f32::default(),
-            max_frame_average_light_level: f32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for HdrMetadataEXT<'a> {
@@ -16711,13 +14854,7 @@ unsafe impl Sync for HdrVividDynamicMetadataHUAWEI<'_> {}
 impl ::core::default::Default for HdrVividDynamicMetadataHUAWEI<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            dynamic_metadata_size: usize::default(),
-            p_dynamic_metadata: ::core::ptr::null(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for HdrVividDynamicMetadataHUAWEI<'a> {
@@ -16748,12 +14885,7 @@ unsafe impl Sync for DisplayNativeHdrSurfaceCapabilitiesAMD<'_> {}
 impl ::core::default::Default for DisplayNativeHdrSurfaceCapabilitiesAMD<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            local_dimming_support: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DisplayNativeHdrSurfaceCapabilitiesAMD<'a> {
@@ -16784,12 +14916,7 @@ unsafe impl Sync for SwapchainDisplayNativeHdrCreateInfoAMD<'_> {}
 impl ::core::default::Default for SwapchainDisplayNativeHdrCreateInfoAMD<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            local_dimming_enable: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for SwapchainDisplayNativeHdrCreateInfoAMD<'a> {
@@ -16875,13 +15002,7 @@ unsafe impl Sync for PresentTimesInfoGOOGLE<'_> {}
 impl ::core::default::Default for PresentTimesInfoGOOGLE<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            swapchain_count: u32::default(),
-            p_times: ::core::ptr::null(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PresentTimesInfoGOOGLE<'a> {
@@ -16934,13 +15055,7 @@ unsafe impl Sync for IOSSurfaceCreateInfoMVK<'_> {}
 impl ::core::default::Default for IOSSurfaceCreateInfoMVK<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            flags: IOSSurfaceCreateFlagsMVK::default(),
-            p_view: ::core::ptr::null(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for IOSSurfaceCreateInfoMVK<'a> {
@@ -16975,13 +15090,7 @@ unsafe impl Sync for MacOSSurfaceCreateInfoMVK<'_> {}
 impl ::core::default::Default for MacOSSurfaceCreateInfoMVK<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            flags: MacOSSurfaceCreateFlagsMVK::default(),
-            p_view: ::core::ptr::null(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for MacOSSurfaceCreateInfoMVK<'a> {
@@ -17016,13 +15125,7 @@ unsafe impl Sync for MetalSurfaceCreateInfoEXT<'_> {}
 impl ::core::default::Default for MetalSurfaceCreateInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            flags: MetalSurfaceCreateFlagsEXT::default(),
-            p_layer: ::core::ptr::null(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for MetalSurfaceCreateInfoEXT<'a> {
@@ -17079,14 +15182,7 @@ unsafe impl Sync for PipelineViewportWScalingStateCreateInfoNV<'_> {}
 impl ::core::default::Default for PipelineViewportWScalingStateCreateInfoNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            viewport_w_scaling_enable: Bool32::default(),
-            viewport_count: u32::default(),
-            p_viewport_w_scalings: ::core::ptr::null(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PipelineViewportWScalingStateCreateInfoNV<'a> {
@@ -17161,14 +15257,7 @@ unsafe impl Sync for PipelineViewportSwizzleStateCreateInfoNV<'_> {}
 impl ::core::default::Default for PipelineViewportSwizzleStateCreateInfoNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            flags: PipelineViewportSwizzleStateCreateFlagsNV::default(),
-            viewport_count: u32::default(),
-            p_viewport_swizzles: ::core::ptr::null(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PipelineViewportSwizzleStateCreateInfoNV<'a> {
@@ -17208,12 +15297,7 @@ unsafe impl Sync for PhysicalDeviceDiscardRectanglePropertiesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceDiscardRectanglePropertiesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            max_discard_rectangles: u32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceDiscardRectanglePropertiesEXT<'a> {
@@ -17250,15 +15334,7 @@ unsafe impl Sync for PipelineDiscardRectangleStateCreateInfoEXT<'_> {}
 impl ::core::default::Default for PipelineDiscardRectangleStateCreateInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            flags: PipelineDiscardRectangleStateCreateFlagsEXT::default(),
-            discard_rectangle_mode: DiscardRectangleModeEXT::default(),
-            discard_rectangle_count: u32::default(),
-            p_discard_rectangles: ::core::ptr::null(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PipelineDiscardRectangleStateCreateInfoEXT<'a> {
@@ -17306,12 +15382,7 @@ unsafe impl Sync for PhysicalDeviceMultiviewPerViewAttributesPropertiesNVX<'_> {
 impl ::core::default::Default for PhysicalDeviceMultiviewPerViewAttributesPropertiesNVX<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            per_view_position_all_components: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceMultiviewPerViewAttributesPropertiesNVX<'a> {
@@ -17376,13 +15447,7 @@ unsafe impl Sync for RenderPassInputAttachmentAspectCreateInfo<'_> {}
 impl ::core::default::Default for RenderPassInputAttachmentAspectCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            aspect_reference_count: u32::default(),
-            p_aspect_references: ::core::ptr::null(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for RenderPassInputAttachmentAspectCreateInfo<'a> {
@@ -17417,12 +15482,7 @@ unsafe impl Sync for PhysicalDeviceSurfaceInfo2KHR<'_> {}
 impl ::core::default::Default for PhysicalDeviceSurfaceInfo2KHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            surface: SurfaceKHR::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceSurfaceInfo2KHR<'a> {
@@ -17451,12 +15511,7 @@ unsafe impl Sync for SurfaceCapabilities2KHR<'_> {}
 impl ::core::default::Default for SurfaceCapabilities2KHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            surface_capabilities: SurfaceCapabilitiesKHR::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for SurfaceCapabilities2KHR<'a> {
@@ -17485,12 +15540,7 @@ unsafe impl Sync for SurfaceFormat2KHR<'_> {}
 impl ::core::default::Default for SurfaceFormat2KHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            surface_format: SurfaceFormatKHR::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for SurfaceFormat2KHR<'a> {
@@ -17519,12 +15569,7 @@ unsafe impl Sync for DisplayProperties2KHR<'_> {}
 impl ::core::default::Default for DisplayProperties2KHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            display_properties: DisplayPropertiesKHR::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DisplayProperties2KHR<'a> {
@@ -17553,12 +15598,7 @@ unsafe impl Sync for DisplayPlaneProperties2KHR<'_> {}
 impl ::core::default::Default for DisplayPlaneProperties2KHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            display_plane_properties: DisplayPlanePropertiesKHR::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DisplayPlaneProperties2KHR<'a> {
@@ -17590,12 +15630,7 @@ unsafe impl Sync for DisplayModeProperties2KHR<'_> {}
 impl ::core::default::Default for DisplayModeProperties2KHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            display_mode_properties: DisplayModePropertiesKHR::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DisplayModeProperties2KHR<'a> {
@@ -17627,12 +15662,7 @@ unsafe impl Sync for DisplayModeStereoPropertiesNV<'_> {}
 impl ::core::default::Default for DisplayModeStereoPropertiesNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            hdmi3_d_supported: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DisplayModeStereoPropertiesNV<'a> {
@@ -17663,13 +15693,7 @@ unsafe impl Sync for DisplayPlaneInfo2KHR<'_> {}
 impl ::core::default::Default for DisplayPlaneInfo2KHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            mode: DisplayModeKHR::default(),
-            plane_index: u32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DisplayPlaneInfo2KHR<'a> {
@@ -17703,12 +15727,7 @@ unsafe impl Sync for DisplayPlaneCapabilities2KHR<'_> {}
 impl ::core::default::Default for DisplayPlaneCapabilities2KHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            capabilities: DisplayPlaneCapabilitiesKHR::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DisplayPlaneCapabilities2KHR<'a> {
@@ -17737,12 +15756,7 @@ unsafe impl Sync for SharedPresentSurfaceCapabilitiesKHR<'_> {}
 impl ::core::default::Default for SharedPresentSurfaceCapabilitiesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            shared_present_supported_usage_flags: ImageUsageFlags::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for SharedPresentSurfaceCapabilitiesKHR<'a> {
@@ -17778,15 +15792,7 @@ unsafe impl Sync for PhysicalDevice16BitStorageFeatures<'_> {}
 impl ::core::default::Default for PhysicalDevice16BitStorageFeatures<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            storage_buffer16_bit_access: Bool32::default(),
-            uniform_and_storage_buffer16_bit_access: Bool32::default(),
-            storage_push_constant16: Bool32::default(),
-            storage_input_output16: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDevice16BitStorageFeatures<'a> {
@@ -17839,15 +15845,7 @@ unsafe impl Sync for PhysicalDeviceSubgroupProperties<'_> {}
 impl ::core::default::Default for PhysicalDeviceSubgroupProperties<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            subgroup_size: u32::default(),
-            supported_stages: ShaderStageFlags::default(),
-            supported_operations: SubgroupFeatureFlags::default(),
-            quad_operations_in_all_stages: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceSubgroupProperties<'a> {
@@ -17892,12 +15890,7 @@ unsafe impl Sync for PhysicalDeviceShaderSubgroupExtendedTypesFeatures<'_> {}
 impl ::core::default::Default for PhysicalDeviceShaderSubgroupExtendedTypesFeatures<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            shader_subgroup_extended_types: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderSubgroupExtendedTypesFeatures<'a> {
@@ -17935,12 +15928,7 @@ unsafe impl Sync for BufferMemoryRequirementsInfo2<'_> {}
 impl ::core::default::Default for BufferMemoryRequirementsInfo2<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            buffer: Buffer::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for BufferMemoryRequirementsInfo2<'a> {
@@ -17969,12 +15957,7 @@ unsafe impl Sync for DeviceBufferMemoryRequirements<'_> {}
 impl ::core::default::Default for DeviceBufferMemoryRequirements<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            p_create_info: ::core::ptr::null(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DeviceBufferMemoryRequirements<'a> {
@@ -18003,12 +15986,7 @@ unsafe impl Sync for ImageMemoryRequirementsInfo2<'_> {}
 impl ::core::default::Default for ImageMemoryRequirementsInfo2<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            image: Image::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ImageMemoryRequirementsInfo2<'a> {
@@ -18037,12 +16015,7 @@ unsafe impl Sync for ImageSparseMemoryRequirementsInfo2<'_> {}
 impl ::core::default::Default for ImageSparseMemoryRequirementsInfo2<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            image: Image::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ImageSparseMemoryRequirementsInfo2<'a> {
@@ -18072,13 +16045,7 @@ unsafe impl Sync for DeviceImageMemoryRequirements<'_> {}
 impl ::core::default::Default for DeviceImageMemoryRequirements<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            p_create_info: ::core::ptr::null(),
-            plane_aspect: ImageAspectFlags::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DeviceImageMemoryRequirements<'a> {
@@ -18112,12 +16079,7 @@ unsafe impl Sync for MemoryRequirements2<'_> {}
 impl ::core::default::Default for MemoryRequirements2<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            memory_requirements: MemoryRequirements::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for MemoryRequirements2<'a> {
@@ -18146,12 +16108,7 @@ unsafe impl Sync for SparseImageMemoryRequirements2<'_> {}
 impl ::core::default::Default for SparseImageMemoryRequirements2<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            memory_requirements: SparseImageMemoryRequirements::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for SparseImageMemoryRequirements2<'a> {
@@ -18183,12 +16140,7 @@ unsafe impl Sync for PhysicalDevicePointClippingProperties<'_> {}
 impl ::core::default::Default for PhysicalDevicePointClippingProperties<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            point_clipping_behavior: PointClippingBehavior::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDevicePointClippingProperties<'a> {
@@ -18222,13 +16174,7 @@ unsafe impl Sync for MemoryDedicatedRequirements<'_> {}
 impl ::core::default::Default for MemoryDedicatedRequirements<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            prefers_dedicated_allocation: Bool32::default(),
-            requires_dedicated_allocation: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for MemoryDedicatedRequirements<'a> {
@@ -18264,13 +16210,7 @@ unsafe impl Sync for MemoryDedicatedAllocateInfo<'_> {}
 impl ::core::default::Default for MemoryDedicatedAllocateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            image: Image::default(),
-            buffer: Buffer::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for MemoryDedicatedAllocateInfo<'a> {
@@ -18305,12 +16245,7 @@ unsafe impl Sync for ImageViewUsageCreateInfo<'_> {}
 impl ::core::default::Default for ImageViewUsageCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            usage: ImageUsageFlags::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ImageViewUsageCreateInfo<'a> {
@@ -18341,13 +16276,7 @@ unsafe impl Sync for ImageViewSlicedCreateInfoEXT<'_> {}
 impl ::core::default::Default for ImageViewSlicedCreateInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            slice_offset: u32::default(),
-            slice_count: u32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ImageViewSlicedCreateInfoEXT<'a> {
@@ -18382,12 +16311,7 @@ unsafe impl Sync for PipelineTessellationDomainOriginStateCreateInfo<'_> {}
 impl ::core::default::Default for PipelineTessellationDomainOriginStateCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            domain_origin: TessellationDomainOrigin::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PipelineTessellationDomainOriginStateCreateInfo<'a> {
@@ -18421,12 +16345,7 @@ unsafe impl Sync for SamplerYcbcrConversionInfo<'_> {}
 impl ::core::default::Default for SamplerYcbcrConversionInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            conversion: SamplerYcbcrConversion::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for SamplerYcbcrConversionInfo<'a> {
@@ -18464,19 +16383,7 @@ unsafe impl Sync for SamplerYcbcrConversionCreateInfo<'_> {}
 impl ::core::default::Default for SamplerYcbcrConversionCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            format: Format::default(),
-            ycbcr_model: SamplerYcbcrModelConversion::default(),
-            ycbcr_range: SamplerYcbcrRange::default(),
-            components: ComponentMapping::default(),
-            x_chroma_offset: ChromaLocation::default(),
-            y_chroma_offset: ChromaLocation::default(),
-            chroma_filter: Filter::default(),
-            force_explicit_reconstruction: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for SamplerYcbcrConversionCreateInfo<'a> {
@@ -18540,12 +16447,7 @@ unsafe impl Sync for BindImagePlaneMemoryInfo<'_> {}
 impl ::core::default::Default for BindImagePlaneMemoryInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            plane_aspect: ImageAspectFlags::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for BindImagePlaneMemoryInfo<'a> {
@@ -18575,12 +16477,7 @@ unsafe impl Sync for ImagePlaneMemoryRequirementsInfo<'_> {}
 impl ::core::default::Default for ImagePlaneMemoryRequirementsInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            plane_aspect: ImageAspectFlags::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ImagePlaneMemoryRequirementsInfo<'a> {
@@ -18610,12 +16507,7 @@ unsafe impl Sync for PhysicalDeviceSamplerYcbcrConversionFeatures<'_> {}
 impl ::core::default::Default for PhysicalDeviceSamplerYcbcrConversionFeatures<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            sampler_ycbcr_conversion: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceSamplerYcbcrConversionFeatures<'a> {
@@ -18650,12 +16542,7 @@ unsafe impl Sync for SamplerYcbcrConversionImageFormatProperties<'_> {}
 impl ::core::default::Default for SamplerYcbcrConversionImageFormatProperties<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            combined_image_sampler_descriptor_count: u32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for SamplerYcbcrConversionImageFormatProperties<'a> {
@@ -18692,12 +16579,7 @@ unsafe impl Sync for TextureLODGatherFormatPropertiesAMD<'_> {}
 impl ::core::default::Default for TextureLODGatherFormatPropertiesAMD<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            supports_texture_gather_lod_bias_amd: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for TextureLODGatherFormatPropertiesAMD<'a> {
@@ -18732,14 +16614,7 @@ unsafe impl Sync for ConditionalRenderingBeginInfoEXT<'_> {}
 impl ::core::default::Default for ConditionalRenderingBeginInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            buffer: Buffer::default(),
-            offset: DeviceSize::default(),
-            flags: ConditionalRenderingFlagsEXT::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ConditionalRenderingBeginInfoEXT<'a> {
@@ -18778,12 +16653,7 @@ unsafe impl Sync for ProtectedSubmitInfo<'_> {}
 impl ::core::default::Default for ProtectedSubmitInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            protected_submit: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ProtectedSubmitInfo<'a> {
@@ -18813,12 +16683,7 @@ unsafe impl Sync for PhysicalDeviceProtectedMemoryFeatures<'_> {}
 impl ::core::default::Default for PhysicalDeviceProtectedMemoryFeatures<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            protected_memory: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceProtectedMemoryFeatures<'a> {
@@ -18849,12 +16714,7 @@ unsafe impl Sync for PhysicalDeviceProtectedMemoryProperties<'_> {}
 impl ::core::default::Default for PhysicalDeviceProtectedMemoryProperties<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            protected_no_fault: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceProtectedMemoryProperties<'a> {
@@ -18887,14 +16747,7 @@ unsafe impl Sync for DeviceQueueInfo2<'_> {}
 impl ::core::default::Default for DeviceQueueInfo2<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            flags: DeviceQueueCreateFlags::default(),
-            queue_family_index: u32::default(),
-            queue_index: u32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DeviceQueueInfo2<'a> {
@@ -18935,14 +16788,7 @@ unsafe impl Sync for PipelineCoverageToColorStateCreateInfoNV<'_> {}
 impl ::core::default::Default for PipelineCoverageToColorStateCreateInfoNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            flags: PipelineCoverageToColorStateCreateFlagsNV::default(),
-            coverage_to_color_enable: Bool32::default(),
-            coverage_to_color_location: u32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PipelineCoverageToColorStateCreateInfoNV<'a> {
@@ -18987,13 +16833,7 @@ unsafe impl Sync for PhysicalDeviceSamplerFilterMinmaxProperties<'_> {}
 impl ::core::default::Default for PhysicalDeviceSamplerFilterMinmaxProperties<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            filter_minmax_single_component_formats: Bool32::default(),
-            filter_minmax_image_component_mapping: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceSamplerFilterMinmaxProperties<'a> {
@@ -19062,15 +16902,7 @@ unsafe impl Sync for SampleLocationsInfoEXT<'_> {}
 impl ::core::default::Default for SampleLocationsInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            sample_locations_per_pixel: SampleCountFlags::default(),
-            sample_location_grid_size: Extent2D::default(),
-            sample_locations_count: u32::default(),
-            p_sample_locations: ::core::ptr::null(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for SampleLocationsInfoEXT<'a> {
@@ -19168,15 +17000,7 @@ unsafe impl Sync for RenderPassSampleLocationsBeginInfoEXT<'_> {}
 impl ::core::default::Default for RenderPassSampleLocationsBeginInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            attachment_initial_sample_locations_count: u32::default(),
-            p_attachment_initial_sample_locations: ::core::ptr::null(),
-            post_subpass_sample_locations_count: u32::default(),
-            p_post_subpass_sample_locations: ::core::ptr::null(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for RenderPassSampleLocationsBeginInfoEXT<'a> {
@@ -19222,13 +17046,7 @@ unsafe impl Sync for PipelineSampleLocationsStateCreateInfoEXT<'_> {}
 impl ::core::default::Default for PipelineSampleLocationsStateCreateInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            sample_locations_enable: Bool32::default(),
-            sample_locations_info: SampleLocationsInfoEXT::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PipelineSampleLocationsStateCreateInfoEXT<'a> {
@@ -19274,16 +17092,7 @@ unsafe impl Sync for PhysicalDeviceSampleLocationsPropertiesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceSampleLocationsPropertiesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            sample_location_sample_counts: SampleCountFlags::default(),
-            max_sample_location_grid_size: Extent2D::default(),
-            sample_location_coordinate_range: unsafe { ::core::mem::zeroed() },
-            sample_location_sub_pixel_bits: u32::default(),
-            variable_sample_locations: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceSampleLocationsPropertiesEXT<'a> {
@@ -19346,12 +17155,7 @@ unsafe impl Sync for MultisamplePropertiesEXT<'_> {}
 impl ::core::default::Default for MultisamplePropertiesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            max_sample_location_grid_size: Extent2D::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for MultisamplePropertiesEXT<'a> {
@@ -19383,12 +17187,7 @@ unsafe impl Sync for SamplerReductionModeCreateInfo<'_> {}
 impl ::core::default::Default for SamplerReductionModeCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            reduction_mode: SamplerReductionMode::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for SamplerReductionModeCreateInfo<'a> {
@@ -19418,12 +17217,7 @@ unsafe impl Sync for PhysicalDeviceBlendOperationAdvancedFeaturesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceBlendOperationAdvancedFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            advanced_blend_coherent_operations: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceBlendOperationAdvancedFeaturesEXT<'a> {
@@ -19461,12 +17255,7 @@ unsafe impl Sync for PhysicalDeviceMultiDrawFeaturesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceMultiDrawFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            multi_draw: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceMultiDrawFeaturesEXT<'a> {
@@ -19502,17 +17291,7 @@ unsafe impl Sync for PhysicalDeviceBlendOperationAdvancedPropertiesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceBlendOperationAdvancedPropertiesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            advanced_blend_max_color_attachments: u32::default(),
-            advanced_blend_independent_blend: Bool32::default(),
-            advanced_blend_non_premultiplied_src_color: Bool32::default(),
-            advanced_blend_non_premultiplied_dst_color: Bool32::default(),
-            advanced_blend_correlated_overlap: Bool32::default(),
-            advanced_blend_all_operations: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceBlendOperationAdvancedPropertiesEXT<'a> {
@@ -19590,14 +17369,7 @@ unsafe impl Sync for PipelineColorBlendAdvancedStateCreateInfoEXT<'_> {}
 impl ::core::default::Default for PipelineColorBlendAdvancedStateCreateInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            src_premultiplied: Bool32::default(),
-            dst_premultiplied: Bool32::default(),
-            blend_overlap: BlendOverlapEXT::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PipelineColorBlendAdvancedStateCreateInfoEXT<'a> {
@@ -19642,13 +17414,7 @@ unsafe impl Sync for PhysicalDeviceInlineUniformBlockFeatures<'_> {}
 impl ::core::default::Default for PhysicalDeviceInlineUniformBlockFeatures<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            inline_uniform_block: Bool32::default(),
-            descriptor_binding_inline_uniform_block_update_after_bind: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceInlineUniformBlockFeatures<'a> {
@@ -19693,16 +17459,7 @@ unsafe impl Sync for PhysicalDeviceInlineUniformBlockProperties<'_> {}
 impl ::core::default::Default for PhysicalDeviceInlineUniformBlockProperties<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            max_inline_uniform_block_size: u32::default(),
-            max_per_stage_descriptor_inline_uniform_blocks: u32::default(),
-            max_per_stage_descriptor_update_after_bind_inline_uniform_blocks: u32::default(),
-            max_descriptor_set_inline_uniform_blocks: u32::default(),
-            max_descriptor_set_update_after_bind_inline_uniform_blocks: u32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceInlineUniformBlockProperties<'a> {
@@ -19772,13 +17529,7 @@ unsafe impl Sync for WriteDescriptorSetInlineUniformBlock<'_> {}
 impl ::core::default::Default for WriteDescriptorSetInlineUniformBlock<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            data_size: u32::default(),
-            p_data: ::core::ptr::null(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for WriteDescriptorSetInlineUniformBlock<'a> {
@@ -19809,12 +17560,7 @@ unsafe impl Sync for DescriptorPoolInlineUniformBlockCreateInfo<'_> {}
 impl ::core::default::Default for DescriptorPoolInlineUniformBlockCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            max_inline_uniform_block_bindings: u32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DescriptorPoolInlineUniformBlockCreateInfo<'a> {
@@ -19855,16 +17601,7 @@ unsafe impl Sync for PipelineCoverageModulationStateCreateInfoNV<'_> {}
 impl ::core::default::Default for PipelineCoverageModulationStateCreateInfoNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            flags: PipelineCoverageModulationStateCreateFlagsNV::default(),
-            coverage_modulation_mode: CoverageModulationModeNV::default(),
-            coverage_modulation_table_enable: Bool32::default(),
-            coverage_modulation_table_count: u32::default(),
-            p_coverage_modulation_table: ::core::ptr::null(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PipelineCoverageModulationStateCreateInfoNV<'a> {
@@ -19921,13 +17658,7 @@ unsafe impl Sync for ImageFormatListCreateInfo<'_> {}
 impl ::core::default::Default for ImageFormatListCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            view_format_count: u32::default(),
-            p_view_formats: ::core::ptr::null(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ImageFormatListCreateInfo<'a> {
@@ -19962,14 +17693,7 @@ unsafe impl Sync for ValidationCacheCreateInfoEXT<'_> {}
 impl ::core::default::Default for ValidationCacheCreateInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            flags: ValidationCacheCreateFlagsEXT::default(),
-            initial_data_size: usize::default(),
-            p_initial_data: ::core::ptr::null(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ValidationCacheCreateInfoEXT<'a> {
@@ -20004,12 +17728,7 @@ unsafe impl Sync for ShaderModuleValidationCacheCreateInfoEXT<'_> {}
 impl ::core::default::Default for ShaderModuleValidationCacheCreateInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            validation_cache: ValidationCacheEXT::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ShaderModuleValidationCacheCreateInfoEXT<'a> {
@@ -20045,13 +17764,7 @@ unsafe impl Sync for PhysicalDeviceMaintenance3Properties<'_> {}
 impl ::core::default::Default for PhysicalDeviceMaintenance3Properties<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            max_per_set_descriptors: u32::default(),
-            max_memory_allocation_size: DeviceSize::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceMaintenance3Properties<'a> {
@@ -20086,12 +17799,7 @@ unsafe impl Sync for PhysicalDeviceMaintenance4Features<'_> {}
 impl ::core::default::Default for PhysicalDeviceMaintenance4Features<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            maintenance4: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceMaintenance4Features<'a> {
@@ -20122,12 +17830,7 @@ unsafe impl Sync for PhysicalDeviceMaintenance4Properties<'_> {}
 impl ::core::default::Default for PhysicalDeviceMaintenance4Properties<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            max_buffer_size: DeviceSize::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceMaintenance4Properties<'a> {
@@ -20157,12 +17860,7 @@ unsafe impl Sync for PhysicalDeviceMaintenance5Features<'_> {}
 impl ::core::default::Default for PhysicalDeviceMaintenance5Features<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            maintenance5: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceMaintenance5Features<'a> {
@@ -20198,17 +17896,7 @@ unsafe impl Sync for PhysicalDeviceMaintenance5Properties<'_> {}
 impl ::core::default::Default for PhysicalDeviceMaintenance5Properties<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            early_fragment_multisample_coverage_after_sample_counting: Bool32::default(),
-            early_fragment_sample_mask_test_before_sample_counting: Bool32::default(),
-            depth_stencil_swizzle_one_support: Bool32::default(),
-            polygon_mode_point_size: Bool32::default(),
-            non_strict_single_pixel_wide_lines_use_parallelogram: Bool32::default(),
-            non_strict_wide_lines_use_parallelogram: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceMaintenance5Properties<'a> {
@@ -20282,12 +17970,7 @@ unsafe impl Sync for PhysicalDeviceMaintenance6Features<'_> {}
 impl ::core::default::Default for PhysicalDeviceMaintenance6Features<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            maintenance6: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceMaintenance6Features<'a> {
@@ -20320,14 +18003,7 @@ unsafe impl Sync for PhysicalDeviceMaintenance6Properties<'_> {}
 impl ::core::default::Default for PhysicalDeviceMaintenance6Properties<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            block_texel_view_compatible_multiple_layers: Bool32::default(),
-            max_combined_image_sampler_descriptor_count: u32::default(),
-            fragment_shading_rate_clamp_combiner_inputs: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceMaintenance6Properties<'a> {
@@ -20379,12 +18055,7 @@ unsafe impl Sync for PhysicalDeviceMaintenance7FeaturesKHR<'_> {}
 impl ::core::default::Default for PhysicalDeviceMaintenance7FeaturesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            maintenance7: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceMaintenance7FeaturesKHR<'a> {
@@ -20422,19 +18093,7 @@ unsafe impl Sync for PhysicalDeviceMaintenance7PropertiesKHR<'_> {}
 impl ::core::default::Default for PhysicalDeviceMaintenance7PropertiesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            robust_fragment_shading_rate_attachment_access: Bool32::default(),
-            separate_depth_stencil_attachment_access: Bool32::default(),
-            max_descriptor_set_total_uniform_buffers_dynamic: u32::default(),
-            max_descriptor_set_total_storage_buffers_dynamic: u32::default(),
-            max_descriptor_set_total_buffers_dynamic: u32::default(),
-            max_descriptor_set_update_after_bind_total_uniform_buffers_dynamic: u32::default(),
-            max_descriptor_set_update_after_bind_total_storage_buffers_dynamic: u32::default(),
-            max_descriptor_set_update_after_bind_total_buffers_dynamic: u32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceMaintenance7PropertiesKHR<'a> {
@@ -20532,13 +18191,7 @@ unsafe impl Sync for PhysicalDeviceLayeredApiPropertiesListKHR<'_> {}
 impl ::core::default::Default for PhysicalDeviceLayeredApiPropertiesListKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            layered_api_count: u32::default(),
-            p_layered_apis: ::core::ptr::null_mut(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceLayeredApiPropertiesListKHR<'a> {
@@ -20591,15 +18244,7 @@ impl fmt::Debug for PhysicalDeviceLayeredApiPropertiesKHR<'_> {
 impl ::core::default::Default for PhysicalDeviceLayeredApiPropertiesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            vendor_id: u32::default(),
-            device_id: u32::default(),
-            layered_api: PhysicalDeviceLayeredApiKHR::default(),
-            device_name: unsafe { ::core::mem::zeroed() },
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceLayeredApiPropertiesKHR<'a> {
@@ -20649,12 +18294,7 @@ unsafe impl Sync for PhysicalDeviceLayeredApiVulkanPropertiesKHR<'_> {}
 impl ::core::default::Default for PhysicalDeviceLayeredApiVulkanPropertiesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            properties: PhysicalDeviceProperties2::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceLayeredApiVulkanPropertiesKHR<'a> {
@@ -20688,12 +18328,7 @@ unsafe impl Sync for PhysicalDeviceMaintenance8FeaturesKHR<'_> {}
 impl ::core::default::Default for PhysicalDeviceMaintenance8FeaturesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            maintenance8: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceMaintenance8FeaturesKHR<'a> {
@@ -20724,12 +18359,7 @@ unsafe impl Sync for PhysicalDeviceMaintenance9FeaturesKHR<'_> {}
 impl ::core::default::Default for PhysicalDeviceMaintenance9FeaturesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            maintenance9: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceMaintenance9FeaturesKHR<'a> {
@@ -20761,13 +18391,7 @@ unsafe impl Sync for PhysicalDeviceMaintenance9PropertiesKHR<'_> {}
 impl ::core::default::Default for PhysicalDeviceMaintenance9PropertiesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            image2_d_view_of3_d_sparse: Bool32::default(),
-            default_vertex_attribute_value: DefaultVertexAttributeValueKHR::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceMaintenance9PropertiesKHR<'a> {
@@ -20806,12 +18430,7 @@ unsafe impl Sync for PhysicalDeviceMaintenance11FeaturesKHR<'_> {}
 impl ::core::default::Default for PhysicalDeviceMaintenance11FeaturesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            maintenance11: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceMaintenance11FeaturesKHR<'a> {
@@ -20845,14 +18464,7 @@ unsafe impl Sync for PhysicalDeviceMaintenance10PropertiesKHR<'_> {}
 impl ::core::default::Default for PhysicalDeviceMaintenance10PropertiesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            rgba4_opaque_black_swizzled: Bool32::default(),
-            resolve_srgb_format_applies_transfer_function: Bool32::default(),
-            resolve_srgb_format_supports_transfer_function_control: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceMaintenance10PropertiesKHR<'a> {
@@ -20904,12 +18516,7 @@ unsafe impl Sync for PhysicalDeviceMaintenance10FeaturesKHR<'_> {}
 impl ::core::default::Default for PhysicalDeviceMaintenance10FeaturesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            maintenance10: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceMaintenance10FeaturesKHR<'a> {
@@ -20941,12 +18548,7 @@ unsafe impl Sync for QueueFamilyOwnershipTransferPropertiesKHR<'_> {}
 impl ::core::default::Default for QueueFamilyOwnershipTransferPropertiesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            optimal_image_transfer_to_queue_families: u32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for QueueFamilyOwnershipTransferPropertiesKHR<'a> {
@@ -20980,12 +18582,7 @@ unsafe impl Sync for QueueFamilyOptimalImageTransferGranularityPropertiesKHR<'_>
 impl ::core::default::Default for QueueFamilyOptimalImageTransferGranularityPropertiesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            optimal_image_transfer_granularity: Extent3D::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a>
@@ -21028,16 +18625,7 @@ unsafe impl Sync for RenderingAreaInfo<'_> {}
 impl ::core::default::Default for RenderingAreaInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            view_mask: u32::default(),
-            color_attachment_count: u32::default(),
-            p_color_attachment_formats: ::core::ptr::null(),
-            depth_attachment_format: Format::default(),
-            stencil_attachment_format: Format::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for RenderingAreaInfo<'a> {
@@ -21082,12 +18670,7 @@ unsafe impl Sync for DescriptorSetLayoutSupport<'_> {}
 impl ::core::default::Default for DescriptorSetLayoutSupport<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            supported: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DescriptorSetLayoutSupport<'a> {
@@ -21116,12 +18699,7 @@ unsafe impl Sync for PhysicalDeviceShaderDrawParametersFeatures<'_> {}
 impl ::core::default::Default for PhysicalDeviceShaderDrawParametersFeatures<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            shader_draw_parameters: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderDrawParametersFeatures<'a> {
@@ -21157,13 +18735,7 @@ unsafe impl Sync for PhysicalDeviceShaderFloat16Int8Features<'_> {}
 impl ::core::default::Default for PhysicalDeviceShaderFloat16Int8Features<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            shader_float16: Bool32::default(),
-            shader_int8: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderFloat16Int8Features<'a> {
@@ -21216,28 +18788,7 @@ unsafe impl Sync for PhysicalDeviceFloatControlsProperties<'_> {}
 impl ::core::default::Default for PhysicalDeviceFloatControlsProperties<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            denorm_behavior_independence: ShaderFloatControlsIndependence::default(),
-            rounding_mode_independence: ShaderFloatControlsIndependence::default(),
-            shader_signed_zero_inf_nan_preserve_float16: Bool32::default(),
-            shader_signed_zero_inf_nan_preserve_float32: Bool32::default(),
-            shader_signed_zero_inf_nan_preserve_float64: Bool32::default(),
-            shader_denorm_preserve_float16: Bool32::default(),
-            shader_denorm_preserve_float32: Bool32::default(),
-            shader_denorm_preserve_float64: Bool32::default(),
-            shader_denorm_flush_to_zero_float16: Bool32::default(),
-            shader_denorm_flush_to_zero_float32: Bool32::default(),
-            shader_denorm_flush_to_zero_float64: Bool32::default(),
-            shader_rounding_mode_rte_float16: Bool32::default(),
-            shader_rounding_mode_rte_float32: Bool32::default(),
-            shader_rounding_mode_rte_float64: Bool32::default(),
-            shader_rounding_mode_rtz_float16: Bool32::default(),
-            shader_rounding_mode_rtz_float32: Bool32::default(),
-            shader_rounding_mode_rtz_float64: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceFloatControlsProperties<'a> {
@@ -21392,12 +18943,7 @@ unsafe impl Sync for PhysicalDeviceHostQueryResetFeatures<'_> {}
 impl ::core::default::Default for PhysicalDeviceHostQueryResetFeatures<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            host_query_reset: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceHostQueryResetFeatures<'a> {
@@ -21453,16 +18999,7 @@ unsafe impl Sync for NativeBufferANDROID<'_> {}
 impl ::core::default::Default for NativeBufferANDROID<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            handle: ::core::ptr::null(),
-            stride: c_int::default(),
-            format: c_int::default(),
-            usage: c_int::default(),
-            usage2: NativeBufferUsage2ANDROID::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for NativeBufferANDROID<'a> {
@@ -21513,12 +19050,7 @@ unsafe impl Sync for SwapchainImageCreateInfoANDROID<'_> {}
 impl ::core::default::Default for SwapchainImageCreateInfoANDROID<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            usage: SwapchainImageUsageFlagsANDROID::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for SwapchainImageCreateInfoANDROID<'a> {
@@ -21548,12 +19080,7 @@ unsafe impl Sync for PhysicalDevicePresentationPropertiesANDROID<'_> {}
 impl ::core::default::Default for PhysicalDevicePresentationPropertiesANDROID<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            shared_image: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDevicePresentationPropertiesANDROID<'a> {
@@ -21627,15 +19154,7 @@ pub struct ShaderStatisticsInfoAMD {
 impl ::core::default::Default for ShaderStatisticsInfoAMD {
     #[inline]
     fn default() -> Self {
-        Self {
-            shader_stage_mask: ShaderStageFlags::default(),
-            resource_usage: ShaderResourceUsageAMD::default(),
-            num_physical_vgprs: u32::default(),
-            num_physical_sgprs: u32::default(),
-            num_available_vgprs: u32::default(),
-            num_available_sgprs: u32::default(),
-            compute_work_group_size: unsafe { ::core::mem::zeroed() },
-        }
+        unsafe { ::core::mem::zeroed() }
     }
 }
 impl ShaderStatisticsInfoAMD {
@@ -21691,12 +19210,7 @@ unsafe impl Sync for PhysicalDeviceElapsedTimerQueryFeaturesQCOM<'_> {}
 impl ::core::default::Default for PhysicalDeviceElapsedTimerQueryFeaturesQCOM<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            elapsed_timer_query: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceElapsedTimerQueryFeaturesQCOM<'a> {
@@ -21731,12 +19245,7 @@ unsafe impl Sync for DeviceQueueGlobalPriorityCreateInfo<'_> {}
 impl ::core::default::Default for DeviceQueueGlobalPriorityCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            global_priority: QueueGlobalPriority::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DeviceQueueGlobalPriorityCreateInfo<'a> {
@@ -21766,12 +19275,7 @@ unsafe impl Sync for PhysicalDeviceGlobalPriorityQueryFeatures<'_> {}
 impl ::core::default::Default for PhysicalDeviceGlobalPriorityQueryFeatures<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            global_priority_query: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceGlobalPriorityQueryFeatures<'a> {
@@ -21814,13 +19318,7 @@ impl fmt::Debug for QueueFamilyGlobalPriorityProperties<'_> {
 impl ::core::default::Default for QueueFamilyGlobalPriorityProperties<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            priority_count: u32::default(),
-            priorities: unsafe { ::core::mem::zeroed() },
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for QueueFamilyGlobalPriorityProperties<'a> {
@@ -21857,14 +19355,7 @@ unsafe impl Sync for DebugUtilsObjectNameInfoEXT<'_> {}
 impl ::core::default::Default for DebugUtilsObjectNameInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            object_type: ObjectType::default(),
-            object_handle: u64::default(),
-            p_object_name: ::core::ptr::null(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DebugUtilsObjectNameInfoEXT<'a> {
@@ -21914,16 +19405,7 @@ unsafe impl Sync for DebugUtilsObjectTagInfoEXT<'_> {}
 impl ::core::default::Default for DebugUtilsObjectTagInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            object_type: ObjectType::default(),
-            object_handle: u64::default(),
-            tag_name: u64::default(),
-            tag_size: usize::default(),
-            p_tag: ::core::ptr::null(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DebugUtilsObjectTagInfoEXT<'a> {
@@ -21965,13 +19447,7 @@ unsafe impl Sync for DebugUtilsLabelEXT<'_> {}
 impl ::core::default::Default for DebugUtilsLabelEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            p_label_name: ::core::ptr::null(),
-            color: unsafe { ::core::mem::zeroed() },
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DebugUtilsLabelEXT<'a> {
@@ -22033,16 +19509,7 @@ impl fmt::Debug for DebugUtilsMessengerCreateInfoEXT<'_> {
 impl ::core::default::Default for DebugUtilsMessengerCreateInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            flags: DebugUtilsMessengerCreateFlagsEXT::default(),
-            message_severity: DebugUtilsMessageSeverityFlagsEXT::default(),
-            message_type: DebugUtilsMessageTypeFlagsEXT::default(),
-            pfn_user_callback: PFN_vkDebugUtilsMessengerCallbackEXT::default(),
-            p_user_data: ::core::ptr::null_mut(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DebugUtilsMessengerCreateInfoEXT<'a> {
@@ -22104,21 +19571,7 @@ unsafe impl Sync for DebugUtilsMessengerCallbackDataEXT<'_> {}
 impl ::core::default::Default for DebugUtilsMessengerCallbackDataEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            flags: DebugUtilsMessengerCallbackDataFlagsEXT::default(),
-            p_message_id_name: ::core::ptr::null(),
-            message_id_number: i32::default(),
-            p_message: ::core::ptr::null(),
-            queue_label_count: u32::default(),
-            p_queue_labels: ::core::ptr::null(),
-            cmd_buf_label_count: u32::default(),
-            p_cmd_buf_labels: ::core::ptr::null(),
-            object_count: u32::default(),
-            p_objects: ::core::ptr::null(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DebugUtilsMessengerCallbackDataEXT<'a> {
@@ -22196,12 +19649,7 @@ unsafe impl Sync for PhysicalDeviceDeviceMemoryReportFeaturesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceDeviceMemoryReportFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            device_memory_report: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceDeviceMemoryReportFeaturesEXT<'a> {
@@ -22252,14 +19700,7 @@ impl fmt::Debug for DeviceDeviceMemoryReportCreateInfoEXT<'_> {
 impl ::core::default::Default for DeviceDeviceMemoryReportCreateInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            flags: DeviceMemoryReportFlagsEXT::default(),
-            pfn_user_callback: PFN_vkDeviceMemoryReportCallbackEXT::default(),
-            p_user_data: ::core::ptr::null_mut(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DeviceDeviceMemoryReportCreateInfoEXT<'a> {
@@ -22309,18 +19750,7 @@ unsafe impl Sync for DeviceMemoryReportCallbackDataEXT<'_> {}
 impl ::core::default::Default for DeviceMemoryReportCallbackDataEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            flags: DeviceMemoryReportFlagsEXT::default(),
-            ty: DeviceMemoryReportEventTypeEXT::default(),
-            memory_object_id: u64::default(),
-            size: DeviceSize::default(),
-            object_type: ObjectType::default(),
-            object_handle: u64::default(),
-            heap_index: u32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DeviceMemoryReportCallbackDataEXT<'a> {
@@ -22376,13 +19806,7 @@ unsafe impl Sync for ImportMemoryHostPointerInfoEXT<'_> {}
 impl ::core::default::Default for ImportMemoryHostPointerInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            handle_type: ExternalMemoryHandleTypeFlags::default(),
-            p_host_pointer: ::core::ptr::null_mut(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ImportMemoryHostPointerInfoEXT<'a> {
@@ -22417,12 +19841,7 @@ unsafe impl Sync for MemoryHostPointerPropertiesEXT<'_> {}
 impl ::core::default::Default for MemoryHostPointerPropertiesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            memory_type_bits: u32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for MemoryHostPointerPropertiesEXT<'a> {
@@ -22451,12 +19870,7 @@ unsafe impl Sync for PhysicalDeviceExternalMemoryHostPropertiesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceExternalMemoryHostPropertiesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            min_imported_host_pointer_alignment: DeviceSize::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceExternalMemoryHostPropertiesEXT<'a> {
@@ -22501,20 +19915,7 @@ unsafe impl Sync for PhysicalDeviceConservativeRasterizationPropertiesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceConservativeRasterizationPropertiesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            primitive_overestimation_size: f32::default(),
-            max_extra_primitive_overestimation_size: f32::default(),
-            extra_primitive_overestimation_size_granularity: f32::default(),
-            primitive_underestimation: Bool32::default(),
-            conservative_point_and_line_rasterization: Bool32::default(),
-            degenerate_triangles_rasterized: Bool32::default(),
-            degenerate_lines_rasterized: Bool32::default(),
-            fully_covered_fragment_shader_input_variable: Bool32::default(),
-            conservative_rasterization_post_depth_coverage: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceConservativeRasterizationPropertiesEXT<'a> {
@@ -22610,12 +20011,7 @@ unsafe impl Sync for CalibratedTimestampInfoKHR<'_> {}
 impl ::core::default::Default for CalibratedTimestampInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            time_domain: TimeDomainKHR::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for CalibratedTimestampInfoKHR<'a> {
@@ -22657,25 +20053,7 @@ unsafe impl Sync for PhysicalDeviceShaderCorePropertiesAMD<'_> {}
 impl ::core::default::Default for PhysicalDeviceShaderCorePropertiesAMD<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            shader_engine_count: u32::default(),
-            shader_arrays_per_engine_count: u32::default(),
-            compute_units_per_shader_array: u32::default(),
-            simd_per_compute_unit: u32::default(),
-            wavefronts_per_simd: u32::default(),
-            wavefront_size: u32::default(),
-            sgprs_per_simd: u32::default(),
-            min_sgpr_allocation: u32::default(),
-            max_sgpr_allocation: u32::default(),
-            sgpr_allocation_granularity: u32::default(),
-            vgprs_per_simd: u32::default(),
-            min_vgpr_allocation: u32::default(),
-            max_vgpr_allocation: u32::default(),
-            vgpr_allocation_granularity: u32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderCorePropertiesAMD<'a> {
@@ -22771,13 +20149,7 @@ unsafe impl Sync for PhysicalDeviceShaderCoreProperties2AMD<'_> {}
 impl ::core::default::Default for PhysicalDeviceShaderCoreProperties2AMD<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            shader_core_features: ShaderCorePropertiesFlagsAMD::default(),
-            active_compute_unit_count: u32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderCoreProperties2AMD<'a> {
@@ -22818,14 +20190,7 @@ unsafe impl Sync for PipelineRasterizationConservativeStateCreateInfoEXT<'_> {}
 impl ::core::default::Default for PipelineRasterizationConservativeStateCreateInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            flags: PipelineRasterizationConservativeStateCreateFlagsEXT::default(),
-            conservative_rasterization_mode: ConservativeRasterizationModeEXT::default(),
-            extra_primitive_overestimation_size: f32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PipelineRasterizationConservativeStateCreateInfoEXT<'a> {
@@ -22894,31 +20259,7 @@ unsafe impl Sync for PhysicalDeviceDescriptorIndexingFeatures<'_> {}
 impl ::core::default::Default for PhysicalDeviceDescriptorIndexingFeatures<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            shader_input_attachment_array_dynamic_indexing: Bool32::default(),
-            shader_uniform_texel_buffer_array_dynamic_indexing: Bool32::default(),
-            shader_storage_texel_buffer_array_dynamic_indexing: Bool32::default(),
-            shader_uniform_buffer_array_non_uniform_indexing: Bool32::default(),
-            shader_sampled_image_array_non_uniform_indexing: Bool32::default(),
-            shader_storage_buffer_array_non_uniform_indexing: Bool32::default(),
-            shader_storage_image_array_non_uniform_indexing: Bool32::default(),
-            shader_input_attachment_array_non_uniform_indexing: Bool32::default(),
-            shader_uniform_texel_buffer_array_non_uniform_indexing: Bool32::default(),
-            shader_storage_texel_buffer_array_non_uniform_indexing: Bool32::default(),
-            descriptor_binding_uniform_buffer_update_after_bind: Bool32::default(),
-            descriptor_binding_sampled_image_update_after_bind: Bool32::default(),
-            descriptor_binding_storage_image_update_after_bind: Bool32::default(),
-            descriptor_binding_storage_buffer_update_after_bind: Bool32::default(),
-            descriptor_binding_uniform_texel_buffer_update_after_bind: Bool32::default(),
-            descriptor_binding_storage_texel_buffer_update_after_bind: Bool32::default(),
-            descriptor_binding_update_unused_while_pending: Bool32::default(),
-            descriptor_binding_partially_bound: Bool32::default(),
-            descriptor_binding_variable_descriptor_count: Bool32::default(),
-            runtime_descriptor_array: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceDescriptorIndexingFeatures<'a> {
@@ -23142,34 +20483,7 @@ unsafe impl Sync for PhysicalDeviceDescriptorIndexingProperties<'_> {}
 impl ::core::default::Default for PhysicalDeviceDescriptorIndexingProperties<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            max_update_after_bind_descriptors_in_all_pools: u32::default(),
-            shader_uniform_buffer_array_non_uniform_indexing_native: Bool32::default(),
-            shader_sampled_image_array_non_uniform_indexing_native: Bool32::default(),
-            shader_storage_buffer_array_non_uniform_indexing_native: Bool32::default(),
-            shader_storage_image_array_non_uniform_indexing_native: Bool32::default(),
-            shader_input_attachment_array_non_uniform_indexing_native: Bool32::default(),
-            robust_buffer_access_update_after_bind: Bool32::default(),
-            quad_divergent_implicit_lod: Bool32::default(),
-            max_per_stage_descriptor_update_after_bind_samplers: u32::default(),
-            max_per_stage_descriptor_update_after_bind_uniform_buffers: u32::default(),
-            max_per_stage_descriptor_update_after_bind_storage_buffers: u32::default(),
-            max_per_stage_descriptor_update_after_bind_sampled_images: u32::default(),
-            max_per_stage_descriptor_update_after_bind_storage_images: u32::default(),
-            max_per_stage_descriptor_update_after_bind_input_attachments: u32::default(),
-            max_per_stage_update_after_bind_resources: u32::default(),
-            max_descriptor_set_update_after_bind_samplers: u32::default(),
-            max_descriptor_set_update_after_bind_uniform_buffers: u32::default(),
-            max_descriptor_set_update_after_bind_uniform_buffers_dynamic: u32::default(),
-            max_descriptor_set_update_after_bind_storage_buffers: u32::default(),
-            max_descriptor_set_update_after_bind_storage_buffers_dynamic: u32::default(),
-            max_descriptor_set_update_after_bind_sampled_images: u32::default(),
-            max_descriptor_set_update_after_bind_storage_images: u32::default(),
-            max_descriptor_set_update_after_bind_input_attachments: u32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceDescriptorIndexingProperties<'a> {
@@ -23400,13 +20714,7 @@ unsafe impl Sync for DescriptorSetLayoutBindingFlagsCreateInfo<'_> {}
 impl ::core::default::Default for DescriptorSetLayoutBindingFlagsCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            binding_count: u32::default(),
-            p_binding_flags: ::core::ptr::null(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DescriptorSetLayoutBindingFlagsCreateInfo<'a> {
@@ -23442,13 +20750,7 @@ unsafe impl Sync for DescriptorSetVariableDescriptorCountAllocateInfo<'_> {}
 impl ::core::default::Default for DescriptorSetVariableDescriptorCountAllocateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            descriptor_set_count: u32::default(),
-            p_descriptor_counts: ::core::ptr::null(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DescriptorSetVariableDescriptorCountAllocateInfo<'a> {
@@ -23483,12 +20785,7 @@ unsafe impl Sync for DescriptorSetVariableDescriptorCountLayoutSupport<'_> {}
 impl ::core::default::Default for DescriptorSetVariableDescriptorCountLayoutSupport<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            max_variable_descriptor_count: u32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DescriptorSetVariableDescriptorCountLayoutSupport<'a> {
@@ -23530,20 +20827,7 @@ unsafe impl Sync for AttachmentDescription2<'_> {}
 impl ::core::default::Default for AttachmentDescription2<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            flags: AttachmentDescriptionFlags::default(),
-            format: Format::default(),
-            samples: SampleCountFlags::default(),
-            load_op: AttachmentLoadOp::default(),
-            store_op: AttachmentStoreOp::default(),
-            stencil_load_op: AttachmentLoadOp::default(),
-            stencil_store_op: AttachmentStoreOp::default(),
-            initial_layout: ImageLayout::default(),
-            final_layout: ImageLayout::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for AttachmentDescription2<'a> {
@@ -23614,14 +20898,7 @@ unsafe impl Sync for AttachmentReference2<'_> {}
 impl ::core::default::Default for AttachmentReference2<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            attachment: u32::default(),
-            layout: ImageLayout::default(),
-            aspect_mask: ImageAspectFlags::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for AttachmentReference2<'a> {
@@ -23670,22 +20947,7 @@ unsafe impl Sync for SubpassDescription2<'_> {}
 impl ::core::default::Default for SubpassDescription2<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            flags: SubpassDescriptionFlags::default(),
-            pipeline_bind_point: PipelineBindPoint::default(),
-            view_mask: u32::default(),
-            input_attachment_count: u32::default(),
-            p_input_attachments: ::core::ptr::null(),
-            color_attachment_count: u32::default(),
-            p_color_attachments: ::core::ptr::null(),
-            p_resolve_attachments: ::core::ptr::null(),
-            p_depth_stencil_attachment: ::core::ptr::null(),
-            preserve_attachment_count: u32::default(),
-            p_preserve_attachments: ::core::ptr::null(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for SubpassDescription2<'a> {
@@ -23766,19 +21028,7 @@ unsafe impl Sync for SubpassDependency2<'_> {}
 impl ::core::default::Default for SubpassDependency2<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            src_subpass: u32::default(),
-            dst_subpass: u32::default(),
-            src_stage_mask: PipelineStageFlags::default(),
-            dst_stage_mask: PipelineStageFlags::default(),
-            src_access_mask: AccessFlags::default(),
-            dst_access_mask: AccessFlags::default(),
-            dependency_flags: DependencyFlags::default(),
-            view_offset: i32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for SubpassDependency2<'a> {
@@ -23850,20 +21100,7 @@ unsafe impl Sync for RenderPassCreateInfo2<'_> {}
 impl ::core::default::Default for RenderPassCreateInfo2<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            flags: RenderPassCreateFlags::default(),
-            attachment_count: u32::default(),
-            p_attachments: ::core::ptr::null(),
-            subpass_count: u32::default(),
-            p_subpasses: ::core::ptr::null(),
-            dependency_count: u32::default(),
-            p_dependencies: ::core::ptr::null(),
-            correlated_view_mask_count: u32::default(),
-            p_correlated_view_masks: ::core::ptr::null(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for RenderPassCreateInfo2<'a> {
@@ -23916,12 +21153,7 @@ unsafe impl Sync for SubpassBeginInfo<'_> {}
 impl ::core::default::Default for SubpassBeginInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            contents: SubpassContents::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for SubpassBeginInfo<'a> {
@@ -23949,11 +21181,7 @@ unsafe impl Sync for SubpassEndInfo<'_> {}
 impl ::core::default::Default for SubpassEndInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for SubpassEndInfo<'a> {
@@ -23976,12 +21204,7 @@ unsafe impl Sync for PhysicalDeviceTimelineSemaphoreFeatures<'_> {}
 impl ::core::default::Default for PhysicalDeviceTimelineSemaphoreFeatures<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            timeline_semaphore: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceTimelineSemaphoreFeatures<'a> {
@@ -24013,12 +21236,7 @@ unsafe impl Sync for PhysicalDeviceTimelineSemaphoreProperties<'_> {}
 impl ::core::default::Default for PhysicalDeviceTimelineSemaphoreProperties<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            max_timeline_semaphore_value_difference: u64::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceTimelineSemaphoreProperties<'a> {
@@ -24056,13 +21274,7 @@ unsafe impl Sync for SemaphoreTypeCreateInfo<'_> {}
 impl ::core::default::Default for SemaphoreTypeCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            semaphore_type: SemaphoreType::default(),
-            initial_value: u64::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for SemaphoreTypeCreateInfo<'a> {
@@ -24101,15 +21313,7 @@ unsafe impl Sync for TimelineSemaphoreSubmitInfo<'_> {}
 impl ::core::default::Default for TimelineSemaphoreSubmitInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            wait_semaphore_value_count: u32::default(),
-            p_wait_semaphore_values: ::core::ptr::null(),
-            signal_semaphore_value_count: u32::default(),
-            p_signal_semaphore_values: ::core::ptr::null(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for TimelineSemaphoreSubmitInfo<'a> {
@@ -24150,15 +21354,7 @@ unsafe impl Sync for SemaphoreWaitInfo<'_> {}
 impl ::core::default::Default for SemaphoreWaitInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            flags: SemaphoreWaitFlags::default(),
-            semaphore_count: u32::default(),
-            p_semaphores: ::core::ptr::null(),
-            p_values: ::core::ptr::null(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for SemaphoreWaitInfo<'a> {
@@ -24200,13 +21396,7 @@ unsafe impl Sync for SemaphoreSignalInfo<'_> {}
 impl ::core::default::Default for SemaphoreSignalInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            semaphore: Semaphore::default(),
-            value: u64::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for SemaphoreSignalInfo<'a> {
@@ -24262,13 +21452,7 @@ unsafe impl Sync for PipelineVertexInputDivisorStateCreateInfo<'_> {}
 impl ::core::default::Default for PipelineVertexInputDivisorStateCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            vertex_binding_divisor_count: u32::default(),
-            p_vertex_binding_divisors: ::core::ptr::null(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PipelineVertexInputDivisorStateCreateInfo<'a> {
@@ -24306,12 +21490,7 @@ unsafe impl Sync for PhysicalDeviceVertexAttributeDivisorPropertiesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceVertexAttributeDivisorPropertiesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            max_vertex_attrib_divisor: u32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceVertexAttributeDivisorPropertiesEXT<'a> {
@@ -24346,13 +21525,7 @@ unsafe impl Sync for PhysicalDeviceVertexAttributeDivisorProperties<'_> {}
 impl ::core::default::Default for PhysicalDeviceVertexAttributeDivisorProperties<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            max_vertex_attrib_divisor: u32::default(),
-            supports_non_zero_first_instance: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceVertexAttributeDivisorProperties<'a> {
@@ -24397,15 +21570,7 @@ unsafe impl Sync for PhysicalDevicePCIBusInfoPropertiesEXT<'_> {}
 impl ::core::default::Default for PhysicalDevicePCIBusInfoPropertiesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            pci_domain: u32::default(),
-            pci_bus: u32::default(),
-            pci_device: u32::default(),
-            pci_function: u32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDevicePCIBusInfoPropertiesEXT<'a> {
@@ -24451,12 +21616,7 @@ unsafe impl Sync for ImportAndroidHardwareBufferInfoANDROID<'_> {}
 impl ::core::default::Default for ImportAndroidHardwareBufferInfoANDROID<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            buffer: ::core::ptr::null_mut(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ImportAndroidHardwareBufferInfoANDROID<'a> {
@@ -24487,12 +21647,7 @@ unsafe impl Sync for AndroidHardwareBufferUsageANDROID<'_> {}
 impl ::core::default::Default for AndroidHardwareBufferUsageANDROID<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            android_hardware_buffer_usage: u64::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for AndroidHardwareBufferUsageANDROID<'a> {
@@ -24523,13 +21678,7 @@ unsafe impl Sync for AndroidHardwareBufferPropertiesANDROID<'_> {}
 impl ::core::default::Default for AndroidHardwareBufferPropertiesANDROID<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            allocation_size: DeviceSize::default(),
-            memory_type_bits: u32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for AndroidHardwareBufferPropertiesANDROID<'a> {
@@ -24563,12 +21712,7 @@ unsafe impl Sync for MemoryGetAndroidHardwareBufferInfoANDROID<'_> {}
 impl ::core::default::Default for MemoryGetAndroidHardwareBufferInfoANDROID<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            memory: DeviceMemory::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for MemoryGetAndroidHardwareBufferInfoANDROID<'a> {
@@ -24605,19 +21749,7 @@ unsafe impl Sync for AndroidHardwareBufferFormatPropertiesANDROID<'_> {}
 impl ::core::default::Default for AndroidHardwareBufferFormatPropertiesANDROID<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            format: Format::default(),
-            external_format: u64::default(),
-            format_features: FormatFeatureFlags::default(),
-            sampler_ycbcr_conversion_components: ComponentMapping::default(),
-            suggested_ycbcr_model: SamplerYcbcrModelConversion::default(),
-            suggested_ycbcr_range: SamplerYcbcrRange::default(),
-            suggested_x_chroma_offset: ChromaLocation::default(),
-            suggested_y_chroma_offset: ChromaLocation::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for AndroidHardwareBufferFormatPropertiesANDROID<'a> {
@@ -24692,12 +21824,7 @@ unsafe impl Sync for CommandBufferInheritanceConditionalRenderingInfoEXT<'_> {}
 impl ::core::default::Default for CommandBufferInheritanceConditionalRenderingInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            conditional_rendering_enable: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for CommandBufferInheritanceConditionalRenderingInfoEXT<'a> {
@@ -24731,12 +21858,7 @@ unsafe impl Sync for ExternalFormatANDROID<'_> {}
 impl ::core::default::Default for ExternalFormatANDROID<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            external_format: u64::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ExternalFormatANDROID<'a> {
@@ -24772,14 +21894,7 @@ unsafe impl Sync for PhysicalDevice8BitStorageFeatures<'_> {}
 impl ::core::default::Default for PhysicalDevice8BitStorageFeatures<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            storage_buffer8_bit_access: Bool32::default(),
-            uniform_and_storage_buffer8_bit_access: Bool32::default(),
-            storage_push_constant8: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDevice8BitStorageFeatures<'a> {
@@ -24824,13 +21939,7 @@ unsafe impl Sync for PhysicalDeviceConditionalRenderingFeaturesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceConditionalRenderingFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            conditional_rendering: Bool32::default(),
-            inherited_conditional_rendering: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceConditionalRenderingFeaturesEXT<'a> {
@@ -24875,14 +21984,7 @@ unsafe impl Sync for PhysicalDeviceVulkanMemoryModelFeatures<'_> {}
 impl ::core::default::Default for PhysicalDeviceVulkanMemoryModelFeatures<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            vulkan_memory_model: Bool32::default(),
-            vulkan_memory_model_device_scope: Bool32::default(),
-            vulkan_memory_model_availability_visibility_chains: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceVulkanMemoryModelFeatures<'a> {
@@ -24932,13 +22034,7 @@ unsafe impl Sync for PhysicalDeviceShaderAtomicInt64Features<'_> {}
 impl ::core::default::Default for PhysicalDeviceShaderAtomicInt64Features<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            shader_buffer_int64_atomics: Bool32::default(),
-            shader_shared_int64_atomics: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderAtomicInt64Features<'a> {
@@ -24986,23 +22082,7 @@ unsafe impl Sync for PhysicalDeviceShaderAtomicFloatFeaturesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceShaderAtomicFloatFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            shader_buffer_float32_atomics: Bool32::default(),
-            shader_buffer_float32_atomic_add: Bool32::default(),
-            shader_buffer_float64_atomics: Bool32::default(),
-            shader_buffer_float64_atomic_add: Bool32::default(),
-            shader_shared_float32_atomics: Bool32::default(),
-            shader_shared_float32_atomic_add: Bool32::default(),
-            shader_shared_float64_atomics: Bool32::default(),
-            shader_shared_float64_atomic_add: Bool32::default(),
-            shader_image_float32_atomics: Bool32::default(),
-            shader_image_float32_atomic_add: Bool32::default(),
-            sparse_image_float32_atomics: Bool32::default(),
-            sparse_image_float32_atomic_add: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderAtomicFloatFeaturesEXT<'a> {
@@ -25121,23 +22201,7 @@ unsafe impl Sync for PhysicalDeviceShaderAtomicFloat2FeaturesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceShaderAtomicFloat2FeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            shader_buffer_float16_atomics: Bool32::default(),
-            shader_buffer_float16_atomic_add: Bool32::default(),
-            shader_buffer_float16_atomic_min_max: Bool32::default(),
-            shader_buffer_float32_atomic_min_max: Bool32::default(),
-            shader_buffer_float64_atomic_min_max: Bool32::default(),
-            shader_shared_float16_atomics: Bool32::default(),
-            shader_shared_float16_atomic_add: Bool32::default(),
-            shader_shared_float16_atomic_min_max: Bool32::default(),
-            shader_shared_float32_atomic_min_max: Bool32::default(),
-            shader_shared_float64_atomic_min_max: Bool32::default(),
-            shader_image_float32_atomic_min_max: Bool32::default(),
-            sparse_image_float32_atomic_min_max: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderAtomicFloat2FeaturesEXT<'a> {
@@ -25258,13 +22322,7 @@ unsafe impl Sync for PhysicalDeviceVertexAttributeDivisorFeatures<'_> {}
 impl ::core::default::Default for PhysicalDeviceVertexAttributeDivisorFeatures<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            vertex_attribute_instance_rate_divisor: Bool32::default(),
-            vertex_attribute_instance_rate_zero_divisor: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceVertexAttributeDivisorFeatures<'a> {
@@ -25311,12 +22369,7 @@ unsafe impl Sync for QueueFamilyCheckpointPropertiesNV<'_> {}
 impl ::core::default::Default for QueueFamilyCheckpointPropertiesNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            checkpoint_execution_stage_mask: PipelineStageFlags::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for QueueFamilyCheckpointPropertiesNV<'a> {
@@ -25350,13 +22403,7 @@ unsafe impl Sync for CheckpointDataNV<'_> {}
 impl ::core::default::Default for CheckpointDataNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            stage: PipelineStageFlags::default(),
-            p_checkpoint_marker: ::core::ptr::null_mut(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for CheckpointDataNV<'a> {
@@ -25393,15 +22440,7 @@ unsafe impl Sync for PhysicalDeviceDepthStencilResolveProperties<'_> {}
 impl ::core::default::Default for PhysicalDeviceDepthStencilResolveProperties<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            supported_depth_resolve_modes: ResolveModeFlags::default(),
-            supported_stencil_resolve_modes: ResolveModeFlags::default(),
-            independent_resolve_none: Bool32::default(),
-            independent_resolve: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceDepthStencilResolveProperties<'a> {
@@ -25458,14 +22497,7 @@ unsafe impl Sync for SubpassDescriptionDepthStencilResolve<'_> {}
 impl ::core::default::Default for SubpassDescriptionDepthStencilResolve<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            depth_resolve_mode: ResolveModeFlags::default(),
-            stencil_resolve_mode: ResolveModeFlags::default(),
-            p_depth_stencil_resolve_attachment: ::core::ptr::null(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for SubpassDescriptionDepthStencilResolve<'a> {
@@ -25508,12 +22540,7 @@ unsafe impl Sync for ImageViewASTCDecodeModeEXT<'_> {}
 impl ::core::default::Default for ImageViewASTCDecodeModeEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            decode_mode: Format::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ImageViewASTCDecodeModeEXT<'a> {
@@ -25543,12 +22570,7 @@ unsafe impl Sync for PhysicalDeviceASTCDecodeFeaturesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceASTCDecodeFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            decode_mode_shared_exponent: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceASTCDecodeFeaturesEXT<'a> {
@@ -25580,13 +22602,7 @@ unsafe impl Sync for PhysicalDeviceTransformFeedbackFeaturesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceTransformFeedbackFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            transform_feedback: Bool32::default(),
-            geometry_streams: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceTransformFeedbackFeaturesEXT<'a> {
@@ -25635,21 +22651,7 @@ unsafe impl Sync for PhysicalDeviceTransformFeedbackPropertiesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceTransformFeedbackPropertiesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            max_transform_feedback_streams: u32::default(),
-            max_transform_feedback_buffers: u32::default(),
-            max_transform_feedback_buffer_size: DeviceSize::default(),
-            max_transform_feedback_stream_data_size: u32::default(),
-            max_transform_feedback_buffer_data_size: u32::default(),
-            max_transform_feedback_buffer_data_stride: u32::default(),
-            transform_feedback_queries: Bool32::default(),
-            transform_feedback_streams_lines_triangles: Bool32::default(),
-            transform_feedback_rasterization_stream_select: Bool32::default(),
-            transform_feedback_draw: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceTransformFeedbackPropertiesEXT<'a> {
@@ -25749,13 +22751,7 @@ unsafe impl Sync for PipelineRasterizationStateStreamCreateInfoEXT<'_> {}
 impl ::core::default::Default for PipelineRasterizationStateStreamCreateInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            flags: PipelineRasterizationStateStreamCreateFlagsEXT::default(),
-            rasterization_stream: u32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PipelineRasterizationStateStreamCreateInfoEXT<'a> {
@@ -25794,12 +22790,7 @@ unsafe impl Sync for PhysicalDeviceRepresentativeFragmentTestFeaturesNV<'_> {}
 impl ::core::default::Default for PhysicalDeviceRepresentativeFragmentTestFeaturesNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            representative_fragment_test: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceRepresentativeFragmentTestFeaturesNV<'a> {
@@ -25837,12 +22828,7 @@ unsafe impl Sync for PipelineRepresentativeFragmentTestStateCreateInfoNV<'_> {}
 impl ::core::default::Default for PipelineRepresentativeFragmentTestStateCreateInfoNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            representative_fragment_test_enable: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PipelineRepresentativeFragmentTestStateCreateInfoNV<'a> {
@@ -25879,12 +22865,7 @@ unsafe impl Sync for PhysicalDeviceExclusiveScissorFeaturesNV<'_> {}
 impl ::core::default::Default for PhysicalDeviceExclusiveScissorFeaturesNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            exclusive_scissor: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceExclusiveScissorFeaturesNV<'a> {
@@ -25917,13 +22898,7 @@ unsafe impl Sync for PipelineViewportExclusiveScissorStateCreateInfoNV<'_> {}
 impl ::core::default::Default for PipelineViewportExclusiveScissorStateCreateInfoNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            exclusive_scissor_count: u32::default(),
-            p_exclusive_scissors: ::core::ptr::null(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PipelineViewportExclusiveScissorStateCreateInfoNV<'a> {
@@ -25958,12 +22933,7 @@ unsafe impl Sync for PhysicalDeviceCornerSampledImageFeaturesNV<'_> {}
 impl ::core::default::Default for PhysicalDeviceCornerSampledImageFeaturesNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            corner_sampled_image: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceCornerSampledImageFeaturesNV<'a> {
@@ -25999,13 +22969,7 @@ unsafe impl Sync for PhysicalDeviceComputeShaderDerivativesFeaturesKHR<'_> {}
 impl ::core::default::Default for PhysicalDeviceComputeShaderDerivativesFeaturesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            compute_derivative_group_quads: Bool32::default(),
-            compute_derivative_group_linear: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceComputeShaderDerivativesFeaturesKHR<'a> {
@@ -26051,12 +23015,7 @@ unsafe impl Sync for PhysicalDeviceComputeShaderDerivativesPropertiesKHR<'_> {}
 impl ::core::default::Default for PhysicalDeviceComputeShaderDerivativesPropertiesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            mesh_and_task_shader_derivatives: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceComputeShaderDerivativesPropertiesKHR<'a> {
@@ -26093,12 +23052,7 @@ unsafe impl Sync for PhysicalDeviceShaderImageFootprintFeaturesNV<'_> {}
 impl ::core::default::Default for PhysicalDeviceShaderImageFootprintFeaturesNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            image_footprint: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderImageFootprintFeaturesNV<'a> {
@@ -26133,12 +23087,7 @@ unsafe impl Sync for PhysicalDeviceDedicatedAllocationImageAliasingFeaturesNV<'_
 impl ::core::default::Default for PhysicalDeviceDedicatedAllocationImageAliasingFeaturesNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            dedicated_allocation_image_aliasing: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a>
@@ -26182,13 +23131,7 @@ unsafe impl Sync for PhysicalDeviceCopyMemoryIndirectFeaturesKHR<'_> {}
 impl ::core::default::Default for PhysicalDeviceCopyMemoryIndirectFeaturesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            indirect_memory_copy: Bool32::default(),
-            indirect_memory_to_image_copy: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceCopyMemoryIndirectFeaturesKHR<'a> {
@@ -26228,12 +23171,7 @@ unsafe impl Sync for PhysicalDeviceCopyMemoryIndirectFeaturesNV<'_> {}
 impl ::core::default::Default for PhysicalDeviceCopyMemoryIndirectFeaturesNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            indirect_copy: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceCopyMemoryIndirectFeaturesNV<'a> {
@@ -26268,12 +23206,7 @@ unsafe impl Sync for PhysicalDeviceCopyMemoryIndirectPropertiesKHR<'_> {}
 impl ::core::default::Default for PhysicalDeviceCopyMemoryIndirectPropertiesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            supported_queues: QueueFlags::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceCopyMemoryIndirectPropertiesKHR<'a> {
@@ -26307,12 +23240,7 @@ unsafe impl Sync for PhysicalDeviceMemoryDecompressionFeaturesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceMemoryDecompressionFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            memory_decompression: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceMemoryDecompressionFeaturesEXT<'a> {
@@ -26348,13 +23276,7 @@ unsafe impl Sync for PhysicalDeviceMemoryDecompressionPropertiesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceMemoryDecompressionPropertiesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            decompression_methods: MemoryDecompressionMethodFlagsEXT::default(),
-            max_decompression_indirect_count: u64::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceMemoryDecompressionPropertiesEXT<'a> {
@@ -26398,11 +23320,7 @@ unsafe impl Sync for ShadingRatePaletteNV<'_> {}
 impl ::core::default::Default for ShadingRatePaletteNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            shading_rate_palette_entry_count: u32::default(),
-            p_shading_rate_palette_entries: ::core::ptr::null(),
-            _marker: PhantomData,
-        }
+        unsafe { ::core::mem::zeroed() }
     }
 }
 impl<'a> ShadingRatePaletteNV<'a> {
@@ -26434,14 +23352,7 @@ unsafe impl Sync for PipelineViewportShadingRateImageStateCreateInfoNV<'_> {}
 impl ::core::default::Default for PipelineViewportShadingRateImageStateCreateInfoNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            shading_rate_image_enable: Bool32::default(),
-            viewport_count: u32::default(),
-            p_shading_rate_palettes: ::core::ptr::null(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PipelineViewportShadingRateImageStateCreateInfoNV<'a> {
@@ -26485,13 +23396,7 @@ unsafe impl Sync for PhysicalDeviceShadingRateImageFeaturesNV<'_> {}
 impl ::core::default::Default for PhysicalDeviceShadingRateImageFeaturesNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            shading_rate_image: Bool32::default(),
-            shading_rate_coarse_sample_order: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShadingRateImageFeaturesNV<'a> {
@@ -26533,14 +23438,7 @@ unsafe impl Sync for PhysicalDeviceShadingRateImagePropertiesNV<'_> {}
 impl ::core::default::Default for PhysicalDeviceShadingRateImagePropertiesNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            shading_rate_texel_size: Extent2D::default(),
-            shading_rate_palette_size: u32::default(),
-            shading_rate_max_coarse_samples: u32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShadingRateImagePropertiesNV<'a> {
@@ -26584,12 +23482,7 @@ unsafe impl Sync for PhysicalDeviceInvocationMaskFeaturesHUAWEI<'_> {}
 impl ::core::default::Default for PhysicalDeviceInvocationMaskFeaturesHUAWEI<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            invocation_mask: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceInvocationMaskFeaturesHUAWEI<'a> {
@@ -26652,13 +23545,7 @@ unsafe impl Sync for CoarseSampleOrderCustomNV<'_> {}
 impl ::core::default::Default for CoarseSampleOrderCustomNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            shading_rate: ShadingRatePaletteEntryNV::default(),
-            sample_count: u32::default(),
-            sample_location_count: u32::default(),
-            p_sample_locations: ::core::ptr::null(),
-            _marker: PhantomData,
-        }
+        unsafe { ::core::mem::zeroed() }
     }
 }
 impl<'a> CoarseSampleOrderCustomNV<'a> {
@@ -26697,14 +23584,7 @@ unsafe impl Sync for PipelineViewportCoarseSampleOrderStateCreateInfoNV<'_> {}
 impl ::core::default::Default for PipelineViewportCoarseSampleOrderStateCreateInfoNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            sample_order_type: CoarseSampleOrderTypeNV::default(),
-            custom_sample_order_count: u32::default(),
-            p_custom_sample_orders: ::core::ptr::null(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PipelineViewportCoarseSampleOrderStateCreateInfoNV<'a> {
@@ -26748,13 +23628,7 @@ unsafe impl Sync for PhysicalDeviceMeshShaderFeaturesNV<'_> {}
 impl ::core::default::Default for PhysicalDeviceMeshShaderFeaturesNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            task_shader: Bool32::default(),
-            mesh_shader: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceMeshShaderFeaturesNV<'a> {
@@ -26802,24 +23676,7 @@ unsafe impl Sync for PhysicalDeviceMeshShaderPropertiesNV<'_> {}
 impl ::core::default::Default for PhysicalDeviceMeshShaderPropertiesNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            max_draw_mesh_tasks_count: u32::default(),
-            max_task_work_group_invocations: u32::default(),
-            max_task_work_group_size: unsafe { ::core::mem::zeroed() },
-            max_task_total_memory_size: u32::default(),
-            max_task_output_count: u32::default(),
-            max_mesh_work_group_invocations: u32::default(),
-            max_mesh_work_group_size: unsafe { ::core::mem::zeroed() },
-            max_mesh_total_memory_size: u32::default(),
-            max_mesh_output_vertices: u32::default(),
-            max_mesh_output_primitives: u32::default(),
-            max_mesh_multiview_view_count: u32::default(),
-            mesh_output_per_vertex_granularity: u32::default(),
-            mesh_output_per_primitive_granularity: u32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceMeshShaderPropertiesNV<'a> {
@@ -26940,16 +23797,7 @@ unsafe impl Sync for PhysicalDeviceMeshShaderFeaturesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceMeshShaderFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            task_shader: Bool32::default(),
-            mesh_shader: Bool32::default(),
-            multiview_mesh_shader: Bool32::default(),
-            primitive_fragment_shading_rate_mesh_shader: Bool32::default(),
-            mesh_shader_queries: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceMeshShaderFeaturesEXT<'a> {
@@ -27031,39 +23879,7 @@ unsafe impl Sync for PhysicalDeviceMeshShaderPropertiesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceMeshShaderPropertiesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            max_task_work_group_total_count: u32::default(),
-            max_task_work_group_count: unsafe { ::core::mem::zeroed() },
-            max_task_work_group_invocations: u32::default(),
-            max_task_work_group_size: unsafe { ::core::mem::zeroed() },
-            max_task_payload_size: u32::default(),
-            max_task_shared_memory_size: u32::default(),
-            max_task_payload_and_shared_memory_size: u32::default(),
-            max_mesh_work_group_total_count: u32::default(),
-            max_mesh_work_group_count: unsafe { ::core::mem::zeroed() },
-            max_mesh_work_group_invocations: u32::default(),
-            max_mesh_work_group_size: unsafe { ::core::mem::zeroed() },
-            max_mesh_shared_memory_size: u32::default(),
-            max_mesh_payload_and_shared_memory_size: u32::default(),
-            max_mesh_output_memory_size: u32::default(),
-            max_mesh_payload_and_output_memory_size: u32::default(),
-            max_mesh_output_components: u32::default(),
-            max_mesh_output_vertices: u32::default(),
-            max_mesh_output_primitives: u32::default(),
-            max_mesh_output_layers: u32::default(),
-            max_mesh_multiview_view_count: u32::default(),
-            mesh_output_per_vertex_granularity: u32::default(),
-            mesh_output_per_primitive_granularity: u32::default(),
-            max_preferred_task_work_group_invocations: u32::default(),
-            max_preferred_mesh_work_group_invocations: u32::default(),
-            prefers_local_invocation_vertex_output: Bool32::default(),
-            prefers_local_invocation_primitive_output: Bool32::default(),
-            prefers_compact_vertex_output: Bool32::default(),
-            prefers_compact_primitive_output: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceMeshShaderPropertiesEXT<'a> {
@@ -27290,16 +24106,7 @@ unsafe impl Sync for RayTracingShaderGroupCreateInfoNV<'_> {}
 impl ::core::default::Default for RayTracingShaderGroupCreateInfoNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            ty: RayTracingShaderGroupTypeKHR::default(),
-            general_shader: u32::default(),
-            closest_hit_shader: u32::default(),
-            any_hit_shader: u32::default(),
-            intersection_shader: u32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for RayTracingShaderGroupCreateInfoNV<'a> {
@@ -27353,17 +24160,7 @@ unsafe impl Sync for RayTracingShaderGroupCreateInfoKHR<'_> {}
 impl ::core::default::Default for RayTracingShaderGroupCreateInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            ty: RayTracingShaderGroupTypeKHR::default(),
-            general_shader: u32::default(),
-            closest_hit_shader: u32::default(),
-            any_hit_shader: u32::default(),
-            intersection_shader: u32::default(),
-            p_shader_group_capture_replay_handle: ::core::ptr::null(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for RayTracingShaderGroupCreateInfoKHR<'a> {
@@ -27428,20 +24225,7 @@ unsafe impl Sync for RayTracingPipelineCreateInfoNV<'_> {}
 impl ::core::default::Default for RayTracingPipelineCreateInfoNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            flags: PipelineCreateFlags::default(),
-            stage_count: u32::default(),
-            p_stages: ::core::ptr::null(),
-            group_count: u32::default(),
-            p_groups: ::core::ptr::null(),
-            max_recursion_depth: u32::default(),
-            layout: PipelineLayout::default(),
-            base_pipeline_handle: Pipeline::default(),
-            base_pipeline_index: i32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for RayTracingPipelineCreateInfoNV<'a> {
@@ -27513,23 +24297,7 @@ unsafe impl Sync for RayTracingPipelineCreateInfoKHR<'_> {}
 impl ::core::default::Default for RayTracingPipelineCreateInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            flags: PipelineCreateFlags::default(),
-            stage_count: u32::default(),
-            p_stages: ::core::ptr::null(),
-            group_count: u32::default(),
-            p_groups: ::core::ptr::null(),
-            max_pipeline_ray_recursion_depth: u32::default(),
-            p_library_info: ::core::ptr::null(),
-            p_library_interface: ::core::ptr::null(),
-            p_dynamic_state: ::core::ptr::null(),
-            layout: PipelineLayout::default(),
-            base_pipeline_handle: Pipeline::default(),
-            base_pipeline_index: i32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for RayTracingPipelineCreateInfoKHR<'a> {
@@ -27621,22 +24389,7 @@ unsafe impl Sync for GeometryTrianglesNV<'_> {}
 impl ::core::default::Default for GeometryTrianglesNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            vertex_data: Buffer::default(),
-            vertex_offset: DeviceSize::default(),
-            vertex_count: u32::default(),
-            vertex_stride: DeviceSize::default(),
-            vertex_format: Format::default(),
-            index_data: Buffer::default(),
-            index_offset: DeviceSize::default(),
-            index_count: u32::default(),
-            index_type: IndexType::default(),
-            transform_data: Buffer::default(),
-            transform_offset: DeviceSize::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for GeometryTrianglesNV<'a> {
@@ -27718,15 +24471,7 @@ unsafe impl Sync for GeometryAABBNV<'_> {}
 impl ::core::default::Default for GeometryAABBNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            aabb_data: Buffer::default(),
-            num_aab_bs: u32::default(),
-            stride: u32::default(),
-            offset: DeviceSize::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for GeometryAABBNV<'a> {
@@ -27794,14 +24539,7 @@ unsafe impl Sync for GeometryNV<'_> {}
 impl ::core::default::Default for GeometryNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            geometry_type: GeometryTypeKHR::default(),
-            geometry: GeometryDataNV::default(),
-            flags: GeometryFlagsKHR::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for GeometryNV<'a> {
@@ -27844,16 +24582,7 @@ unsafe impl Sync for AccelerationStructureInfoNV<'_> {}
 impl ::core::default::Default for AccelerationStructureInfoNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            ty: AccelerationStructureTypeNV::default(),
-            flags: BuildAccelerationStructureFlagsKHR::default(),
-            instance_count: u32::default(),
-            geometry_count: u32::default(),
-            p_geometries: ::core::ptr::null(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for AccelerationStructureInfoNV<'a> {
@@ -27899,13 +24628,7 @@ unsafe impl Sync for AccelerationStructureCreateInfoNV<'_> {}
 impl ::core::default::Default for AccelerationStructureCreateInfoNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            compacted_size: DeviceSize::default(),
-            info: AccelerationStructureInfoNV::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for AccelerationStructureCreateInfoNV<'a> {
@@ -27943,16 +24666,7 @@ unsafe impl Sync for BindAccelerationStructureMemoryInfoNV<'_> {}
 impl ::core::default::Default for BindAccelerationStructureMemoryInfoNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            acceleration_structure: AccelerationStructureNV::default(),
-            memory: DeviceMemory::default(),
-            memory_offset: DeviceSize::default(),
-            device_index_count: u32::default(),
-            p_device_indices: ::core::ptr::null(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for BindAccelerationStructureMemoryInfoNV<'a> {
@@ -28001,13 +24715,7 @@ unsafe impl Sync for WriteDescriptorSetAccelerationStructureKHR<'_> {}
 impl ::core::default::Default for WriteDescriptorSetAccelerationStructureKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            acceleration_structure_count: u32::default(),
-            p_acceleration_structures: ::core::ptr::null(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for WriteDescriptorSetAccelerationStructureKHR<'a> {
@@ -28043,13 +24751,7 @@ unsafe impl Sync for WriteDescriptorSetAccelerationStructureNV<'_> {}
 impl ::core::default::Default for WriteDescriptorSetAccelerationStructureNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            acceleration_structure_count: u32::default(),
-            p_acceleration_structures: ::core::ptr::null(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for WriteDescriptorSetAccelerationStructureNV<'a> {
@@ -28085,13 +24787,7 @@ unsafe impl Sync for AccelerationStructureMemoryRequirementsInfoNV<'_> {}
 impl ::core::default::Default for AccelerationStructureMemoryRequirementsInfoNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            ty: AccelerationStructureMemoryRequirementsTypeNV::default(),
-            acceleration_structure: AccelerationStructureNV::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for AccelerationStructureMemoryRequirementsInfoNV<'a> {
@@ -28133,16 +24829,7 @@ unsafe impl Sync for PhysicalDeviceAccelerationStructureFeaturesKHR<'_> {}
 impl ::core::default::Default for PhysicalDeviceAccelerationStructureFeaturesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            acceleration_structure: Bool32::default(),
-            acceleration_structure_capture_replay: Bool32::default(),
-            acceleration_structure_indirect_build: Bool32::default(),
-            acceleration_structure_host_commands: Bool32::default(),
-            descriptor_binding_acceleration_structure_update_after_bind: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceAccelerationStructureFeaturesKHR<'a> {
@@ -28214,16 +24901,7 @@ unsafe impl Sync for PhysicalDeviceRayTracingPipelineFeaturesKHR<'_> {}
 impl ::core::default::Default for PhysicalDeviceRayTracingPipelineFeaturesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            ray_tracing_pipeline: Bool32::default(),
-            ray_tracing_pipeline_shader_group_handle_capture_replay: Bool32::default(),
-            ray_tracing_pipeline_shader_group_handle_capture_replay_mixed: Bool32::default(),
-            ray_tracing_pipeline_trace_rays_indirect: Bool32::default(),
-            ray_traversal_primitive_culling: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceRayTracingPipelineFeaturesKHR<'a> {
@@ -28293,12 +24971,7 @@ unsafe impl Sync for PhysicalDeviceRayQueryFeaturesKHR<'_> {}
 impl ::core::default::Default for PhysicalDeviceRayQueryFeaturesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            ray_query: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceRayQueryFeaturesKHR<'a> {
@@ -28336,19 +25009,7 @@ unsafe impl Sync for PhysicalDeviceAccelerationStructurePropertiesKHR<'_> {}
 impl ::core::default::Default for PhysicalDeviceAccelerationStructurePropertiesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            max_geometry_count: u64::default(),
-            max_instance_count: u64::default(),
-            max_primitive_count: u64::default(),
-            max_per_stage_descriptor_acceleration_structures: u32::default(),
-            max_per_stage_descriptor_update_after_bind_acceleration_structures: u32::default(),
-            max_descriptor_set_acceleration_structures: u32::default(),
-            max_descriptor_set_update_after_bind_acceleration_structures: u32::default(),
-            min_acceleration_structure_scratch_offset_alignment: u32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceAccelerationStructurePropertiesKHR<'a> {
@@ -28444,19 +25105,7 @@ unsafe impl Sync for PhysicalDeviceRayTracingPipelinePropertiesKHR<'_> {}
 impl ::core::default::Default for PhysicalDeviceRayTracingPipelinePropertiesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            shader_group_handle_size: u32::default(),
-            max_ray_recursion_depth: u32::default(),
-            max_shader_group_stride: u32::default(),
-            shader_group_base_alignment: u32::default(),
-            shader_group_handle_capture_replay_size: u32::default(),
-            max_ray_dispatch_invocation_count: u32::default(),
-            shader_group_handle_alignment: u32::default(),
-            max_ray_hit_attribute_size: u32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceRayTracingPipelinePropertiesKHR<'a> {
@@ -28538,19 +25187,7 @@ unsafe impl Sync for PhysicalDeviceRayTracingPropertiesNV<'_> {}
 impl ::core::default::Default for PhysicalDeviceRayTracingPropertiesNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            shader_group_handle_size: u32::default(),
-            max_recursion_depth: u32::default(),
-            max_shader_group_stride: u32::default(),
-            shader_group_base_alignment: u32::default(),
-            max_geometry_count: u64::default(),
-            max_instance_count: u64::default(),
-            max_triangle_count: u64::default(),
-            max_descriptor_set_acceleration_structures: u32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceRayTracingPropertiesNV<'a> {
@@ -28797,13 +25434,7 @@ unsafe impl Sync for PhysicalDeviceRayTracingMaintenance1FeaturesKHR<'_> {}
 impl ::core::default::Default for PhysicalDeviceRayTracingMaintenance1FeaturesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            ray_tracing_maintenance1: Bool32::default(),
-            ray_tracing_pipeline_trace_rays_indirect2: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceRayTracingMaintenance1FeaturesKHR<'a> {
@@ -28848,13 +25479,7 @@ unsafe impl Sync for DrmFormatModifierPropertiesListEXT<'_> {}
 impl ::core::default::Default for DrmFormatModifierPropertiesListEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            drm_format_modifier_count: u32::default(),
-            p_drm_format_modifier_properties: ::core::ptr::null_mut(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DrmFormatModifierPropertiesListEXT<'a> {
@@ -28921,15 +25546,7 @@ unsafe impl Sync for PhysicalDeviceImageDrmFormatModifierInfoEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceImageDrmFormatModifierInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            drm_format_modifier: u64::default(),
-            sharing_mode: SharingMode::default(),
-            queue_family_index_count: u32::default(),
-            p_queue_family_indices: ::core::ptr::null(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceImageDrmFormatModifierInfoEXT<'a> {
@@ -28975,13 +25592,7 @@ unsafe impl Sync for ImageDrmFormatModifierListCreateInfoEXT<'_> {}
 impl ::core::default::Default for ImageDrmFormatModifierListCreateInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            drm_format_modifier_count: u32::default(),
-            p_drm_format_modifiers: ::core::ptr::null(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ImageDrmFormatModifierListCreateInfoEXT<'a> {
@@ -29015,14 +25626,7 @@ unsafe impl Sync for ImageDrmFormatModifierExplicitCreateInfoEXT<'_> {}
 impl ::core::default::Default for ImageDrmFormatModifierExplicitCreateInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            drm_format_modifier: u64::default(),
-            drm_format_modifier_plane_count: u32::default(),
-            p_plane_layouts: ::core::ptr::null(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ImageDrmFormatModifierExplicitCreateInfoEXT<'a> {
@@ -29059,12 +25663,7 @@ unsafe impl Sync for ImageDrmFormatModifierPropertiesEXT<'_> {}
 impl ::core::default::Default for ImageDrmFormatModifierPropertiesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            drm_format_modifier: u64::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ImageDrmFormatModifierPropertiesEXT<'a> {
@@ -29093,12 +25692,7 @@ unsafe impl Sync for ImageStencilUsageCreateInfo<'_> {}
 impl ::core::default::Default for ImageStencilUsageCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            stencil_usage: ImageUsageFlags::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ImageStencilUsageCreateInfo<'a> {
@@ -29129,12 +25723,7 @@ unsafe impl Sync for DeviceMemoryOverallocationCreateInfoAMD<'_> {}
 impl ::core::default::Default for DeviceMemoryOverallocationCreateInfoAMD<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            overallocation_behavior: MemoryOverallocationBehaviorAMD::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DeviceMemoryOverallocationCreateInfoAMD<'a> {
@@ -29170,14 +25759,7 @@ unsafe impl Sync for PhysicalDeviceFragmentDensityMapFeaturesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceFragmentDensityMapFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            fragment_density_map: Bool32::default(),
-            fragment_density_map_dynamic: Bool32::default(),
-            fragment_density_map_non_subsampled_images: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceFragmentDensityMapFeaturesEXT<'a> {
@@ -29226,12 +25808,7 @@ unsafe impl Sync for PhysicalDeviceFragmentDensityMap2FeaturesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceFragmentDensityMap2FeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            fragment_density_map_deferred: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceFragmentDensityMap2FeaturesEXT<'a> {
@@ -29266,12 +25843,7 @@ unsafe impl Sync for PhysicalDeviceFragmentDensityMapOffsetFeaturesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceFragmentDensityMapOffsetFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            fragment_density_map_offset: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceFragmentDensityMapOffsetFeaturesEXT<'a> {
@@ -29311,14 +25883,7 @@ unsafe impl Sync for PhysicalDeviceFragmentDensityMapPropertiesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceFragmentDensityMapPropertiesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            min_fragment_density_texel_size: Extent2D::default(),
-            max_fragment_density_texel_size: Extent2D::default(),
-            fragment_density_invocations: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceFragmentDensityMapPropertiesEXT<'a> {
@@ -29371,15 +25936,7 @@ unsafe impl Sync for PhysicalDeviceFragmentDensityMap2PropertiesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceFragmentDensityMap2PropertiesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            subsampled_loads: Bool32::default(),
-            subsampled_coarse_reconstruction_early_access: Bool32::default(),
-            max_subsampled_array_layers: u32::default(),
-            max_descriptor_set_subsampled_samplers: u32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceFragmentDensityMap2PropertiesEXT<'a> {
@@ -29435,12 +25992,7 @@ unsafe impl Sync for PhysicalDeviceFragmentDensityMapOffsetPropertiesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceFragmentDensityMapOffsetPropertiesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            fragment_density_offset_granularity: Extent2D::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceFragmentDensityMapOffsetPropertiesEXT<'a> {
@@ -29477,12 +26029,7 @@ unsafe impl Sync for RenderPassFragmentDensityMapCreateInfoEXT<'_> {}
 impl ::core::default::Default for RenderPassFragmentDensityMapCreateInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            fragment_density_map_attachment: AttachmentReference::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for RenderPassFragmentDensityMapCreateInfoEXT<'a> {
@@ -29518,13 +26065,7 @@ unsafe impl Sync for RenderPassFragmentDensityMapOffsetEndInfoEXT<'_> {}
 impl ::core::default::Default for RenderPassFragmentDensityMapOffsetEndInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            fragment_density_offset_count: u32::default(),
-            p_fragment_density_offsets: ::core::ptr::null(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for RenderPassFragmentDensityMapOffsetEndInfoEXT<'a> {
@@ -29557,12 +26098,7 @@ unsafe impl Sync for PhysicalDeviceScalarBlockLayoutFeatures<'_> {}
 impl ::core::default::Default for PhysicalDeviceScalarBlockLayoutFeatures<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            scalar_block_layout: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceScalarBlockLayoutFeatures<'a> {
@@ -29594,12 +26130,7 @@ unsafe impl Sync for SurfaceProtectedCapabilitiesKHR<'_> {}
 impl ::core::default::Default for SurfaceProtectedCapabilitiesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            supports_protected: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for SurfaceProtectedCapabilitiesKHR<'a> {
@@ -29629,12 +26160,7 @@ unsafe impl Sync for PhysicalDeviceUniformBufferStandardLayoutFeatures<'_> {}
 impl ::core::default::Default for PhysicalDeviceUniformBufferStandardLayoutFeatures<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            uniform_buffer_standard_layout: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceUniformBufferStandardLayoutFeatures<'a> {
@@ -29672,12 +26198,7 @@ unsafe impl Sync for PhysicalDeviceDepthClipEnableFeaturesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceDepthClipEnableFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            depth_clip_enable: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceDepthClipEnableFeaturesEXT<'a> {
@@ -29710,13 +26231,7 @@ unsafe impl Sync for PipelineRasterizationDepthClipStateCreateInfoEXT<'_> {}
 impl ::core::default::Default for PipelineRasterizationDepthClipStateCreateInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            flags: PipelineRasterizationDepthClipStateCreateFlagsEXT::default(),
-            depth_clip_enable: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PipelineRasterizationDepthClipStateCreateInfoEXT<'a> {
@@ -29756,13 +26271,7 @@ unsafe impl Sync for PhysicalDeviceMemoryBudgetPropertiesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceMemoryBudgetPropertiesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            heap_budget: unsafe { ::core::mem::zeroed() },
-            heap_usage: unsafe { ::core::mem::zeroed() },
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceMemoryBudgetPropertiesEXT<'a> {
@@ -29801,12 +26310,7 @@ unsafe impl Sync for PhysicalDeviceMemoryPriorityFeaturesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceMemoryPriorityFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            memory_priority: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceMemoryPriorityFeaturesEXT<'a> {
@@ -29838,12 +26342,7 @@ unsafe impl Sync for MemoryPriorityAllocateInfoEXT<'_> {}
 impl ::core::default::Default for MemoryPriorityAllocateInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            priority: f32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for MemoryPriorityAllocateInfoEXT<'a> {
@@ -29873,12 +26372,7 @@ unsafe impl Sync for PhysicalDevicePageableDeviceLocalMemoryFeaturesEXT<'_> {}
 impl ::core::default::Default for PhysicalDevicePageableDeviceLocalMemoryFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            pageable_device_local_memory: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDevicePageableDeviceLocalMemoryFeaturesEXT<'a> {
@@ -29918,14 +26412,7 @@ unsafe impl Sync for PhysicalDeviceBufferDeviceAddressFeatures<'_> {}
 impl ::core::default::Default for PhysicalDeviceBufferDeviceAddressFeatures<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            buffer_device_address: Bool32::default(),
-            buffer_device_address_capture_replay: Bool32::default(),
-            buffer_device_address_multi_device: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceBufferDeviceAddressFeatures<'a> {
@@ -29975,14 +26462,7 @@ unsafe impl Sync for PhysicalDeviceBufferDeviceAddressFeaturesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceBufferDeviceAddressFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            buffer_device_address: Bool32::default(),
-            buffer_device_address_capture_replay: Bool32::default(),
-            buffer_device_address_multi_device: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceBufferDeviceAddressFeaturesEXT<'a> {
@@ -30033,12 +26513,7 @@ unsafe impl Sync for BufferDeviceAddressInfo<'_> {}
 impl ::core::default::Default for BufferDeviceAddressInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            buffer: Buffer::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for BufferDeviceAddressInfo<'a> {
@@ -30067,12 +26542,7 @@ unsafe impl Sync for BufferOpaqueCaptureAddressCreateInfo<'_> {}
 impl ::core::default::Default for BufferOpaqueCaptureAddressCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            opaque_capture_address: u64::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for BufferOpaqueCaptureAddressCreateInfo<'a> {
@@ -30102,12 +26572,7 @@ unsafe impl Sync for BufferDeviceAddressCreateInfoEXT<'_> {}
 impl ::core::default::Default for BufferDeviceAddressCreateInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            device_address: DeviceAddress::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for BufferDeviceAddressCreateInfoEXT<'a> {
@@ -30137,12 +26602,7 @@ unsafe impl Sync for PhysicalDeviceImageViewImageFormatInfoEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceImageViewImageFormatInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            image_view_type: ImageViewType::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceImageViewImageFormatInfoEXT<'a> {
@@ -30177,13 +26637,7 @@ unsafe impl Sync for FilterCubicImageViewImageFormatPropertiesEXT<'_> {}
 impl ::core::default::Default for FilterCubicImageViewImageFormatPropertiesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            filter_cubic: Bool32::default(),
-            filter_cubic_minmax: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for FilterCubicImageViewImageFormatPropertiesEXT<'a> {
@@ -30222,12 +26676,7 @@ unsafe impl Sync for PhysicalDeviceImagelessFramebufferFeatures<'_> {}
 impl ::core::default::Default for PhysicalDeviceImagelessFramebufferFeatures<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            imageless_framebuffer: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceImagelessFramebufferFeatures<'a> {
@@ -30263,13 +26712,7 @@ unsafe impl Sync for FramebufferAttachmentsCreateInfo<'_> {}
 impl ::core::default::Default for FramebufferAttachmentsCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            attachment_image_info_count: u32::default(),
-            p_attachment_image_infos: ::core::ptr::null(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for FramebufferAttachmentsCreateInfo<'a> {
@@ -30309,18 +26752,7 @@ unsafe impl Sync for FramebufferAttachmentImageInfo<'_> {}
 impl ::core::default::Default for FramebufferAttachmentImageInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            flags: ImageCreateFlags::default(),
-            usage: ImageUsageFlags::default(),
-            width: u32::default(),
-            height: u32::default(),
-            layer_count: u32::default(),
-            view_format_count: u32::default(),
-            p_view_formats: ::core::ptr::null(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for FramebufferAttachmentImageInfo<'a> {
@@ -30376,13 +26808,7 @@ unsafe impl Sync for RenderPassAttachmentBeginInfo<'_> {}
 impl ::core::default::Default for RenderPassAttachmentBeginInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            attachment_count: u32::default(),
-            p_attachments: ::core::ptr::null(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for RenderPassAttachmentBeginInfo<'a> {
@@ -30413,12 +26839,7 @@ unsafe impl Sync for PhysicalDeviceTextureCompressionASTCHDRFeatures<'_> {}
 impl ::core::default::Default for PhysicalDeviceTextureCompressionASTCHDRFeatures<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            texture_compression_astc_hdr: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceTextureCompressionASTCHDRFeatures<'a> {
@@ -30454,13 +26875,7 @@ unsafe impl Sync for PhysicalDeviceCooperativeMatrixFeaturesNV<'_> {}
 impl ::core::default::Default for PhysicalDeviceCooperativeMatrixFeaturesNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            cooperative_matrix: Bool32::default(),
-            cooperative_matrix_robust_buffer_access: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceCooperativeMatrixFeaturesNV<'a> {
@@ -30501,12 +26916,7 @@ unsafe impl Sync for PhysicalDeviceCooperativeMatrixPropertiesNV<'_> {}
 impl ::core::default::Default for PhysicalDeviceCooperativeMatrixPropertiesNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            cooperative_matrix_supported_stages: ShaderStageFlags::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceCooperativeMatrixPropertiesNV<'a> {
@@ -30550,19 +26960,7 @@ unsafe impl Sync for CooperativeMatrixPropertiesNV<'_> {}
 impl ::core::default::Default for CooperativeMatrixPropertiesNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            m_size: u32::default(),
-            n_size: u32::default(),
-            k_size: u32::default(),
-            a_type: ComponentTypeNV::default(),
-            b_type: ComponentTypeNV::default(),
-            c_type: ComponentTypeNV::default(),
-            d_type: ComponentTypeNV::default(),
-            scope: ScopeNV::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for CooperativeMatrixPropertiesNV<'a> {
@@ -30626,12 +27024,7 @@ unsafe impl Sync for PhysicalDeviceYcbcrImageArraysFeaturesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceYcbcrImageArraysFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            ycbcr_image_arrays: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceYcbcrImageArraysFeaturesEXT<'a> {
@@ -30665,14 +27058,7 @@ unsafe impl Sync for ImageViewHandleInfoNVX<'_> {}
 impl ::core::default::Default for ImageViewHandleInfoNVX<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            image_view: ImageView::default(),
-            descriptor_type: DescriptorType::default(),
-            sampler: Sampler::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ImageViewHandleInfoNVX<'a> {
@@ -30712,13 +27098,7 @@ unsafe impl Sync for ImageViewAddressPropertiesNVX<'_> {}
 impl ::core::default::Default for ImageViewAddressPropertiesNVX<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            device_address: DeviceAddress::default(),
-            size: DeviceSize::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ImageViewAddressPropertiesNVX<'a> {
@@ -30752,12 +27132,7 @@ unsafe impl Sync for PresentFrameTokenGGP<'_> {}
 impl ::core::default::Default for PresentFrameTokenGGP<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            frame_token: GgpFrameToken::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PresentFrameTokenGGP<'a> {
@@ -30810,14 +27185,7 @@ unsafe impl Sync for PipelineCreationFeedbackCreateInfo<'_> {}
 impl ::core::default::Default for PipelineCreationFeedbackCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            p_pipeline_creation_feedback: ::core::ptr::null_mut(),
-            pipeline_stage_creation_feedback_count: u32::default(),
-            p_pipeline_stage_creation_feedbacks: ::core::ptr::null_mut(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PipelineCreationFeedbackCreateInfo<'a> {
@@ -30871,12 +27239,7 @@ unsafe impl Sync for SurfaceFullScreenExclusiveInfoEXT<'_> {}
 impl ::core::default::Default for SurfaceFullScreenExclusiveInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            full_screen_exclusive: FullScreenExclusiveEXT::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for SurfaceFullScreenExclusiveInfoEXT<'a> {
@@ -30907,12 +27270,7 @@ unsafe impl Sync for SurfaceFullScreenExclusiveWin32InfoEXT<'_> {}
 impl ::core::default::Default for SurfaceFullScreenExclusiveWin32InfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            hmonitor: unsafe { ::core::mem::zeroed() },
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for SurfaceFullScreenExclusiveWin32InfoEXT<'a> {
@@ -30947,12 +27305,7 @@ unsafe impl Sync for SurfaceCapabilitiesFullScreenExclusiveEXT<'_> {}
 impl ::core::default::Default for SurfaceCapabilitiesFullScreenExclusiveEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            full_screen_exclusive_supported: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for SurfaceCapabilitiesFullScreenExclusiveEXT<'a> {
@@ -30986,12 +27339,7 @@ unsafe impl Sync for PhysicalDevicePresentBarrierFeaturesNV<'_> {}
 impl ::core::default::Default for PhysicalDevicePresentBarrierFeaturesNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            present_barrier: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDevicePresentBarrierFeaturesNV<'a> {
@@ -31023,12 +27371,7 @@ unsafe impl Sync for SurfaceCapabilitiesPresentBarrierNV<'_> {}
 impl ::core::default::Default for SurfaceCapabilitiesPresentBarrierNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            present_barrier_supported: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for SurfaceCapabilitiesPresentBarrierNV<'a> {
@@ -31058,12 +27401,7 @@ unsafe impl Sync for SwapchainPresentBarrierCreateInfoNV<'_> {}
 impl ::core::default::Default for SwapchainPresentBarrierCreateInfoNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            present_barrier_enable: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for SwapchainPresentBarrierCreateInfoNV<'a> {
@@ -31094,13 +27432,7 @@ unsafe impl Sync for PhysicalDevicePerformanceQueryFeaturesKHR<'_> {}
 impl ::core::default::Default for PhysicalDevicePerformanceQueryFeaturesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            performance_counter_query_pools: Bool32::default(),
-            performance_counter_multiple_query_pools: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDevicePerformanceQueryFeaturesKHR<'a> {
@@ -31144,12 +27476,7 @@ unsafe impl Sync for PhysicalDevicePerformanceQueryPropertiesKHR<'_> {}
 impl ::core::default::Default for PhysicalDevicePerformanceQueryPropertiesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            allow_command_buffer_query_copies: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDevicePerformanceQueryPropertiesKHR<'a> {
@@ -31189,15 +27516,7 @@ unsafe impl Sync for PerformanceCounterKHR<'_> {}
 impl ::core::default::Default for PerformanceCounterKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            unit: PerformanceCounterUnitKHR::default(),
-            scope: PerformanceCounterScopeKHR::default(),
-            storage: PerformanceCounterStorageKHR::default(),
-            uuid: unsafe { ::core::mem::zeroed() },
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PerformanceCounterKHR<'a> {
@@ -31256,15 +27575,7 @@ impl fmt::Debug for PerformanceCounterDescriptionKHR<'_> {
 impl ::core::default::Default for PerformanceCounterDescriptionKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            flags: PerformanceCounterDescriptionFlagsKHR::default(),
-            name: unsafe { ::core::mem::zeroed() },
-            category: unsafe { ::core::mem::zeroed() },
-            description: unsafe { ::core::mem::zeroed() },
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PerformanceCounterDescriptionKHR<'a> {
@@ -31325,14 +27636,7 @@ unsafe impl Sync for QueryPoolPerformanceCreateInfoKHR<'_> {}
 impl ::core::default::Default for QueryPoolPerformanceCreateInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            queue_family_index: u32::default(),
-            counter_index_count: u32::default(),
-            p_counter_indices: ::core::ptr::null(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for QueryPoolPerformanceCreateInfoKHR<'a> {
@@ -31386,13 +27690,7 @@ unsafe impl Sync for AcquireProfilingLockInfoKHR<'_> {}
 impl ::core::default::Default for AcquireProfilingLockInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            flags: AcquireProfilingLockFlagsKHR::default(),
-            timeout: u64::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for AcquireProfilingLockInfoKHR<'a> {
@@ -31426,12 +27724,7 @@ unsafe impl Sync for PerformanceQuerySubmitInfoKHR<'_> {}
 impl ::core::default::Default for PerformanceQuerySubmitInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            counter_pass_index: u32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PerformanceQuerySubmitInfoKHR<'a> {
@@ -31462,12 +27755,7 @@ unsafe impl Sync for HeadlessSurfaceCreateInfoEXT<'_> {}
 impl ::core::default::Default for HeadlessSurfaceCreateInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            flags: HeadlessSurfaceCreateFlagsEXT::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for HeadlessSurfaceCreateInfoEXT<'a> {
@@ -31496,12 +27784,7 @@ unsafe impl Sync for PhysicalDeviceCoverageReductionModeFeaturesNV<'_> {}
 impl ::core::default::Default for PhysicalDeviceCoverageReductionModeFeaturesNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            coverage_reduction_mode: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceCoverageReductionModeFeaturesNV<'a> {
@@ -31537,13 +27820,7 @@ unsafe impl Sync for PipelineCoverageReductionStateCreateInfoNV<'_> {}
 impl ::core::default::Default for PipelineCoverageReductionStateCreateInfoNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            flags: PipelineCoverageReductionStateCreateFlagsNV::default(),
-            coverage_reduction_mode: CoverageReductionModeNV::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PipelineCoverageReductionStateCreateInfoNV<'a> {
@@ -31588,15 +27865,7 @@ unsafe impl Sync for FramebufferMixedSamplesCombinationNV<'_> {}
 impl ::core::default::Default for FramebufferMixedSamplesCombinationNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            coverage_reduction_mode: CoverageReductionModeNV::default(),
-            rasterization_samples: SampleCountFlags::default(),
-            depth_stencil_samples: SampleCountFlags::default(),
-            color_samples: SampleCountFlags::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for FramebufferMixedSamplesCombinationNV<'a> {
@@ -31643,12 +27912,7 @@ unsafe impl Sync for PhysicalDeviceShaderIntegerFunctions2FeaturesINTEL<'_> {}
 impl ::core::default::Default for PhysicalDeviceShaderIntegerFunctions2FeaturesINTEL<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            shader_integer_functions2: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderIntegerFunctions2FeaturesINTEL<'a> {
@@ -31731,12 +27995,7 @@ unsafe impl Sync for InitializePerformanceApiInfoINTEL<'_> {}
 impl ::core::default::Default for InitializePerformanceApiInfoINTEL<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            p_user_data: ::core::ptr::null_mut(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for InitializePerformanceApiInfoINTEL<'a> {
@@ -31765,12 +28024,7 @@ unsafe impl Sync for QueryPoolPerformanceQueryCreateInfoINTEL<'_> {}
 impl ::core::default::Default for QueryPoolPerformanceQueryCreateInfoINTEL<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            performance_counters_sampling: QueryPoolSamplingModeINTEL::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for QueryPoolPerformanceQueryCreateInfoINTEL<'a> {
@@ -31804,12 +28058,7 @@ unsafe impl Sync for PerformanceMarkerInfoINTEL<'_> {}
 impl ::core::default::Default for PerformanceMarkerInfoINTEL<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            marker: u64::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PerformanceMarkerInfoINTEL<'a> {
@@ -31838,12 +28087,7 @@ unsafe impl Sync for PerformanceStreamMarkerInfoINTEL<'_> {}
 impl ::core::default::Default for PerformanceStreamMarkerInfoINTEL<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            marker: u32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PerformanceStreamMarkerInfoINTEL<'a> {
@@ -31874,14 +28118,7 @@ unsafe impl Sync for PerformanceOverrideInfoINTEL<'_> {}
 impl ::core::default::Default for PerformanceOverrideInfoINTEL<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            ty: PerformanceOverrideTypeINTEL::default(),
-            enable: Bool32::default(),
-            parameter: u64::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PerformanceOverrideInfoINTEL<'a> {
@@ -31920,12 +28157,7 @@ unsafe impl Sync for PerformanceConfigurationAcquireInfoINTEL<'_> {}
 impl ::core::default::Default for PerformanceConfigurationAcquireInfoINTEL<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            ty: PerformanceConfigurationTypeINTEL::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PerformanceConfigurationAcquireInfoINTEL<'a> {
@@ -31956,13 +28188,7 @@ unsafe impl Sync for PhysicalDeviceShaderClockFeaturesKHR<'_> {}
 impl ::core::default::Default for PhysicalDeviceShaderClockFeaturesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            shader_subgroup_clock: Bool32::default(),
-            shader_device_clock: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderClockFeaturesKHR<'a> {
@@ -31998,12 +28224,7 @@ unsafe impl Sync for PhysicalDeviceIndexTypeUint8Features<'_> {}
 impl ::core::default::Default for PhysicalDeviceIndexTypeUint8Features<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            index_type_uint8: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceIndexTypeUint8Features<'a> {
@@ -32035,13 +28256,7 @@ unsafe impl Sync for PhysicalDeviceShaderSMBuiltinsPropertiesNV<'_> {}
 impl ::core::default::Default for PhysicalDeviceShaderSMBuiltinsPropertiesNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            shader_sm_count: u32::default(),
-            shader_warps_per_sm: u32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderSMBuiltinsPropertiesNV<'a> {
@@ -32080,12 +28295,7 @@ unsafe impl Sync for PhysicalDeviceShaderSMBuiltinsFeaturesNV<'_> {}
 impl ::core::default::Default for PhysicalDeviceShaderSMBuiltinsFeaturesNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            shader_sm_builtins: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderSMBuiltinsFeaturesNV<'a> {
@@ -32119,14 +28329,7 @@ unsafe impl Sync for PhysicalDeviceFragmentShaderInterlockFeaturesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceFragmentShaderInterlockFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            fragment_shader_sample_interlock: Bool32::default(),
-            fragment_shader_pixel_interlock: Bool32::default(),
-            fragment_shader_shading_rate_interlock: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceFragmentShaderInterlockFeaturesEXT<'a> {
@@ -32180,12 +28383,7 @@ unsafe impl Sync for PhysicalDeviceSeparateDepthStencilLayoutsFeatures<'_> {}
 impl ::core::default::Default for PhysicalDeviceSeparateDepthStencilLayoutsFeatures<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            separate_depth_stencil_layouts: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceSeparateDepthStencilLayoutsFeatures<'a> {
@@ -32223,12 +28421,7 @@ unsafe impl Sync for AttachmentReferenceStencilLayout<'_> {}
 impl ::core::default::Default for AttachmentReferenceStencilLayout<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            stencil_layout: ImageLayout::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for AttachmentReferenceStencilLayout<'a> {
@@ -32259,13 +28452,7 @@ unsafe impl Sync for PhysicalDevicePrimitiveTopologyListRestartFeaturesEXT<'_> {
 impl ::core::default::Default for PhysicalDevicePrimitiveTopologyListRestartFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            primitive_topology_list_restart: Bool32::default(),
-            primitive_topology_patch_list_restart: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDevicePrimitiveTopologyListRestartFeaturesEXT<'a> {
@@ -32315,13 +28502,7 @@ unsafe impl Sync for AttachmentDescriptionStencilLayout<'_> {}
 impl ::core::default::Default for AttachmentDescriptionStencilLayout<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            stencil_initial_layout: ImageLayout::default(),
-            stencil_final_layout: ImageLayout::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for AttachmentDescriptionStencilLayout<'a> {
@@ -32356,12 +28537,7 @@ unsafe impl Sync for PhysicalDevicePipelineExecutablePropertiesFeaturesKHR<'_> {
 impl ::core::default::Default for PhysicalDevicePipelineExecutablePropertiesFeaturesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            pipeline_executable_info: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDevicePipelineExecutablePropertiesFeaturesKHR<'a> {
@@ -32399,12 +28575,7 @@ unsafe impl Sync for PipelineInfoKHR<'_> {}
 impl ::core::default::Default for PipelineInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            pipeline: Pipeline::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PipelineInfoKHR<'a> {
@@ -32448,15 +28619,7 @@ impl fmt::Debug for PipelineExecutablePropertiesKHR<'_> {
 impl ::core::default::Default for PipelineExecutablePropertiesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            stages: ShaderStageFlags::default(),
-            name: unsafe { ::core::mem::zeroed() },
-            description: unsafe { ::core::mem::zeroed() },
-            subgroup_size: u32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PipelineExecutablePropertiesKHR<'a> {
@@ -32510,13 +28673,7 @@ unsafe impl Sync for PipelineExecutableInfoKHR<'_> {}
 impl ::core::default::Default for PipelineExecutableInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            pipeline: Pipeline::default(),
-            executable_index: u32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PipelineExecutableInfoKHR<'a> {
@@ -32580,15 +28737,7 @@ impl fmt::Debug for PipelineExecutableStatisticKHR<'_> {
 impl ::core::default::Default for PipelineExecutableStatisticKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            name: unsafe { ::core::mem::zeroed() },
-            description: unsafe { ::core::mem::zeroed() },
-            format: PipelineExecutableStatisticFormatKHR::default(),
-            value: PipelineExecutableStatisticValueKHR::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PipelineExecutableStatisticKHR<'a> {
@@ -32658,16 +28807,7 @@ impl fmt::Debug for PipelineExecutableInternalRepresentationKHR<'_> {
 impl ::core::default::Default for PipelineExecutableInternalRepresentationKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            name: unsafe { ::core::mem::zeroed() },
-            description: unsafe { ::core::mem::zeroed() },
-            is_text: Bool32::default(),
-            data_size: usize::default(),
-            p_data: ::core::ptr::null_mut(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PipelineExecutableInternalRepresentationKHR<'a> {
@@ -32722,12 +28862,7 @@ unsafe impl Sync for PhysicalDeviceShaderDemoteToHelperInvocationFeatures<'_> {}
 impl ::core::default::Default for PhysicalDeviceShaderDemoteToHelperInvocationFeatures<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            shader_demote_to_helper_invocation: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderDemoteToHelperInvocationFeatures<'a> {
@@ -32768,12 +28903,7 @@ unsafe impl Sync for PhysicalDeviceTexelBufferAlignmentFeaturesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceTexelBufferAlignmentFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            texel_buffer_alignment: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceTexelBufferAlignmentFeaturesEXT<'a> {
@@ -32811,15 +28941,7 @@ unsafe impl Sync for PhysicalDeviceTexelBufferAlignmentProperties<'_> {}
 impl ::core::default::Default for PhysicalDeviceTexelBufferAlignmentProperties<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            storage_texel_buffer_offset_alignment_bytes: DeviceSize::default(),
-            storage_texel_buffer_offset_single_texel_alignment: Bool32::default(),
-            uniform_texel_buffer_offset_alignment_bytes: DeviceSize::default(),
-            uniform_texel_buffer_offset_single_texel_alignment: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceTexelBufferAlignmentProperties<'a> {
@@ -32885,13 +29007,7 @@ unsafe impl Sync for PhysicalDeviceSubgroupSizeControlFeatures<'_> {}
 impl ::core::default::Default for PhysicalDeviceSubgroupSizeControlFeatures<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            subgroup_size_control: Bool32::default(),
-            compute_full_subgroups: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceSubgroupSizeControlFeatures<'a> {
@@ -32931,15 +29047,7 @@ unsafe impl Sync for PhysicalDeviceSubgroupSizeControlProperties<'_> {}
 impl ::core::default::Default for PhysicalDeviceSubgroupSizeControlProperties<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            min_subgroup_size: u32::default(),
-            max_subgroup_size: u32::default(),
-            max_compute_workgroup_subgroups: u32::default(),
-            required_subgroup_size_stages: ShaderStageFlags::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceSubgroupSizeControlProperties<'a> {
@@ -32991,12 +29099,7 @@ unsafe impl Sync for PipelineShaderStageRequiredSubgroupSizeCreateInfo<'_> {}
 impl ::core::default::Default for PipelineShaderStageRequiredSubgroupSizeCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            required_subgroup_size: u32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PipelineShaderStageRequiredSubgroupSizeCreateInfo<'a> {
@@ -33035,13 +29138,7 @@ unsafe impl Sync for SubpassShadingPipelineCreateInfoHUAWEI<'_> {}
 impl ::core::default::Default for SubpassShadingPipelineCreateInfoHUAWEI<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            render_pass: RenderPass::default(),
-            subpass: u32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for SubpassShadingPipelineCreateInfoHUAWEI<'a> {
@@ -33077,12 +29174,7 @@ unsafe impl Sync for PhysicalDeviceSubpassShadingPropertiesHUAWEI<'_> {}
 impl ::core::default::Default for PhysicalDeviceSubpassShadingPropertiesHUAWEI<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            max_subpass_shading_workgroup_size_aspect_ratio: u32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceSubpassShadingPropertiesHUAWEI<'a> {
@@ -33123,15 +29215,7 @@ unsafe impl Sync for PhysicalDeviceClusterCullingShaderPropertiesHUAWEI<'_> {}
 impl ::core::default::Default for PhysicalDeviceClusterCullingShaderPropertiesHUAWEI<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            max_work_group_count: unsafe { ::core::mem::zeroed() },
-            max_work_group_size: unsafe { ::core::mem::zeroed() },
-            max_output_cluster_count: u32::default(),
-            indirect_buffer_offset_alignment: DeviceSize::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceClusterCullingShaderPropertiesHUAWEI<'a> {
@@ -33183,12 +29267,7 @@ unsafe impl Sync for MemoryOpaqueCaptureAddressAllocateInfo<'_> {}
 impl ::core::default::Default for MemoryOpaqueCaptureAddressAllocateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            opaque_capture_address: u64::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for MemoryOpaqueCaptureAddressAllocateInfo<'a> {
@@ -33219,12 +29298,7 @@ unsafe impl Sync for DeviceMemoryOpaqueCaptureAddressInfo<'_> {}
 impl ::core::default::Default for DeviceMemoryOpaqueCaptureAddressInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            memory: DeviceMemory::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DeviceMemoryOpaqueCaptureAddressInfo<'a> {
@@ -33258,17 +29332,7 @@ unsafe impl Sync for PhysicalDeviceLineRasterizationFeatures<'_> {}
 impl ::core::default::Default for PhysicalDeviceLineRasterizationFeatures<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            rectangular_lines: Bool32::default(),
-            bresenham_lines: Bool32::default(),
-            smooth_lines: Bool32::default(),
-            stippled_rectangular_lines: Bool32::default(),
-            stippled_bresenham_lines: Bool32::default(),
-            stippled_smooth_lines: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceLineRasterizationFeatures<'a> {
@@ -33325,12 +29389,7 @@ unsafe impl Sync for PhysicalDeviceLineRasterizationProperties<'_> {}
 impl ::core::default::Default for PhysicalDeviceLineRasterizationProperties<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            line_sub_pixel_precision_bits: u32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceLineRasterizationProperties<'a> {
@@ -33367,15 +29426,7 @@ unsafe impl Sync for PipelineRasterizationLineStateCreateInfo<'_> {}
 impl ::core::default::Default for PipelineRasterizationLineStateCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            line_rasterization_mode: LineRasterizationMode::default(),
-            stippled_line_enable: Bool32::default(),
-            line_stipple_factor: u32::default(),
-            line_stipple_pattern: u16::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PipelineRasterizationLineStateCreateInfo<'a> {
@@ -33427,12 +29478,7 @@ unsafe impl Sync for PhysicalDevicePipelineCreationCacheControlFeatures<'_> {}
 impl ::core::default::Default for PhysicalDevicePipelineCreationCacheControlFeatures<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            pipeline_creation_cache_control: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDevicePipelineCreationCacheControlFeatures<'a> {
@@ -33484,23 +29530,7 @@ unsafe impl Sync for PhysicalDeviceVulkan11Features<'_> {}
 impl ::core::default::Default for PhysicalDeviceVulkan11Features<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            storage_buffer16_bit_access: Bool32::default(),
-            uniform_and_storage_buffer16_bit_access: Bool32::default(),
-            storage_push_constant16: Bool32::default(),
-            storage_input_output16: Bool32::default(),
-            multiview: Bool32::default(),
-            multiview_geometry_shader: Bool32::default(),
-            multiview_tessellation_shader: Bool32::default(),
-            variable_pointers_storage_buffer: Bool32::default(),
-            variable_pointers: Bool32::default(),
-            protected_memory: Bool32::default(),
-            sampler_ycbcr_conversion: Bool32::default(),
-            shader_draw_parameters: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceVulkan11Features<'a> {
@@ -33607,26 +29637,7 @@ unsafe impl Sync for PhysicalDeviceVulkan11Properties<'_> {}
 impl ::core::default::Default for PhysicalDeviceVulkan11Properties<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            device_uuid: unsafe { ::core::mem::zeroed() },
-            driver_uuid: unsafe { ::core::mem::zeroed() },
-            device_luid: unsafe { ::core::mem::zeroed() },
-            device_node_mask: u32::default(),
-            device_luid_valid: Bool32::default(),
-            subgroup_size: u32::default(),
-            subgroup_supported_stages: ShaderStageFlags::default(),
-            subgroup_supported_operations: SubgroupFeatureFlags::default(),
-            subgroup_quad_operations_in_all_stages: Bool32::default(),
-            point_clipping_behavior: PointClippingBehavior::default(),
-            max_multiview_view_count: u32::default(),
-            max_multiview_instance_index: u32::default(),
-            protected_no_fault: Bool32::default(),
-            max_per_set_descriptors: u32::default(),
-            max_memory_allocation_size: DeviceSize::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceVulkan11Properties<'a> {
@@ -33784,58 +29795,7 @@ unsafe impl Sync for PhysicalDeviceVulkan12Features<'_> {}
 impl ::core::default::Default for PhysicalDeviceVulkan12Features<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            sampler_mirror_clamp_to_edge: Bool32::default(),
-            draw_indirect_count: Bool32::default(),
-            storage_buffer8_bit_access: Bool32::default(),
-            uniform_and_storage_buffer8_bit_access: Bool32::default(),
-            storage_push_constant8: Bool32::default(),
-            shader_buffer_int64_atomics: Bool32::default(),
-            shader_shared_int64_atomics: Bool32::default(),
-            shader_float16: Bool32::default(),
-            shader_int8: Bool32::default(),
-            descriptor_indexing: Bool32::default(),
-            shader_input_attachment_array_dynamic_indexing: Bool32::default(),
-            shader_uniform_texel_buffer_array_dynamic_indexing: Bool32::default(),
-            shader_storage_texel_buffer_array_dynamic_indexing: Bool32::default(),
-            shader_uniform_buffer_array_non_uniform_indexing: Bool32::default(),
-            shader_sampled_image_array_non_uniform_indexing: Bool32::default(),
-            shader_storage_buffer_array_non_uniform_indexing: Bool32::default(),
-            shader_storage_image_array_non_uniform_indexing: Bool32::default(),
-            shader_input_attachment_array_non_uniform_indexing: Bool32::default(),
-            shader_uniform_texel_buffer_array_non_uniform_indexing: Bool32::default(),
-            shader_storage_texel_buffer_array_non_uniform_indexing: Bool32::default(),
-            descriptor_binding_uniform_buffer_update_after_bind: Bool32::default(),
-            descriptor_binding_sampled_image_update_after_bind: Bool32::default(),
-            descriptor_binding_storage_image_update_after_bind: Bool32::default(),
-            descriptor_binding_storage_buffer_update_after_bind: Bool32::default(),
-            descriptor_binding_uniform_texel_buffer_update_after_bind: Bool32::default(),
-            descriptor_binding_storage_texel_buffer_update_after_bind: Bool32::default(),
-            descriptor_binding_update_unused_while_pending: Bool32::default(),
-            descriptor_binding_partially_bound: Bool32::default(),
-            descriptor_binding_variable_descriptor_count: Bool32::default(),
-            runtime_descriptor_array: Bool32::default(),
-            sampler_filter_minmax: Bool32::default(),
-            scalar_block_layout: Bool32::default(),
-            imageless_framebuffer: Bool32::default(),
-            uniform_buffer_standard_layout: Bool32::default(),
-            shader_subgroup_extended_types: Bool32::default(),
-            separate_depth_stencil_layouts: Bool32::default(),
-            host_query_reset: Bool32::default(),
-            timeline_semaphore: Bool32::default(),
-            buffer_device_address: Bool32::default(),
-            buffer_device_address_capture_replay: Bool32::default(),
-            buffer_device_address_multi_device: Bool32::default(),
-            vulkan_memory_model: Bool32::default(),
-            vulkan_memory_model_device_scope: Bool32::default(),
-            vulkan_memory_model_availability_visibility_chains: Bool32::default(),
-            shader_output_viewport_index: Bool32::default(),
-            shader_output_layer: Bool32::default(),
-            subgroup_broadcast_dynamic_id: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceVulkan12Features<'a> {
@@ -34436,63 +30396,7 @@ impl fmt::Debug for PhysicalDeviceVulkan12Properties<'_> {
 impl ::core::default::Default for PhysicalDeviceVulkan12Properties<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            driver_id: DriverId::default(),
-            driver_name: unsafe { ::core::mem::zeroed() },
-            driver_info: unsafe { ::core::mem::zeroed() },
-            conformance_version: ConformanceVersion::default(),
-            denorm_behavior_independence: ShaderFloatControlsIndependence::default(),
-            rounding_mode_independence: ShaderFloatControlsIndependence::default(),
-            shader_signed_zero_inf_nan_preserve_float16: Bool32::default(),
-            shader_signed_zero_inf_nan_preserve_float32: Bool32::default(),
-            shader_signed_zero_inf_nan_preserve_float64: Bool32::default(),
-            shader_denorm_preserve_float16: Bool32::default(),
-            shader_denorm_preserve_float32: Bool32::default(),
-            shader_denorm_preserve_float64: Bool32::default(),
-            shader_denorm_flush_to_zero_float16: Bool32::default(),
-            shader_denorm_flush_to_zero_float32: Bool32::default(),
-            shader_denorm_flush_to_zero_float64: Bool32::default(),
-            shader_rounding_mode_rte_float16: Bool32::default(),
-            shader_rounding_mode_rte_float32: Bool32::default(),
-            shader_rounding_mode_rte_float64: Bool32::default(),
-            shader_rounding_mode_rtz_float16: Bool32::default(),
-            shader_rounding_mode_rtz_float32: Bool32::default(),
-            shader_rounding_mode_rtz_float64: Bool32::default(),
-            max_update_after_bind_descriptors_in_all_pools: u32::default(),
-            shader_uniform_buffer_array_non_uniform_indexing_native: Bool32::default(),
-            shader_sampled_image_array_non_uniform_indexing_native: Bool32::default(),
-            shader_storage_buffer_array_non_uniform_indexing_native: Bool32::default(),
-            shader_storage_image_array_non_uniform_indexing_native: Bool32::default(),
-            shader_input_attachment_array_non_uniform_indexing_native: Bool32::default(),
-            robust_buffer_access_update_after_bind: Bool32::default(),
-            quad_divergent_implicit_lod: Bool32::default(),
-            max_per_stage_descriptor_update_after_bind_samplers: u32::default(),
-            max_per_stage_descriptor_update_after_bind_uniform_buffers: u32::default(),
-            max_per_stage_descriptor_update_after_bind_storage_buffers: u32::default(),
-            max_per_stage_descriptor_update_after_bind_sampled_images: u32::default(),
-            max_per_stage_descriptor_update_after_bind_storage_images: u32::default(),
-            max_per_stage_descriptor_update_after_bind_input_attachments: u32::default(),
-            max_per_stage_update_after_bind_resources: u32::default(),
-            max_descriptor_set_update_after_bind_samplers: u32::default(),
-            max_descriptor_set_update_after_bind_uniform_buffers: u32::default(),
-            max_descriptor_set_update_after_bind_uniform_buffers_dynamic: u32::default(),
-            max_descriptor_set_update_after_bind_storage_buffers: u32::default(),
-            max_descriptor_set_update_after_bind_storage_buffers_dynamic: u32::default(),
-            max_descriptor_set_update_after_bind_sampled_images: u32::default(),
-            max_descriptor_set_update_after_bind_storage_images: u32::default(),
-            max_descriptor_set_update_after_bind_input_attachments: u32::default(),
-            supported_depth_resolve_modes: ResolveModeFlags::default(),
-            supported_stencil_resolve_modes: ResolveModeFlags::default(),
-            independent_resolve_none: Bool32::default(),
-            independent_resolve: Bool32::default(),
-            filter_minmax_single_component_formats: Bool32::default(),
-            filter_minmax_image_component_mapping: Bool32::default(),
-            max_timeline_semaphore_value_difference: u64::default(),
-            framebuffer_integer_color_sample_counts: SampleCountFlags::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceVulkan12Properties<'a> {
@@ -34952,26 +30856,7 @@ unsafe impl Sync for PhysicalDeviceVulkan13Features<'_> {}
 impl ::core::default::Default for PhysicalDeviceVulkan13Features<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            robust_image_access: Bool32::default(),
-            inline_uniform_block: Bool32::default(),
-            descriptor_binding_inline_uniform_block_update_after_bind: Bool32::default(),
-            pipeline_creation_cache_control: Bool32::default(),
-            private_data: Bool32::default(),
-            shader_demote_to_helper_invocation: Bool32::default(),
-            shader_terminate_invocation: Bool32::default(),
-            subgroup_size_control: Bool32::default(),
-            compute_full_subgroups: Bool32::default(),
-            synchronization2: Bool32::default(),
-            texture_compression_astc_hdr: Bool32::default(),
-            shader_zero_initialize_workgroup_memory: Bool32::default(),
-            dynamic_rendering: Bool32::default(),
-            shader_integer_dot_product: Bool32::default(),
-            maintenance4: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceVulkan13Features<'a> {
@@ -35131,7 +31016,7 @@ unsafe impl Sync for PhysicalDeviceVulkan13Properties<'_> {}
 impl ::core::default::Default for PhysicalDeviceVulkan13Properties<'_> {
     #[inline]
     fn default() -> Self {
-        Self { s_type : Self :: STRUCTURE_TYPE , p_next : :: core :: ptr :: null_mut () , min_subgroup_size : u32 :: default () , max_subgroup_size : u32 :: default () , max_compute_workgroup_subgroups : u32 :: default () , required_subgroup_size_stages : ShaderStageFlags :: default () , max_inline_uniform_block_size : u32 :: default () , max_per_stage_descriptor_inline_uniform_blocks : u32 :: default () , max_per_stage_descriptor_update_after_bind_inline_uniform_blocks : u32 :: default () , max_descriptor_set_inline_uniform_blocks : u32 :: default () , max_descriptor_set_update_after_bind_inline_uniform_blocks : u32 :: default () , max_inline_uniform_total_size : u32 :: default () , integer_dot_product8_bit_unsigned_accelerated : Bool32 :: default () , integer_dot_product8_bit_signed_accelerated : Bool32 :: default () , integer_dot_product8_bit_mixed_signedness_accelerated : Bool32 :: default () , integer_dot_product4x8_bit_packed_unsigned_accelerated : Bool32 :: default () , integer_dot_product4x8_bit_packed_signed_accelerated : Bool32 :: default () , integer_dot_product4x8_bit_packed_mixed_signedness_accelerated : Bool32 :: default () , integer_dot_product16_bit_unsigned_accelerated : Bool32 :: default () , integer_dot_product16_bit_signed_accelerated : Bool32 :: default () , integer_dot_product16_bit_mixed_signedness_accelerated : Bool32 :: default () , integer_dot_product32_bit_unsigned_accelerated : Bool32 :: default () , integer_dot_product32_bit_signed_accelerated : Bool32 :: default () , integer_dot_product32_bit_mixed_signedness_accelerated : Bool32 :: default () , integer_dot_product64_bit_unsigned_accelerated : Bool32 :: default () , integer_dot_product64_bit_signed_accelerated : Bool32 :: default () , integer_dot_product64_bit_mixed_signedness_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating8_bit_unsigned_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating8_bit_signed_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating8_bit_mixed_signedness_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating4x8_bit_packed_unsigned_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating4x8_bit_packed_signed_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating4x8_bit_packed_mixed_signedness_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating16_bit_unsigned_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating16_bit_signed_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating16_bit_mixed_signedness_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating32_bit_unsigned_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating32_bit_signed_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating32_bit_mixed_signedness_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating64_bit_unsigned_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating64_bit_signed_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating64_bit_mixed_signedness_accelerated : Bool32 :: default () , storage_texel_buffer_offset_alignment_bytes : DeviceSize :: default () , storage_texel_buffer_offset_single_texel_alignment : Bool32 :: default () , uniform_texel_buffer_offset_alignment_bytes : DeviceSize :: default () , uniform_texel_buffer_offset_single_texel_alignment : Bool32 :: default () , max_buffer_size : DeviceSize :: default () , _marker : PhantomData , }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceVulkan13Properties<'a> {
@@ -35554,32 +31439,7 @@ unsafe impl Sync for PhysicalDeviceVulkan14Features<'_> {}
 impl ::core::default::Default for PhysicalDeviceVulkan14Features<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            global_priority_query: Bool32::default(),
-            shader_subgroup_rotate: Bool32::default(),
-            shader_subgroup_rotate_clustered: Bool32::default(),
-            shader_float_controls2: Bool32::default(),
-            shader_expect_assume: Bool32::default(),
-            rectangular_lines: Bool32::default(),
-            bresenham_lines: Bool32::default(),
-            smooth_lines: Bool32::default(),
-            stippled_rectangular_lines: Bool32::default(),
-            stippled_bresenham_lines: Bool32::default(),
-            stippled_smooth_lines: Bool32::default(),
-            vertex_attribute_instance_rate_divisor: Bool32::default(),
-            vertex_attribute_instance_rate_zero_divisor: Bool32::default(),
-            index_type_uint8: Bool32::default(),
-            dynamic_rendering_local_read: Bool32::default(),
-            maintenance5: Bool32::default(),
-            maintenance6: Bool32::default(),
-            pipeline_protected_access: Bool32::default(),
-            pipeline_robustness: Bool32::default(),
-            host_image_copy: Bool32::default(),
-            push_descriptor: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceVulkan14Features<'a> {
@@ -35744,36 +31604,7 @@ unsafe impl Sync for PhysicalDeviceVulkan14Properties<'_> {}
 impl ::core::default::Default for PhysicalDeviceVulkan14Properties<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            line_sub_pixel_precision_bits: u32::default(),
-            max_vertex_attrib_divisor: u32::default(),
-            supports_non_zero_first_instance: Bool32::default(),
-            max_push_descriptors: u32::default(),
-            dynamic_rendering_local_read_depth_stencil_attachments: Bool32::default(),
-            dynamic_rendering_local_read_multisampled_attachments: Bool32::default(),
-            early_fragment_multisample_coverage_after_sample_counting: Bool32::default(),
-            early_fragment_sample_mask_test_before_sample_counting: Bool32::default(),
-            depth_stencil_swizzle_one_support: Bool32::default(),
-            polygon_mode_point_size: Bool32::default(),
-            non_strict_single_pixel_wide_lines_use_parallelogram: Bool32::default(),
-            non_strict_wide_lines_use_parallelogram: Bool32::default(),
-            block_texel_view_compatible_multiple_layers: Bool32::default(),
-            max_combined_image_sampler_descriptor_count: u32::default(),
-            fragment_shading_rate_clamp_combiner_inputs: Bool32::default(),
-            default_robustness_storage_buffers: PipelineRobustnessBufferBehavior::default(),
-            default_robustness_uniform_buffers: PipelineRobustnessBufferBehavior::default(),
-            default_robustness_vertex_inputs: PipelineRobustnessBufferBehavior::default(),
-            default_robustness_images: PipelineRobustnessImageBehavior::default(),
-            copy_src_layout_count: u32::default(),
-            p_copy_src_layouts: ::core::ptr::null_mut(),
-            copy_dst_layout_count: u32::default(),
-            p_copy_dst_layouts: ::core::ptr::null_mut(),
-            optimal_tiling_layout_uuid: unsafe { ::core::mem::zeroed() },
-            identical_memory_type_requirements: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceVulkan14Properties<'a> {
@@ -35975,12 +31806,7 @@ unsafe impl Sync for PipelineCompilerControlCreateInfoAMD<'_> {}
 impl ::core::default::Default for PipelineCompilerControlCreateInfoAMD<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            compiler_control_flags: PipelineCompilerControlFlagsAMD::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PipelineCompilerControlCreateInfoAMD<'a> {
@@ -36019,12 +31845,7 @@ unsafe impl Sync for PhysicalDeviceCoherentMemoryFeaturesAMD<'_> {}
 impl ::core::default::Default for PhysicalDeviceCoherentMemoryFeaturesAMD<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            device_coherent_memory: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceCoherentMemoryFeaturesAMD<'a> {
@@ -36110,15 +31931,7 @@ unsafe impl Sync for PhysicalDeviceGpaFeaturesAMD<'_> {}
 impl ::core::default::Default for PhysicalDeviceGpaFeaturesAMD<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            perf_counters: Bool32::default(),
-            streaming_perf_counters: Bool32::default(),
-            sq_thread_tracing: Bool32::default(),
-            clock_modes: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceGpaFeaturesAMD<'a> {
@@ -36168,16 +31981,7 @@ unsafe impl Sync for PhysicalDeviceGpaPropertiesAMD<'_> {}
 impl ::core::default::Default for PhysicalDeviceGpaPropertiesAMD<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            flags: PhysicalDeviceGpaPropertiesFlagsAMD::default(),
-            max_sqtt_se_buffer_size: DeviceSize::default(),
-            shader_engine_count: u32::default(),
-            perf_block_count: u32::default(),
-            p_perf_blocks: ::core::ptr::null_mut(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceGpaPropertiesAMD<'a> {
@@ -36223,12 +32027,7 @@ unsafe impl Sync for PhysicalDeviceGpaProperties2AMD<'_> {}
 impl ::core::default::Default for PhysicalDeviceGpaProperties2AMD<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            revision_id: u32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceGpaProperties2AMD<'a> {
@@ -36298,25 +32097,7 @@ unsafe impl Sync for GpaSampleBeginInfoAMD<'_> {}
 impl ::core::default::Default for GpaSampleBeginInfoAMD<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            sample_type: GpaSampleTypeAMD::default(),
-            sample_internal_operations: Bool32::default(),
-            cache_flush_on_counter_collection: Bool32::default(),
-            sq_shader_mask_enable: Bool32::default(),
-            sq_shader_mask: GpaSqShaderStageFlagsAMD::default(),
-            perf_counter_count: u32::default(),
-            p_perf_counters: ::core::ptr::null(),
-            streaming_perf_trace_sample_interval: u32::default(),
-            perf_counter_device_memory_limit: DeviceSize::default(),
-            sq_thread_trace_enable: Bool32::default(),
-            sq_thread_trace_suppress_instruction_tokens: Bool32::default(),
-            sq_thread_trace_device_memory_limit: DeviceSize::default(),
-            timing_pre_sample: PipelineStageFlags::default(),
-            timing_post_sample: PipelineStageFlags::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for GpaSampleBeginInfoAMD<'a> {
@@ -36424,14 +32205,7 @@ unsafe impl Sync for GpaDeviceClockModeInfoAMD<'_> {}
 impl ::core::default::Default for GpaDeviceClockModeInfoAMD<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            clock_mode: GpaDeviceClockModeAMD::default(),
-            memory_clock_ratio_to_peak: f32::default(),
-            engine_clock_ratio_to_peak: f32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for GpaDeviceClockModeInfoAMD<'a> {
@@ -36473,15 +32247,7 @@ unsafe impl Sync for GpaDeviceGetClockInfoAMD<'_> {}
 impl ::core::default::Default for GpaDeviceGetClockInfoAMD<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            memory_clock_ratio_to_peak: f32::default(),
-            engine_clock_ratio_to_peak: f32::default(),
-            memory_clock_frequency: u32::default(),
-            engine_clock_frequency: u32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for GpaDeviceGetClockInfoAMD<'a> {
@@ -36525,12 +32291,7 @@ unsafe impl Sync for GpaSessionCreateInfoAMD<'_> {}
 impl ::core::default::Default for GpaSessionCreateInfoAMD<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            secondary_copy_source: GpaSessionAMD::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for GpaSessionCreateInfoAMD<'a> {
@@ -36576,16 +32337,7 @@ impl fmt::Debug for PhysicalDeviceToolProperties<'_> {
 impl ::core::default::Default for PhysicalDeviceToolProperties<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            name: unsafe { ::core::mem::zeroed() },
-            version: unsafe { ::core::mem::zeroed() },
-            purposes: ToolPurposeFlags::default(),
-            description: unsafe { ::core::mem::zeroed() },
-            layer: unsafe { ::core::mem::zeroed() },
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceToolProperties<'a> {
@@ -36663,13 +32415,7 @@ impl fmt::Debug for SamplerCustomBorderColorCreateInfoEXT<'_> {
 impl ::core::default::Default for SamplerCustomBorderColorCreateInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            custom_border_color: ClearColorValue::default(),
-            format: Format::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for SamplerCustomBorderColorCreateInfoEXT<'a> {
@@ -36705,12 +32451,7 @@ unsafe impl Sync for PhysicalDeviceCustomBorderColorPropertiesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceCustomBorderColorPropertiesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            max_custom_border_color_samplers: u32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceCustomBorderColorPropertiesEXT<'a> {
@@ -36748,13 +32489,7 @@ unsafe impl Sync for PhysicalDeviceCustomBorderColorFeaturesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceCustomBorderColorFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            custom_border_colors: Bool32::default(),
-            custom_border_color_without_format: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceCustomBorderColorFeaturesEXT<'a> {
@@ -36798,13 +32533,7 @@ unsafe impl Sync for SamplerBorderColorComponentMappingCreateInfoEXT<'_> {}
 impl ::core::default::Default for SamplerBorderColorComponentMappingCreateInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            components: ComponentMapping::default(),
-            srgb: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for SamplerBorderColorComponentMappingCreateInfoEXT<'a> {
@@ -36841,13 +32570,7 @@ unsafe impl Sync for PhysicalDeviceBorderColorSwizzleFeaturesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceBorderColorSwizzleFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            border_color_swizzle: Bool32::default(),
-            border_color_swizzle_from_image: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceBorderColorSwizzleFeaturesEXT<'a> {
@@ -36952,18 +32675,7 @@ impl fmt::Debug for AccelerationStructureGeometryTrianglesDataKHR<'_> {
 impl ::core::default::Default for AccelerationStructureGeometryTrianglesDataKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            vertex_format: Format::default(),
-            vertex_data: DeviceOrHostAddressConstKHR::default(),
-            vertex_stride: DeviceSize::default(),
-            max_vertex: u32::default(),
-            index_type: IndexType::default(),
-            index_data: DeviceOrHostAddressConstKHR::default(),
-            transform_data: DeviceOrHostAddressConstKHR::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for AccelerationStructureGeometryTrianglesDataKHR<'a> {
@@ -37034,13 +32746,7 @@ impl fmt::Debug for AccelerationStructureGeometryAabbsDataKHR<'_> {
 impl ::core::default::Default for AccelerationStructureGeometryAabbsDataKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            data: DeviceOrHostAddressConstKHR::default(),
-            stride: DeviceSize::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for AccelerationStructureGeometryAabbsDataKHR<'a> {
@@ -37086,13 +32792,7 @@ impl fmt::Debug for AccelerationStructureGeometryInstancesDataKHR<'_> {
 impl ::core::default::Default for AccelerationStructureGeometryInstancesDataKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            array_of_pointers: Bool32::default(),
-            data: DeviceOrHostAddressConstKHR::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for AccelerationStructureGeometryInstancesDataKHR<'a> {
@@ -37156,22 +32856,7 @@ impl fmt::Debug for AccelerationStructureGeometryLinearSweptSpheresDataNV<'_> {
 impl ::core::default::Default for AccelerationStructureGeometryLinearSweptSpheresDataNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            vertex_format: Format::default(),
-            vertex_data: DeviceOrHostAddressConstKHR::default(),
-            vertex_stride: DeviceSize::default(),
-            radius_format: Format::default(),
-            radius_data: DeviceOrHostAddressConstKHR::default(),
-            radius_stride: DeviceSize::default(),
-            index_type: IndexType::default(),
-            index_data: DeviceOrHostAddressConstKHR::default(),
-            index_stride: DeviceSize::default(),
-            indexing_mode: RayTracingLssIndexingModeNV::default(),
-            end_caps_mode: RayTracingLssPrimitiveEndCapsModeNV::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for AccelerationStructureGeometryLinearSweptSpheresDataNV<'a> {
@@ -37280,20 +32965,7 @@ impl fmt::Debug for AccelerationStructureGeometrySpheresDataNV<'_> {
 impl ::core::default::Default for AccelerationStructureGeometrySpheresDataNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            vertex_format: Format::default(),
-            vertex_data: DeviceOrHostAddressConstKHR::default(),
-            vertex_stride: DeviceSize::default(),
-            radius_format: Format::default(),
-            radius_data: DeviceOrHostAddressConstKHR::default(),
-            radius_stride: DeviceSize::default(),
-            index_type: IndexType::default(),
-            index_data: DeviceOrHostAddressConstKHR::default(),
-            index_stride: DeviceSize::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for AccelerationStructureGeometrySpheresDataNV<'a> {
@@ -37394,14 +33066,7 @@ impl fmt::Debug for AccelerationStructureGeometryKHR<'_> {
 impl ::core::default::Default for AccelerationStructureGeometryKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            geometry_type: GeometryTypeKHR::default(),
-            geometry: AccelerationStructureGeometryDataKHR::default(),
-            flags: GeometryFlagsKHR::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for AccelerationStructureGeometryKHR<'a> {
@@ -37471,20 +33136,7 @@ impl fmt::Debug for AccelerationStructureBuildGeometryInfoKHR<'_> {
 impl ::core::default::Default for AccelerationStructureBuildGeometryInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            ty: AccelerationStructureTypeKHR::default(),
-            flags: BuildAccelerationStructureFlagsKHR::default(),
-            mode: BuildAccelerationStructureModeKHR::default(),
-            src_acceleration_structure: AccelerationStructureKHR::default(),
-            dst_acceleration_structure: AccelerationStructureKHR::default(),
-            geometry_count: u32::default(),
-            p_geometries: ::core::ptr::null(),
-            pp_geometries: ::core::ptr::null(),
-            scratch_data: DeviceOrHostAddressKHR::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for AccelerationStructureBuildGeometryInfoKHR<'a> {
@@ -37598,17 +33250,7 @@ unsafe impl Sync for AccelerationStructureCreateInfoKHR<'_> {}
 impl ::core::default::Default for AccelerationStructureCreateInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            create_flags: AccelerationStructureCreateFlagsKHR::default(),
-            buffer: Buffer::default(),
-            offset: DeviceSize::default(),
-            size: DeviceSize::default(),
-            ty: AccelerationStructureTypeKHR::default(),
-            device_address: DeviceAddress::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for AccelerationStructureCreateInfoKHR<'a> {
@@ -37735,12 +33377,7 @@ unsafe impl Sync for AccelerationStructureDeviceAddressInfoKHR<'_> {}
 impl ::core::default::Default for AccelerationStructureDeviceAddressInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            acceleration_structure: AccelerationStructureKHR::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for AccelerationStructureDeviceAddressInfoKHR<'a> {
@@ -37773,12 +33410,7 @@ unsafe impl Sync for AccelerationStructureVersionInfoKHR<'_> {}
 impl ::core::default::Default for AccelerationStructureVersionInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            p_version_data: ::core::ptr::null(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for AccelerationStructureVersionInfoKHR<'a> {
@@ -37809,14 +33441,7 @@ unsafe impl Sync for CopyAccelerationStructureInfoKHR<'_> {}
 impl ::core::default::Default for CopyAccelerationStructureInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            src: AccelerationStructureKHR::default(),
-            dst: AccelerationStructureKHR::default(),
-            mode: CopyAccelerationStructureModeKHR::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for CopyAccelerationStructureInfoKHR<'a> {
@@ -37868,14 +33493,7 @@ impl fmt::Debug for CopyAccelerationStructureToMemoryInfoKHR<'_> {
 impl ::core::default::Default for CopyAccelerationStructureToMemoryInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            src: AccelerationStructureKHR::default(),
-            dst: DeviceOrHostAddressKHR::default(),
-            mode: CopyAccelerationStructureModeKHR::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for CopyAccelerationStructureToMemoryInfoKHR<'a> {
@@ -37928,14 +33546,7 @@ impl fmt::Debug for CopyMemoryToAccelerationStructureInfoKHR<'_> {
 impl ::core::default::Default for CopyMemoryToAccelerationStructureInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            src: DeviceOrHostAddressConstKHR::default(),
-            dst: AccelerationStructureKHR::default(),
-            mode: CopyAccelerationStructureModeKHR::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for CopyMemoryToAccelerationStructureInfoKHR<'a> {
@@ -37976,13 +33587,7 @@ unsafe impl Sync for RayTracingPipelineInterfaceCreateInfoKHR<'_> {}
 impl ::core::default::Default for RayTracingPipelineInterfaceCreateInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            max_pipeline_ray_payload_size: u32::default(),
-            max_pipeline_ray_hit_attribute_size: u32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for RayTracingPipelineInterfaceCreateInfoKHR<'a> {
@@ -38021,13 +33626,7 @@ unsafe impl Sync for PipelineLibraryCreateInfoKHR<'_> {}
 impl ::core::default::Default for PipelineLibraryCreateInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            library_count: u32::default(),
-            p_libraries: ::core::ptr::null(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PipelineLibraryCreateInfoKHR<'a> {
@@ -38058,12 +33657,7 @@ unsafe impl Sync for PhysicalDeviceExtendedDynamicStateFeaturesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceExtendedDynamicStateFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            extended_dynamic_state: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceExtendedDynamicStateFeaturesEXT<'a> {
@@ -38100,14 +33694,7 @@ unsafe impl Sync for PhysicalDeviceExtendedDynamicState2FeaturesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceExtendedDynamicState2FeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            extended_dynamic_state2: Bool32::default(),
-            extended_dynamic_state2_logic_op: Bool32::default(),
-            extended_dynamic_state2_patch_control_points: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceExtendedDynamicState2FeaturesEXT<'a> {
@@ -38189,42 +33776,7 @@ unsafe impl Sync for PhysicalDeviceExtendedDynamicState3FeaturesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceExtendedDynamicState3FeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            extended_dynamic_state3_tessellation_domain_origin: Bool32::default(),
-            extended_dynamic_state3_depth_clamp_enable: Bool32::default(),
-            extended_dynamic_state3_polygon_mode: Bool32::default(),
-            extended_dynamic_state3_rasterization_samples: Bool32::default(),
-            extended_dynamic_state3_sample_mask: Bool32::default(),
-            extended_dynamic_state3_alpha_to_coverage_enable: Bool32::default(),
-            extended_dynamic_state3_alpha_to_one_enable: Bool32::default(),
-            extended_dynamic_state3_logic_op_enable: Bool32::default(),
-            extended_dynamic_state3_color_blend_enable: Bool32::default(),
-            extended_dynamic_state3_color_blend_equation: Bool32::default(),
-            extended_dynamic_state3_color_write_mask: Bool32::default(),
-            extended_dynamic_state3_rasterization_stream: Bool32::default(),
-            extended_dynamic_state3_conservative_rasterization_mode: Bool32::default(),
-            extended_dynamic_state3_extra_primitive_overestimation_size: Bool32::default(),
-            extended_dynamic_state3_depth_clip_enable: Bool32::default(),
-            extended_dynamic_state3_sample_locations_enable: Bool32::default(),
-            extended_dynamic_state3_color_blend_advanced: Bool32::default(),
-            extended_dynamic_state3_provoking_vertex_mode: Bool32::default(),
-            extended_dynamic_state3_line_rasterization_mode: Bool32::default(),
-            extended_dynamic_state3_line_stipple_enable: Bool32::default(),
-            extended_dynamic_state3_depth_clip_negative_one_to_one: Bool32::default(),
-            extended_dynamic_state3_viewport_w_scaling_enable: Bool32::default(),
-            extended_dynamic_state3_viewport_swizzle: Bool32::default(),
-            extended_dynamic_state3_coverage_to_color_enable: Bool32::default(),
-            extended_dynamic_state3_coverage_to_color_location: Bool32::default(),
-            extended_dynamic_state3_coverage_modulation_mode: Bool32::default(),
-            extended_dynamic_state3_coverage_modulation_table_enable: Bool32::default(),
-            extended_dynamic_state3_coverage_modulation_table: Bool32::default(),
-            extended_dynamic_state3_coverage_reduction_mode: Bool32::default(),
-            extended_dynamic_state3_representative_fragment_test_enable: Bool32::default(),
-            extended_dynamic_state3_shading_rate_image_enable: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceExtendedDynamicState3FeaturesEXT<'a> {
@@ -38531,12 +34083,7 @@ unsafe impl Sync for PhysicalDeviceExtendedDynamicState3PropertiesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceExtendedDynamicState3PropertiesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            dynamic_primitive_topology_unrestricted: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceExtendedDynamicState3PropertiesEXT<'a> {
@@ -38658,12 +34205,7 @@ unsafe impl Sync for RenderPassTransformBeginInfoQCOM<'_> {}
 impl ::core::default::Default for RenderPassTransformBeginInfoQCOM<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            transform: SurfaceTransformFlagsKHR::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for RenderPassTransformBeginInfoQCOM<'a> {
@@ -38693,12 +34235,7 @@ unsafe impl Sync for CopyCommandTransformInfoQCOM<'_> {}
 impl ::core::default::Default for CopyCommandTransformInfoQCOM<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            transform: SurfaceTransformFlagsKHR::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for CopyCommandTransformInfoQCOM<'a> {
@@ -38731,13 +34268,7 @@ unsafe impl Sync for CommandBufferInheritanceRenderPassTransformInfoQCOM<'_> {}
 impl ::core::default::Default for CommandBufferInheritanceRenderPassTransformInfoQCOM<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            transform: SurfaceTransformFlagsKHR::default(),
-            render_area: Rect2D::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for CommandBufferInheritanceRenderPassTransformInfoQCOM<'a> {
@@ -38776,12 +34307,7 @@ unsafe impl Sync for PhysicalDevicePartitionedAccelerationStructureFeaturesNV<'_
 impl ::core::default::Default for PhysicalDevicePartitionedAccelerationStructureFeaturesNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            partitioned_acceleration_structure: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a>
@@ -38824,12 +34350,7 @@ unsafe impl Sync for PhysicalDevicePartitionedAccelerationStructurePropertiesNV<
 impl ::core::default::Default for PhysicalDevicePartitionedAccelerationStructurePropertiesNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            max_partition_count: u32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a>
@@ -38892,12 +34413,7 @@ unsafe impl Sync for PartitionedAccelerationStructureFlagsNV<'_> {}
 impl ::core::default::Default for PartitionedAccelerationStructureFlagsNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            enable_partition_translation: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PartitionedAccelerationStructureFlagsNV<'a> {
@@ -38934,17 +34450,7 @@ pub struct PartitionedAccelerationStructureWriteInstanceDataNV {
 impl ::core::default::Default for PartitionedAccelerationStructureWriteInstanceDataNV {
     #[inline]
     fn default() -> Self {
-        Self {
-            transform: TransformMatrixKHR::default(),
-            explicit_aabb: unsafe { ::core::mem::zeroed() },
-            instance_id: u32::default(),
-            instance_mask: u32::default(),
-            instance_contribution_to_hit_group_index: u32::default(),
-            instance_flags: PartitionedAccelerationStructureInstanceFlagsNV::default(),
-            instance_index: u32::default(),
-            partition_index: u32::default(),
-            acceleration_structure: DeviceAddress::default(),
-        }
+        unsafe { ::core::mem::zeroed() }
     }
 }
 impl PartitionedAccelerationStructureWriteInstanceDataNV {
@@ -39042,10 +34548,7 @@ pub struct PartitionedAccelerationStructureWritePartitionTranslationDataNV {
 impl ::core::default::Default for PartitionedAccelerationStructureWritePartitionTranslationDataNV {
     #[inline]
     fn default() -> Self {
-        Self {
-            partition_index: u32::default(),
-            partition_translation: unsafe { ::core::mem::zeroed() },
-        }
+        unsafe { ::core::mem::zeroed() }
     }
 }
 impl PartitionedAccelerationStructureWritePartitionTranslationDataNV {
@@ -39077,13 +34580,7 @@ unsafe impl Sync for WriteDescriptorSetPartitionedAccelerationStructureNV<'_> {}
 impl ::core::default::Default for WriteDescriptorSetPartitionedAccelerationStructureNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            acceleration_structure_count: u32::default(),
-            p_acceleration_structures: ::core::ptr::null(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for WriteDescriptorSetPartitionedAccelerationStructureNV<'a> {
@@ -39122,16 +34619,7 @@ unsafe impl Sync for PartitionedAccelerationStructureInstancesInputNV<'_> {}
 impl ::core::default::Default for PartitionedAccelerationStructureInstancesInputNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            flags: BuildAccelerationStructureFlagsKHR::default(),
-            instance_count: u32::default(),
-            max_instance_per_partition_count: u32::default(),
-            partition_count: u32::default(),
-            max_instance_in_global_partition_count: u32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PartitionedAccelerationStructureInstancesInputNV<'a> {
@@ -39192,17 +34680,7 @@ unsafe impl Sync for BuildPartitionedAccelerationStructureInfoNV<'_> {}
 impl ::core::default::Default for BuildPartitionedAccelerationStructureInfoNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            input: PartitionedAccelerationStructureInstancesInputNV::default(),
-            src_acceleration_structure_data: DeviceAddress::default(),
-            dst_acceleration_structure_data: DeviceAddress::default(),
-            scratch_data: DeviceAddress::default(),
-            src_infos: DeviceAddress::default(),
-            src_infos_count: DeviceAddress::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for BuildPartitionedAccelerationStructureInfoNV<'a> {
@@ -39263,12 +34741,7 @@ unsafe impl Sync for PhysicalDeviceDiagnosticsConfigFeaturesNV<'_> {}
 impl ::core::default::Default for PhysicalDeviceDiagnosticsConfigFeaturesNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            diagnostics_config: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceDiagnosticsConfigFeaturesNV<'a> {
@@ -39300,12 +34773,7 @@ unsafe impl Sync for DeviceDiagnosticsConfigCreateInfoNV<'_> {}
 impl ::core::default::Default for DeviceDiagnosticsConfigCreateInfoNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            flags: DeviceDiagnosticsConfigFlagsNV::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DeviceDiagnosticsConfigCreateInfoNV<'a> {
@@ -39335,12 +34803,7 @@ unsafe impl Sync for PhysicalDeviceZeroInitializeWorkgroupMemoryFeatures<'_> {}
 impl ::core::default::Default for PhysicalDeviceZeroInitializeWorkgroupMemoryFeatures<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            shader_zero_initialize_workgroup_memory: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceZeroInitializeWorkgroupMemoryFeatures<'a> {
@@ -39382,12 +34845,7 @@ unsafe impl Sync for PhysicalDeviceShaderSubgroupUniformControlFlowFeaturesKHR<'
 impl ::core::default::Default for PhysicalDeviceShaderSubgroupUniformControlFlowFeaturesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            shader_subgroup_uniform_control_flow: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a>
@@ -39432,14 +34890,7 @@ unsafe impl Sync for PhysicalDeviceRobustness2FeaturesKHR<'_> {}
 impl ::core::default::Default for PhysicalDeviceRobustness2FeaturesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            robust_buffer_access2: Bool32::default(),
-            robust_image_access2: Bool32::default(),
-            null_descriptor: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceRobustness2FeaturesKHR<'a> {
@@ -39481,13 +34932,7 @@ unsafe impl Sync for PhysicalDeviceRobustness2PropertiesKHR<'_> {}
 impl ::core::default::Default for PhysicalDeviceRobustness2PropertiesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            robust_storage_buffer_access_size_alignment: DeviceSize::default(),
-            robust_uniform_buffer_access_size_alignment: DeviceSize::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceRobustness2PropertiesKHR<'a> {
@@ -39531,12 +34976,7 @@ unsafe impl Sync for PhysicalDeviceImageRobustnessFeatures<'_> {}
 impl ::core::default::Default for PhysicalDeviceImageRobustnessFeatures<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            robust_image_access: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceImageRobustnessFeatures<'a> {
@@ -39570,15 +35010,7 @@ unsafe impl Sync for PhysicalDeviceWorkgroupMemoryExplicitLayoutFeaturesKHR<'_> 
 impl ::core::default::Default for PhysicalDeviceWorkgroupMemoryExplicitLayoutFeaturesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            workgroup_memory_explicit_layout: Bool32::default(),
-            workgroup_memory_explicit_layout_scalar_block_layout: Bool32::default(),
-            workgroup_memory_explicit_layout8_bit_access: Bool32::default(),
-            workgroup_memory_explicit_layout16_bit_access: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceWorkgroupMemoryExplicitLayoutFeaturesKHR<'a> {
@@ -39664,26 +35096,7 @@ unsafe impl Sync for PhysicalDevicePortabilitySubsetFeaturesKHR<'_> {}
 impl ::core::default::Default for PhysicalDevicePortabilitySubsetFeaturesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            constant_alpha_color_blend_factors: Bool32::default(),
-            events: Bool32::default(),
-            image_view_format_reinterpretation: Bool32::default(),
-            image_view_format_swizzle: Bool32::default(),
-            image_view2_d_on3_d_image: Bool32::default(),
-            multisample_array_image: Bool32::default(),
-            mutable_comparison_samplers: Bool32::default(),
-            point_polygons: Bool32::default(),
-            sampler_mip_lod_bias: Bool32::default(),
-            separate_stencil_mask_ref: Bool32::default(),
-            shader_sample_rate_interpolation_functions: Bool32::default(),
-            tessellation_isolines: Bool32::default(),
-            tessellation_point_mode: Bool32::default(),
-            triangle_fans: Bool32::default(),
-            vertex_attribute_access_beyond_stride: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 #[cfg(feature = "provisional")]
@@ -39809,12 +35222,7 @@ unsafe impl Sync for PhysicalDevicePortabilitySubsetPropertiesKHR<'_> {}
 impl ::core::default::Default for PhysicalDevicePortabilitySubsetPropertiesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            min_vertex_input_binding_stride_alignment: u32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 #[cfg(feature = "provisional")]
@@ -39855,13 +35263,7 @@ unsafe impl Sync for PhysicalDevice4444FormatsFeaturesEXT<'_> {}
 impl ::core::default::Default for PhysicalDevice4444FormatsFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            format_a4r4g4b4: Bool32::default(),
-            format_a4b4g4r4: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDevice4444FormatsFeaturesEXT<'a> {
@@ -39897,12 +35299,7 @@ unsafe impl Sync for PhysicalDeviceSubpassShadingFeaturesHUAWEI<'_> {}
 impl ::core::default::Default for PhysicalDeviceSubpassShadingFeaturesHUAWEI<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            subpass_shading: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceSubpassShadingFeaturesHUAWEI<'a> {
@@ -39938,13 +35335,7 @@ unsafe impl Sync for PhysicalDeviceClusterCullingShaderFeaturesHUAWEI<'_> {}
 impl ::core::default::Default for PhysicalDeviceClusterCullingShaderFeaturesHUAWEI<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            clusterculling_shader: Bool32::default(),
-            multiview_cluster_culling_shader: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceClusterCullingShaderFeaturesHUAWEI<'a> {
@@ -39987,12 +35378,7 @@ unsafe impl Sync for PhysicalDeviceClusterCullingShaderVrsFeaturesHUAWEI<'_> {}
 impl ::core::default::Default for PhysicalDeviceClusterCullingShaderVrsFeaturesHUAWEI<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            cluster_shading_rate: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceClusterCullingShaderVrsFeaturesHUAWEI<'a> {
@@ -40028,14 +35414,7 @@ unsafe impl Sync for BufferCopy2<'_> {}
 impl ::core::default::Default for BufferCopy2<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            src_offset: DeviceSize::default(),
-            dst_offset: DeviceSize::default(),
-            size: DeviceSize::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for BufferCopy2<'a> {
@@ -40078,16 +35457,7 @@ unsafe impl Sync for ImageCopy2<'_> {}
 impl ::core::default::Default for ImageCopy2<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            src_subresource: ImageSubresourceLayers::default(),
-            src_offset: Offset3D::default(),
-            dst_subresource: ImageSubresourceLayers::default(),
-            dst_offset: Offset3D::default(),
-            extent: Extent3D::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ImageCopy2<'a> {
@@ -40139,15 +35509,7 @@ unsafe impl Sync for ImageBlit2<'_> {}
 impl ::core::default::Default for ImageBlit2<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            src_subresource: ImageSubresourceLayers::default(),
-            src_offsets: unsafe { ::core::mem::zeroed() },
-            dst_subresource: ImageSubresourceLayers::default(),
-            dst_offsets: unsafe { ::core::mem::zeroed() },
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ImageBlit2<'a> {
@@ -40196,17 +35558,7 @@ unsafe impl Sync for BufferImageCopy2<'_> {}
 impl ::core::default::Default for BufferImageCopy2<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            buffer_offset: DeviceSize::default(),
-            buffer_row_length: u32::default(),
-            buffer_image_height: u32::default(),
-            image_subresource: ImageSubresourceLayers::default(),
-            image_offset: Offset3D::default(),
-            image_extent: Extent3D::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for BufferImageCopy2<'a> {
@@ -40264,16 +35616,7 @@ unsafe impl Sync for ImageResolve2<'_> {}
 impl ::core::default::Default for ImageResolve2<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            src_subresource: ImageSubresourceLayers::default(),
-            src_offset: Offset3D::default(),
-            dst_subresource: ImageSubresourceLayers::default(),
-            dst_offset: Offset3D::default(),
-            extent: Extent3D::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ImageResolve2<'a> {
@@ -40325,15 +35668,7 @@ unsafe impl Sync for CopyBufferInfo2<'_> {}
 impl ::core::default::Default for CopyBufferInfo2<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            src_buffer: Buffer::default(),
-            dst_buffer: Buffer::default(),
-            region_count: u32::default(),
-            p_regions: ::core::ptr::null(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for CopyBufferInfo2<'a> {
@@ -40378,17 +35713,7 @@ unsafe impl Sync for CopyImageInfo2<'_> {}
 impl ::core::default::Default for CopyImageInfo2<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            src_image: Image::default(),
-            src_image_layout: ImageLayout::default(),
-            dst_image: Image::default(),
-            dst_image_layout: ImageLayout::default(),
-            region_count: u32::default(),
-            p_regions: ::core::ptr::null(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for CopyImageInfo2<'a> {
@@ -40444,18 +35769,7 @@ unsafe impl Sync for BlitImageInfo2<'_> {}
 impl ::core::default::Default for BlitImageInfo2<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            src_image: Image::default(),
-            src_image_layout: ImageLayout::default(),
-            dst_image: Image::default(),
-            dst_image_layout: ImageLayout::default(),
-            region_count: u32::default(),
-            p_regions: ::core::ptr::null(),
-            filter: Filter::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for BlitImageInfo2<'a> {
@@ -40514,16 +35828,7 @@ unsafe impl Sync for CopyBufferToImageInfo2<'_> {}
 impl ::core::default::Default for CopyBufferToImageInfo2<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            src_buffer: Buffer::default(),
-            dst_image: Image::default(),
-            dst_image_layout: ImageLayout::default(),
-            region_count: u32::default(),
-            p_regions: ::core::ptr::null(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for CopyBufferToImageInfo2<'a> {
@@ -40572,16 +35877,7 @@ unsafe impl Sync for CopyImageToBufferInfo2<'_> {}
 impl ::core::default::Default for CopyImageToBufferInfo2<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            src_image: Image::default(),
-            src_image_layout: ImageLayout::default(),
-            dst_buffer: Buffer::default(),
-            region_count: u32::default(),
-            p_regions: ::core::ptr::null(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for CopyImageToBufferInfo2<'a> {
@@ -40631,17 +35927,7 @@ unsafe impl Sync for ResolveImageInfo2<'_> {}
 impl ::core::default::Default for ResolveImageInfo2<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            src_image: Image::default(),
-            src_image_layout: ImageLayout::default(),
-            dst_image: Image::default(),
-            dst_image_layout: ImageLayout::default(),
-            region_count: u32::default(),
-            p_regions: ::core::ptr::null(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ResolveImageInfo2<'a> {
@@ -40692,13 +35978,7 @@ unsafe impl Sync for PhysicalDeviceShaderImageAtomicInt64FeaturesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceShaderImageAtomicInt64FeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            shader_image_int64_atomics: Bool32::default(),
-            sparse_image_int64_atomics: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderImageAtomicInt64FeaturesEXT<'a> {
@@ -40739,13 +36019,7 @@ unsafe impl Sync for FragmentShadingRateAttachmentInfoKHR<'_> {}
 impl ::core::default::Default for FragmentShadingRateAttachmentInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            p_fragment_shading_rate_attachment: ::core::ptr::null(),
-            shading_rate_attachment_texel_size: Extent2D::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for FragmentShadingRateAttachmentInfoKHR<'a> {
@@ -40787,13 +36061,7 @@ unsafe impl Sync for PipelineFragmentShadingRateStateCreateInfoKHR<'_> {}
 impl ::core::default::Default for PipelineFragmentShadingRateStateCreateInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            fragment_size: Extent2D::default(),
-            combiner_ops: unsafe { ::core::mem::zeroed() },
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PipelineFragmentShadingRateStateCreateInfoKHR<'a> {
@@ -40834,14 +36102,7 @@ unsafe impl Sync for PhysicalDeviceFragmentShadingRateFeaturesKHR<'_> {}
 impl ::core::default::Default for PhysicalDeviceFragmentShadingRateFeaturesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            pipeline_fragment_shading_rate: Bool32::default(),
-            primitive_fragment_shading_rate: Bool32::default(),
-            attachment_fragment_shading_rate: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceFragmentShadingRateFeaturesKHR<'a> {
@@ -40908,28 +36169,7 @@ unsafe impl Sync for PhysicalDeviceFragmentShadingRatePropertiesKHR<'_> {}
 impl ::core::default::Default for PhysicalDeviceFragmentShadingRatePropertiesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            min_fragment_shading_rate_attachment_texel_size: Extent2D::default(),
-            max_fragment_shading_rate_attachment_texel_size: Extent2D::default(),
-            max_fragment_shading_rate_attachment_texel_size_aspect_ratio: u32::default(),
-            primitive_fragment_shading_rate_with_multiple_viewports: Bool32::default(),
-            layered_shading_rate_attachments: Bool32::default(),
-            fragment_shading_rate_non_trivial_combiner_ops: Bool32::default(),
-            max_fragment_size: Extent2D::default(),
-            max_fragment_size_aspect_ratio: u32::default(),
-            max_fragment_shading_rate_coverage_samples: u32::default(),
-            max_fragment_shading_rate_rasterization_samples: SampleCountFlags::default(),
-            fragment_shading_rate_with_shader_depth_stencil_writes: Bool32::default(),
-            fragment_shading_rate_with_sample_mask: Bool32::default(),
-            fragment_shading_rate_with_shader_sample_mask: Bool32::default(),
-            fragment_shading_rate_with_conservative_rasterization: Bool32::default(),
-            fragment_shading_rate_with_fragment_shader_interlock: Bool32::default(),
-            fragment_shading_rate_with_custom_sample_locations: Bool32::default(),
-            fragment_shading_rate_strict_multiply_combiner: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceFragmentShadingRatePropertiesKHR<'a> {
@@ -41102,13 +36342,7 @@ unsafe impl Sync for PhysicalDeviceFragmentShadingRateKHR<'_> {}
 impl ::core::default::Default for PhysicalDeviceFragmentShadingRateKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            sample_counts: SampleCountFlags::default(),
-            fragment_size: Extent2D::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceFragmentShadingRateKHR<'a> {
@@ -41142,12 +36376,7 @@ unsafe impl Sync for PhysicalDeviceShaderTerminateInvocationFeatures<'_> {}
 impl ::core::default::Default for PhysicalDeviceShaderTerminateInvocationFeatures<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            shader_terminate_invocation: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderTerminateInvocationFeatures<'a> {
@@ -41184,14 +36413,7 @@ unsafe impl Sync for PhysicalDeviceFragmentShadingRateEnumsFeaturesNV<'_> {}
 impl ::core::default::Default for PhysicalDeviceFragmentShadingRateEnumsFeaturesNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            fragment_shading_rate_enums: Bool32::default(),
-            supersample_fragment_shading_rates: Bool32::default(),
-            no_invocation_fragment_shading_rates: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceFragmentShadingRateEnumsFeaturesNV<'a> {
@@ -41242,12 +36464,7 @@ unsafe impl Sync for PhysicalDeviceFragmentShadingRateEnumsPropertiesNV<'_> {}
 impl ::core::default::Default for PhysicalDeviceFragmentShadingRateEnumsPropertiesNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            max_fragment_shading_rate_invocation_count: SampleCountFlags::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceFragmentShadingRateEnumsPropertiesNV<'a> {
@@ -41287,14 +36504,7 @@ unsafe impl Sync for PipelineFragmentShadingRateEnumStateCreateInfoNV<'_> {}
 impl ::core::default::Default for PipelineFragmentShadingRateEnumStateCreateInfoNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            shading_rate_type: FragmentShadingRateTypeNV::default(),
-            shading_rate: FragmentShadingRateNV::default(),
-            combiner_ops: unsafe { ::core::mem::zeroed() },
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PipelineFragmentShadingRateEnumStateCreateInfoNV<'a> {
@@ -41340,14 +36550,7 @@ unsafe impl Sync for AccelerationStructureBuildSizesInfoKHR<'_> {}
 impl ::core::default::Default for AccelerationStructureBuildSizesInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            acceleration_structure_size: DeviceSize::default(),
-            update_scratch_size: DeviceSize::default(),
-            build_scratch_size: DeviceSize::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for AccelerationStructureBuildSizesInfoKHR<'a> {
@@ -41388,13 +36591,7 @@ unsafe impl Sync for PhysicalDeviceImage2DViewOf3DFeaturesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceImage2DViewOf3DFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            image2_d_view_of3_d: Bool32::default(),
-            sampler2_d_view_of3_d: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceImage2DViewOf3DFeaturesEXT<'a> {
@@ -41431,12 +36628,7 @@ unsafe impl Sync for PhysicalDeviceImageSlicedViewOf3DFeaturesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceImageSlicedViewOf3DFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            image_sliced_view_of3_d: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceImageSlicedViewOf3DFeaturesEXT<'a> {
@@ -41471,12 +36663,7 @@ unsafe impl Sync for PhysicalDeviceAttachmentFeedbackLoopDynamicStateFeaturesEXT
 impl ::core::default::Default for PhysicalDeviceAttachmentFeedbackLoopDynamicStateFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            attachment_feedback_loop_dynamic_state: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a>
@@ -41519,12 +36706,7 @@ unsafe impl Sync for PhysicalDeviceLegacyVertexAttributesFeaturesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceLegacyVertexAttributesFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            legacy_vertex_attributes: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceLegacyVertexAttributesFeaturesEXT<'a> {
@@ -41559,12 +36741,7 @@ unsafe impl Sync for PhysicalDeviceLegacyVertexAttributesPropertiesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceLegacyVertexAttributesPropertiesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            native_unaligned_performance: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceLegacyVertexAttributesPropertiesEXT<'a> {
@@ -41598,12 +36775,7 @@ unsafe impl Sync for PhysicalDeviceMutableDescriptorTypeFeaturesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceMutableDescriptorTypeFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            mutable_descriptor_type: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceMutableDescriptorTypeFeaturesEXT<'a> {
@@ -41637,11 +36809,7 @@ unsafe impl Sync for MutableDescriptorTypeListEXT<'_> {}
 impl ::core::default::Default for MutableDescriptorTypeListEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            descriptor_type_count: u32::default(),
-            p_descriptor_types: ::core::ptr::null(),
-            _marker: PhantomData,
-        }
+        unsafe { ::core::mem::zeroed() }
     }
 }
 impl<'a> MutableDescriptorTypeListEXT<'a> {
@@ -41669,13 +36837,7 @@ unsafe impl Sync for MutableDescriptorTypeCreateInfoEXT<'_> {}
 impl ::core::default::Default for MutableDescriptorTypeCreateInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            mutable_descriptor_type_list_count: u32::default(),
-            p_mutable_descriptor_type_lists: ::core::ptr::null(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for MutableDescriptorTypeCreateInfoEXT<'a> {
@@ -41710,12 +36872,7 @@ unsafe impl Sync for PhysicalDeviceDepthClipControlFeaturesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceDepthClipControlFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            depth_clip_control: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceDepthClipControlFeaturesEXT<'a> {
@@ -41747,12 +36904,7 @@ unsafe impl Sync for PhysicalDeviceZeroInitializeDeviceMemoryFeaturesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceZeroInitializeDeviceMemoryFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            zero_initialize_device_memory: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceZeroInitializeDeviceMemoryFeaturesEXT<'a> {
@@ -41789,11 +36941,7 @@ unsafe impl Sync for BeginCustomResolveInfoEXT<'_> {}
 impl ::core::default::Default for BeginCustomResolveInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for BeginCustomResolveInfoEXT<'a> {
@@ -41816,12 +36964,7 @@ unsafe impl Sync for PhysicalDeviceCustomResolveFeaturesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceCustomResolveFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            custom_resolve: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceCustomResolveFeaturesEXT<'a> {
@@ -41857,16 +37000,7 @@ unsafe impl Sync for CustomResolveCreateInfoEXT<'_> {}
 impl ::core::default::Default for CustomResolveCreateInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            custom_resolve: Bool32::default(),
-            color_attachment_count: u32::default(),
-            p_color_attachment_formats: ::core::ptr::null(),
-            depth_attachment_format: Format::default(),
-            stencil_attachment_format: Format::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for CustomResolveCreateInfoEXT<'a> {
@@ -41915,13 +37049,7 @@ unsafe impl Sync for PhysicalDeviceDeviceGeneratedCommandsFeaturesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceDeviceGeneratedCommandsFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            device_generated_commands: Bool32::default(),
-            dynamic_generated_pipeline_layout: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceDeviceGeneratedCommandsFeaturesEXT<'a> {
@@ -41975,23 +37103,7 @@ unsafe impl Sync for PhysicalDeviceDeviceGeneratedCommandsPropertiesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceDeviceGeneratedCommandsPropertiesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            max_indirect_pipeline_count: u32::default(),
-            max_indirect_shader_object_count: u32::default(),
-            max_indirect_sequence_count: u32::default(),
-            max_indirect_commands_token_count: u32::default(),
-            max_indirect_commands_token_offset: u32::default(),
-            max_indirect_commands_indirect_stride: u32::default(),
-            supported_indirect_commands_input_modes: IndirectCommandsInputModeFlagsEXT::default(),
-            supported_indirect_commands_shader_stages: ShaderStageFlags::default(),
-            supported_indirect_commands_shader_stages_pipeline_binding: ShaderStageFlags::default(),
-            supported_indirect_commands_shader_stages_shader_binding: ShaderStageFlags::default(),
-            device_generated_commands_transform_feedback: Bool32::default(),
-            device_generated_commands_multi_draw_indirect_count: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceDeviceGeneratedCommandsPropertiesEXT<'a> {
@@ -42114,12 +37226,7 @@ unsafe impl Sync for GeneratedCommandsPipelineInfoEXT<'_> {}
 impl ::core::default::Default for GeneratedCommandsPipelineInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            pipeline: Pipeline::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for GeneratedCommandsPipelineInfoEXT<'a> {
@@ -42154,13 +37261,7 @@ unsafe impl Sync for GeneratedCommandsShaderInfoEXT<'_> {}
 impl ::core::default::Default for GeneratedCommandsShaderInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            shader_count: u32::default(),
-            p_shaders: ::core::ptr::null(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for GeneratedCommandsShaderInfoEXT<'a> {
@@ -42198,15 +37299,7 @@ unsafe impl Sync for GeneratedCommandsMemoryRequirementsInfoEXT<'_> {}
 impl ::core::default::Default for GeneratedCommandsMemoryRequirementsInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            indirect_execution_set: IndirectExecutionSetEXT::default(),
-            indirect_commands_layout: IndirectCommandsLayoutEXT::default(),
-            max_sequence_count: u32::default(),
-            max_draw_count: u32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for GeneratedCommandsMemoryRequirementsInfoEXT<'a> {
@@ -42258,13 +37351,7 @@ unsafe impl Sync for IndirectExecutionSetPipelineInfoEXT<'_> {}
 impl ::core::default::Default for IndirectExecutionSetPipelineInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            initial_pipeline: Pipeline::default(),
-            max_pipeline_count: u32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for IndirectExecutionSetPipelineInfoEXT<'a> {
@@ -42299,13 +37386,7 @@ unsafe impl Sync for IndirectExecutionSetShaderLayoutInfoEXT<'_> {}
 impl ::core::default::Default for IndirectExecutionSetShaderLayoutInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            set_layout_count: u32::default(),
-            p_set_layouts: ::core::ptr::null(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for IndirectExecutionSetShaderLayoutInfoEXT<'a> {
@@ -42341,17 +37422,7 @@ unsafe impl Sync for IndirectExecutionSetShaderInfoEXT<'_> {}
 impl ::core::default::Default for IndirectExecutionSetShaderInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            shader_count: u32::default(),
-            p_initial_shaders: ::core::ptr::null(),
-            p_set_layout_infos: ::core::ptr::null(),
-            max_shader_count: u32::default(),
-            push_constant_range_count: u32::default(),
-            p_push_constant_ranges: ::core::ptr::null(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for IndirectExecutionSetShaderInfoEXT<'a> {
@@ -42425,13 +37496,7 @@ impl fmt::Debug for IndirectExecutionSetCreateInfoEXT<'_> {
 impl ::core::default::Default for IndirectExecutionSetCreateInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            ty: IndirectExecutionSetInfoTypeEXT::default(),
-            info: IndirectExecutionSetInfoEXT::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for IndirectExecutionSetCreateInfoEXT<'a> {
@@ -42474,21 +37539,7 @@ unsafe impl Sync for GeneratedCommandsInfoEXT<'_> {}
 impl ::core::default::Default for GeneratedCommandsInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            shader_stages: ShaderStageFlags::default(),
-            indirect_execution_set: IndirectExecutionSetEXT::default(),
-            indirect_commands_layout: IndirectCommandsLayoutEXT::default(),
-            indirect_address: DeviceAddress::default(),
-            indirect_address_size: DeviceSize::default(),
-            preprocess_address: DeviceAddress::default(),
-            preprocess_size: DeviceSize::default(),
-            max_sequence_count: u32::default(),
-            sequence_count_address: DeviceAddress::default(),
-            max_draw_count: u32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for GeneratedCommandsInfoEXT<'a> {
@@ -42569,13 +37620,7 @@ unsafe impl Sync for WriteIndirectExecutionSetPipelineEXT<'_> {}
 impl ::core::default::Default for WriteIndirectExecutionSetPipelineEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            index: u32::default(),
-            pipeline: Pipeline::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for WriteIndirectExecutionSetPipelineEXT<'a> {
@@ -42610,13 +37655,7 @@ unsafe impl Sync for WriteIndirectExecutionSetShaderEXT<'_> {}
 impl ::core::default::Default for WriteIndirectExecutionSetShaderEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            index: u32::default(),
-            shader: ShaderEXT::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for WriteIndirectExecutionSetShaderEXT<'a> {
@@ -42655,17 +37694,7 @@ unsafe impl Sync for IndirectCommandsLayoutCreateInfoEXT<'_> {}
 impl ::core::default::Default for IndirectCommandsLayoutCreateInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            flags: IndirectCommandsLayoutUsageFlagsEXT::default(),
-            shader_stages: ShaderStageFlags::default(),
-            indirect_stride: u32::default(),
-            pipeline_layout: PipelineLayout::default(),
-            token_count: u32::default(),
-            p_tokens: ::core::ptr::null(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for IndirectCommandsLayoutCreateInfoEXT<'a> {
@@ -42728,14 +37757,7 @@ impl fmt::Debug for IndirectCommandsLayoutTokenEXT<'_> {
 impl ::core::default::Default for IndirectCommandsLayoutTokenEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            ty: IndirectCommandsTokenTypeEXT::default(),
-            data: IndirectCommandsTokenDataEXT::default(),
-            offset: u32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for IndirectCommandsLayoutTokenEXT<'a> {
@@ -42936,12 +37958,7 @@ unsafe impl Sync for PipelineViewportDepthClipControlCreateInfoEXT<'_> {}
 impl ::core::default::Default for PipelineViewportDepthClipControlCreateInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            negative_one_to_one: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PipelineViewportDepthClipControlCreateInfoEXT<'a> {
@@ -42975,12 +37992,7 @@ unsafe impl Sync for PhysicalDeviceDepthClampControlFeaturesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceDepthClampControlFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            depth_clamp_control: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceDepthClampControlFeaturesEXT<'a> {
@@ -43016,13 +38028,7 @@ unsafe impl Sync for PipelineViewportDepthClampControlCreateInfoEXT<'_> {}
 impl ::core::default::Default for PipelineViewportDepthClampControlCreateInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            depth_clamp_mode: DepthClampModeEXT::default(),
-            p_depth_clamp_range: ::core::ptr::null(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PipelineViewportDepthClampControlCreateInfoEXT<'a> {
@@ -43061,12 +38067,7 @@ unsafe impl Sync for PhysicalDeviceVertexInputDynamicStateFeaturesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceVertexInputDynamicStateFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            vertex_input_dynamic_state: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceVertexInputDynamicStateFeaturesEXT<'a> {
@@ -43101,12 +38102,7 @@ unsafe impl Sync for PhysicalDeviceExternalMemoryRDMAFeaturesNV<'_> {}
 impl ::core::default::Default for PhysicalDeviceExternalMemoryRDMAFeaturesNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            external_memory_rdma: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceExternalMemoryRDMAFeaturesNV<'a> {
@@ -43141,12 +38137,7 @@ unsafe impl Sync for PhysicalDeviceShaderRelaxedExtendedInstructionFeaturesKHR<'
 impl ::core::default::Default for PhysicalDeviceShaderRelaxedExtendedInstructionFeaturesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            shader_relaxed_extended_instruction: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a>
@@ -43192,15 +38183,7 @@ unsafe impl Sync for VertexInputBindingDescription2EXT<'_> {}
 impl ::core::default::Default for VertexInputBindingDescription2EXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            binding: u32::default(),
-            stride: u32::default(),
-            input_rate: VertexInputRate::default(),
-            divisor: u32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VertexInputBindingDescription2EXT<'a> {
@@ -43247,15 +38230,7 @@ unsafe impl Sync for VertexInputAttributeDescription2EXT<'_> {}
 impl ::core::default::Default for VertexInputAttributeDescription2EXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            location: u32::default(),
-            binding: u32::default(),
-            format: Format::default(),
-            offset: u32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VertexInputAttributeDescription2EXT<'a> {
@@ -43299,12 +38274,7 @@ unsafe impl Sync for PhysicalDeviceColorWriteEnableFeaturesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceColorWriteEnableFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            color_write_enable: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceColorWriteEnableFeaturesEXT<'a> {
@@ -43337,13 +38307,7 @@ unsafe impl Sync for PipelineColorWriteCreateInfoEXT<'_> {}
 impl ::core::default::Default for PipelineColorWriteCreateInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            attachment_count: u32::default(),
-            p_color_write_enables: ::core::ptr::null(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PipelineColorWriteCreateInfoEXT<'a> {
@@ -43377,15 +38341,7 @@ unsafe impl Sync for MemoryBarrier2<'_> {}
 impl ::core::default::Default for MemoryBarrier2<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            src_stage_mask: PipelineStageFlags2::default(),
-            src_access_mask: AccessFlags2::default(),
-            dst_stage_mask: PipelineStageFlags2::default(),
-            dst_access_mask: AccessFlags2::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for MemoryBarrier2<'a> {
@@ -43439,21 +38395,7 @@ unsafe impl Sync for ImageMemoryBarrier2<'_> {}
 impl ::core::default::Default for ImageMemoryBarrier2<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            src_stage_mask: PipelineStageFlags2::default(),
-            src_access_mask: AccessFlags2::default(),
-            dst_stage_mask: PipelineStageFlags2::default(),
-            dst_access_mask: AccessFlags2::default(),
-            old_layout: ImageLayout::default(),
-            new_layout: ImageLayout::default(),
-            src_queue_family_index: u32::default(),
-            dst_queue_family_index: u32::default(),
-            image: Image::default(),
-            subresource_range: ImageSubresourceRange::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ImageMemoryBarrier2<'a> {
@@ -43535,20 +38477,7 @@ unsafe impl Sync for BufferMemoryBarrier2<'_> {}
 impl ::core::default::Default for BufferMemoryBarrier2<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            src_stage_mask: PipelineStageFlags2::default(),
-            src_access_mask: AccessFlags2::default(),
-            dst_stage_mask: PipelineStageFlags2::default(),
-            dst_access_mask: AccessFlags2::default(),
-            src_queue_family_index: u32::default(),
-            dst_queue_family_index: u32::default(),
-            buffer: Buffer::default(),
-            offset: DeviceSize::default(),
-            size: DeviceSize::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for BufferMemoryBarrier2<'a> {
@@ -43618,13 +38547,7 @@ unsafe impl Sync for MemoryBarrierAccessFlags3KHR<'_> {}
 impl ::core::default::Default for MemoryBarrierAccessFlags3KHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            src_access_mask3: AccessFlags3KHR::default(),
-            dst_access_mask3: AccessFlags3KHR::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for MemoryBarrierAccessFlags3KHR<'a> {
@@ -43668,18 +38591,7 @@ unsafe impl Sync for DependencyInfo<'_> {}
 impl ::core::default::Default for DependencyInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            dependency_flags: DependencyFlags::default(),
-            memory_barrier_count: u32::default(),
-            p_memory_barriers: ::core::ptr::null(),
-            buffer_memory_barrier_count: u32::default(),
-            p_buffer_memory_barriers: ::core::ptr::null(),
-            image_memory_barrier_count: u32::default(),
-            p_image_memory_barriers: ::core::ptr::null(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DependencyInfo<'a> {
@@ -43735,15 +38647,7 @@ unsafe impl Sync for SemaphoreSubmitInfo<'_> {}
 impl ::core::default::Default for SemaphoreSubmitInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            semaphore: Semaphore::default(),
-            value: u64::default(),
-            stage_mask: PipelineStageFlags2::default(),
-            device_index: u32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for SemaphoreSubmitInfo<'a> {
@@ -43788,13 +38692,7 @@ unsafe impl Sync for CommandBufferSubmitInfo<'_> {}
 impl ::core::default::Default for CommandBufferSubmitInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            command_buffer: CommandBuffer::default(),
-            device_mask: u32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for CommandBufferSubmitInfo<'a> {
@@ -43834,18 +38732,7 @@ unsafe impl Sync for SubmitInfo2<'_> {}
 impl ::core::default::Default for SubmitInfo2<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            flags: SubmitFlags::default(),
-            wait_semaphore_info_count: u32::default(),
-            p_wait_semaphore_infos: ::core::ptr::null(),
-            command_buffer_info_count: u32::default(),
-            p_command_buffer_infos: ::core::ptr::null(),
-            signal_semaphore_info_count: u32::default(),
-            p_signal_semaphore_infos: ::core::ptr::null(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for SubmitInfo2<'a> {
@@ -43901,12 +38788,7 @@ unsafe impl Sync for QueueFamilyCheckpointProperties2NV<'_> {}
 impl ::core::default::Default for QueueFamilyCheckpointProperties2NV<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            checkpoint_execution_stage_mask: PipelineStageFlags2::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for QueueFamilyCheckpointProperties2NV<'a> {
@@ -43940,13 +38822,7 @@ unsafe impl Sync for CheckpointData2NV<'_> {}
 impl ::core::default::Default for CheckpointData2NV<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            stage: PipelineStageFlags2::default(),
-            p_checkpoint_marker: ::core::ptr::null_mut(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for CheckpointData2NV<'a> {
@@ -43980,12 +38856,7 @@ unsafe impl Sync for PhysicalDeviceSynchronization2Features<'_> {}
 impl ::core::default::Default for PhysicalDeviceSynchronization2Features<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            synchronization2: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceSynchronization2Features<'a> {
@@ -44017,13 +38888,7 @@ unsafe impl Sync for PhysicalDeviceUnifiedImageLayoutsFeaturesKHR<'_> {}
 impl ::core::default::Default for PhysicalDeviceUnifiedImageLayoutsFeaturesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            unified_image_layouts: Bool32::default(),
-            unified_image_layouts_video: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceUnifiedImageLayoutsFeaturesKHR<'a> {
@@ -44063,12 +38928,7 @@ unsafe impl Sync for PhysicalDeviceHostImageCopyFeatures<'_> {}
 impl ::core::default::Default for PhysicalDeviceHostImageCopyFeatures<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            host_image_copy: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceHostImageCopyFeatures<'a> {
@@ -44104,17 +38964,7 @@ unsafe impl Sync for PhysicalDeviceHostImageCopyProperties<'_> {}
 impl ::core::default::Default for PhysicalDeviceHostImageCopyProperties<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            copy_src_layout_count: u32::default(),
-            p_copy_src_layouts: ::core::ptr::null_mut(),
-            copy_dst_layout_count: u32::default(),
-            p_copy_dst_layouts: ::core::ptr::null_mut(),
-            optimal_tiling_layout_uuid: unsafe { ::core::mem::zeroed() },
-            identical_memory_type_requirements: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceHostImageCopyProperties<'a> {
@@ -44172,17 +39022,7 @@ unsafe impl Sync for MemoryToImageCopy<'_> {}
 impl ::core::default::Default for MemoryToImageCopy<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            p_host_pointer: ::core::ptr::null(),
-            memory_row_length: u32::default(),
-            memory_image_height: u32::default(),
-            image_subresource: ImageSubresourceLayers::default(),
-            image_offset: Offset3D::default(),
-            image_extent: Extent3D::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for MemoryToImageCopy<'a> {
@@ -44241,17 +39081,7 @@ unsafe impl Sync for ImageToMemoryCopy<'_> {}
 impl ::core::default::Default for ImageToMemoryCopy<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            p_host_pointer: ::core::ptr::null_mut(),
-            memory_row_length: u32::default(),
-            memory_image_height: u32::default(),
-            image_subresource: ImageSubresourceLayers::default(),
-            image_offset: Offset3D::default(),
-            image_extent: Extent3D::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ImageToMemoryCopy<'a> {
@@ -44309,16 +39139,7 @@ unsafe impl Sync for CopyMemoryToImageInfo<'_> {}
 impl ::core::default::Default for CopyMemoryToImageInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            flags: HostImageCopyFlags::default(),
-            dst_image: Image::default(),
-            dst_image_layout: ImageLayout::default(),
-            region_count: u32::default(),
-            p_regions: ::core::ptr::null(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for CopyMemoryToImageInfo<'a> {
@@ -44367,16 +39188,7 @@ unsafe impl Sync for CopyImageToMemoryInfo<'_> {}
 impl ::core::default::Default for CopyImageToMemoryInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            flags: HostImageCopyFlags::default(),
-            src_image: Image::default(),
-            src_image_layout: ImageLayout::default(),
-            region_count: u32::default(),
-            p_regions: ::core::ptr::null(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for CopyImageToMemoryInfo<'a> {
@@ -44427,18 +39239,7 @@ unsafe impl Sync for CopyImageToImageInfo<'_> {}
 impl ::core::default::Default for CopyImageToImageInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            flags: HostImageCopyFlags::default(),
-            src_image: Image::default(),
-            src_image_layout: ImageLayout::default(),
-            dst_image: Image::default(),
-            dst_image_layout: ImageLayout::default(),
-            region_count: u32::default(),
-            p_regions: ::core::ptr::null(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for CopyImageToImageInfo<'a> {
@@ -44496,15 +39297,7 @@ unsafe impl Sync for HostImageLayoutTransitionInfo<'_> {}
 impl ::core::default::Default for HostImageLayoutTransitionInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            image: Image::default(),
-            old_layout: ImageLayout::default(),
-            new_layout: ImageLayout::default(),
-            subresource_range: ImageSubresourceRange::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for HostImageLayoutTransitionInfo<'a> {
@@ -44548,12 +39341,7 @@ unsafe impl Sync for SubresourceHostMemcpySize<'_> {}
 impl ::core::default::Default for SubresourceHostMemcpySize<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            size: DeviceSize::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for SubresourceHostMemcpySize<'a> {
@@ -44584,13 +39372,7 @@ unsafe impl Sync for HostImageCopyDevicePerformanceQuery<'_> {}
 impl ::core::default::Default for HostImageCopyDevicePerformanceQuery<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            optimal_device_access: Bool32::default(),
-            identical_memory_layout: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for HostImageCopyDevicePerformanceQuery<'a> {
@@ -44627,14 +39409,7 @@ unsafe impl Sync for PhysicalDevicePrimitivesGeneratedQueryFeaturesEXT<'_> {}
 impl ::core::default::Default for PhysicalDevicePrimitivesGeneratedQueryFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            primitives_generated_query: Bool32::default(),
-            primitives_generated_query_with_rasterizer_discard: Bool32::default(),
-            primitives_generated_query_with_non_zero_streams: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDevicePrimitivesGeneratedQueryFeaturesEXT<'a> {
@@ -44690,12 +39465,7 @@ unsafe impl Sync for PhysicalDeviceLegacyDitheringFeaturesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceLegacyDitheringFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            legacy_dithering: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceLegacyDitheringFeaturesEXT<'a> {
@@ -44727,12 +39497,7 @@ unsafe impl Sync for PhysicalDeviceMultisampledRenderToSingleSampledFeaturesEXT<
 impl ::core::default::Default for PhysicalDeviceMultisampledRenderToSingleSampledFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            multisampled_render_to_single_sampled: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a>
@@ -44775,12 +39540,7 @@ unsafe impl Sync for SurfaceCapabilitiesPresentId2KHR<'_> {}
 impl ::core::default::Default for SurfaceCapabilitiesPresentId2KHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            present_id2_supported: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for SurfaceCapabilitiesPresentId2KHR<'a> {
@@ -44810,12 +39570,7 @@ unsafe impl Sync for SurfaceCapabilitiesPresentWait2KHR<'_> {}
 impl ::core::default::Default for SurfaceCapabilitiesPresentWait2KHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            present_wait2_supported: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for SurfaceCapabilitiesPresentWait2KHR<'a> {
@@ -44845,12 +39600,7 @@ unsafe impl Sync for SubpassResolvePerformanceQueryEXT<'_> {}
 impl ::core::default::Default for SubpassResolvePerformanceQueryEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            optimal: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for SubpassResolvePerformanceQueryEXT<'a> {
@@ -44881,13 +39631,7 @@ unsafe impl Sync for MultisampledRenderToSingleSampledInfoEXT<'_> {}
 impl ::core::default::Default for MultisampledRenderToSingleSampledInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            multisampled_render_to_single_sampled_enable: Bool32::default(),
-            rasterization_samples: SampleCountFlags::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for MultisampledRenderToSingleSampledInfoEXT<'a> {
@@ -44928,12 +39672,7 @@ unsafe impl Sync for PhysicalDevicePipelineProtectedAccessFeatures<'_> {}
 impl ::core::default::Default for PhysicalDevicePipelineProtectedAccessFeatures<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            pipeline_protected_access: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDevicePipelineProtectedAccessFeatures<'a> {
@@ -44968,12 +39707,7 @@ unsafe impl Sync for QueueFamilyVideoPropertiesKHR<'_> {}
 impl ::core::default::Default for QueueFamilyVideoPropertiesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            video_codec_operations: VideoCodecOperationFlagsKHR::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for QueueFamilyVideoPropertiesKHR<'a> {
@@ -45006,12 +39740,7 @@ unsafe impl Sync for QueueFamilyQueryResultStatusPropertiesKHR<'_> {}
 impl ::core::default::Default for QueueFamilyQueryResultStatusPropertiesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            query_result_status_support: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for QueueFamilyQueryResultStatusPropertiesKHR<'a> {
@@ -45043,13 +39772,7 @@ unsafe impl Sync for VideoProfileListInfoKHR<'_> {}
 impl ::core::default::Default for VideoProfileListInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            profile_count: u32::default(),
-            p_profiles: ::core::ptr::null(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoProfileListInfoKHR<'a> {
@@ -45083,12 +39806,7 @@ unsafe impl Sync for PhysicalDeviceVideoFormatInfoKHR<'_> {}
 impl ::core::default::Default for PhysicalDeviceVideoFormatInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            image_usage: ImageUsageFlags::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceVideoFormatInfoKHR<'a> {
@@ -45122,17 +39840,7 @@ unsafe impl Sync for VideoFormatPropertiesKHR<'_> {}
 impl ::core::default::Default for VideoFormatPropertiesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            format: Format::default(),
-            component_mapping: ComponentMapping::default(),
-            image_create_flags: ImageCreateFlags::default(),
-            image_type: ImageType::default(),
-            image_tiling: ImageTiling::default(),
-            image_usage_flags: ImageUsageFlags::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoFormatPropertiesKHR<'a> {
@@ -45186,12 +39894,7 @@ unsafe impl Sync for VideoEncodeQuantizationMapCapabilitiesKHR<'_> {}
 impl ::core::default::Default for VideoEncodeQuantizationMapCapabilitiesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            max_quantization_map_extent: Extent2D::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeQuantizationMapCapabilitiesKHR<'a> {
@@ -45223,13 +39926,7 @@ unsafe impl Sync for VideoEncodeH264QuantizationMapCapabilitiesKHR<'_> {}
 impl ::core::default::Default for VideoEncodeH264QuantizationMapCapabilitiesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            min_qp_delta: i32::default(),
-            max_qp_delta: i32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeH264QuantizationMapCapabilitiesKHR<'a> {
@@ -45269,13 +39966,7 @@ unsafe impl Sync for VideoEncodeH265QuantizationMapCapabilitiesKHR<'_> {}
 impl ::core::default::Default for VideoEncodeH265QuantizationMapCapabilitiesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            min_qp_delta: i32::default(),
-            max_qp_delta: i32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeH265QuantizationMapCapabilitiesKHR<'a> {
@@ -45315,13 +40006,7 @@ unsafe impl Sync for VideoEncodeAV1QuantizationMapCapabilitiesKHR<'_> {}
 impl ::core::default::Default for VideoEncodeAV1QuantizationMapCapabilitiesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            min_q_index_delta: i32::default(),
-            max_q_index_delta: i32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeAV1QuantizationMapCapabilitiesKHR<'a> {
@@ -45357,12 +40042,7 @@ unsafe impl Sync for VideoFormatQuantizationMapPropertiesKHR<'_> {}
 impl ::core::default::Default for VideoFormatQuantizationMapPropertiesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            quantization_map_texel_size: Extent2D::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoFormatQuantizationMapPropertiesKHR<'a> {
@@ -45393,12 +40073,7 @@ unsafe impl Sync for VideoFormatH265QuantizationMapPropertiesKHR<'_> {}
 impl ::core::default::Default for VideoFormatH265QuantizationMapPropertiesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            compatible_ctb_sizes: VideoEncodeH265CtbSizeFlagsKHR::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoFormatH265QuantizationMapPropertiesKHR<'a> {
@@ -45435,12 +40110,7 @@ unsafe impl Sync for VideoFormatAV1QuantizationMapPropertiesKHR<'_> {}
 impl ::core::default::Default for VideoFormatAV1QuantizationMapPropertiesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            compatible_superblock_sizes: VideoEncodeAV1SuperblockSizeFlagsKHR::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoFormatAV1QuantizationMapPropertiesKHR<'a> {
@@ -45480,15 +40150,7 @@ unsafe impl Sync for VideoProfileInfoKHR<'_> {}
 impl ::core::default::Default for VideoProfileInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            video_codec_operation: VideoCodecOperationFlagsKHR::default(),
-            chroma_subsampling: VideoChromaSubsamplingFlagsKHR::default(),
-            luma_bit_depth: VideoComponentBitDepthFlagsKHR::default(),
-            chroma_bit_depth: VideoComponentBitDepthFlagsKHR::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoProfileInfoKHR<'a> {
@@ -45547,20 +40209,7 @@ unsafe impl Sync for VideoCapabilitiesKHR<'_> {}
 impl ::core::default::Default for VideoCapabilitiesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            flags: VideoCapabilityFlagsKHR::default(),
-            min_bitstream_buffer_offset_alignment: DeviceSize::default(),
-            min_bitstream_buffer_size_alignment: DeviceSize::default(),
-            picture_access_granularity: Extent2D::default(),
-            min_coded_extent: Extent2D::default(),
-            max_coded_extent: Extent2D::default(),
-            max_dpb_slots: u32::default(),
-            max_active_reference_pictures: u32::default(),
-            std_header_version: ExtensionProperties::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoCapabilitiesKHR<'a> {
@@ -45636,13 +40285,7 @@ unsafe impl Sync for VideoSessionMemoryRequirementsKHR<'_> {}
 impl ::core::default::Default for VideoSessionMemoryRequirementsKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            memory_bind_index: u32::default(),
-            memory_requirements: MemoryRequirements::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoSessionMemoryRequirementsKHR<'a> {
@@ -45679,15 +40322,7 @@ unsafe impl Sync for BindVideoSessionMemoryInfoKHR<'_> {}
 impl ::core::default::Default for BindVideoSessionMemoryInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            memory_bind_index: u32::default(),
-            memory: DeviceMemory::default(),
-            memory_offset: DeviceSize::default(),
-            memory_size: DeviceSize::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for BindVideoSessionMemoryInfoKHR<'a> {
@@ -45734,15 +40369,7 @@ unsafe impl Sync for VideoPictureResourceInfoKHR<'_> {}
 impl ::core::default::Default for VideoPictureResourceInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            coded_offset: Offset2D::default(),
-            coded_extent: Extent2D::default(),
-            base_array_layer: u32::default(),
-            image_view_binding: ImageView::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoPictureResourceInfoKHR<'a> {
@@ -45787,13 +40414,7 @@ unsafe impl Sync for VideoReferenceSlotInfoKHR<'_> {}
 impl ::core::default::Default for VideoReferenceSlotInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            slot_index: i32::default(),
-            p_picture_resource: ::core::ptr::null(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoReferenceSlotInfoKHR<'a> {
@@ -45830,12 +40451,7 @@ unsafe impl Sync for VideoDecodeCapabilitiesKHR<'_> {}
 impl ::core::default::Default for VideoDecodeCapabilitiesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            flags: VideoDecodeCapabilityFlagsKHR::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoDecodeCapabilitiesKHR<'a> {
@@ -45865,12 +40481,7 @@ unsafe impl Sync for VideoDecodeUsageInfoKHR<'_> {}
 impl ::core::default::Default for VideoDecodeUsageInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            video_usage_hints: VideoDecodeUsageFlagsKHR::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoDecodeUsageInfoKHR<'a> {
@@ -45908,19 +40519,7 @@ unsafe impl Sync for VideoDecodeInfoKHR<'_> {}
 impl ::core::default::Default for VideoDecodeInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            flags: VideoDecodeFlagsKHR::default(),
-            src_buffer: Buffer::default(),
-            src_buffer_offset: DeviceSize::default(),
-            src_buffer_range: DeviceSize::default(),
-            dst_picture_resource: VideoPictureResourceInfoKHR::default(),
-            p_setup_reference_slot: ::core::ptr::null(),
-            reference_slot_count: u32::default(),
-            p_reference_slots: ::core::ptr::null(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoDecodeInfoKHR<'a> {
@@ -45986,12 +40585,7 @@ unsafe impl Sync for PhysicalDeviceVideoMaintenance1FeaturesKHR<'_> {}
 impl ::core::default::Default for PhysicalDeviceVideoMaintenance1FeaturesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            video_maintenance1: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceVideoMaintenance1FeaturesKHR<'a> {
@@ -46026,12 +40620,7 @@ unsafe impl Sync for PhysicalDeviceVideoMaintenance2FeaturesKHR<'_> {}
 impl ::core::default::Default for PhysicalDeviceVideoMaintenance2FeaturesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            video_maintenance2: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceVideoMaintenance2FeaturesKHR<'a> {
@@ -46068,14 +40657,7 @@ unsafe impl Sync for VideoInlineQueryInfoKHR<'_> {}
 impl ::core::default::Default for VideoInlineQueryInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            query_pool: QueryPool::default(),
-            first_query: u32::default(),
-            query_count: u32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoInlineQueryInfoKHR<'a> {
@@ -46117,13 +40699,7 @@ unsafe impl Sync for VideoDecodeH264ProfileInfoKHR<'_> {}
 impl ::core::default::Default for VideoDecodeH264ProfileInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            std_profile_idc: StdVideoH264ProfileIdc::default(),
-            picture_layout: VideoDecodeH264PictureLayoutFlagsKHR::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoDecodeH264ProfileInfoKHR<'a> {
@@ -46160,13 +40736,7 @@ unsafe impl Sync for VideoDecodeH264CapabilitiesKHR<'_> {}
 impl ::core::default::Default for VideoDecodeH264CapabilitiesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            max_level_idc: StdVideoH264LevelIdc::default(),
-            field_offset_granularity: Offset2D::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoDecodeH264CapabilitiesKHR<'a> {
@@ -46204,15 +40774,7 @@ unsafe impl Sync for VideoDecodeH264SessionParametersAddInfoKHR<'_> {}
 impl ::core::default::Default for VideoDecodeH264SessionParametersAddInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            std_sps_count: u32::default(),
-            p_std_sp_ss: ::core::ptr::null(),
-            std_pps_count: u32::default(),
-            p_std_pp_ss: ::core::ptr::null(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoDecodeH264SessionParametersAddInfoKHR<'a> {
@@ -46255,14 +40817,7 @@ unsafe impl Sync for VideoDecodeH264SessionParametersCreateInfoKHR<'_> {}
 impl ::core::default::Default for VideoDecodeH264SessionParametersCreateInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            max_std_sps_count: u32::default(),
-            max_std_pps_count: u32::default(),
-            p_parameters_add_info: ::core::ptr::null(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoDecodeH264SessionParametersCreateInfoKHR<'a> {
@@ -46310,13 +40865,7 @@ unsafe impl Sync for VideoDecodeH264InlineSessionParametersInfoKHR<'_> {}
 impl ::core::default::Default for VideoDecodeH264InlineSessionParametersInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            p_std_sps: ::core::ptr::null(),
-            p_std_pps: ::core::ptr::null(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoDecodeH264InlineSessionParametersInfoKHR<'a> {
@@ -46354,14 +40903,7 @@ unsafe impl Sync for VideoDecodeH264PictureInfoKHR<'_> {}
 impl ::core::default::Default for VideoDecodeH264PictureInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            p_std_picture_info: ::core::ptr::null(),
-            slice_count: u32::default(),
-            p_slice_offsets: ::core::ptr::null(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoDecodeH264PictureInfoKHR<'a> {
@@ -46397,12 +40939,7 @@ unsafe impl Sync for VideoDecodeH264DpbSlotInfoKHR<'_> {}
 impl ::core::default::Default for VideoDecodeH264DpbSlotInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            p_std_reference_info: ::core::ptr::null(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoDecodeH264DpbSlotInfoKHR<'a> {
@@ -46435,12 +40972,7 @@ unsafe impl Sync for VideoDecodeH265ProfileInfoKHR<'_> {}
 impl ::core::default::Default for VideoDecodeH265ProfileInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            std_profile_idc: StdVideoH265ProfileIdc::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoDecodeH265ProfileInfoKHR<'a> {
@@ -46471,12 +41003,7 @@ unsafe impl Sync for VideoDecodeH265CapabilitiesKHR<'_> {}
 impl ::core::default::Default for VideoDecodeH265CapabilitiesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            max_level_idc: StdVideoH265LevelIdc::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoDecodeH265CapabilitiesKHR<'a> {
@@ -46511,17 +41038,7 @@ unsafe impl Sync for VideoDecodeH265SessionParametersAddInfoKHR<'_> {}
 impl ::core::default::Default for VideoDecodeH265SessionParametersAddInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            std_vps_count: u32::default(),
-            p_std_vp_ss: ::core::ptr::null(),
-            std_sps_count: u32::default(),
-            p_std_sp_ss: ::core::ptr::null(),
-            std_pps_count: u32::default(),
-            p_std_pp_ss: ::core::ptr::null(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoDecodeH265SessionParametersAddInfoKHR<'a> {
@@ -46571,15 +41088,7 @@ unsafe impl Sync for VideoDecodeH265SessionParametersCreateInfoKHR<'_> {}
 impl ::core::default::Default for VideoDecodeH265SessionParametersCreateInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            max_std_vps_count: u32::default(),
-            max_std_sps_count: u32::default(),
-            max_std_pps_count: u32::default(),
-            p_parameters_add_info: ::core::ptr::null(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoDecodeH265SessionParametersCreateInfoKHR<'a> {
@@ -46633,14 +41142,7 @@ unsafe impl Sync for VideoDecodeH265InlineSessionParametersInfoKHR<'_> {}
 impl ::core::default::Default for VideoDecodeH265InlineSessionParametersInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            p_std_vps: ::core::ptr::null(),
-            p_std_sps: ::core::ptr::null(),
-            p_std_pps: ::core::ptr::null(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoDecodeH265InlineSessionParametersInfoKHR<'a> {
@@ -46683,14 +41185,7 @@ unsafe impl Sync for VideoDecodeH265PictureInfoKHR<'_> {}
 impl ::core::default::Default for VideoDecodeH265PictureInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            p_std_picture_info: ::core::ptr::null(),
-            slice_segment_count: u32::default(),
-            p_slice_segment_offsets: ::core::ptr::null(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoDecodeH265PictureInfoKHR<'a> {
@@ -46726,12 +41221,7 @@ unsafe impl Sync for VideoDecodeH265DpbSlotInfoKHR<'_> {}
 impl ::core::default::Default for VideoDecodeH265DpbSlotInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            p_std_reference_info: ::core::ptr::null(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoDecodeH265DpbSlotInfoKHR<'a> {
@@ -46764,12 +41254,7 @@ unsafe impl Sync for PhysicalDeviceVideoDecodeVP9FeaturesKHR<'_> {}
 impl ::core::default::Default for PhysicalDeviceVideoDecodeVP9FeaturesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            video_decode_vp9: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceVideoDecodeVP9FeaturesKHR<'a> {
@@ -46801,12 +41286,7 @@ unsafe impl Sync for VideoDecodeVP9ProfileInfoKHR<'_> {}
 impl ::core::default::Default for VideoDecodeVP9ProfileInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            std_profile: StdVideoVP9Profile::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoDecodeVP9ProfileInfoKHR<'a> {
@@ -46837,12 +41317,7 @@ unsafe impl Sync for VideoDecodeVP9CapabilitiesKHR<'_> {}
 impl ::core::default::Default for VideoDecodeVP9CapabilitiesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            max_level: StdVideoVP9Level::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoDecodeVP9CapabilitiesKHR<'a> {
@@ -46876,16 +41351,7 @@ unsafe impl Sync for VideoDecodeVP9PictureInfoKHR<'_> {}
 impl ::core::default::Default for VideoDecodeVP9PictureInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            p_std_picture_info: ::core::ptr::null(),
-            reference_name_slot_indices: unsafe { ::core::mem::zeroed() },
-            uncompressed_header_offset: u32::default(),
-            compressed_header_offset: u32::default(),
-            tiles_offset: u32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoDecodeVP9PictureInfoKHR<'a> {
@@ -46939,13 +41405,7 @@ unsafe impl Sync for VideoDecodeAV1ProfileInfoKHR<'_> {}
 impl ::core::default::Default for VideoDecodeAV1ProfileInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            std_profile: StdVideoAV1Profile::default(),
-            film_grain_support: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoDecodeAV1ProfileInfoKHR<'a> {
@@ -46981,12 +41441,7 @@ unsafe impl Sync for VideoDecodeAV1CapabilitiesKHR<'_> {}
 impl ::core::default::Default for VideoDecodeAV1CapabilitiesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            max_level: StdVideoAV1Level::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoDecodeAV1CapabilitiesKHR<'a> {
@@ -47016,12 +41471,7 @@ unsafe impl Sync for VideoDecodeAV1SessionParametersCreateInfoKHR<'_> {}
 impl ::core::default::Default for VideoDecodeAV1SessionParametersCreateInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            p_std_sequence_header: ::core::ptr::null(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoDecodeAV1SessionParametersCreateInfoKHR<'a> {
@@ -47058,12 +41508,7 @@ unsafe impl Sync for VideoDecodeAV1InlineSessionParametersInfoKHR<'_> {}
 impl ::core::default::Default for VideoDecodeAV1InlineSessionParametersInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            p_std_sequence_header: ::core::ptr::null(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoDecodeAV1InlineSessionParametersInfoKHR<'a> {
@@ -47102,17 +41547,7 @@ unsafe impl Sync for VideoDecodeAV1PictureInfoKHR<'_> {}
 impl ::core::default::Default for VideoDecodeAV1PictureInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            p_std_picture_info: ::core::ptr::null(),
-            reference_name_slot_indices: unsafe { ::core::mem::zeroed() },
-            frame_header_offset: u32::default(),
-            tile_count: u32::default(),
-            p_tile_offsets: ::core::ptr::null(),
-            p_tile_sizes: ::core::ptr::null(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoDecodeAV1PictureInfoKHR<'a> {
@@ -47167,12 +41602,7 @@ unsafe impl Sync for VideoDecodeAV1DpbSlotInfoKHR<'_> {}
 impl ::core::default::Default for VideoDecodeAV1DpbSlotInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            p_std_reference_info: ::core::ptr::null(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoDecodeAV1DpbSlotInfoKHR<'a> {
@@ -47213,20 +41643,7 @@ unsafe impl Sync for VideoSessionCreateInfoKHR<'_> {}
 impl ::core::default::Default for VideoSessionCreateInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            queue_family_index: u32::default(),
-            flags: VideoSessionCreateFlagsKHR::default(),
-            p_video_profile: ::core::ptr::null(),
-            picture_format: Format::default(),
-            max_coded_extent: Extent2D::default(),
-            reference_picture_format: Format::default(),
-            max_dpb_slots: u32::default(),
-            max_active_reference_pictures: u32::default(),
-            p_std_header_version: ::core::ptr::null(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoSessionCreateInfoKHR<'a> {
@@ -47297,14 +41714,7 @@ unsafe impl Sync for VideoSessionParametersCreateInfoKHR<'_> {}
 impl ::core::default::Default for VideoSessionParametersCreateInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            flags: VideoSessionParametersCreateFlagsKHR::default(),
-            video_session_parameters_template: VideoSessionParametersKHR::default(),
-            video_session: VideoSessionKHR::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoSessionParametersCreateInfoKHR<'a> {
@@ -47346,12 +41756,7 @@ unsafe impl Sync for VideoSessionParametersUpdateInfoKHR<'_> {}
 impl ::core::default::Default for VideoSessionParametersUpdateInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            update_sequence_count: u32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoSessionParametersUpdateInfoKHR<'a> {
@@ -47380,12 +41785,7 @@ unsafe impl Sync for VideoEncodeSessionParametersGetInfoKHR<'_> {}
 impl ::core::default::Default for VideoEncodeSessionParametersGetInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            video_session_parameters: VideoSessionParametersKHR::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeSessionParametersGetInfoKHR<'a> {
@@ -47418,12 +41818,7 @@ unsafe impl Sync for VideoEncodeSessionParametersFeedbackInfoKHR<'_> {}
 impl ::core::default::Default for VideoEncodeSessionParametersFeedbackInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            has_overrides: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeSessionParametersFeedbackInfoKHR<'a> {
@@ -47457,16 +41852,7 @@ unsafe impl Sync for VideoBeginCodingInfoKHR<'_> {}
 impl ::core::default::Default for VideoBeginCodingInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            flags: VideoBeginCodingFlagsKHR::default(),
-            video_session: VideoSessionKHR::default(),
-            video_session_parameters: VideoSessionParametersKHR::default(),
-            reference_slot_count: u32::default(),
-            p_reference_slots: ::core::ptr::null(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoBeginCodingInfoKHR<'a> {
@@ -47514,12 +41900,7 @@ unsafe impl Sync for VideoEndCodingInfoKHR<'_> {}
 impl ::core::default::Default for VideoEndCodingInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            flags: VideoEndCodingFlagsKHR::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEndCodingInfoKHR<'a> {
@@ -47548,12 +41929,7 @@ unsafe impl Sync for VideoCodingControlInfoKHR<'_> {}
 impl ::core::default::Default for VideoCodingControlInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            flags: VideoCodingControlFlagsKHR::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoCodingControlInfoKHR<'a> {
@@ -47584,14 +41960,7 @@ unsafe impl Sync for VideoEncodeUsageInfoKHR<'_> {}
 impl ::core::default::Default for VideoEncodeUsageInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            video_usage_hints: VideoEncodeUsageFlagsKHR::default(),
-            video_content_hints: VideoEncodeContentFlagsKHR::default(),
-            tuning_mode: VideoEncodeTuningModeKHR::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeUsageInfoKHR<'a> {
@@ -47640,20 +42009,7 @@ unsafe impl Sync for VideoEncodeInfoKHR<'_> {}
 impl ::core::default::Default for VideoEncodeInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            flags: VideoEncodeFlagsKHR::default(),
-            dst_buffer: Buffer::default(),
-            dst_buffer_offset: DeviceSize::default(),
-            dst_buffer_range: DeviceSize::default(),
-            src_picture_resource: VideoPictureResourceInfoKHR::default(),
-            p_setup_reference_slot: ::core::ptr::null(),
-            reference_slot_count: u32::default(),
-            p_reference_slots: ::core::ptr::null(),
-            preceding_externally_encoded_bytes: u32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeInfoKHR<'a> {
@@ -47728,13 +42084,7 @@ unsafe impl Sync for VideoEncodeQuantizationMapInfoKHR<'_> {}
 impl ::core::default::Default for VideoEncodeQuantizationMapInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            quantization_map: ImageView::default(),
-            quantization_map_extent: Extent2D::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeQuantizationMapInfoKHR<'a> {
@@ -47769,12 +42119,7 @@ unsafe impl Sync for VideoEncodeQuantizationMapSessionParametersCreateInfoKHR<'_
 impl ::core::default::Default for VideoEncodeQuantizationMapSessionParametersCreateInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            quantization_map_texel_size: Extent2D::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a>
@@ -47810,12 +42155,7 @@ unsafe impl Sync for PhysicalDeviceVideoEncodeQuantizationMapFeaturesKHR<'_> {}
 impl ::core::default::Default for PhysicalDeviceVideoEncodeQuantizationMapFeaturesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            video_encode_quantization_map: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceVideoEncodeQuantizationMapFeaturesKHR<'a> {
@@ -47853,12 +42193,7 @@ unsafe impl Sync for QueryPoolVideoEncodeFeedbackCreateInfoKHR<'_> {}
 impl ::core::default::Default for QueryPoolVideoEncodeFeedbackCreateInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            encode_feedback_flags: VideoEncodeFeedbackFlagsKHR::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for QueryPoolVideoEncodeFeedbackCreateInfoKHR<'a> {
@@ -47892,12 +42227,7 @@ unsafe impl Sync for VideoEncodeQualityLevelInfoKHR<'_> {}
 impl ::core::default::Default for VideoEncodeQualityLevelInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            quality_level: u32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeQualityLevelInfoKHR<'a> {
@@ -47932,13 +42262,7 @@ unsafe impl Sync for PhysicalDeviceVideoEncodeQualityLevelInfoKHR<'_> {}
 impl ::core::default::Default for PhysicalDeviceVideoEncodeQualityLevelInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            p_video_profile: ::core::ptr::null(),
-            quality_level: u32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceVideoEncodeQualityLevelInfoKHR<'a> {
@@ -47974,13 +42298,7 @@ unsafe impl Sync for VideoEncodeQualityLevelPropertiesKHR<'_> {}
 impl ::core::default::Default for VideoEncodeQualityLevelPropertiesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            preferred_rate_control_mode: VideoEncodeRateControlModeFlagsKHR::default(),
-            preferred_rate_control_layer_count: u32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeQualityLevelPropertiesKHR<'a> {
@@ -48025,17 +42343,7 @@ unsafe impl Sync for VideoEncodeRateControlInfoKHR<'_> {}
 impl ::core::default::Default for VideoEncodeRateControlInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            flags: VideoEncodeRateControlFlagsKHR::default(),
-            rate_control_mode: VideoEncodeRateControlModeFlagsKHR::default(),
-            layer_count: u32::default(),
-            p_layers: ::core::ptr::null(),
-            virtual_buffer_size_in_ms: u32::default(),
-            initial_virtual_buffer_size_in_ms: u32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeRateControlInfoKHR<'a> {
@@ -48096,15 +42404,7 @@ unsafe impl Sync for VideoEncodeRateControlLayerInfoKHR<'_> {}
 impl ::core::default::Default for VideoEncodeRateControlLayerInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            average_bitrate: u64::default(),
-            max_bitrate: u64::default(),
-            frame_rate_numerator: u32::default(),
-            frame_rate_denominator: u32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeRateControlLayerInfoKHR<'a> {
@@ -48154,18 +42454,7 @@ unsafe impl Sync for VideoEncodeCapabilitiesKHR<'_> {}
 impl ::core::default::Default for VideoEncodeCapabilitiesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            flags: VideoEncodeCapabilityFlagsKHR::default(),
-            rate_control_modes: VideoEncodeRateControlModeFlagsKHR::default(),
-            max_rate_control_layers: u32::default(),
-            max_bitrate: u64::default(),
-            max_quality_levels: u32::default(),
-            encode_input_picture_granularity: Extent2D::default(),
-            supported_encode_feedback_flags: VideoEncodeFeedbackFlagsKHR::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeCapabilitiesKHR<'a> {
@@ -48246,24 +42535,7 @@ unsafe impl Sync for VideoEncodeH264CapabilitiesKHR<'_> {}
 impl ::core::default::Default for VideoEncodeH264CapabilitiesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            flags: VideoEncodeH264CapabilityFlagsKHR::default(),
-            max_level_idc: StdVideoH264LevelIdc::default(),
-            max_slice_count: u32::default(),
-            max_p_picture_l0_reference_count: u32::default(),
-            max_b_picture_l0_reference_count: u32::default(),
-            max_l1_reference_count: u32::default(),
-            max_temporal_layer_count: u32::default(),
-            expect_dyadic_temporal_layer_pattern: Bool32::default(),
-            min_qp: i32::default(),
-            max_qp: i32::default(),
-            prefers_gop_remaining_frames: Bool32::default(),
-            requires_gop_remaining_frames: Bool32::default(),
-            std_syntax_flags: VideoEncodeH264StdFlagsKHR::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeH264CapabilitiesKHR<'a> {
@@ -48370,20 +42642,7 @@ unsafe impl Sync for VideoEncodeH264QualityLevelPropertiesKHR<'_> {}
 impl ::core::default::Default for VideoEncodeH264QualityLevelPropertiesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            preferred_rate_control_flags: VideoEncodeH264RateControlFlagsKHR::default(),
-            preferred_gop_frame_count: u32::default(),
-            preferred_idr_period: u32::default(),
-            preferred_consecutive_b_frame_count: u32::default(),
-            preferred_temporal_layer_count: u32::default(),
-            preferred_constant_qp: VideoEncodeH264QpKHR::default(),
-            preferred_max_l0_reference_count: u32::default(),
-            preferred_max_l1_reference_count: u32::default(),
-            preferred_std_entropy_coding_mode_flag: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeH264QualityLevelPropertiesKHR<'a> {
@@ -48473,13 +42732,7 @@ unsafe impl Sync for VideoEncodeH264SessionCreateInfoKHR<'_> {}
 impl ::core::default::Default for VideoEncodeH264SessionCreateInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            use_max_level_idc: Bool32::default(),
-            max_level_idc: StdVideoH264LevelIdc::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeH264SessionCreateInfoKHR<'a> {
@@ -48517,15 +42770,7 @@ unsafe impl Sync for VideoEncodeH264SessionParametersAddInfoKHR<'_> {}
 impl ::core::default::Default for VideoEncodeH264SessionParametersAddInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            std_sps_count: u32::default(),
-            p_std_sp_ss: ::core::ptr::null(),
-            std_pps_count: u32::default(),
-            p_std_pp_ss: ::core::ptr::null(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeH264SessionParametersAddInfoKHR<'a> {
@@ -48568,14 +42813,7 @@ unsafe impl Sync for VideoEncodeH264SessionParametersCreateInfoKHR<'_> {}
 impl ::core::default::Default for VideoEncodeH264SessionParametersCreateInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            max_std_sps_count: u32::default(),
-            max_std_pps_count: u32::default(),
-            p_parameters_add_info: ::core::ptr::null(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeH264SessionParametersCreateInfoKHR<'a> {
@@ -48625,15 +42863,7 @@ unsafe impl Sync for VideoEncodeH264SessionParametersGetInfoKHR<'_> {}
 impl ::core::default::Default for VideoEncodeH264SessionParametersGetInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            write_std_sps: Bool32::default(),
-            write_std_pps: Bool32::default(),
-            std_sps_id: u32::default(),
-            std_pps_id: u32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeH264SessionParametersGetInfoKHR<'a> {
@@ -48683,13 +42913,7 @@ unsafe impl Sync for VideoEncodeH264SessionParametersFeedbackInfoKHR<'_> {}
 impl ::core::default::Default for VideoEncodeH264SessionParametersFeedbackInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            has_std_sps_overrides: Bool32::default(),
-            has_std_pps_overrides: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeH264SessionParametersFeedbackInfoKHR<'a> {
@@ -48728,12 +42952,7 @@ unsafe impl Sync for VideoEncodeH264DpbSlotInfoKHR<'_> {}
 impl ::core::default::Default for VideoEncodeH264DpbSlotInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            p_std_reference_info: ::core::ptr::null(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeH264DpbSlotInfoKHR<'a> {
@@ -48769,15 +42988,7 @@ unsafe impl Sync for VideoEncodeH264PictureInfoKHR<'_> {}
 impl ::core::default::Default for VideoEncodeH264PictureInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            nalu_slice_entry_count: u32::default(),
-            p_nalu_slice_entries: ::core::ptr::null(),
-            p_std_picture_info: ::core::ptr::null(),
-            generate_prefix_nalu: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeH264PictureInfoKHR<'a> {
@@ -48821,12 +43032,7 @@ unsafe impl Sync for VideoEncodeH264ProfileInfoKHR<'_> {}
 impl ::core::default::Default for VideoEncodeH264ProfileInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            std_profile_idc: StdVideoH264ProfileIdc::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeH264ProfileInfoKHR<'a> {
@@ -48858,13 +43064,7 @@ unsafe impl Sync for VideoEncodeH264NaluSliceInfoKHR<'_> {}
 impl ::core::default::Default for VideoEncodeH264NaluSliceInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            constant_qp: i32::default(),
-            p_std_slice_header: ::core::ptr::null(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeH264NaluSliceInfoKHR<'a> {
@@ -48902,16 +43102,7 @@ unsafe impl Sync for VideoEncodeH264RateControlInfoKHR<'_> {}
 impl ::core::default::Default for VideoEncodeH264RateControlInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            flags: VideoEncodeH264RateControlFlagsKHR::default(),
-            gop_frame_count: u32::default(),
-            idr_period: u32::default(),
-            consecutive_b_frame_count: u32::default(),
-            temporal_layer_count: u32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeH264RateControlInfoKHR<'a> {
@@ -49019,15 +43210,7 @@ unsafe impl Sync for VideoEncodeH264GopRemainingFrameInfoKHR<'_> {}
 impl ::core::default::Default for VideoEncodeH264GopRemainingFrameInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            use_gop_remaining_frames: Bool32::default(),
-            gop_remaining_i: u32::default(),
-            gop_remaining_p: u32::default(),
-            gop_remaining_b: u32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeH264GopRemainingFrameInfoKHR<'a> {
@@ -49078,17 +43261,7 @@ unsafe impl Sync for VideoEncodeH264RateControlLayerInfoKHR<'_> {}
 impl ::core::default::Default for VideoEncodeH264RateControlLayerInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            use_min_qp: Bool32::default(),
-            min_qp: VideoEncodeH264QpKHR::default(),
-            use_max_qp: Bool32::default(),
-            max_qp: VideoEncodeH264QpKHR::default(),
-            use_max_frame_size: Bool32::default(),
-            max_frame_size: VideoEncodeH264FrameSizeKHR::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeH264RateControlLayerInfoKHR<'a> {
@@ -49162,27 +43335,7 @@ unsafe impl Sync for VideoEncodeH265CapabilitiesKHR<'_> {}
 impl ::core::default::Default for VideoEncodeH265CapabilitiesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            flags: VideoEncodeH265CapabilityFlagsKHR::default(),
-            max_level_idc: StdVideoH265LevelIdc::default(),
-            max_slice_segment_count: u32::default(),
-            max_tiles: Extent2D::default(),
-            ctb_sizes: VideoEncodeH265CtbSizeFlagsKHR::default(),
-            transform_block_sizes: VideoEncodeH265TransformBlockSizeFlagsKHR::default(),
-            max_p_picture_l0_reference_count: u32::default(),
-            max_b_picture_l0_reference_count: u32::default(),
-            max_l1_reference_count: u32::default(),
-            max_sub_layer_count: u32::default(),
-            expect_dyadic_temporal_sub_layer_pattern: Bool32::default(),
-            min_qp: i32::default(),
-            max_qp: i32::default(),
-            prefers_gop_remaining_frames: Bool32::default(),
-            requires_gop_remaining_frames: Bool32::default(),
-            std_syntax_flags: VideoEncodeH265StdFlagsKHR::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeH265CapabilitiesKHR<'a> {
@@ -49307,19 +43460,7 @@ unsafe impl Sync for VideoEncodeH265QualityLevelPropertiesKHR<'_> {}
 impl ::core::default::Default for VideoEncodeH265QualityLevelPropertiesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            preferred_rate_control_flags: VideoEncodeH265RateControlFlagsKHR::default(),
-            preferred_gop_frame_count: u32::default(),
-            preferred_idr_period: u32::default(),
-            preferred_consecutive_b_frame_count: u32::default(),
-            preferred_sub_layer_count: u32::default(),
-            preferred_constant_qp: VideoEncodeH265QpKHR::default(),
-            preferred_max_l0_reference_count: u32::default(),
-            preferred_max_l1_reference_count: u32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeH265QualityLevelPropertiesKHR<'a> {
@@ -49401,13 +43542,7 @@ unsafe impl Sync for VideoEncodeH265SessionCreateInfoKHR<'_> {}
 impl ::core::default::Default for VideoEncodeH265SessionCreateInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            use_max_level_idc: Bool32::default(),
-            max_level_idc: StdVideoH265LevelIdc::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeH265SessionCreateInfoKHR<'a> {
@@ -49447,17 +43582,7 @@ unsafe impl Sync for VideoEncodeH265SessionParametersAddInfoKHR<'_> {}
 impl ::core::default::Default for VideoEncodeH265SessionParametersAddInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            std_vps_count: u32::default(),
-            p_std_vp_ss: ::core::ptr::null(),
-            std_sps_count: u32::default(),
-            p_std_sp_ss: ::core::ptr::null(),
-            std_pps_count: u32::default(),
-            p_std_pp_ss: ::core::ptr::null(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeH265SessionParametersAddInfoKHR<'a> {
@@ -49507,15 +43632,7 @@ unsafe impl Sync for VideoEncodeH265SessionParametersCreateInfoKHR<'_> {}
 impl ::core::default::Default for VideoEncodeH265SessionParametersCreateInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            max_std_vps_count: u32::default(),
-            max_std_sps_count: u32::default(),
-            max_std_pps_count: u32::default(),
-            p_parameters_add_info: ::core::ptr::null(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeH265SessionParametersCreateInfoKHR<'a> {
@@ -49572,17 +43689,7 @@ unsafe impl Sync for VideoEncodeH265SessionParametersGetInfoKHR<'_> {}
 impl ::core::default::Default for VideoEncodeH265SessionParametersGetInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            write_std_vps: Bool32::default(),
-            write_std_sps: Bool32::default(),
-            write_std_pps: Bool32::default(),
-            std_vps_id: u32::default(),
-            std_sps_id: u32::default(),
-            std_pps_id: u32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeH265SessionParametersGetInfoKHR<'a> {
@@ -49643,14 +43750,7 @@ unsafe impl Sync for VideoEncodeH265SessionParametersFeedbackInfoKHR<'_> {}
 impl ::core::default::Default for VideoEncodeH265SessionParametersFeedbackInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            has_std_vps_overrides: Bool32::default(),
-            has_std_sps_overrides: Bool32::default(),
-            has_std_pps_overrides: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeH265SessionParametersFeedbackInfoKHR<'a> {
@@ -49696,14 +43796,7 @@ unsafe impl Sync for VideoEncodeH265PictureInfoKHR<'_> {}
 impl ::core::default::Default for VideoEncodeH265PictureInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            nalu_slice_segment_entry_count: u32::default(),
-            p_nalu_slice_segment_entries: ::core::ptr::null(),
-            p_std_picture_info: ::core::ptr::null(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeH265PictureInfoKHR<'a> {
@@ -49743,13 +43836,7 @@ unsafe impl Sync for VideoEncodeH265NaluSliceSegmentInfoKHR<'_> {}
 impl ::core::default::Default for VideoEncodeH265NaluSliceSegmentInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            constant_qp: i32::default(),
-            p_std_slice_segment_header: ::core::ptr::null(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeH265NaluSliceSegmentInfoKHR<'a> {
@@ -49791,16 +43878,7 @@ unsafe impl Sync for VideoEncodeH265RateControlInfoKHR<'_> {}
 impl ::core::default::Default for VideoEncodeH265RateControlInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            flags: VideoEncodeH265RateControlFlagsKHR::default(),
-            gop_frame_count: u32::default(),
-            idr_period: u32::default(),
-            consecutive_b_frame_count: u32::default(),
-            sub_layer_count: u32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeH265RateControlInfoKHR<'a> {
@@ -49908,15 +43986,7 @@ unsafe impl Sync for VideoEncodeH265GopRemainingFrameInfoKHR<'_> {}
 impl ::core::default::Default for VideoEncodeH265GopRemainingFrameInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            use_gop_remaining_frames: Bool32::default(),
-            gop_remaining_i: u32::default(),
-            gop_remaining_p: u32::default(),
-            gop_remaining_b: u32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeH265GopRemainingFrameInfoKHR<'a> {
@@ -49967,17 +44037,7 @@ unsafe impl Sync for VideoEncodeH265RateControlLayerInfoKHR<'_> {}
 impl ::core::default::Default for VideoEncodeH265RateControlLayerInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            use_min_qp: Bool32::default(),
-            min_qp: VideoEncodeH265QpKHR::default(),
-            use_max_qp: Bool32::default(),
-            max_qp: VideoEncodeH265QpKHR::default(),
-            use_max_frame_size: Bool32::default(),
-            max_frame_size: VideoEncodeH265FrameSizeKHR::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeH265RateControlLayerInfoKHR<'a> {
@@ -50036,12 +44096,7 @@ unsafe impl Sync for VideoEncodeH265ProfileInfoKHR<'_> {}
 impl ::core::default::Default for VideoEncodeH265ProfileInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            std_profile_idc: StdVideoH265ProfileIdc::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeH265ProfileInfoKHR<'a> {
@@ -50072,12 +44127,7 @@ unsafe impl Sync for VideoEncodeH265DpbSlotInfoKHR<'_> {}
 impl ::core::default::Default for VideoEncodeH265DpbSlotInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            p_std_reference_info: ::core::ptr::null(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeH265DpbSlotInfoKHR<'a> {
@@ -50133,35 +44183,7 @@ unsafe impl Sync for VideoEncodeAV1CapabilitiesKHR<'_> {}
 impl ::core::default::Default for VideoEncodeAV1CapabilitiesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            flags: VideoEncodeAV1CapabilityFlagsKHR::default(),
-            max_level: StdVideoAV1Level::default(),
-            coded_picture_alignment: Extent2D::default(),
-            max_tiles: Extent2D::default(),
-            min_tile_size: Extent2D::default(),
-            max_tile_size: Extent2D::default(),
-            superblock_sizes: VideoEncodeAV1SuperblockSizeFlagsKHR::default(),
-            max_single_reference_count: u32::default(),
-            single_reference_name_mask: u32::default(),
-            max_unidirectional_compound_reference_count: u32::default(),
-            max_unidirectional_compound_group1_reference_count: u32::default(),
-            unidirectional_compound_reference_name_mask: u32::default(),
-            max_bidirectional_compound_reference_count: u32::default(),
-            max_bidirectional_compound_group1_reference_count: u32::default(),
-            max_bidirectional_compound_group2_reference_count: u32::default(),
-            bidirectional_compound_reference_name_mask: u32::default(),
-            max_temporal_layer_count: u32::default(),
-            max_spatial_layer_count: u32::default(),
-            max_operating_points: u32::default(),
-            min_q_index: u32::default(),
-            max_q_index: u32::default(),
-            prefers_gop_remaining_frames: Bool32::default(),
-            requires_gop_remaining_frames: Bool32::default(),
-            std_syntax_flags: VideoEncodeAV1StdFlagsKHR::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeAV1CapabilitiesKHR<'a> {
@@ -50351,26 +44373,7 @@ unsafe impl Sync for VideoEncodeAV1QualityLevelPropertiesKHR<'_> {}
 impl ::core::default::Default for VideoEncodeAV1QualityLevelPropertiesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            preferred_rate_control_flags: VideoEncodeAV1RateControlFlagsKHR::default(),
-            preferred_gop_frame_count: u32::default(),
-            preferred_key_frame_period: u32::default(),
-            preferred_consecutive_bipredictive_frame_count: u32::default(),
-            preferred_temporal_layer_count: u32::default(),
-            preferred_constant_q_index: VideoEncodeAV1QIndexKHR::default(),
-            preferred_max_single_reference_count: u32::default(),
-            preferred_single_reference_name_mask: u32::default(),
-            preferred_max_unidirectional_compound_reference_count: u32::default(),
-            preferred_max_unidirectional_compound_group1_reference_count: u32::default(),
-            preferred_unidirectional_compound_reference_name_mask: u32::default(),
-            preferred_max_bidirectional_compound_reference_count: u32::default(),
-            preferred_max_bidirectional_compound_group1_reference_count: u32::default(),
-            preferred_max_bidirectional_compound_group2_reference_count: u32::default(),
-            preferred_bidirectional_compound_reference_name_mask: u32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeAV1QualityLevelPropertiesKHR<'a> {
@@ -50518,12 +44521,7 @@ unsafe impl Sync for PhysicalDeviceVideoEncodeAV1FeaturesKHR<'_> {}
 impl ::core::default::Default for PhysicalDeviceVideoEncodeAV1FeaturesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            video_encode_av1: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceVideoEncodeAV1FeaturesKHR<'a> {
@@ -50556,13 +44554,7 @@ unsafe impl Sync for VideoEncodeAV1SessionCreateInfoKHR<'_> {}
 impl ::core::default::Default for VideoEncodeAV1SessionCreateInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            use_max_level: Bool32::default(),
-            max_level: StdVideoAV1Level::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeAV1SessionCreateInfoKHR<'a> {
@@ -50600,15 +44592,7 @@ unsafe impl Sync for VideoEncodeAV1SessionParametersCreateInfoKHR<'_> {}
 impl ::core::default::Default for VideoEncodeAV1SessionParametersCreateInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            p_std_sequence_header: ::core::ptr::null(),
-            p_std_decoder_model_info: ::core::ptr::null(),
-            std_operating_point_count: u32::default(),
-            p_std_operating_points: ::core::ptr::null(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeAV1SessionParametersCreateInfoKHR<'a> {
@@ -50662,12 +44646,7 @@ unsafe impl Sync for VideoEncodeAV1DpbSlotInfoKHR<'_> {}
 impl ::core::default::Default for VideoEncodeAV1DpbSlotInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            p_std_reference_info: ::core::ptr::null(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeAV1DpbSlotInfoKHR<'a> {
@@ -50706,18 +44685,7 @@ unsafe impl Sync for VideoEncodeAV1PictureInfoKHR<'_> {}
 impl ::core::default::Default for VideoEncodeAV1PictureInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            prediction_mode: VideoEncodeAV1PredictionModeKHR::default(),
-            rate_control_group: VideoEncodeAV1RateControlGroupKHR::default(),
-            constant_q_index: u32::default(),
-            p_std_picture_info: ::core::ptr::null(),
-            reference_name_slot_indices: unsafe { ::core::mem::zeroed() },
-            primary_reference_cdf_only: Bool32::default(),
-            generate_obu_extension_header: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeAV1PictureInfoKHR<'a> {
@@ -50783,12 +44751,7 @@ unsafe impl Sync for VideoEncodeAV1ProfileInfoKHR<'_> {}
 impl ::core::default::Default for VideoEncodeAV1ProfileInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            std_profile: StdVideoAV1Profile::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeAV1ProfileInfoKHR<'a> {
@@ -50823,16 +44786,7 @@ unsafe impl Sync for VideoEncodeAV1RateControlInfoKHR<'_> {}
 impl ::core::default::Default for VideoEncodeAV1RateControlInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            flags: VideoEncodeAV1RateControlFlagsKHR::default(),
-            gop_frame_count: u32::default(),
-            key_frame_period: u32::default(),
-            consecutive_bipredictive_frame_count: u32::default(),
-            temporal_layer_count: u32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeAV1RateControlInfoKHR<'a> {
@@ -50943,15 +44897,7 @@ unsafe impl Sync for VideoEncodeAV1GopRemainingFrameInfoKHR<'_> {}
 impl ::core::default::Default for VideoEncodeAV1GopRemainingFrameInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            use_gop_remaining_frames: Bool32::default(),
-            gop_remaining_intra: u32::default(),
-            gop_remaining_predictive: u32::default(),
-            gop_remaining_bipredictive: u32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeAV1GopRemainingFrameInfoKHR<'a> {
@@ -51002,17 +44948,7 @@ unsafe impl Sync for VideoEncodeAV1RateControlLayerInfoKHR<'_> {}
 impl ::core::default::Default for VideoEncodeAV1RateControlLayerInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            use_min_q_index: Bool32::default(),
-            min_q_index: VideoEncodeAV1QIndexKHR::default(),
-            use_max_q_index: Bool32::default(),
-            max_q_index: VideoEncodeAV1QIndexKHR::default(),
-            use_max_frame_size: Bool32::default(),
-            max_frame_size: VideoEncodeAV1FrameSizeKHR::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeAV1RateControlLayerInfoKHR<'a> {
@@ -51071,12 +45007,7 @@ unsafe impl Sync for PhysicalDeviceInheritedViewportScissorFeaturesNV<'_> {}
 impl ::core::default::Default for PhysicalDeviceInheritedViewportScissorFeaturesNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            inherited_viewport_scissor2_d: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceInheritedViewportScissorFeaturesNV<'a> {
@@ -51113,14 +45044,7 @@ unsafe impl Sync for CommandBufferInheritanceViewportScissorInfoNV<'_> {}
 impl ::core::default::Default for CommandBufferInheritanceViewportScissorInfoNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            viewport_scissor2_d: Bool32::default(),
-            viewport_depth_count: u32::default(),
-            p_viewport_depths: ::core::ptr::null(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for CommandBufferInheritanceViewportScissorInfoNV<'a> {
@@ -51164,12 +45088,7 @@ unsafe impl Sync for PhysicalDeviceYcbcr2Plane444FormatsFeaturesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceYcbcr2Plane444FormatsFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            ycbcr2plane444_formats: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceYcbcr2Plane444FormatsFeaturesEXT<'a> {
@@ -51205,13 +45124,7 @@ unsafe impl Sync for PhysicalDeviceProvokingVertexFeaturesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceProvokingVertexFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            provoking_vertex_last: Bool32::default(),
-            transform_feedback_preserves_provoking_vertex: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceProvokingVertexFeaturesEXT<'a> {
@@ -51253,13 +45166,7 @@ unsafe impl Sync for PhysicalDeviceProvokingVertexPropertiesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceProvokingVertexPropertiesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            provoking_vertex_mode_per_pipeline: Bool32::default(),
-            transform_feedback_preserves_triangle_fan_provoking_vertex: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceProvokingVertexPropertiesEXT<'a> {
@@ -51305,12 +45212,7 @@ unsafe impl Sync for PipelineRasterizationProvokingVertexStateCreateInfoEXT<'_> 
 impl ::core::default::Default for PipelineRasterizationProvokingVertexStateCreateInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            provoking_vertex_mode: ProvokingVertexModeEXT::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PipelineRasterizationProvokingVertexStateCreateInfoEXT<'a> {
@@ -51348,16 +45250,7 @@ unsafe impl Sync for VideoEncodeIntraRefreshCapabilitiesKHR<'_> {}
 impl ::core::default::Default for VideoEncodeIntraRefreshCapabilitiesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            intra_refresh_modes: VideoEncodeIntraRefreshModeFlagsKHR::default(),
-            max_intra_refresh_cycle_duration: u32::default(),
-            max_intra_refresh_active_reference_pictures: u32::default(),
-            partition_independent_intra_refresh_regions: Bool32::default(),
-            non_rectangular_intra_refresh_regions: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeIntraRefreshCapabilitiesKHR<'a> {
@@ -51425,12 +45318,7 @@ unsafe impl Sync for VideoEncodeSessionIntraRefreshCreateInfoKHR<'_> {}
 impl ::core::default::Default for VideoEncodeSessionIntraRefreshCreateInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            intra_refresh_mode: VideoEncodeIntraRefreshModeFlagsKHR::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeSessionIntraRefreshCreateInfoKHR<'a> {
@@ -51468,13 +45356,7 @@ unsafe impl Sync for VideoEncodeIntraRefreshInfoKHR<'_> {}
 impl ::core::default::Default for VideoEncodeIntraRefreshInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            intra_refresh_cycle_duration: u32::default(),
-            intra_refresh_index: u32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeIntraRefreshInfoKHR<'a> {
@@ -51509,12 +45391,7 @@ unsafe impl Sync for VideoReferenceIntraRefreshInfoKHR<'_> {}
 impl ::core::default::Default for VideoReferenceIntraRefreshInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            dirty_intra_refresh_regions: u32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoReferenceIntraRefreshInfoKHR<'a> {
@@ -51544,12 +45421,7 @@ unsafe impl Sync for PhysicalDeviceVideoEncodeIntraRefreshFeaturesKHR<'_> {}
 impl ::core::default::Default for PhysicalDeviceVideoEncodeIntraRefreshFeaturesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            video_encode_intra_refresh: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceVideoEncodeIntraRefreshFeaturesKHR<'a> {
@@ -51585,13 +45457,7 @@ unsafe impl Sync for CuModuleCreateInfoNVX<'_> {}
 impl ::core::default::Default for CuModuleCreateInfoNVX<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            data_size: usize::default(),
-            p_data: ::core::ptr::null(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for CuModuleCreateInfoNVX<'a> {
@@ -51621,12 +45487,7 @@ unsafe impl Sync for CuModuleTexturingModeCreateInfoNVX<'_> {}
 impl ::core::default::Default for CuModuleTexturingModeCreateInfoNVX<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            use64bit_texturing: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for CuModuleTexturingModeCreateInfoNVX<'a> {
@@ -51657,13 +45518,7 @@ unsafe impl Sync for CuFunctionCreateInfoNVX<'_> {}
 impl ::core::default::Default for CuFunctionCreateInfoNVX<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            module: CuModuleNVX::default(),
-            p_name: ::core::ptr::null(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for CuFunctionCreateInfoNVX<'a> {
@@ -51716,23 +45571,7 @@ unsafe impl Sync for CuLaunchInfoNVX<'_> {}
 impl ::core::default::Default for CuLaunchInfoNVX<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            function: CuFunctionNVX::default(),
-            grid_dim_x: u32::default(),
-            grid_dim_y: u32::default(),
-            grid_dim_z: u32::default(),
-            block_dim_x: u32::default(),
-            block_dim_y: u32::default(),
-            block_dim_z: u32::default(),
-            shared_mem_bytes: u32::default(),
-            param_count: usize::default(),
-            p_params: ::core::ptr::null(),
-            extra_count: usize::default(),
-            p_extras: ::core::ptr::null(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for CuLaunchInfoNVX<'a> {
@@ -51811,15 +45650,7 @@ unsafe impl Sync for PhysicalDeviceDescriptorBufferFeaturesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceDescriptorBufferFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            descriptor_buffer: Bool32::default(),
-            descriptor_buffer_capture_replay: Bool32::default(),
-            descriptor_buffer_image_layout_ignored: Bool32::default(),
-            descriptor_buffer_push_descriptors: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceDescriptorBufferFeaturesEXT<'a> {
@@ -51907,44 +45738,7 @@ unsafe impl Sync for PhysicalDeviceDescriptorBufferPropertiesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceDescriptorBufferPropertiesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            combined_image_sampler_descriptor_single_array: Bool32::default(),
-            bufferless_push_descriptors: Bool32::default(),
-            allow_sampler_image_view_post_submit_creation: Bool32::default(),
-            descriptor_buffer_offset_alignment: DeviceSize::default(),
-            max_descriptor_buffer_bindings: u32::default(),
-            max_resource_descriptor_buffer_bindings: u32::default(),
-            max_sampler_descriptor_buffer_bindings: u32::default(),
-            max_embedded_immutable_sampler_bindings: u32::default(),
-            max_embedded_immutable_samplers: u32::default(),
-            buffer_capture_replay_descriptor_data_size: usize::default(),
-            image_capture_replay_descriptor_data_size: usize::default(),
-            image_view_capture_replay_descriptor_data_size: usize::default(),
-            sampler_capture_replay_descriptor_data_size: usize::default(),
-            acceleration_structure_capture_replay_descriptor_data_size: usize::default(),
-            sampler_descriptor_size: usize::default(),
-            combined_image_sampler_descriptor_size: usize::default(),
-            sampled_image_descriptor_size: usize::default(),
-            storage_image_descriptor_size: usize::default(),
-            uniform_texel_buffer_descriptor_size: usize::default(),
-            robust_uniform_texel_buffer_descriptor_size: usize::default(),
-            storage_texel_buffer_descriptor_size: usize::default(),
-            robust_storage_texel_buffer_descriptor_size: usize::default(),
-            uniform_buffer_descriptor_size: usize::default(),
-            robust_uniform_buffer_descriptor_size: usize::default(),
-            storage_buffer_descriptor_size: usize::default(),
-            robust_storage_buffer_descriptor_size: usize::default(),
-            input_attachment_descriptor_size: usize::default(),
-            acceleration_structure_descriptor_size: usize::default(),
-            max_sampler_descriptor_buffer_range: DeviceSize::default(),
-            max_resource_descriptor_buffer_range: DeviceSize::default(),
-            sampler_descriptor_buffer_address_space_size: DeviceSize::default(),
-            resource_descriptor_buffer_address_space_size: DeviceSize::default(),
-            descriptor_buffer_address_space_size: DeviceSize::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceDescriptorBufferPropertiesEXT<'a> {
@@ -52223,12 +46017,7 @@ unsafe impl Sync for PhysicalDeviceDescriptorBufferDensityMapPropertiesEXT<'_> {
 impl ::core::default::Default for PhysicalDeviceDescriptorBufferDensityMapPropertiesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            combined_image_sampler_density_map_descriptor_size: usize::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceDescriptorBufferDensityMapPropertiesEXT<'a> {
@@ -52268,14 +46057,7 @@ unsafe impl Sync for DescriptorAddressInfoEXT<'_> {}
 impl ::core::default::Default for DescriptorAddressInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            address: DeviceAddress::default(),
-            range: DeviceSize::default(),
-            format: Format::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DescriptorAddressInfoEXT<'a> {
@@ -52315,13 +46097,7 @@ unsafe impl Sync for DescriptorBufferBindingInfoEXT<'_> {}
 impl ::core::default::Default for DescriptorBufferBindingInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            address: DeviceAddress::default(),
-            usage: BufferUsageFlags::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DescriptorBufferBindingInfoEXT<'a> {
@@ -52355,12 +46131,7 @@ unsafe impl Sync for DescriptorBufferBindingPushDescriptorBufferHandleEXT<'_> {}
 impl ::core::default::Default for DescriptorBufferBindingPushDescriptorBufferHandleEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            buffer: Buffer::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DescriptorBufferBindingPushDescriptorBufferHandleEXT<'a> {
@@ -52426,13 +46197,7 @@ impl fmt::Debug for DescriptorGetInfoEXT<'_> {
 impl ::core::default::Default for DescriptorGetInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            ty: DescriptorType::default(),
-            data: DescriptorDataEXT::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DescriptorGetInfoEXT<'a> {
@@ -52466,12 +46231,7 @@ unsafe impl Sync for BufferCaptureDescriptorDataInfoEXT<'_> {}
 impl ::core::default::Default for BufferCaptureDescriptorDataInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            buffer: Buffer::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for BufferCaptureDescriptorDataInfoEXT<'a> {
@@ -52500,12 +46260,7 @@ unsafe impl Sync for ImageCaptureDescriptorDataInfoEXT<'_> {}
 impl ::core::default::Default for ImageCaptureDescriptorDataInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            image: Image::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ImageCaptureDescriptorDataInfoEXT<'a> {
@@ -52534,12 +46289,7 @@ unsafe impl Sync for ImageViewCaptureDescriptorDataInfoEXT<'_> {}
 impl ::core::default::Default for ImageViewCaptureDescriptorDataInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            image_view: ImageView::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ImageViewCaptureDescriptorDataInfoEXT<'a> {
@@ -52569,12 +46319,7 @@ unsafe impl Sync for SamplerCaptureDescriptorDataInfoEXT<'_> {}
 impl ::core::default::Default for SamplerCaptureDescriptorDataInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            sampler: Sampler::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for SamplerCaptureDescriptorDataInfoEXT<'a> {
@@ -52604,13 +46349,7 @@ unsafe impl Sync for AccelerationStructureCaptureDescriptorDataInfoEXT<'_> {}
 impl ::core::default::Default for AccelerationStructureCaptureDescriptorDataInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            acceleration_structure: AccelerationStructureKHR::default(),
-            acceleration_structure_nv: AccelerationStructureNV::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for AccelerationStructureCaptureDescriptorDataInfoEXT<'a> {
@@ -52651,12 +46390,7 @@ unsafe impl Sync for OpaqueCaptureDescriptorDataCreateInfoEXT<'_> {}
 impl ::core::default::Default for OpaqueCaptureDescriptorDataCreateInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            opaque_capture_descriptor_data: ::core::ptr::null(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for OpaqueCaptureDescriptorDataCreateInfoEXT<'a> {
@@ -52707,12 +46441,7 @@ unsafe impl Sync for PhysicalDeviceShaderIntegerDotProductFeatures<'_> {}
 impl ::core::default::Default for PhysicalDeviceShaderIntegerDotProductFeatures<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            shader_integer_dot_product: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderIntegerDotProductFeatures<'a> {
@@ -52777,7 +46506,7 @@ unsafe impl Sync for PhysicalDeviceShaderIntegerDotProductProperties<'_> {}
 impl ::core::default::Default for PhysicalDeviceShaderIntegerDotProductProperties<'_> {
     #[inline]
     fn default() -> Self {
-        Self { s_type : Self :: STRUCTURE_TYPE , p_next : :: core :: ptr :: null_mut () , integer_dot_product8_bit_unsigned_accelerated : Bool32 :: default () , integer_dot_product8_bit_signed_accelerated : Bool32 :: default () , integer_dot_product8_bit_mixed_signedness_accelerated : Bool32 :: default () , integer_dot_product4x8_bit_packed_unsigned_accelerated : Bool32 :: default () , integer_dot_product4x8_bit_packed_signed_accelerated : Bool32 :: default () , integer_dot_product4x8_bit_packed_mixed_signedness_accelerated : Bool32 :: default () , integer_dot_product16_bit_unsigned_accelerated : Bool32 :: default () , integer_dot_product16_bit_signed_accelerated : Bool32 :: default () , integer_dot_product16_bit_mixed_signedness_accelerated : Bool32 :: default () , integer_dot_product32_bit_unsigned_accelerated : Bool32 :: default () , integer_dot_product32_bit_signed_accelerated : Bool32 :: default () , integer_dot_product32_bit_mixed_signedness_accelerated : Bool32 :: default () , integer_dot_product64_bit_unsigned_accelerated : Bool32 :: default () , integer_dot_product64_bit_signed_accelerated : Bool32 :: default () , integer_dot_product64_bit_mixed_signedness_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating8_bit_unsigned_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating8_bit_signed_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating8_bit_mixed_signedness_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating4x8_bit_packed_unsigned_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating4x8_bit_packed_signed_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating4x8_bit_packed_mixed_signedness_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating16_bit_unsigned_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating16_bit_signed_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating16_bit_mixed_signedness_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating32_bit_unsigned_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating32_bit_signed_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating32_bit_mixed_signedness_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating64_bit_unsigned_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating64_bit_signed_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating64_bit_mixed_signedness_accelerated : Bool32 :: default () , _marker : PhantomData , }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderIntegerDotProductProperties<'a> {
@@ -53080,17 +46809,7 @@ unsafe impl Sync for PhysicalDeviceDrmPropertiesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceDrmPropertiesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            has_primary: Bool32::default(),
-            has_render: Bool32::default(),
-            primary_major: i64::default(),
-            primary_minor: i64::default(),
-            render_major: i64::default(),
-            render_minor: i64::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceDrmPropertiesEXT<'a> {
@@ -53145,12 +46864,7 @@ unsafe impl Sync for PhysicalDeviceFragmentShaderBarycentricFeaturesKHR<'_> {}
 impl ::core::default::Default for PhysicalDeviceFragmentShaderBarycentricFeaturesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            fragment_shader_barycentric: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceFragmentShaderBarycentricFeaturesKHR<'a> {
@@ -53188,12 +46902,7 @@ unsafe impl Sync for PhysicalDeviceFragmentShaderBarycentricPropertiesKHR<'_> {}
 impl ::core::default::Default for PhysicalDeviceFragmentShaderBarycentricPropertiesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            tri_strip_vertex_order_independent_of_provoking_vertex: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceFragmentShaderBarycentricPropertiesKHR<'a> {
@@ -53233,14 +46942,7 @@ unsafe impl Sync for PhysicalDeviceShaderFmaFeaturesKHR<'_> {}
 impl ::core::default::Default for PhysicalDeviceShaderFmaFeaturesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            shader_fma_float16: Bool32::default(),
-            shader_fma_float32: Bool32::default(),
-            shader_fma_float64: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderFmaFeaturesKHR<'a> {
@@ -53282,13 +46984,7 @@ unsafe impl Sync for PhysicalDeviceRayTracingMotionBlurFeaturesNV<'_> {}
 impl ::core::default::Default for PhysicalDeviceRayTracingMotionBlurFeaturesNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            ray_tracing_motion_blur: Bool32::default(),
-            ray_tracing_motion_blur_pipeline_trace_rays_indirect: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceRayTracingMotionBlurFeaturesNV<'a> {
@@ -53332,12 +47028,7 @@ unsafe impl Sync for PhysicalDeviceRayTracingValidationFeaturesNV<'_> {}
 impl ::core::default::Default for PhysicalDeviceRayTracingValidationFeaturesNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            ray_tracing_validation: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceRayTracingValidationFeaturesNV<'a> {
@@ -53373,13 +47064,7 @@ unsafe impl Sync for PhysicalDeviceRayTracingLinearSweptSpheresFeaturesNV<'_> {}
 impl ::core::default::Default for PhysicalDeviceRayTracingLinearSweptSpheresFeaturesNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            spheres: Bool32::default(),
-            linear_swept_spheres: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceRayTracingLinearSweptSpheresFeaturesNV<'a> {
@@ -53431,12 +47116,7 @@ impl fmt::Debug for AccelerationStructureGeometryMotionTrianglesDataNV<'_> {
 impl ::core::default::Default for AccelerationStructureGeometryMotionTrianglesDataNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            vertex_data: DeviceOrHostAddressConstKHR::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for AccelerationStructureGeometryMotionTrianglesDataNV<'a> {
@@ -53471,13 +47151,7 @@ unsafe impl Sync for AccelerationStructureMotionInfoNV<'_> {}
 impl ::core::default::Default for AccelerationStructureMotionInfoNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            max_instances: u32::default(),
-            flags: AccelerationStructureMotionInfoFlagsNV::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for AccelerationStructureMotionInfoNV<'a> {
@@ -53699,13 +47373,7 @@ unsafe impl Sync for MemoryGetRemoteAddressInfoNV<'_> {}
 impl ::core::default::Default for MemoryGetRemoteAddressInfoNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            memory: DeviceMemory::default(),
-            handle_type: ExternalMemoryHandleTypeFlags::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for MemoryGetRemoteAddressInfoNV<'a> {
@@ -53740,13 +47408,7 @@ unsafe impl Sync for ImportMemoryBufferCollectionFUCHSIA<'_> {}
 impl ::core::default::Default for ImportMemoryBufferCollectionFUCHSIA<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            collection: BufferCollectionFUCHSIA::default(),
-            index: u32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ImportMemoryBufferCollectionFUCHSIA<'a> {
@@ -53782,13 +47444,7 @@ unsafe impl Sync for BufferCollectionImageCreateInfoFUCHSIA<'_> {}
 impl ::core::default::Default for BufferCollectionImageCreateInfoFUCHSIA<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            collection: BufferCollectionFUCHSIA::default(),
-            index: u32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for BufferCollectionImageCreateInfoFUCHSIA<'a> {
@@ -53825,13 +47481,7 @@ unsafe impl Sync for BufferCollectionBufferCreateInfoFUCHSIA<'_> {}
 impl ::core::default::Default for BufferCollectionBufferCreateInfoFUCHSIA<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            collection: BufferCollectionFUCHSIA::default(),
-            index: u32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for BufferCollectionBufferCreateInfoFUCHSIA<'a> {
@@ -53867,12 +47517,7 @@ unsafe impl Sync for BufferCollectionCreateInfoFUCHSIA<'_> {}
 impl ::core::default::Default for BufferCollectionCreateInfoFUCHSIA<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            collection_token: zx_handle_t::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for BufferCollectionCreateInfoFUCHSIA<'a> {
@@ -53911,22 +47556,7 @@ unsafe impl Sync for BufferCollectionPropertiesFUCHSIA<'_> {}
 impl ::core::default::Default for BufferCollectionPropertiesFUCHSIA<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            memory_type_bits: u32::default(),
-            buffer_count: u32::default(),
-            create_info_index: u32::default(),
-            sysmem_pixel_format: u64::default(),
-            format_features: FormatFeatureFlags::default(),
-            sysmem_color_space_index: SysmemColorSpaceFUCHSIA::default(),
-            sampler_ycbcr_conversion_components: ComponentMapping::default(),
-            suggested_ycbcr_model: SamplerYcbcrModelConversion::default(),
-            suggested_ycbcr_range: SamplerYcbcrRange::default(),
-            suggested_x_chroma_offset: ChromaLocation::default(),
-            suggested_y_chroma_offset: ChromaLocation::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for BufferCollectionPropertiesFUCHSIA<'a> {
@@ -54016,14 +47646,7 @@ unsafe impl Sync for BufferConstraintsInfoFUCHSIA<'_> {}
 impl ::core::default::Default for BufferConstraintsInfoFUCHSIA<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            create_info: BufferCreateInfo::default(),
-            required_format_features: FormatFeatureFlags::default(),
-            buffer_collection_constraints: BufferCollectionConstraintsInfoFUCHSIA::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for BufferConstraintsInfoFUCHSIA<'a> {
@@ -54068,12 +47691,7 @@ unsafe impl Sync for SysmemColorSpaceFUCHSIA<'_> {}
 impl ::core::default::Default for SysmemColorSpaceFUCHSIA<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            color_space: u32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for SysmemColorSpaceFUCHSIA<'a> {
@@ -54107,17 +47725,7 @@ unsafe impl Sync for ImageFormatConstraintsInfoFUCHSIA<'_> {}
 impl ::core::default::Default for ImageFormatConstraintsInfoFUCHSIA<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            image_create_info: ImageCreateInfo::default(),
-            required_format_features: FormatFeatureFlags::default(),
-            flags: ImageFormatConstraintsFlagsFUCHSIA::default(),
-            sysmem_pixel_format: u64::default(),
-            color_space_count: u32::default(),
-            p_color_spaces: ::core::ptr::null(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ImageFormatConstraintsInfoFUCHSIA<'a> {
@@ -54173,15 +47781,7 @@ unsafe impl Sync for ImageConstraintsInfoFUCHSIA<'_> {}
 impl ::core::default::Default for ImageConstraintsInfoFUCHSIA<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            format_constraints_count: u32::default(),
-            p_format_constraints: ::core::ptr::null(),
-            buffer_collection_constraints: BufferCollectionConstraintsInfoFUCHSIA::default(),
-            flags: ImageConstraintsInfoFlagsFUCHSIA::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ImageConstraintsInfoFUCHSIA<'a> {
@@ -54231,16 +47831,7 @@ unsafe impl Sync for BufferCollectionConstraintsInfoFUCHSIA<'_> {}
 impl ::core::default::Default for BufferCollectionConstraintsInfoFUCHSIA<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            min_buffer_count: u32::default(),
-            max_buffer_count: u32::default(),
-            min_buffer_count_for_camping: u32::default(),
-            min_buffer_count_for_dedicated_slack: u32::default(),
-            min_buffer_count_for_shared_slack: u32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for BufferCollectionConstraintsInfoFUCHSIA<'a> {
@@ -54312,13 +47903,7 @@ unsafe impl Sync for CudaModuleCreateInfoNV<'_> {}
 impl ::core::default::Default for CudaModuleCreateInfoNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            data_size: usize::default(),
-            p_data: ::core::ptr::null(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 #[cfg(feature = "provisional")]
@@ -54355,13 +47940,7 @@ unsafe impl Sync for CudaFunctionCreateInfoNV<'_> {}
 impl ::core::default::Default for CudaFunctionCreateInfoNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            module: CudaModuleNV::default(),
-            p_name: ::core::ptr::null(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 #[cfg(feature = "provisional")]
@@ -54420,23 +47999,7 @@ unsafe impl Sync for CudaLaunchInfoNV<'_> {}
 impl ::core::default::Default for CudaLaunchInfoNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            function: CudaFunctionNV::default(),
-            grid_dim_x: u32::default(),
-            grid_dim_y: u32::default(),
-            grid_dim_z: u32::default(),
-            block_dim_x: u32::default(),
-            block_dim_y: u32::default(),
-            block_dim_z: u32::default(),
-            shared_mem_bytes: u32::default(),
-            param_count: usize::default(),
-            p_params: ::core::ptr::null(),
-            extra_count: usize::default(),
-            p_extras: ::core::ptr::null(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 #[cfg(feature = "provisional")]
@@ -54514,12 +48077,7 @@ unsafe impl Sync for PhysicalDeviceRGBA10X6FormatsFeaturesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceRGBA10X6FormatsFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            format_rgba10x6_without_y_cb_cr_sampler: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceRGBA10X6FormatsFeaturesEXT<'a> {
@@ -54557,14 +48115,7 @@ unsafe impl Sync for FormatProperties3<'_> {}
 impl ::core::default::Default for FormatProperties3<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            linear_tiling_features: FormatFeatureFlags2::default(),
-            optimal_tiling_features: FormatFeatureFlags2::default(),
-            buffer_features: FormatFeatureFlags2::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for FormatProperties3<'a> {
@@ -54605,13 +48156,7 @@ unsafe impl Sync for DrmFormatModifierPropertiesList2EXT<'_> {}
 impl ::core::default::Default for DrmFormatModifierPropertiesList2EXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            drm_format_modifier_count: u32::default(),
-            p_drm_format_modifier_properties: ::core::ptr::null_mut(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DrmFormatModifierPropertiesList2EXT<'a> {
@@ -54682,19 +48227,7 @@ unsafe impl Sync for AndroidHardwareBufferFormatProperties2ANDROID<'_> {}
 impl ::core::default::Default for AndroidHardwareBufferFormatProperties2ANDROID<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            format: Format::default(),
-            external_format: u64::default(),
-            format_features: FormatFeatureFlags2::default(),
-            sampler_ycbcr_conversion_components: ComponentMapping::default(),
-            suggested_ycbcr_model: SamplerYcbcrModelConversion::default(),
-            suggested_ycbcr_range: SamplerYcbcrRange::default(),
-            suggested_x_chroma_offset: ChromaLocation::default(),
-            suggested_y_chroma_offset: ChromaLocation::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for AndroidHardwareBufferFormatProperties2ANDROID<'a> {
@@ -54773,16 +48306,7 @@ unsafe impl Sync for PipelineRenderingCreateInfo<'_> {}
 impl ::core::default::Default for PipelineRenderingCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            view_mask: u32::default(),
-            color_attachment_count: u32::default(),
-            p_color_attachment_formats: ::core::ptr::null(),
-            depth_attachment_format: Format::default(),
-            stencil_attachment_format: Format::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PipelineRenderingCreateInfo<'a> {
@@ -54835,19 +48359,7 @@ unsafe impl Sync for RenderingInfo<'_> {}
 impl ::core::default::Default for RenderingInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            flags: RenderingFlags::default(),
-            render_area: Rect2D::default(),
-            layer_count: u32::default(),
-            view_mask: u32::default(),
-            color_attachment_count: u32::default(),
-            p_color_attachments: ::core::ptr::null(),
-            p_depth_attachment: ::core::ptr::null(),
-            p_stencil_attachment: ::core::ptr::null(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for RenderingInfo<'a> {
@@ -54912,11 +48424,7 @@ unsafe impl Sync for RenderingEndInfoKHR<'_> {}
 impl ::core::default::Default for RenderingEndInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for RenderingEndInfoKHR<'a> {
@@ -54962,19 +48470,7 @@ impl fmt::Debug for RenderingAttachmentInfo<'_> {
 impl ::core::default::Default for RenderingAttachmentInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            image_view: ImageView::default(),
-            image_layout: ImageLayout::default(),
-            resolve_mode: ResolveModeFlags::default(),
-            resolve_image_view: ImageView::default(),
-            resolve_image_layout: ImageLayout::default(),
-            load_op: AttachmentLoadOp::default(),
-            store_op: AttachmentStoreOp::default(),
-            clear_value: ClearValue::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for RenderingAttachmentInfo<'a> {
@@ -55040,14 +48536,7 @@ unsafe impl Sync for RenderingFragmentShadingRateAttachmentInfoKHR<'_> {}
 impl ::core::default::Default for RenderingFragmentShadingRateAttachmentInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            image_view: ImageView::default(),
-            image_layout: ImageLayout::default(),
-            shading_rate_attachment_texel_size: Extent2D::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for RenderingFragmentShadingRateAttachmentInfoKHR<'a> {
@@ -55092,13 +48581,7 @@ unsafe impl Sync for RenderingFragmentDensityMapAttachmentInfoEXT<'_> {}
 impl ::core::default::Default for RenderingFragmentDensityMapAttachmentInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            image_view: ImageView::default(),
-            image_layout: ImageLayout::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for RenderingFragmentDensityMapAttachmentInfoEXT<'a> {
@@ -55134,12 +48617,7 @@ unsafe impl Sync for PhysicalDeviceDynamicRenderingFeatures<'_> {}
 impl ::core::default::Default for PhysicalDeviceDynamicRenderingFeatures<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            dynamic_rendering: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceDynamicRenderingFeatures<'a> {
@@ -55176,18 +48654,7 @@ unsafe impl Sync for CommandBufferInheritanceRenderingInfo<'_> {}
 impl ::core::default::Default for CommandBufferInheritanceRenderingInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            flags: RenderingFlags::default(),
-            view_mask: u32::default(),
-            color_attachment_count: u32::default(),
-            p_color_attachment_formats: ::core::ptr::null(),
-            depth_attachment_format: Format::default(),
-            stencil_attachment_format: Format::default(),
-            rasterization_samples: SampleCountFlags::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for CommandBufferInheritanceRenderingInfo<'a> {
@@ -55248,14 +48715,7 @@ unsafe impl Sync for AttachmentSampleCountInfoAMD<'_> {}
 impl ::core::default::Default for AttachmentSampleCountInfoAMD<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            color_attachment_count: u32::default(),
-            p_color_attachment_samples: ::core::ptr::null(),
-            depth_stencil_attachment_samples: SampleCountFlags::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for AttachmentSampleCountInfoAMD<'a> {
@@ -55299,13 +48759,7 @@ unsafe impl Sync for MultiviewPerViewAttributesInfoNVX<'_> {}
 impl ::core::default::Default for MultiviewPerViewAttributesInfoNVX<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            per_view_attributes: Bool32::default(),
-            per_view_attributes_position_x_only: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for MultiviewPerViewAttributesInfoNVX<'a> {
@@ -55345,12 +48799,7 @@ unsafe impl Sync for PhysicalDeviceImageViewMinLodFeaturesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceImageViewMinLodFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            min_lod: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceImageViewMinLodFeaturesEXT<'a> {
@@ -55382,12 +48831,7 @@ unsafe impl Sync for ImageViewMinLodCreateInfoEXT<'_> {}
 impl ::core::default::Default for ImageViewMinLodCreateInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            min_lod: f32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ImageViewMinLodCreateInfoEXT<'a> {
@@ -55419,14 +48863,7 @@ unsafe impl Sync for PhysicalDeviceRasterizationOrderAttachmentAccessFeaturesEXT
 impl ::core::default::Default for PhysicalDeviceRasterizationOrderAttachmentAccessFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            rasterization_order_color_attachment_access: Bool32::default(),
-            rasterization_order_depth_attachment_access: Bool32::default(),
-            rasterization_order_stencil_attachment_access: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a>
@@ -55488,12 +48925,7 @@ unsafe impl Sync for PhysicalDeviceLinearColorAttachmentFeaturesNV<'_> {}
 impl ::core::default::Default for PhysicalDeviceLinearColorAttachmentFeaturesNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            linear_color_attachment: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceLinearColorAttachmentFeaturesNV<'a> {
@@ -55528,12 +48960,7 @@ unsafe impl Sync for PhysicalDeviceGraphicsPipelineLibraryFeaturesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceGraphicsPipelineLibraryFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            graphics_pipeline_library: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceGraphicsPipelineLibraryFeaturesEXT<'a> {
@@ -55568,12 +48995,7 @@ unsafe impl Sync for PhysicalDevicePipelineBinaryFeaturesKHR<'_> {}
 impl ::core::default::Default for PhysicalDevicePipelineBinaryFeaturesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            pipeline_binaries: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDevicePipelineBinaryFeaturesKHR<'a> {
@@ -55605,12 +49027,7 @@ unsafe impl Sync for DevicePipelineBinaryInternalCacheControlKHR<'_> {}
 impl ::core::default::Default for DevicePipelineBinaryInternalCacheControlKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            disable_internal_cache: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DevicePipelineBinaryInternalCacheControlKHR<'a> {
@@ -55645,16 +49062,7 @@ unsafe impl Sync for PhysicalDevicePipelineBinaryPropertiesKHR<'_> {}
 impl ::core::default::Default for PhysicalDevicePipelineBinaryPropertiesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            pipeline_binary_internal_cache: Bool32::default(),
-            pipeline_binary_internal_cache_control: Bool32::default(),
-            pipeline_binary_prefers_internal_cache: Bool32::default(),
-            pipeline_binary_precompiled_internal_cache: Bool32::default(),
-            pipeline_binary_compressed_data: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDevicePipelineBinaryPropertiesKHR<'a> {
@@ -55722,13 +49130,7 @@ unsafe impl Sync for PhysicalDeviceGraphicsPipelineLibraryPropertiesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceGraphicsPipelineLibraryPropertiesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            graphics_pipeline_library_fast_linking: Bool32::default(),
-            graphics_pipeline_library_independent_interpolation_decoration: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceGraphicsPipelineLibraryPropertiesEXT<'a> {
@@ -55774,12 +49176,7 @@ unsafe impl Sync for GraphicsPipelineLibraryCreateInfoEXT<'_> {}
 impl ::core::default::Default for GraphicsPipelineLibraryCreateInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            flags: GraphicsPipelineLibraryFlagsEXT::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for GraphicsPipelineLibraryCreateInfoEXT<'a> {
@@ -55811,12 +49208,7 @@ impl ::core::default::Default
 {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            data_graph_neural_accelerator_statistics: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a>
@@ -55860,12 +49252,7 @@ unsafe impl Sync for DataGraphPipelineNeuralStatisticsCreateInfoARM<'_> {}
 impl ::core::default::Default for DataGraphPipelineNeuralStatisticsCreateInfoARM<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            allow_neural_statistics: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DataGraphPipelineNeuralStatisticsCreateInfoARM<'a> {
@@ -55899,12 +49286,7 @@ unsafe impl Sync for DataGraphPipelineSessionNeuralStatisticsCreateInfoARM<'_> {
 impl ::core::default::Default for DataGraphPipelineSessionNeuralStatisticsCreateInfoARM<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            mode: NeuralAcceleratorStatisticsModeARM::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DataGraphPipelineSessionNeuralStatisticsCreateInfoARM<'a> {
@@ -55938,12 +49320,7 @@ unsafe impl Sync for PhysicalDeviceDescriptorSetHostMappingFeaturesVALVE<'_> {}
 impl ::core::default::Default for PhysicalDeviceDescriptorSetHostMappingFeaturesVALVE<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            descriptor_set_host_mapping: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceDescriptorSetHostMappingFeaturesVALVE<'a> {
@@ -55982,13 +49359,7 @@ unsafe impl Sync for DescriptorSetBindingReferenceVALVE<'_> {}
 impl ::core::default::Default for DescriptorSetBindingReferenceVALVE<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            descriptor_set_layout: DescriptorSetLayout::default(),
-            binding: u32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DescriptorSetBindingReferenceVALVE<'a> {
@@ -56023,13 +49394,7 @@ unsafe impl Sync for DescriptorSetLayoutHostMappingInfoVALVE<'_> {}
 impl ::core::default::Default for DescriptorSetLayoutHostMappingInfoVALVE<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            descriptor_offset: usize::default(),
-            descriptor_size: u32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DescriptorSetLayoutHostMappingInfoVALVE<'a> {
@@ -56066,14 +49431,7 @@ unsafe impl Sync for PhysicalDeviceNestedCommandBufferFeaturesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceNestedCommandBufferFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            nested_command_buffer: Bool32::default(),
-            nested_command_buffer_rendering: Bool32::default(),
-            nested_command_buffer_simultaneous_use: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceNestedCommandBufferFeaturesEXT<'a> {
@@ -56124,12 +49482,7 @@ unsafe impl Sync for PhysicalDeviceNestedCommandBufferPropertiesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceNestedCommandBufferPropertiesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            max_command_buffer_nesting_level: u32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceNestedCommandBufferPropertiesEXT<'a> {
@@ -56166,12 +49519,7 @@ unsafe impl Sync for PhysicalDeviceShaderModuleIdentifierFeaturesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceShaderModuleIdentifierFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            shader_module_identifier: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderModuleIdentifierFeaturesEXT<'a> {
@@ -56206,12 +49554,7 @@ unsafe impl Sync for PhysicalDeviceShaderModuleIdentifierPropertiesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceShaderModuleIdentifierPropertiesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            shader_module_identifier_algorithm_uuid: unsafe { ::core::mem::zeroed() },
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderModuleIdentifierPropertiesEXT<'a> {
@@ -56249,13 +49592,7 @@ unsafe impl Sync for PipelineShaderStageModuleIdentifierCreateInfoEXT<'_> {}
 impl ::core::default::Default for PipelineShaderStageModuleIdentifierCreateInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            identifier_size: u32::default(),
-            p_identifier: ::core::ptr::null(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PipelineShaderStageModuleIdentifierCreateInfoEXT<'a> {
@@ -56301,13 +49638,7 @@ impl fmt::Debug for ShaderModuleIdentifierEXT<'_> {
 impl ::core::default::Default for ShaderModuleIdentifierEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            identifier_size: u32::default(),
-            identifier: unsafe { ::core::mem::zeroed() },
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ShaderModuleIdentifierEXT<'a> {
@@ -56343,14 +49674,7 @@ unsafe impl Sync for ImageCompressionControlEXT<'_> {}
 impl ::core::default::Default for ImageCompressionControlEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            flags: ImageCompressionFlagsEXT::default(),
-            compression_control_plane_count: u32::default(),
-            p_fixed_rate_flags: ::core::ptr::null_mut(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ImageCompressionControlEXT<'a> {
@@ -56391,12 +49715,7 @@ unsafe impl Sync for PhysicalDeviceImageCompressionControlFeaturesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceImageCompressionControlFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            image_compression_control: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceImageCompressionControlFeaturesEXT<'a> {
@@ -56432,13 +49751,7 @@ unsafe impl Sync for ImageCompressionPropertiesEXT<'_> {}
 impl ::core::default::Default for ImageCompressionPropertiesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            image_compression_flags: ImageCompressionFlagsEXT::default(),
-            image_compression_fixed_rate_flags: ImageCompressionFixedRateFlagsEXT::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ImageCompressionPropertiesEXT<'a> {
@@ -56481,12 +49794,7 @@ unsafe impl Sync for PhysicalDeviceImageCompressionControlSwapchainFeaturesEXT<'
 impl ::core::default::Default for PhysicalDeviceImageCompressionControlSwapchainFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            image_compression_control_swapchain: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a>
@@ -56529,12 +49837,7 @@ unsafe impl Sync for ImageSubresource2<'_> {}
 impl ::core::default::Default for ImageSubresource2<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            image_subresource: ImageSubresource::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ImageSubresource2<'a> {
@@ -56563,12 +49866,7 @@ unsafe impl Sync for SubresourceLayout2<'_> {}
 impl ::core::default::Default for SubresourceLayout2<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            subresource_layout: SubresourceLayout::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for SubresourceLayout2<'a> {
@@ -56597,12 +49895,7 @@ unsafe impl Sync for RenderPassCreationControlEXT<'_> {}
 impl ::core::default::Default for RenderPassCreationControlEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            disallow_merging: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for RenderPassCreationControlEXT<'a> {
@@ -56648,12 +49941,7 @@ unsafe impl Sync for RenderPassCreationFeedbackCreateInfoEXT<'_> {}
 impl ::core::default::Default for RenderPassCreationFeedbackCreateInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            p_render_pass_feedback: ::core::ptr::null_mut(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for RenderPassCreationFeedbackCreateInfoEXT<'a> {
@@ -56693,11 +49981,7 @@ impl fmt::Debug for RenderPassSubpassFeedbackInfoEXT {
 impl ::core::default::Default for RenderPassSubpassFeedbackInfoEXT {
     #[inline]
     fn default() -> Self {
-        Self {
-            subpass_merge_status: SubpassMergeStatusEXT::default(),
-            description: unsafe { ::core::mem::zeroed() },
-            post_merge_index: u32::default(),
-        }
+        unsafe { ::core::mem::zeroed() }
     }
 }
 impl RenderPassSubpassFeedbackInfoEXT {
@@ -56739,12 +50023,7 @@ unsafe impl Sync for RenderPassSubpassFeedbackCreateInfoEXT<'_> {}
 impl ::core::default::Default for RenderPassSubpassFeedbackCreateInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            p_subpass_feedback: ::core::ptr::null_mut(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for RenderPassSubpassFeedbackCreateInfoEXT<'a> {
@@ -56778,12 +50057,7 @@ unsafe impl Sync for PhysicalDeviceSubpassMergeFeedbackFeaturesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceSubpassMergeFeedbackFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            subpass_merge_feedback: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceSubpassMergeFeedbackFeaturesEXT<'a> {
@@ -56847,22 +50121,7 @@ impl fmt::Debug for MicromapBuildInfoEXT<'_> {
 impl ::core::default::Default for MicromapBuildInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            ty: MicromapTypeEXT::default(),
-            flags: BuildMicromapFlagsEXT::default(),
-            mode: BuildMicromapModeEXT::default(),
-            dst_micromap: MicromapEXT::default(),
-            usage_counts_count: u32::default(),
-            p_usage_counts: ::core::ptr::null(),
-            pp_usage_counts: ::core::ptr::null(),
-            data: DeviceOrHostAddressConstKHR::default(),
-            scratch_data: DeviceOrHostAddressKHR::default(),
-            triangle_array: DeviceOrHostAddressConstKHR::default(),
-            triangle_array_stride: DeviceSize::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for MicromapBuildInfoEXT<'a> {
@@ -56943,17 +50202,7 @@ unsafe impl Sync for AccelerationStructureGeometryMicromapDataKHR<'_> {}
 impl ::core::default::Default for AccelerationStructureGeometryMicromapDataKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            usage_counts_count: u32::default(),
-            p_usage_counts: ::core::ptr::null(),
-            pp_usage_counts: ::core::ptr::null(),
-            data: DeviceAddress::default(),
-            triangle_array: DeviceAddress::default(),
-            triangle_array_stride: DeviceSize::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for AccelerationStructureGeometryMicromapDataKHR<'a> {
@@ -57014,17 +50263,7 @@ unsafe impl Sync for MicromapCreateInfoEXT<'_> {}
 impl ::core::default::Default for MicromapCreateInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            create_flags: MicromapCreateFlagsEXT::default(),
-            buffer: Buffer::default(),
-            offset: DeviceSize::default(),
-            size: DeviceSize::default(),
-            ty: MicromapTypeEXT::default(),
-            device_address: DeviceAddress::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for MicromapCreateInfoEXT<'a> {
@@ -57078,12 +50317,7 @@ unsafe impl Sync for MicromapVersionInfoEXT<'_> {}
 impl ::core::default::Default for MicromapVersionInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            p_version_data: ::core::ptr::null(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for MicromapVersionInfoEXT<'a> {
@@ -57114,14 +50348,7 @@ unsafe impl Sync for CopyMicromapInfoEXT<'_> {}
 impl ::core::default::Default for CopyMicromapInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            src: MicromapEXT::default(),
-            dst: MicromapEXT::default(),
-            mode: CopyMicromapModeEXT::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for CopyMicromapInfoEXT<'a> {
@@ -57173,14 +50400,7 @@ impl fmt::Debug for CopyMicromapToMemoryInfoEXT<'_> {
 impl ::core::default::Default for CopyMicromapToMemoryInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            src: MicromapEXT::default(),
-            dst: DeviceOrHostAddressKHR::default(),
-            mode: CopyMicromapModeEXT::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for CopyMicromapToMemoryInfoEXT<'a> {
@@ -57232,14 +50452,7 @@ impl fmt::Debug for CopyMemoryToMicromapInfoEXT<'_> {
 impl ::core::default::Default for CopyMemoryToMicromapInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            src: DeviceOrHostAddressConstKHR::default(),
-            dst: MicromapEXT::default(),
-            mode: CopyMicromapModeEXT::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for CopyMemoryToMicromapInfoEXT<'a> {
@@ -57280,14 +50493,7 @@ unsafe impl Sync for MicromapBuildSizesInfoEXT<'_> {}
 impl ::core::default::Default for MicromapBuildSizesInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            micromap_size: DeviceSize::default(),
-            build_scratch_size: DeviceSize::default(),
-            discardable: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for MicromapBuildSizesInfoEXT<'a> {
@@ -57407,12 +50613,7 @@ unsafe impl Sync for PhysicalDeviceOpacityMicromapFeaturesKHR<'_> {}
 impl ::core::default::Default for PhysicalDeviceOpacityMicromapFeaturesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            micromap: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceOpacityMicromapFeaturesKHR<'a> {
@@ -57446,14 +50647,7 @@ unsafe impl Sync for PhysicalDeviceOpacityMicromapFeaturesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceOpacityMicromapFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            micromap: Bool32::default(),
-            micromap_capture_replay: Bool32::default(),
-            micromap_host_commands: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceOpacityMicromapFeaturesEXT<'a> {
@@ -57498,15 +50692,7 @@ unsafe impl Sync for PhysicalDeviceOpacityMicromapPropertiesKHR<'_> {}
 impl ::core::default::Default for PhysicalDeviceOpacityMicromapPropertiesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            max_opacity2_state_subdivision_level: u32::default(),
-            max_opacity4_state_subdivision_level: u32::default(),
-            max_opacity_lossy4_state_subdivision_level: u32::default(),
-            max_micromap_triangles: u64::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceOpacityMicromapPropertiesKHR<'a> {
@@ -57566,13 +50752,7 @@ unsafe impl Sync for PhysicalDeviceOpacityMicromapPropertiesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceOpacityMicromapPropertiesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            max_opacity2_state_subdivision_level: u32::default(),
-            max_opacity4_state_subdivision_level: u32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceOpacityMicromapPropertiesEXT<'a> {
@@ -57621,16 +50801,7 @@ unsafe impl Sync for AccelerationStructureTrianglesOpacityMicromapKHR<'_> {}
 impl ::core::default::Default for AccelerationStructureTrianglesOpacityMicromapKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            index_type: IndexType::default(),
-            index_buffer: DeviceAddress::default(),
-            index_stride: DeviceSize::default(),
-            base_triangle: u32::default(),
-            micromap: AccelerationStructureKHR::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for AccelerationStructureTrianglesOpacityMicromapKHR<'a> {
@@ -57712,19 +50883,7 @@ impl fmt::Debug for AccelerationStructureTrianglesOpacityMicromapEXT<'_> {
 impl ::core::default::Default for AccelerationStructureTrianglesOpacityMicromapEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            index_type: IndexType::default(),
-            index_buffer: DeviceOrHostAddressConstKHR::default(),
-            index_stride: DeviceSize::default(),
-            base_triangle: u32::default(),
-            usage_counts_count: u32::default(),
-            p_usage_counts: ::core::ptr::null(),
-            pp_usage_counts: ::core::ptr::null(),
-            micromap: MicromapEXT::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for AccelerationStructureTrianglesOpacityMicromapEXT<'a> {
@@ -57799,12 +50958,7 @@ unsafe impl Sync for PhysicalDeviceDisplacementMicromapFeaturesNV<'_> {}
 impl ::core::default::Default for PhysicalDeviceDisplacementMicromapFeaturesNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            displacement_micromap: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 #[cfg(feature = "provisional")]
@@ -57847,12 +51001,7 @@ unsafe impl Sync for PhysicalDeviceDisplacementMicromapPropertiesNV<'_> {}
 impl ::core::default::Default for PhysicalDeviceDisplacementMicromapPropertiesNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            max_displacement_micromap_subdivision_level: u32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 #[cfg(feature = "provisional")]
@@ -57952,27 +51101,7 @@ impl fmt::Debug for AccelerationStructureTrianglesDisplacementMicromapNV<'_> {
 impl ::core::default::Default for AccelerationStructureTrianglesDisplacementMicromapNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            displacement_bias_and_scale_format: Format::default(),
-            displacement_vector_format: Format::default(),
-            displacement_bias_and_scale_buffer: DeviceOrHostAddressConstKHR::default(),
-            displacement_bias_and_scale_stride: DeviceSize::default(),
-            displacement_vector_buffer: DeviceOrHostAddressConstKHR::default(),
-            displacement_vector_stride: DeviceSize::default(),
-            displaced_micromap_primitive_flags: DeviceOrHostAddressConstKHR::default(),
-            displaced_micromap_primitive_flags_stride: DeviceSize::default(),
-            index_type: IndexType::default(),
-            index_buffer: DeviceOrHostAddressConstKHR::default(),
-            index_stride: DeviceSize::default(),
-            base_triangle: u32::default(),
-            usage_counts_count: u32::default(),
-            p_usage_counts: ::core::ptr::null(),
-            pp_usage_counts: ::core::ptr::null(),
-            micromap: MicromapEXT::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 #[cfg(feature = "provisional")]
@@ -58099,12 +51228,7 @@ unsafe impl Sync for PipelinePropertiesIdentifierEXT<'_> {}
 impl ::core::default::Default for PipelinePropertiesIdentifierEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            pipeline_identifier: unsafe { ::core::mem::zeroed() },
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PipelinePropertiesIdentifierEXT<'a> {
@@ -58133,12 +51257,7 @@ unsafe impl Sync for PhysicalDevicePipelinePropertiesFeaturesEXT<'_> {}
 impl ::core::default::Default for PhysicalDevicePipelinePropertiesFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            pipeline_properties_identifier: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDevicePipelinePropertiesFeaturesEXT<'a> {
@@ -58173,12 +51292,7 @@ unsafe impl Sync for PhysicalDeviceShaderEarlyAndLateFragmentTestsFeaturesAMD<'_
 impl ::core::default::Default for PhysicalDeviceShaderEarlyAndLateFragmentTestsFeaturesAMD<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            shader_early_and_late_fragment_tests: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a>
@@ -58221,12 +51335,7 @@ unsafe impl Sync for ExternalMemoryAcquireUnmodifiedEXT<'_> {}
 impl ::core::default::Default for ExternalMemoryAcquireUnmodifiedEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            acquire_unmodified_memory: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ExternalMemoryAcquireUnmodifiedEXT<'a> {
@@ -58259,12 +51368,7 @@ unsafe impl Sync for ExportMetalObjectCreateInfoEXT<'_> {}
 impl ::core::default::Default for ExportMetalObjectCreateInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            export_object_type: ExportMetalObjectTypeFlagsEXT::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ExportMetalObjectCreateInfoEXT<'a> {
@@ -58299,11 +51403,7 @@ unsafe impl Sync for ExportMetalObjectsInfoEXT<'_> {}
 impl ::core::default::Default for ExportMetalObjectsInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ExportMetalObjectsInfoEXT<'a> {
@@ -58326,12 +51426,7 @@ unsafe impl Sync for ExportMetalDeviceInfoEXT<'_> {}
 impl ::core::default::Default for ExportMetalDeviceInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            mtl_device: unsafe { ::core::mem::zeroed() },
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ExportMetalDeviceInfoEXT<'a> {
@@ -58362,13 +51457,7 @@ unsafe impl Sync for ExportMetalCommandQueueInfoEXT<'_> {}
 impl ::core::default::Default for ExportMetalCommandQueueInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            queue: Queue::default(),
-            mtl_command_queue: unsafe { ::core::mem::zeroed() },
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ExportMetalCommandQueueInfoEXT<'a> {
@@ -58404,13 +51493,7 @@ unsafe impl Sync for ExportMetalBufferInfoEXT<'_> {}
 impl ::core::default::Default for ExportMetalBufferInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            memory: DeviceMemory::default(),
-            mtl_buffer: unsafe { ::core::mem::zeroed() },
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ExportMetalBufferInfoEXT<'a> {
@@ -58445,12 +51528,7 @@ unsafe impl Sync for ImportMetalBufferInfoEXT<'_> {}
 impl ::core::default::Default for ImportMetalBufferInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            mtl_buffer: unsafe { ::core::mem::zeroed() },
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ImportMetalBufferInfoEXT<'a> {
@@ -58484,16 +51562,7 @@ unsafe impl Sync for ExportMetalTextureInfoEXT<'_> {}
 impl ::core::default::Default for ExportMetalTextureInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            image: Image::default(),
-            image_view: ImageView::default(),
-            buffer_view: BufferView::default(),
-            plane: ImageAspectFlags::default(),
-            mtl_texture: unsafe { ::core::mem::zeroed() },
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ExportMetalTextureInfoEXT<'a> {
@@ -58544,13 +51613,7 @@ unsafe impl Sync for ImportMetalTextureInfoEXT<'_> {}
 impl ::core::default::Default for ImportMetalTextureInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            plane: ImageAspectFlags::default(),
-            mtl_texture: unsafe { ::core::mem::zeroed() },
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ImportMetalTextureInfoEXT<'a> {
@@ -58586,13 +51649,7 @@ unsafe impl Sync for ExportMetalIOSurfaceInfoEXT<'_> {}
 impl ::core::default::Default for ExportMetalIOSurfaceInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            image: Image::default(),
-            io_surface: unsafe { ::core::mem::zeroed() },
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ExportMetalIOSurfaceInfoEXT<'a> {
@@ -58627,12 +51684,7 @@ unsafe impl Sync for ImportMetalIOSurfaceInfoEXT<'_> {}
 impl ::core::default::Default for ImportMetalIOSurfaceInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            io_surface: unsafe { ::core::mem::zeroed() },
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ImportMetalIOSurfaceInfoEXT<'a> {
@@ -58664,14 +51716,7 @@ unsafe impl Sync for ExportMetalSharedEventInfoEXT<'_> {}
 impl ::core::default::Default for ExportMetalSharedEventInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            semaphore: Semaphore::default(),
-            event: Event::default(),
-            mtl_shared_event: unsafe { ::core::mem::zeroed() },
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ExportMetalSharedEventInfoEXT<'a> {
@@ -58711,12 +51756,7 @@ unsafe impl Sync for ImportMetalSharedEventInfoEXT<'_> {}
 impl ::core::default::Default for ImportMetalSharedEventInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            mtl_shared_event: unsafe { ::core::mem::zeroed() },
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ImportMetalSharedEventInfoEXT<'a> {
@@ -58747,12 +51787,7 @@ unsafe impl Sync for PhysicalDeviceNonSeamlessCubeMapFeaturesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceNonSeamlessCubeMapFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            non_seamless_cube_map: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceNonSeamlessCubeMapFeaturesEXT<'a> {
@@ -58787,12 +51822,7 @@ unsafe impl Sync for PhysicalDevicePipelineRobustnessFeatures<'_> {}
 impl ::core::default::Default for PhysicalDevicePipelineRobustnessFeatures<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            pipeline_robustness: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDevicePipelineRobustnessFeatures<'a> {
@@ -58827,15 +51857,7 @@ unsafe impl Sync for PipelineRobustnessCreateInfo<'_> {}
 impl ::core::default::Default for PipelineRobustnessCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            storage_buffers: PipelineRobustnessBufferBehavior::default(),
-            uniform_buffers: PipelineRobustnessBufferBehavior::default(),
-            vertex_inputs: PipelineRobustnessBufferBehavior::default(),
-            images: PipelineRobustnessImageBehavior::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PipelineRobustnessCreateInfo<'a> {
@@ -58886,15 +51908,7 @@ unsafe impl Sync for PhysicalDevicePipelineRobustnessProperties<'_> {}
 impl ::core::default::Default for PhysicalDevicePipelineRobustnessProperties<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            default_robustness_storage_buffers: PipelineRobustnessBufferBehavior::default(),
-            default_robustness_uniform_buffers: PipelineRobustnessBufferBehavior::default(),
-            default_robustness_vertex_inputs: PipelineRobustnessBufferBehavior::default(),
-            default_robustness_images: PipelineRobustnessImageBehavior::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDevicePipelineRobustnessProperties<'a> {
@@ -58957,14 +51971,7 @@ unsafe impl Sync for ImageViewSampleWeightCreateInfoQCOM<'_> {}
 impl ::core::default::Default for ImageViewSampleWeightCreateInfoQCOM<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            filter_center: Offset2D::default(),
-            filter_size: Extent2D::default(),
-            num_phases: u32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ImageViewSampleWeightCreateInfoQCOM<'a> {
@@ -59004,12 +52011,7 @@ unsafe impl Sync for PhysicalDeviceShaderMultipleWaitQueuesFeaturesQCOM<'_> {}
 impl ::core::default::Default for PhysicalDeviceShaderMultipleWaitQueuesFeaturesQCOM<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            shader_multiple_wait_queues: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderMultipleWaitQueuesFeaturesQCOM<'a> {
@@ -59047,12 +52049,7 @@ unsafe impl Sync for PhysicalDeviceShaderMultipleWaitQueuesPropertiesQCOM<'_> {}
 impl ::core::default::Default for PhysicalDeviceShaderMultipleWaitQueuesPropertiesQCOM<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            max_shader_wait_queues: u32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderMultipleWaitQueuesPropertiesQCOM<'a> {
@@ -59088,14 +52085,7 @@ unsafe impl Sync for PhysicalDeviceImageProcessingFeaturesQCOM<'_> {}
 impl ::core::default::Default for PhysicalDeviceImageProcessingFeaturesQCOM<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            texture_sample_weighted: Bool32::default(),
-            texture_box_filter: Bool32::default(),
-            texture_block_match: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceImageProcessingFeaturesQCOM<'a> {
@@ -59140,15 +52130,7 @@ unsafe impl Sync for PhysicalDeviceImageProcessingPropertiesQCOM<'_> {}
 impl ::core::default::Default for PhysicalDeviceImageProcessingPropertiesQCOM<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            max_weight_filter_phases: u32::default(),
-            max_weight_filter_dimension: Extent2D::default(),
-            max_block_match_region: Extent2D::default(),
-            max_box_filter_block_size: Extent2D::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceImageProcessingPropertiesQCOM<'a> {
@@ -59197,12 +52179,7 @@ unsafe impl Sync for PhysicalDeviceTilePropertiesFeaturesQCOM<'_> {}
 impl ::core::default::Default for PhysicalDeviceTilePropertiesFeaturesQCOM<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            tile_properties: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceTilePropertiesFeaturesQCOM<'a> {
@@ -59236,14 +52213,7 @@ unsafe impl Sync for TilePropertiesQCOM<'_> {}
 impl ::core::default::Default for TilePropertiesQCOM<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            tile_size: Extent3D::default(),
-            apron_size: Extent2D::default(),
-            origin: Offset2D::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for TilePropertiesQCOM<'a> {
@@ -59282,12 +52252,7 @@ unsafe impl Sync for TileMemoryBindInfoQCOM<'_> {}
 impl ::core::default::Default for TileMemoryBindInfoQCOM<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            memory: DeviceMemory::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for TileMemoryBindInfoQCOM<'a> {
@@ -59317,12 +52282,7 @@ unsafe impl Sync for PhysicalDeviceAmigoProfilingFeaturesSEC<'_> {}
 impl ::core::default::Default for PhysicalDeviceAmigoProfilingFeaturesSEC<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            amigo_profiling: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceAmigoProfilingFeaturesSEC<'a> {
@@ -59355,13 +52315,7 @@ unsafe impl Sync for AmigoProfilingSubmitInfoSEC<'_> {}
 impl ::core::default::Default for AmigoProfilingSubmitInfoSEC<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            first_draw_timestamp: u64::default(),
-            swap_buffer_timestamp: u64::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for AmigoProfilingSubmitInfoSEC<'a> {
@@ -59396,12 +52350,7 @@ unsafe impl Sync for PhysicalDeviceAttachmentFeedbackLoopLayoutFeaturesEXT<'_> {
 impl ::core::default::Default for PhysicalDeviceAttachmentFeedbackLoopLayoutFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            attachment_feedback_loop_layout: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceAttachmentFeedbackLoopLayoutFeaturesEXT<'a> {
@@ -59442,12 +52391,7 @@ unsafe impl Sync for AttachmentFeedbackLoopInfoEXT<'_> {}
 impl ::core::default::Default for AttachmentFeedbackLoopInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            feedback_loop_enable: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for AttachmentFeedbackLoopInfoEXT<'a> {
@@ -59477,12 +52421,7 @@ unsafe impl Sync for PhysicalDeviceAddressBindingReportFeaturesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceAddressBindingReportFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            report_address_binding: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceAddressBindingReportFeaturesEXT<'a> {
@@ -59517,12 +52456,7 @@ unsafe impl Sync for RenderingAttachmentFlagsInfoKHR<'_> {}
 impl ::core::default::Default for RenderingAttachmentFlagsInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            flags: RenderingAttachmentFlagsKHR::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for RenderingAttachmentFlagsInfoKHR<'a> {
@@ -59554,14 +52488,7 @@ unsafe impl Sync for ResolveImageModeInfoKHR<'_> {}
 impl ::core::default::Default for ResolveImageModeInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            flags: ResolveImageFlagsKHR::default(),
-            resolve_mode: ResolveModeFlags::default(),
-            stencil_resolve_mode: ResolveModeFlags::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ResolveImageModeInfoKHR<'a> {
@@ -59604,15 +52531,7 @@ unsafe impl Sync for DeviceAddressBindingCallbackDataEXT<'_> {}
 impl ::core::default::Default for DeviceAddressBindingCallbackDataEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            flags: DeviceAddressBindingFlagsEXT::default(),
-            base_address: DeviceAddress::default(),
-            size: DeviceSize::default(),
-            binding_type: DeviceAddressBindingTypeEXT::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DeviceAddressBindingCallbackDataEXT<'a> {
@@ -59660,12 +52579,7 @@ unsafe impl Sync for PhysicalDeviceOpticalFlowFeaturesNV<'_> {}
 impl ::core::default::Default for PhysicalDeviceOpticalFlowFeaturesNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            optical_flow: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceOpticalFlowFeaturesNV<'a> {
@@ -59706,22 +52620,7 @@ unsafe impl Sync for PhysicalDeviceOpticalFlowPropertiesNV<'_> {}
 impl ::core::default::Default for PhysicalDeviceOpticalFlowPropertiesNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            supported_output_grid_sizes: OpticalFlowGridSizeFlagsNV::default(),
-            supported_hint_grid_sizes: OpticalFlowGridSizeFlagsNV::default(),
-            hint_supported: Bool32::default(),
-            cost_supported: Bool32::default(),
-            bidirectional_flow_supported: Bool32::default(),
-            global_flow_supported: Bool32::default(),
-            min_width: u32::default(),
-            min_height: u32::default(),
-            max_width: u32::default(),
-            max_height: u32::default(),
-            max_num_regions_of_interest: u32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceOpticalFlowPropertiesNV<'a> {
@@ -59807,12 +52706,7 @@ unsafe impl Sync for OpticalFlowImageFormatInfoNV<'_> {}
 impl ::core::default::Default for OpticalFlowImageFormatInfoNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            usage: OpticalFlowUsageFlagsNV::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for OpticalFlowImageFormatInfoNV<'a> {
@@ -59843,12 +52737,7 @@ unsafe impl Sync for OpticalFlowImageFormatPropertiesNV<'_> {}
 impl ::core::default::Default for OpticalFlowImageFormatPropertiesNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            format: Format::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for OpticalFlowImageFormatPropertiesNV<'a> {
@@ -59885,20 +52774,7 @@ unsafe impl Sync for OpticalFlowSessionCreateInfoNV<'_> {}
 impl ::core::default::Default for OpticalFlowSessionCreateInfoNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            width: u32::default(),
-            height: u32::default(),
-            image_format: Format::default(),
-            flow_vector_format: Format::default(),
-            cost_format: Format::default(),
-            output_grid_size: OpticalFlowGridSizeFlagsNV::default(),
-            hint_grid_size: OpticalFlowGridSizeFlagsNV::default(),
-            performance_level: OpticalFlowPerformanceLevelNV::default(),
-            flags: OpticalFlowSessionCreateFlagsNV::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for OpticalFlowSessionCreateInfoNV<'a> {
@@ -59969,14 +52845,7 @@ unsafe impl Sync for OpticalFlowSessionCreatePrivateDataInfoNV<'_> {}
 impl ::core::default::Default for OpticalFlowSessionCreatePrivateDataInfoNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            id: u32::default(),
-            size: u32::default(),
-            p_private_data: ::core::ptr::null(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for OpticalFlowSessionCreatePrivateDataInfoNV<'a> {
@@ -60022,14 +52891,7 @@ unsafe impl Sync for OpticalFlowExecuteInfoNV<'_> {}
 impl ::core::default::Default for OpticalFlowExecuteInfoNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            flags: OpticalFlowExecuteFlagsNV::default(),
-            region_count: u32::default(),
-            p_regions: ::core::ptr::null(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for OpticalFlowExecuteInfoNV<'a> {
@@ -60065,13 +52927,7 @@ unsafe impl Sync for PhysicalDeviceFaultFeaturesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceFaultFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            device_fault: Bool32::default(),
-            device_fault_vendor_binary: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceFaultFeaturesEXT<'a> {
@@ -60140,11 +52996,7 @@ impl fmt::Debug for DeviceFaultVendorInfoKHR {
 impl ::core::default::Default for DeviceFaultVendorInfoKHR {
     #[inline]
     fn default() -> Self {
-        Self {
-            description: unsafe { ::core::mem::zeroed() },
-            vendor_fault_code: u64::default(),
-            vendor_fault_data: u64::default(),
-        }
+        unsafe { ::core::mem::zeroed() }
     }
 }
 impl DeviceFaultVendorInfoKHR {
@@ -60205,17 +53057,7 @@ impl fmt::Debug for DeviceFaultInfoKHR<'_> {
 impl ::core::default::Default for DeviceFaultInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            flags: DeviceFaultFlagsKHR::default(),
-            group_id: u64::default(),
-            description: unsafe { ::core::mem::zeroed() },
-            fault_address_info: DeviceFaultAddressInfoKHR::default(),
-            instruction_address_info: DeviceFaultAddressInfoKHR::default(),
-            vendor_info: DeviceFaultVendorInfoKHR::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DeviceFaultInfoKHR<'a> {
@@ -60279,13 +53121,7 @@ unsafe impl Sync for DeviceFaultDebugInfoKHR<'_> {}
 impl ::core::default::Default for DeviceFaultDebugInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            vendor_binary_size: u32::default(),
-            p_vendor_binary_data: ::core::ptr::null_mut(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DeviceFaultDebugInfoKHR<'a> {
@@ -60317,14 +53153,7 @@ unsafe impl Sync for DeviceFaultCountsEXT<'_> {}
 impl ::core::default::Default for DeviceFaultCountsEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            address_info_count: u32::default(),
-            vendor_info_count: u32::default(),
-            vendor_binary_size: DeviceSize::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DeviceFaultCountsEXT<'a> {
@@ -60378,15 +53207,7 @@ impl fmt::Debug for DeviceFaultInfoEXT<'_> {
 impl ::core::default::Default for DeviceFaultInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            description: unsafe { ::core::mem::zeroed() },
-            p_address_infos: ::core::ptr::null_mut(),
-            p_vendor_infos: ::core::ptr::null_mut(),
-            p_vendor_binary_data: ::core::ptr::null_mut(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DeviceFaultInfoEXT<'a> {
@@ -60441,19 +53262,7 @@ pub struct DeviceFaultVendorBinaryHeaderVersionOneKHR {
 impl ::core::default::Default for DeviceFaultVendorBinaryHeaderVersionOneKHR {
     #[inline]
     fn default() -> Self {
-        Self {
-            header_size: u32::default(),
-            header_version: DeviceFaultVendorBinaryHeaderVersionKHR::default(),
-            vendor_id: u32::default(),
-            device_id: u32::default(),
-            driver_version: u32::default(),
-            pipeline_cache_uuid: unsafe { ::core::mem::zeroed() },
-            application_name_offset: u32::default(),
-            application_version: u32::default(),
-            engine_name_offset: u32::default(),
-            engine_version: u32::default(),
-            api_version: u32::default(),
-        }
+        unsafe { ::core::mem::zeroed() }
     }
 }
 impl DeviceFaultVendorBinaryHeaderVersionOneKHR {
@@ -60535,15 +53344,7 @@ unsafe impl Sync for PhysicalDeviceFaultFeaturesKHR<'_> {}
 impl ::core::default::Default for PhysicalDeviceFaultFeaturesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            device_fault: Bool32::default(),
-            device_fault_vendor_binary: Bool32::default(),
-            device_fault_report_masked: Bool32::default(),
-            device_fault_device_lost_on_masked: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceFaultFeaturesKHR<'a> {
@@ -60592,12 +53393,7 @@ unsafe impl Sync for PhysicalDeviceFaultPropertiesKHR<'_> {}
 impl ::core::default::Default for PhysicalDeviceFaultPropertiesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            max_device_fault_count: u32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceFaultPropertiesKHR<'a> {
@@ -60627,12 +53423,7 @@ unsafe impl Sync for PhysicalDevicePipelineLibraryGroupHandlesFeaturesEXT<'_> {}
 impl ::core::default::Default for PhysicalDevicePipelineLibraryGroupHandlesFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            pipeline_library_group_handles: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDevicePipelineLibraryGroupHandlesFeaturesEXT<'a> {
@@ -60672,14 +53463,7 @@ unsafe impl Sync for DepthBiasInfoEXT<'_> {}
 impl ::core::default::Default for DepthBiasInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            depth_bias_constant_factor: f32::default(),
-            depth_bias_clamp: f32::default(),
-            depth_bias_slope_factor: f32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DepthBiasInfoEXT<'a> {
@@ -60719,13 +53503,7 @@ unsafe impl Sync for DepthBiasRepresentationInfoEXT<'_> {}
 impl ::core::default::Default for DepthBiasRepresentationInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            depth_bias_representation: DepthBiasRepresentationEXT::default(),
-            depth_bias_exact: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DepthBiasRepresentationInfoEXT<'a> {
@@ -60844,14 +53622,7 @@ unsafe impl Sync for DecompressMemoryInfoEXT<'_> {}
 impl ::core::default::Default for DecompressMemoryInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            decompression_method: MemoryDecompressionMethodFlagsEXT::default(),
-            region_count: u32::default(),
-            p_regions: ::core::ptr::null(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DecompressMemoryInfoEXT<'a> {
@@ -60891,14 +53662,7 @@ unsafe impl Sync for PhysicalDeviceShaderCoreBuiltinsPropertiesARM<'_> {}
 impl ::core::default::Default for PhysicalDeviceShaderCoreBuiltinsPropertiesARM<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            shader_core_mask: u64::default(),
-            shader_core_count: u32::default(),
-            shader_warps_per_core: u32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderCoreBuiltinsPropertiesARM<'a> {
@@ -60942,12 +53706,7 @@ unsafe impl Sync for PhysicalDeviceShaderCoreBuiltinsFeaturesARM<'_> {}
 impl ::core::default::Default for PhysicalDeviceShaderCoreBuiltinsFeaturesARM<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            shader_core_builtins: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderCoreBuiltinsFeaturesARM<'a> {
@@ -60990,20 +53749,7 @@ unsafe impl Sync for FrameBoundaryEXT<'_> {}
 impl ::core::default::Default for FrameBoundaryEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            flags: FrameBoundaryFlagsEXT::default(),
-            frame_id: u64::default(),
-            image_count: u32::default(),
-            p_images: ::core::ptr::null(),
-            buffer_count: u32::default(),
-            p_buffers: ::core::ptr::null(),
-            tag_name: u64::default(),
-            tag_size: usize::default(),
-            p_tag: ::core::ptr::null(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for FrameBoundaryEXT<'a> {
@@ -61064,12 +53810,7 @@ unsafe impl Sync for PhysicalDeviceFrameBoundaryFeaturesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceFrameBoundaryFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            frame_boundary: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceFrameBoundaryFeaturesEXT<'a> {
@@ -61101,12 +53842,7 @@ unsafe impl Sync for PhysicalDeviceDynamicRenderingUnusedAttachmentsFeaturesEXT<
 impl ::core::default::Default for PhysicalDeviceDynamicRenderingUnusedAttachmentsFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            dynamic_rendering_unused_attachments: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a>
@@ -61149,12 +53885,7 @@ unsafe impl Sync for PhysicalDeviceInternallySynchronizedQueuesFeaturesKHR<'_> {
 impl ::core::default::Default for PhysicalDeviceInternallySynchronizedQueuesFeaturesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            internally_synchronized_queues: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceInternallySynchronizedQueuesFeaturesKHR<'a> {
@@ -61192,12 +53923,7 @@ unsafe impl Sync for SurfacePresentModeKHR<'_> {}
 impl ::core::default::Default for SurfacePresentModeKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            present_mode: PresentModeKHR::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for SurfacePresentModeKHR<'a> {
@@ -61231,16 +53957,7 @@ unsafe impl Sync for SurfacePresentScalingCapabilitiesKHR<'_> {}
 impl ::core::default::Default for SurfacePresentScalingCapabilitiesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            supported_present_scaling: PresentScalingFlagsKHR::default(),
-            supported_present_gravity_x: PresentGravityFlagsKHR::default(),
-            supported_present_gravity_y: PresentGravityFlagsKHR::default(),
-            min_scaled_image_extent: Extent2D::default(),
-            max_scaled_image_extent: Extent2D::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for SurfacePresentScalingCapabilitiesKHR<'a> {
@@ -61300,13 +54017,7 @@ unsafe impl Sync for SurfacePresentModeCompatibilityKHR<'_> {}
 impl ::core::default::Default for SurfacePresentModeCompatibilityKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            present_mode_count: u32::default(),
-            p_present_modes: ::core::ptr::null_mut(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for SurfacePresentModeCompatibilityKHR<'a> {
@@ -61337,12 +54048,7 @@ unsafe impl Sync for PhysicalDeviceSwapchainMaintenance1FeaturesKHR<'_> {}
 impl ::core::default::Default for PhysicalDeviceSwapchainMaintenance1FeaturesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            swapchain_maintenance1: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceSwapchainMaintenance1FeaturesKHR<'a> {
@@ -61378,13 +54084,7 @@ unsafe impl Sync for SwapchainPresentFenceInfoKHR<'_> {}
 impl ::core::default::Default for SwapchainPresentFenceInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            swapchain_count: u32::default(),
-            p_fences: ::core::ptr::null(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for SwapchainPresentFenceInfoKHR<'a> {
@@ -61416,13 +54116,7 @@ unsafe impl Sync for SwapchainPresentModesCreateInfoKHR<'_> {}
 impl ::core::default::Default for SwapchainPresentModesCreateInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            present_mode_count: u32::default(),
-            p_present_modes: ::core::ptr::null(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for SwapchainPresentModesCreateInfoKHR<'a> {
@@ -61454,13 +54148,7 @@ unsafe impl Sync for SwapchainPresentModeInfoKHR<'_> {}
 impl ::core::default::Default for SwapchainPresentModeInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            swapchain_count: u32::default(),
-            p_present_modes: ::core::ptr::null(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for SwapchainPresentModeInfoKHR<'a> {
@@ -61493,14 +54181,7 @@ unsafe impl Sync for SwapchainPresentScalingCreateInfoKHR<'_> {}
 impl ::core::default::Default for SwapchainPresentScalingCreateInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            scaling_behavior: PresentScalingFlagsKHR::default(),
-            present_gravity_x: PresentGravityFlagsKHR::default(),
-            present_gravity_y: PresentGravityFlagsKHR::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for SwapchainPresentScalingCreateInfoKHR<'a> {
@@ -61542,14 +54223,7 @@ unsafe impl Sync for ReleaseSwapchainImagesInfoKHR<'_> {}
 impl ::core::default::Default for ReleaseSwapchainImagesInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            swapchain: SwapchainKHR::default(),
-            image_index_count: u32::default(),
-            p_image_indices: ::core::ptr::null(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ReleaseSwapchainImagesInfoKHR<'a> {
@@ -61587,15 +54261,7 @@ unsafe impl Sync for PhysicalDeviceDepthBiasControlFeaturesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceDepthBiasControlFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            depth_bias_control: Bool32::default(),
-            least_representable_value_force_unorm_representation: Bool32::default(),
-            float_representation: Bool32::default(),
-            depth_bias_exact: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceDepthBiasControlFeaturesEXT<'a> {
@@ -61646,12 +54312,7 @@ unsafe impl Sync for PhysicalDeviceRayTracingInvocationReorderFeaturesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceRayTracingInvocationReorderFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            ray_tracing_invocation_reorder: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceRayTracingInvocationReorderFeaturesEXT<'a> {
@@ -61689,12 +54350,7 @@ unsafe impl Sync for PhysicalDeviceRayTracingInvocationReorderFeaturesNV<'_> {}
 impl ::core::default::Default for PhysicalDeviceRayTracingInvocationReorderFeaturesNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            ray_tracing_invocation_reorder: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceRayTracingInvocationReorderFeaturesNV<'a> {
@@ -61733,14 +54389,7 @@ unsafe impl Sync for PhysicalDeviceRayTracingInvocationReorderPropertiesEXT<'_> 
 impl ::core::default::Default for PhysicalDeviceRayTracingInvocationReorderPropertiesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            ray_tracing_invocation_reorder_reordering_hint:
-                RayTracingInvocationReorderModeEXT::default(),
-            max_shader_binding_table_record_index: u32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceRayTracingInvocationReorderPropertiesEXT<'a> {
@@ -61786,13 +54435,7 @@ unsafe impl Sync for PhysicalDeviceRayTracingInvocationReorderPropertiesNV<'_> {
 impl ::core::default::Default for PhysicalDeviceRayTracingInvocationReorderPropertiesNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            ray_tracing_invocation_reorder_reordering_hint:
-                RayTracingInvocationReorderModeEXT::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceRayTracingInvocationReorderPropertiesNV<'a> {
@@ -61830,12 +54473,7 @@ unsafe impl Sync for PhysicalDeviceExtendedSparseAddressSpaceFeaturesNV<'_> {}
 impl ::core::default::Default for PhysicalDeviceExtendedSparseAddressSpaceFeaturesNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            extended_sparse_address_space: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceExtendedSparseAddressSpaceFeaturesNV<'a> {
@@ -61875,14 +54513,7 @@ unsafe impl Sync for PhysicalDeviceExtendedSparseAddressSpacePropertiesNV<'_> {}
 impl ::core::default::Default for PhysicalDeviceExtendedSparseAddressSpacePropertiesNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            extended_sparse_address_space_size: DeviceSize::default(),
-            extended_sparse_image_usage_flags: ImageUsageFlags::default(),
-            extended_sparse_buffer_usage_flags: BufferUsageFlags::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceExtendedSparseAddressSpacePropertiesNV<'a> {
@@ -61949,13 +54580,7 @@ impl fmt::Debug for DirectDriverLoadingInfoLUNARG<'_> {
 impl ::core::default::Default for DirectDriverLoadingInfoLUNARG<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            flags: DirectDriverLoadingFlagsLUNARG::default(),
-            pfn_get_instance_proc_addr: PFN_vkGetInstanceProcAddrLUNARG::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DirectDriverLoadingInfoLUNARG<'a> {
@@ -61994,14 +54619,7 @@ unsafe impl Sync for DirectDriverLoadingListLUNARG<'_> {}
 impl ::core::default::Default for DirectDriverLoadingListLUNARG<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            mode: DirectDriverLoadingModeLUNARG::default(),
-            driver_count: u32::default(),
-            p_drivers: ::core::ptr::null(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DirectDriverLoadingListLUNARG<'a> {
@@ -62037,12 +54655,7 @@ unsafe impl Sync for PhysicalDeviceMultiviewPerViewViewportsFeaturesQCOM<'_> {}
 impl ::core::default::Default for PhysicalDeviceMultiviewPerViewViewportsFeaturesQCOM<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            multiview_per_view_viewports: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceMultiviewPerViewViewportsFeaturesQCOM<'a> {
@@ -62080,12 +54693,7 @@ unsafe impl Sync for PhysicalDeviceRayTracingPositionFetchFeaturesKHR<'_> {}
 impl ::core::default::Default for PhysicalDeviceRayTracingPositionFetchFeaturesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            ray_tracing_position_fetch: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceRayTracingPositionFetchFeaturesKHR<'a> {
@@ -62121,13 +54729,7 @@ unsafe impl Sync for DeviceImageSubresourceInfo<'_> {}
 impl ::core::default::Default for DeviceImageSubresourceInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            p_create_info: ::core::ptr::null(),
-            p_subresource: ::core::ptr::null(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DeviceImageSubresourceInfo<'a> {
@@ -62163,14 +54765,7 @@ unsafe impl Sync for PhysicalDeviceShaderCorePropertiesARM<'_> {}
 impl ::core::default::Default for PhysicalDeviceShaderCorePropertiesARM<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            pixel_rate: u32::default(),
-            texel_rate: u32::default(),
-            fma_rate: u32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderCorePropertiesARM<'a> {
@@ -62210,12 +54805,7 @@ unsafe impl Sync for PhysicalDeviceMultiviewPerViewRenderAreasFeaturesQCOM<'_> {
 impl ::core::default::Default for PhysicalDeviceMultiviewPerViewRenderAreasFeaturesQCOM<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            multiview_per_view_render_areas: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceMultiviewPerViewRenderAreasFeaturesQCOM<'a> {
@@ -62257,13 +54847,7 @@ unsafe impl Sync for MultiviewPerViewRenderAreasRenderPassBeginInfoQCOM<'_> {}
 impl ::core::default::Default for MultiviewPerViewRenderAreasRenderPassBeginInfoQCOM<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            per_view_render_area_count: u32::default(),
-            p_per_view_render_areas: ::core::ptr::null(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for MultiviewPerViewRenderAreasRenderPassBeginInfoQCOM<'a> {
@@ -62299,12 +54883,7 @@ unsafe impl Sync for QueryLowLatencySupportNV<'_> {}
 impl ::core::default::Default for QueryLowLatencySupportNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            p_queried_low_latency_data: ::core::ptr::null_mut(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for QueryLowLatencySupportNV<'a> {
@@ -62337,15 +54916,7 @@ unsafe impl Sync for MemoryMapInfo<'_> {}
 impl ::core::default::Default for MemoryMapInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            flags: MemoryMapFlags::default(),
-            memory: DeviceMemory::default(),
-            offset: DeviceSize::default(),
-            size: DeviceSize::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for MemoryMapInfo<'a> {
@@ -62390,13 +54961,7 @@ unsafe impl Sync for MemoryUnmapInfo<'_> {}
 impl ::core::default::Default for MemoryUnmapInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            flags: MemoryUnmapFlags::default(),
-            memory: DeviceMemory::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for MemoryUnmapInfo<'a> {
@@ -62430,12 +54995,7 @@ unsafe impl Sync for PhysicalDeviceShaderObjectFeaturesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceShaderObjectFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            shader_object: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderObjectFeaturesEXT<'a> {
@@ -62467,13 +55027,7 @@ unsafe impl Sync for PhysicalDeviceShaderObjectPropertiesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceShaderObjectPropertiesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            shader_binary_uuid: unsafe { ::core::mem::zeroed() },
-            shader_binary_version: u32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderObjectPropertiesEXT<'a> {
@@ -62520,23 +55074,7 @@ unsafe impl Sync for ShaderCreateInfoEXT<'_> {}
 impl ::core::default::Default for ShaderCreateInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            flags: ShaderCreateFlagsEXT::default(),
-            stage: ShaderStageFlags::default(),
-            next_stage: ShaderStageFlags::default(),
-            code_type: ShaderCodeTypeEXT::default(),
-            code_size: usize::default(),
-            p_code: ::core::ptr::null(),
-            p_name: ::core::ptr::null(),
-            set_layout_count: u32::default(),
-            p_set_layouts: ::core::ptr::null(),
-            push_constant_range_count: u32::default(),
-            p_push_constant_ranges: ::core::ptr::null(),
-            p_specialization_info: ::core::ptr::null(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ShaderCreateInfoEXT<'a> {
@@ -62618,14 +55156,7 @@ unsafe impl Sync for PhysicalDeviceShaderTileImageFeaturesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceShaderTileImageFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            shader_tile_image_color_read_access: Bool32::default(),
-            shader_tile_image_depth_read_access: Bool32::default(),
-            shader_tile_image_stencil_read_access: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderTileImageFeaturesEXT<'a> {
@@ -62678,14 +55209,7 @@ unsafe impl Sync for PhysicalDeviceShaderTileImagePropertiesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceShaderTileImagePropertiesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            shader_tile_image_coherent_read_accelerated: Bool32::default(),
-            shader_tile_image_read_sample_from_pixel_rate_invocation: Bool32::default(),
-            shader_tile_image_read_from_helper_invocation: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderTileImagePropertiesEXT<'a> {
@@ -62741,12 +55265,7 @@ unsafe impl Sync for ImportScreenBufferInfoQNX<'_> {}
 impl ::core::default::Default for ImportScreenBufferInfoQNX<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            buffer: ::core::ptr::null_mut(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ImportScreenBufferInfoQNX<'a> {
@@ -62777,13 +55296,7 @@ unsafe impl Sync for ScreenBufferPropertiesQNX<'_> {}
 impl ::core::default::Default for ScreenBufferPropertiesQNX<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            allocation_size: DeviceSize::default(),
-            memory_type_bits: u32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ScreenBufferPropertiesQNX<'a> {
@@ -62825,20 +55338,7 @@ unsafe impl Sync for ScreenBufferFormatPropertiesQNX<'_> {}
 impl ::core::default::Default for ScreenBufferFormatPropertiesQNX<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            format: Format::default(),
-            external_format: u64::default(),
-            screen_usage: u64::default(),
-            format_features: FormatFeatureFlags::default(),
-            sampler_ycbcr_conversion_components: ComponentMapping::default(),
-            suggested_ycbcr_model: SamplerYcbcrModelConversion::default(),
-            suggested_ycbcr_range: SamplerYcbcrRange::default(),
-            suggested_x_chroma_offset: ChromaLocation::default(),
-            suggested_y_chroma_offset: ChromaLocation::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ScreenBufferFormatPropertiesQNX<'a> {
@@ -62914,12 +55414,7 @@ unsafe impl Sync for ExternalFormatQNX<'_> {}
 impl ::core::default::Default for ExternalFormatQNX<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            external_format: u64::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ExternalFormatQNX<'a> {
@@ -62950,12 +55445,7 @@ unsafe impl Sync for PhysicalDeviceExternalMemoryScreenBufferFeaturesQNX<'_> {}
 impl ::core::default::Default for PhysicalDeviceExternalMemoryScreenBufferFeaturesQNX<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            screen_buffer_import: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceExternalMemoryScreenBufferFeaturesQNX<'a> {
@@ -62994,13 +55484,7 @@ unsafe impl Sync for PhysicalDeviceCooperativeMatrixFeaturesKHR<'_> {}
 impl ::core::default::Default for PhysicalDeviceCooperativeMatrixFeaturesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            cooperative_matrix: Bool32::default(),
-            cooperative_matrix_robust_buffer_access: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceCooperativeMatrixFeaturesKHR<'a> {
@@ -63052,20 +55536,7 @@ unsafe impl Sync for CooperativeMatrixPropertiesKHR<'_> {}
 impl ::core::default::Default for CooperativeMatrixPropertiesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            m_size: u32::default(),
-            n_size: u32::default(),
-            k_size: u32::default(),
-            a_type: ComponentTypeKHR::default(),
-            b_type: ComponentTypeKHR::default(),
-            c_type: ComponentTypeKHR::default(),
-            result_type: ComponentTypeKHR::default(),
-            saturating_accumulation: Bool32::default(),
-            scope: ScopeKHR::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for CooperativeMatrixPropertiesKHR<'a> {
@@ -63134,12 +55605,7 @@ unsafe impl Sync for PhysicalDeviceCooperativeMatrixPropertiesKHR<'_> {}
 impl ::core::default::Default for PhysicalDeviceCooperativeMatrixPropertiesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            cooperative_matrix_supported_stages: ShaderStageFlags::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceCooperativeMatrixPropertiesKHR<'a> {
@@ -63176,12 +55642,7 @@ unsafe impl Sync for PhysicalDeviceCooperativeMatrixConversionFeaturesQCOM<'_> {
 impl ::core::default::Default for PhysicalDeviceCooperativeMatrixConversionFeaturesQCOM<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            cooperative_matrix_conversion: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceCooperativeMatrixConversionFeaturesQCOM<'a> {
@@ -63229,18 +55690,7 @@ unsafe impl Sync for PhysicalDeviceShaderEnqueuePropertiesAMDX<'_> {}
 impl ::core::default::Default for PhysicalDeviceShaderEnqueuePropertiesAMDX<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            max_execution_graph_depth: u32::default(),
-            max_execution_graph_shader_output_nodes: u32::default(),
-            max_execution_graph_shader_payload_size: u32::default(),
-            max_execution_graph_shader_payload_count: u32::default(),
-            execution_graph_dispatch_address_alignment: u32::default(),
-            max_execution_graph_workgroup_count: unsafe { ::core::mem::zeroed() },
-            max_execution_graph_workgroups: u32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 #[cfg(feature = "provisional")]
@@ -63328,13 +55778,7 @@ unsafe impl Sync for PhysicalDeviceShaderEnqueueFeaturesAMDX<'_> {}
 impl ::core::default::Default for PhysicalDeviceShaderEnqueueFeaturesAMDX<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            shader_enqueue: Bool32::default(),
-            shader_mesh_enqueue: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 #[cfg(feature = "provisional")]
@@ -63385,18 +55829,7 @@ unsafe impl Sync for ExecutionGraphPipelineCreateInfoAMDX<'_> {}
 impl ::core::default::Default for ExecutionGraphPipelineCreateInfoAMDX<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            flags: PipelineCreateFlags::default(),
-            stage_count: u32::default(),
-            p_stages: ::core::ptr::null(),
-            p_library_info: ::core::ptr::null(),
-            layout: PipelineLayout::default(),
-            base_pipeline_handle: Pipeline::default(),
-            base_pipeline_index: i32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 #[cfg(feature = "provisional")]
@@ -63458,13 +55891,7 @@ unsafe impl Sync for PipelineShaderStageNodeCreateInfoAMDX<'_> {}
 impl ::core::default::Default for PipelineShaderStageNodeCreateInfoAMDX<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            p_name: ::core::ptr::null(),
-            index: u32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 #[cfg(feature = "provisional")]
@@ -63520,14 +55947,7 @@ unsafe impl Sync for ExecutionGraphPipelineScratchSizeAMDX<'_> {}
 impl ::core::default::Default for ExecutionGraphPipelineScratchSizeAMDX<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            min_size: DeviceSize::default(),
-            max_size: DeviceSize::default(),
-            size_granularity: DeviceSize::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 #[cfg(feature = "provisional")]
@@ -63653,12 +56073,7 @@ unsafe impl Sync for PhysicalDeviceAntiLagFeaturesAMD<'_> {}
 impl ::core::default::Default for PhysicalDeviceAntiLagFeaturesAMD<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            anti_lag: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceAntiLagFeaturesAMD<'a> {
@@ -63691,14 +56106,7 @@ unsafe impl Sync for AntiLagDataAMD<'_> {}
 impl ::core::default::Default for AntiLagDataAMD<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            mode: AntiLagModeAMD::default(),
-            max_fps: u32::default(),
-            p_presentation_info: ::core::ptr::null(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for AntiLagDataAMD<'a> {
@@ -63741,13 +56149,7 @@ unsafe impl Sync for AntiLagPresentationInfoAMD<'_> {}
 impl ::core::default::Default for AntiLagPresentationInfoAMD<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            stage: AntiLagStageAMD::default(),
-            frame_index: u64::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for AntiLagPresentationInfoAMD<'a> {
@@ -63781,12 +56183,7 @@ unsafe impl Sync for BindMemoryStatus<'_> {}
 impl ::core::default::Default for BindMemoryStatus<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            p_result: ::core::ptr::null_mut(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for BindMemoryStatus<'a> {
@@ -63817,12 +56214,7 @@ unsafe impl Sync for PhysicalDeviceTileMemoryHeapFeaturesQCOM<'_> {}
 impl ::core::default::Default for PhysicalDeviceTileMemoryHeapFeaturesQCOM<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            tile_memory_heap: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceTileMemoryHeapFeaturesQCOM<'a> {
@@ -63855,13 +56247,7 @@ unsafe impl Sync for PhysicalDeviceTileMemoryHeapPropertiesQCOM<'_> {}
 impl ::core::default::Default for PhysicalDeviceTileMemoryHeapPropertiesQCOM<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            queue_submit_boundary: Bool32::default(),
-            tile_buffer_transfers: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceTileMemoryHeapPropertiesQCOM<'a> {
@@ -63900,12 +56286,7 @@ unsafe impl Sync for TileMemorySizeInfoQCOM<'_> {}
 impl ::core::default::Default for TileMemorySizeInfoQCOM<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            size: DeviceSize::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for TileMemorySizeInfoQCOM<'a> {
@@ -63938,13 +56319,7 @@ unsafe impl Sync for TileMemoryRequirementsQCOM<'_> {}
 impl ::core::default::Default for TileMemoryRequirementsQCOM<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            size: DeviceSize::default(),
-            alignment: DeviceSize::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for TileMemoryRequirementsQCOM<'a> {
@@ -63985,18 +56360,7 @@ unsafe impl Sync for BindDescriptorSetsInfo<'_> {}
 impl ::core::default::Default for BindDescriptorSetsInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            stage_flags: ShaderStageFlags::default(),
-            layout: PipelineLayout::default(),
-            first_set: u32::default(),
-            descriptor_set_count: u32::default(),
-            p_descriptor_sets: ::core::ptr::null(),
-            dynamic_offset_count: u32::default(),
-            p_dynamic_offsets: ::core::ptr::null(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for BindDescriptorSetsInfo<'a> {
@@ -64051,16 +56415,7 @@ unsafe impl Sync for PushConstantsInfo<'_> {}
 impl ::core::default::Default for PushConstantsInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            layout: PipelineLayout::default(),
-            stage_flags: ShaderStageFlags::default(),
-            offset: u32::default(),
-            size: u32::default(),
-            p_values: ::core::ptr::null(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PushConstantsInfo<'a> {
@@ -64109,16 +56464,7 @@ unsafe impl Sync for PushDescriptorSetInfo<'_> {}
 impl ::core::default::Default for PushDescriptorSetInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            stage_flags: ShaderStageFlags::default(),
-            layout: PipelineLayout::default(),
-            set: u32::default(),
-            descriptor_write_count: u32::default(),
-            p_descriptor_writes: ::core::ptr::null(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PushDescriptorSetInfo<'a> {
@@ -64166,15 +56512,7 @@ unsafe impl Sync for PushDescriptorSetWithTemplateInfo<'_> {}
 impl ::core::default::Default for PushDescriptorSetWithTemplateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            descriptor_update_template: DescriptorUpdateTemplate::default(),
-            layout: PipelineLayout::default(),
-            set: u32::default(),
-            p_data: ::core::ptr::null(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PushDescriptorSetWithTemplateInfo<'a> {
@@ -64226,17 +56564,7 @@ unsafe impl Sync for SetDescriptorBufferOffsetsInfoEXT<'_> {}
 impl ::core::default::Default for SetDescriptorBufferOffsetsInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            stage_flags: ShaderStageFlags::default(),
-            layout: PipelineLayout::default(),
-            first_set: u32::default(),
-            set_count: u32::default(),
-            p_buffer_indices: ::core::ptr::null(),
-            p_offsets: ::core::ptr::null(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for SetDescriptorBufferOffsetsInfoEXT<'a> {
@@ -64289,14 +56617,7 @@ unsafe impl Sync for BindDescriptorBufferEmbeddedSamplersInfoEXT<'_> {}
 impl ::core::default::Default for BindDescriptorBufferEmbeddedSamplersInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            stage_flags: ShaderStageFlags::default(),
-            layout: PipelineLayout::default(),
-            set: u32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for BindDescriptorBufferEmbeddedSamplersInfoEXT<'a> {
@@ -64336,12 +56657,7 @@ unsafe impl Sync for PhysicalDeviceCubicClampFeaturesQCOM<'_> {}
 impl ::core::default::Default for PhysicalDeviceCubicClampFeaturesQCOM<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            cubic_range_clamp: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceCubicClampFeaturesQCOM<'a> {
@@ -64372,12 +56688,7 @@ unsafe impl Sync for PhysicalDeviceYcbcrDegammaFeaturesQCOM<'_> {}
 impl ::core::default::Default for PhysicalDeviceYcbcrDegammaFeaturesQCOM<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            ycbcr_degamma: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceYcbcrDegammaFeaturesQCOM<'a> {
@@ -64410,13 +56721,7 @@ unsafe impl Sync for SamplerYcbcrConversionYcbcrDegammaCreateInfoQCOM<'_> {}
 impl ::core::default::Default for SamplerYcbcrConversionYcbcrDegammaCreateInfoQCOM<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            enable_y_degamma: Bool32::default(),
-            enable_cb_cr_degamma: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for SamplerYcbcrConversionYcbcrDegammaCreateInfoQCOM<'a> {
@@ -64455,12 +56760,7 @@ unsafe impl Sync for PhysicalDeviceCubicWeightsFeaturesQCOM<'_> {}
 impl ::core::default::Default for PhysicalDeviceCubicWeightsFeaturesQCOM<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            selectable_cubic_weights: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceCubicWeightsFeaturesQCOM<'a> {
@@ -64492,12 +56792,7 @@ unsafe impl Sync for SamplerCubicWeightsCreateInfoQCOM<'_> {}
 impl ::core::default::Default for SamplerCubicWeightsCreateInfoQCOM<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            cubic_weights: CubicFilterWeightsQCOM::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for SamplerCubicWeightsCreateInfoQCOM<'a> {
@@ -64527,12 +56822,7 @@ unsafe impl Sync for BlitImageCubicWeightsInfoQCOM<'_> {}
 impl ::core::default::Default for BlitImageCubicWeightsInfoQCOM<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            cubic_weights: CubicFilterWeightsQCOM::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for BlitImageCubicWeightsInfoQCOM<'a> {
@@ -64562,12 +56852,7 @@ unsafe impl Sync for PhysicalDeviceImageProcessing2FeaturesQCOM<'_> {}
 impl ::core::default::Default for PhysicalDeviceImageProcessing2FeaturesQCOM<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            texture_block_match2: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceImageProcessing2FeaturesQCOM<'a> {
@@ -64602,12 +56887,7 @@ unsafe impl Sync for PhysicalDeviceImageProcessing2PropertiesQCOM<'_> {}
 impl ::core::default::Default for PhysicalDeviceImageProcessing2PropertiesQCOM<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            max_block_match_window: Extent2D::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceImageProcessing2PropertiesQCOM<'a> {
@@ -64642,13 +56922,7 @@ unsafe impl Sync for SamplerBlockMatchWindowCreateInfoQCOM<'_> {}
 impl ::core::default::Default for SamplerBlockMatchWindowCreateInfoQCOM<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            window_extent: Extent2D::default(),
-            window_compare_mode: BlockMatchWindowCompareModeQCOM::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for SamplerBlockMatchWindowCreateInfoQCOM<'a> {
@@ -64689,14 +56963,7 @@ unsafe impl Sync for PhysicalDeviceImageProcessing3FeaturesQCOM<'_> {}
 impl ::core::default::Default for PhysicalDeviceImageProcessing3FeaturesQCOM<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            image_gather_linear: Bool32::default(),
-            image_gather_extended_modes: Bool32::default(),
-            block_match_extended_clamp_to_edge: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceImageProcessing3FeaturesQCOM<'a> {
@@ -64744,12 +57011,7 @@ unsafe impl Sync for PhysicalDeviceDescriptorPoolOverallocationFeaturesNV<'_> {}
 impl ::core::default::Default for PhysicalDeviceDescriptorPoolOverallocationFeaturesNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            descriptor_pool_overallocation: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceDescriptorPoolOverallocationFeaturesNV<'a> {
@@ -64787,12 +57049,7 @@ unsafe impl Sync for PhysicalDeviceLayeredDriverPropertiesMSFT<'_> {}
 impl ::core::default::Default for PhysicalDeviceLayeredDriverPropertiesMSFT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            underlying_api: LayeredDriverUnderlyingApiMSFT::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceLayeredDriverPropertiesMSFT<'a> {
@@ -64827,13 +57084,7 @@ unsafe impl Sync for PhysicalDevicePerStageDescriptorSetFeaturesNV<'_> {}
 impl ::core::default::Default for PhysicalDevicePerStageDescriptorSetFeaturesNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            per_stage_descriptor_set: Bool32::default(),
-            dynamic_pipeline_layout: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDevicePerStageDescriptorSetFeaturesNV<'a> {
@@ -64873,12 +57124,7 @@ unsafe impl Sync for PhysicalDeviceExternalFormatResolveFeaturesANDROID<'_> {}
 impl ::core::default::Default for PhysicalDeviceExternalFormatResolveFeaturesANDROID<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            external_format_resolve: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceExternalFormatResolveFeaturesANDROID<'a> {
@@ -64918,14 +57164,7 @@ unsafe impl Sync for PhysicalDeviceExternalFormatResolvePropertiesANDROID<'_> {}
 impl ::core::default::Default for PhysicalDeviceExternalFormatResolvePropertiesANDROID<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            null_color_attachment_with_external_format_resolve: Bool32::default(),
-            external_format_resolve_chroma_offset_x: ChromaLocation::default(),
-            external_format_resolve_chroma_offset_y: ChromaLocation::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceExternalFormatResolvePropertiesANDROID<'a> {
@@ -64979,12 +57218,7 @@ unsafe impl Sync for AndroidHardwareBufferFormatResolvePropertiesANDROID<'_> {}
 impl ::core::default::Default for AndroidHardwareBufferFormatResolvePropertiesANDROID<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            color_attachment_format: Format::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for AndroidHardwareBufferFormatResolvePropertiesANDROID<'a> {
@@ -65020,14 +57254,7 @@ unsafe impl Sync for LatencySleepModeInfoNV<'_> {}
 impl ::core::default::Default for LatencySleepModeInfoNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            low_latency_mode: Bool32::default(),
-            low_latency_boost: Bool32::default(),
-            minimum_interval_us: u32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for LatencySleepModeInfoNV<'a> {
@@ -65067,13 +57294,7 @@ unsafe impl Sync for LatencySleepInfoNV<'_> {}
 impl ::core::default::Default for LatencySleepInfoNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            signal_semaphore: Semaphore::default(),
-            value: u64::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for LatencySleepInfoNV<'a> {
@@ -65108,13 +57329,7 @@ unsafe impl Sync for SetLatencyMarkerInfoNV<'_> {}
 impl ::core::default::Default for SetLatencyMarkerInfoNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            present_id: u64::default(),
-            marker: LatencyMarkerNV::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for SetLatencyMarkerInfoNV<'a> {
@@ -65149,13 +57364,7 @@ unsafe impl Sync for GetLatencyMarkerInfoNV<'_> {}
 impl ::core::default::Default for GetLatencyMarkerInfoNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            timing_count: u32::default(),
-            p_timings: ::core::ptr::null_mut(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for GetLatencyMarkerInfoNV<'a> {
@@ -65198,25 +57407,7 @@ unsafe impl Sync for LatencyTimingsFrameReportNV<'_> {}
 impl ::core::default::Default for LatencyTimingsFrameReportNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            present_id: u64::default(),
-            input_sample_time_us: u64::default(),
-            sim_start_time_us: u64::default(),
-            sim_end_time_us: u64::default(),
-            render_submit_start_time_us: u64::default(),
-            render_submit_end_time_us: u64::default(),
-            present_start_time_us: u64::default(),
-            present_end_time_us: u64::default(),
-            driver_start_time_us: u64::default(),
-            driver_end_time_us: u64::default(),
-            os_render_queue_start_time_us: u64::default(),
-            os_render_queue_end_time_us: u64::default(),
-            gpu_render_start_time_us: u64::default(),
-            gpu_render_end_time_us: u64::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for LatencyTimingsFrameReportNV<'a> {
@@ -65310,12 +57501,7 @@ unsafe impl Sync for OutOfBandQueueTypeInfoNV<'_> {}
 impl ::core::default::Default for OutOfBandQueueTypeInfoNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            queue_type: OutOfBandQueueTypeNV::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for OutOfBandQueueTypeInfoNV<'a> {
@@ -65344,12 +57530,7 @@ unsafe impl Sync for LatencySubmissionPresentIdNV<'_> {}
 impl ::core::default::Default for LatencySubmissionPresentIdNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            present_id: u64::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for LatencySubmissionPresentIdNV<'a> {
@@ -65380,12 +57561,7 @@ unsafe impl Sync for SwapchainLatencyCreateInfoNV<'_> {}
 impl ::core::default::Default for SwapchainLatencyCreateInfoNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            latency_mode_enable: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for SwapchainLatencyCreateInfoNV<'a> {
@@ -65416,13 +57592,7 @@ unsafe impl Sync for LatencySurfaceCapabilitiesNV<'_> {}
 impl ::core::default::Default for LatencySurfaceCapabilitiesNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            present_mode_count: u32::default(),
-            p_present_modes: ::core::ptr::null_mut(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for LatencySurfaceCapabilitiesNV<'a> {
@@ -65457,12 +57627,7 @@ unsafe impl Sync for PhysicalDeviceCudaKernelLaunchFeaturesNV<'_> {}
 impl ::core::default::Default for PhysicalDeviceCudaKernelLaunchFeaturesNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            cuda_kernel_launch_features: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 #[cfg(feature = "provisional")]
@@ -65503,13 +57668,7 @@ unsafe impl Sync for PhysicalDeviceCudaKernelLaunchPropertiesNV<'_> {}
 impl ::core::default::Default for PhysicalDeviceCudaKernelLaunchPropertiesNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            compute_capability_minor: u32::default(),
-            compute_capability_major: u32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 #[cfg(feature = "provisional")]
@@ -65551,12 +57710,7 @@ unsafe impl Sync for DeviceQueueShaderCoreControlCreateInfoARM<'_> {}
 impl ::core::default::Default for DeviceQueueShaderCoreControlCreateInfoARM<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            shader_core_count: u32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DeviceQueueShaderCoreControlCreateInfoARM<'a> {
@@ -65588,12 +57742,7 @@ unsafe impl Sync for PhysicalDeviceSchedulingControlsFeaturesARM<'_> {}
 impl ::core::default::Default for PhysicalDeviceSchedulingControlsFeaturesARM<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            scheduling_controls: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceSchedulingControlsFeaturesARM<'a> {
@@ -65628,12 +57777,7 @@ unsafe impl Sync for PhysicalDeviceSchedulingControlsPropertiesARM<'_> {}
 impl ::core::default::Default for PhysicalDeviceSchedulingControlsPropertiesARM<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            scheduling_controls_flags: PhysicalDeviceSchedulingControlsFlagsARM::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceSchedulingControlsPropertiesARM<'a> {
@@ -65674,14 +57818,7 @@ impl ::core::default::Default
 {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            scheduling_controls_max_warps_count: u32::default(),
-            scheduling_controls_max_queued_batches_count: u32::default(),
-            scheduling_controls_max_work_group_batch_size: u32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a>
@@ -65740,14 +57877,7 @@ unsafe impl Sync for DispatchParametersARM<'_> {}
 impl ::core::default::Default for DispatchParametersARM<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            work_group_batch_size: u32::default(),
-            max_queued_work_group_batches: u32::default(),
-            max_warps_per_shader_core: u32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DispatchParametersARM<'a> {
@@ -65786,12 +57916,7 @@ unsafe impl Sync for PhysicalDeviceRelaxedLineRasterizationFeaturesIMG<'_> {}
 impl ::core::default::Default for PhysicalDeviceRelaxedLineRasterizationFeaturesIMG<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            relaxed_line_rasterization: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceRelaxedLineRasterizationFeaturesIMG<'a> {
@@ -65829,12 +57954,7 @@ unsafe impl Sync for PhysicalDeviceRenderPassStripedFeaturesARM<'_> {}
 impl ::core::default::Default for PhysicalDeviceRenderPassStripedFeaturesARM<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            render_pass_striped: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceRenderPassStripedFeaturesARM<'a> {
@@ -65870,13 +57990,7 @@ unsafe impl Sync for PhysicalDeviceRenderPassStripedPropertiesARM<'_> {}
 impl ::core::default::Default for PhysicalDeviceRenderPassStripedPropertiesARM<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            render_pass_stripe_granularity: Extent2D::default(),
-            max_render_pass_stripes: u32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceRenderPassStripedPropertiesARM<'a> {
@@ -65918,12 +58032,7 @@ unsafe impl Sync for RenderPassStripeInfoARM<'_> {}
 impl ::core::default::Default for RenderPassStripeInfoARM<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            stripe_area: Rect2D::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for RenderPassStripeInfoARM<'a> {
@@ -65953,13 +58062,7 @@ unsafe impl Sync for RenderPassStripeBeginInfoARM<'_> {}
 impl ::core::default::Default for RenderPassStripeBeginInfoARM<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            stripe_info_count: u32::default(),
-            p_stripe_infos: ::core::ptr::null(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for RenderPassStripeBeginInfoARM<'a> {
@@ -65992,13 +58095,7 @@ unsafe impl Sync for RenderPassStripeSubmitInfoARM<'_> {}
 impl ::core::default::Default for RenderPassStripeSubmitInfoARM<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            stripe_semaphore_info_count: u32::default(),
-            p_stripe_semaphore_infos: ::core::ptr::null(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for RenderPassStripeSubmitInfoARM<'a> {
@@ -66032,12 +58129,7 @@ unsafe impl Sync for PhysicalDevicePipelineOpacityMicromapFeaturesARM<'_> {}
 impl ::core::default::Default for PhysicalDevicePipelineOpacityMicromapFeaturesARM<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            pipeline_opacity_micromap: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDevicePipelineOpacityMicromapFeaturesARM<'a> {
@@ -66072,12 +58164,7 @@ unsafe impl Sync for PhysicalDeviceShaderMaximalReconvergenceFeaturesKHR<'_> {}
 impl ::core::default::Default for PhysicalDeviceShaderMaximalReconvergenceFeaturesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            shader_maximal_reconvergence: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderMaximalReconvergenceFeaturesKHR<'a> {
@@ -66116,13 +58203,7 @@ unsafe impl Sync for PhysicalDeviceShaderSubgroupRotateFeatures<'_> {}
 impl ::core::default::Default for PhysicalDeviceShaderSubgroupRotateFeatures<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            shader_subgroup_rotate: Bool32::default(),
-            shader_subgroup_rotate_clustered: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderSubgroupRotateFeatures<'a> {
@@ -66165,12 +58246,7 @@ unsafe impl Sync for PhysicalDeviceShaderExpectAssumeFeatures<'_> {}
 impl ::core::default::Default for PhysicalDeviceShaderExpectAssumeFeatures<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            shader_expect_assume: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderExpectAssumeFeatures<'a> {
@@ -66202,12 +58278,7 @@ unsafe impl Sync for PhysicalDeviceShaderFloatControls2Features<'_> {}
 impl ::core::default::Default for PhysicalDeviceShaderFloatControls2Features<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            shader_float_controls2: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderFloatControls2Features<'a> {
@@ -66242,12 +58313,7 @@ unsafe impl Sync for PhysicalDeviceDynamicRenderingLocalReadFeatures<'_> {}
 impl ::core::default::Default for PhysicalDeviceDynamicRenderingLocalReadFeatures<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            dynamic_rendering_local_read: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceDynamicRenderingLocalReadFeatures<'a> {
@@ -66283,13 +58349,7 @@ unsafe impl Sync for RenderingAttachmentLocationInfo<'_> {}
 impl ::core::default::Default for RenderingAttachmentLocationInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            color_attachment_count: u32::default(),
-            p_color_attachment_locations: ::core::ptr::null(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for RenderingAttachmentLocationInfo<'a> {
@@ -66324,15 +58384,7 @@ unsafe impl Sync for RenderingInputAttachmentIndexInfo<'_> {}
 impl ::core::default::Default for RenderingInputAttachmentIndexInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            color_attachment_count: u32::default(),
-            p_color_attachment_input_indices: ::core::ptr::null(),
-            p_depth_input_attachment_index: ::core::ptr::null(),
-            p_stencil_input_attachment_index: ::core::ptr::null(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for RenderingInputAttachmentIndexInfo<'a> {
@@ -66380,12 +58432,7 @@ unsafe impl Sync for PhysicalDeviceShaderQuadControlFeaturesKHR<'_> {}
 impl ::core::default::Default for PhysicalDeviceShaderQuadControlFeaturesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            shader_quad_control: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderQuadControlFeaturesKHR<'a> {
@@ -66420,12 +58467,7 @@ unsafe impl Sync for PhysicalDeviceShaderAtomicFloat16VectorFeaturesNV<'_> {}
 impl ::core::default::Default for PhysicalDeviceShaderAtomicFloat16VectorFeaturesNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            shader_float16_vector_atomics: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderAtomicFloat16VectorFeaturesNV<'a> {
@@ -66465,14 +58507,7 @@ unsafe impl Sync for PhysicalDeviceMapMemoryPlacedFeaturesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceMapMemoryPlacedFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            memory_map_placed: Bool32::default(),
-            memory_map_range_placed: Bool32::default(),
-            memory_unmap_reserve: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceMapMemoryPlacedFeaturesEXT<'a> {
@@ -66514,12 +58549,7 @@ unsafe impl Sync for PhysicalDeviceMapMemoryPlacedPropertiesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceMapMemoryPlacedPropertiesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            min_placed_memory_map_alignment: DeviceSize::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceMapMemoryPlacedPropertiesEXT<'a> {
@@ -66556,12 +58586,7 @@ unsafe impl Sync for MemoryMapPlacedInfoEXT<'_> {}
 impl ::core::default::Default for MemoryMapPlacedInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            p_placed_address: ::core::ptr::null_mut(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for MemoryMapPlacedInfoEXT<'a> {
@@ -66593,14 +58618,7 @@ unsafe impl Sync for PhysicalDeviceShaderBfloat16FeaturesKHR<'_> {}
 impl ::core::default::Default for PhysicalDeviceShaderBfloat16FeaturesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            shader_b_float16_type: Bool32::default(),
-            shader_b_float16_dot_product: Bool32::default(),
-            shader_b_float16_cooperative_matrix: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderBfloat16FeaturesKHR<'a> {
@@ -66645,12 +58663,7 @@ unsafe impl Sync for PhysicalDeviceRawAccessChainsFeaturesNV<'_> {}
 impl ::core::default::Default for PhysicalDeviceRawAccessChainsFeaturesNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            shader_raw_access_chains: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceRawAccessChainsFeaturesNV<'a> {
@@ -66682,12 +58695,7 @@ unsafe impl Sync for PhysicalDeviceCommandBufferInheritanceFeaturesNV<'_> {}
 impl ::core::default::Default for PhysicalDeviceCommandBufferInheritanceFeaturesNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            command_buffer_inheritance: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceCommandBufferInheritanceFeaturesNV<'a> {
@@ -66722,12 +58730,7 @@ unsafe impl Sync for PhysicalDeviceImageAlignmentControlFeaturesMESA<'_> {}
 impl ::core::default::Default for PhysicalDeviceImageAlignmentControlFeaturesMESA<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            image_alignment_control: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceImageAlignmentControlFeaturesMESA<'a> {
@@ -66762,12 +58765,7 @@ unsafe impl Sync for PhysicalDeviceImageAlignmentControlPropertiesMESA<'_> {}
 impl ::core::default::Default for PhysicalDeviceImageAlignmentControlPropertiesMESA<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            supported_image_alignment_mask: u32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceImageAlignmentControlPropertiesMESA<'a> {
@@ -66801,12 +58799,7 @@ unsafe impl Sync for ImageAlignmentControlCreateInfoMESA<'_> {}
 impl ::core::default::Default for ImageAlignmentControlCreateInfoMESA<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            maximum_requested_alignment: u32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ImageAlignmentControlCreateInfoMESA<'a> {
@@ -66836,12 +58829,7 @@ unsafe impl Sync for PhysicalDeviceShaderReplicatedCompositesFeaturesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceShaderReplicatedCompositesFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            shader_replicated_composites: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderReplicatedCompositesFeaturesEXT<'a> {
@@ -66879,12 +58867,7 @@ unsafe impl Sync for PhysicalDevicePresentModeFifoLatestReadyFeaturesKHR<'_> {}
 impl ::core::default::Default for PhysicalDevicePresentModeFifoLatestReadyFeaturesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            present_mode_fifo_latest_ready: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDevicePresentModeFifoLatestReadyFeaturesKHR<'a> {
@@ -66949,18 +58932,7 @@ unsafe impl Sync for PhysicalDeviceCooperativeMatrix2FeaturesNV<'_> {}
 impl ::core::default::Default for PhysicalDeviceCooperativeMatrix2FeaturesNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            cooperative_matrix_workgroup_scope: Bool32::default(),
-            cooperative_matrix_flexible_dimensions: Bool32::default(),
-            cooperative_matrix_reductions: Bool32::default(),
-            cooperative_matrix_conversions: Bool32::default(),
-            cooperative_matrix_per_element_operations: Bool32::default(),
-            cooperative_matrix_tensor_addressing: Bool32::default(),
-            cooperative_matrix_block_loads: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceCooperativeMatrix2FeaturesNV<'a> {
@@ -67040,14 +59012,7 @@ unsafe impl Sync for PhysicalDeviceCooperativeMatrix2PropertiesNV<'_> {}
 impl ::core::default::Default for PhysicalDeviceCooperativeMatrix2PropertiesNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            cooperative_matrix_workgroup_scope_max_workgroup_size: u32::default(),
-            cooperative_matrix_flexible_dimensions_max_dimension: u32::default(),
-            cooperative_matrix_workgroup_scope_reserved_shared_memory: u32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceCooperativeMatrix2PropertiesNV<'a> {
@@ -67112,21 +59077,7 @@ unsafe impl Sync for CooperativeMatrixFlexibleDimensionsPropertiesNV<'_> {}
 impl ::core::default::Default for CooperativeMatrixFlexibleDimensionsPropertiesNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            m_granularity: u32::default(),
-            n_granularity: u32::default(),
-            k_granularity: u32::default(),
-            a_type: ComponentTypeKHR::default(),
-            b_type: ComponentTypeKHR::default(),
-            c_type: ComponentTypeKHR::default(),
-            result_type: ComponentTypeKHR::default(),
-            saturating_accumulation: Bool32::default(),
-            scope: ScopeKHR::default(),
-            workgroup_invocations: u32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for CooperativeMatrixFlexibleDimensionsPropertiesNV<'a> {
@@ -67201,12 +59152,7 @@ unsafe impl Sync for PhysicalDeviceCooperativeMatrixDecodeVectorFeaturesNV<'_> {
 impl ::core::default::Default for PhysicalDeviceCooperativeMatrixDecodeVectorFeaturesNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            cooperative_matrix_decode_vector: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceCooperativeMatrixDecodeVectorFeaturesNV<'a> {
@@ -67247,12 +59193,7 @@ unsafe impl Sync for PhysicalDeviceHdrVividFeaturesHUAWEI<'_> {}
 impl ::core::default::Default for PhysicalDeviceHdrVividFeaturesHUAWEI<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            hdr_vivid: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceHdrVividFeaturesHUAWEI<'a> {
@@ -67283,12 +59224,7 @@ unsafe impl Sync for PhysicalDeviceVertexAttributeRobustnessFeaturesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceVertexAttributeRobustnessFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            vertex_attribute_robustness: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceVertexAttributeRobustnessFeaturesEXT<'a> {
@@ -67330,12 +59266,7 @@ unsafe impl Sync for PhysicalDeviceDenseGeometryFormatFeaturesAMDX<'_> {}
 impl ::core::default::Default for PhysicalDeviceDenseGeometryFormatFeaturesAMDX<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            dense_geometry_format: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 #[cfg(feature = "provisional")]
@@ -67400,18 +59331,7 @@ impl fmt::Debug for AccelerationStructureDenseGeometryFormatTrianglesDataAMDX<'_
 impl ::core::default::Default for AccelerationStructureDenseGeometryFormatTrianglesDataAMDX<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            compressed_data: DeviceOrHostAddressConstKHR::default(),
-            data_size: DeviceSize::default(),
-            num_triangles: u32::default(),
-            num_vertices: u32::default(),
-            max_primitive_index: u32::default(),
-            max_geometry_index: u32::default(),
-            format: CompressedTriangleFormatAMDX::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 #[cfg(feature = "provisional")]
@@ -67480,12 +59400,7 @@ unsafe impl Sync for PhysicalDeviceDepthClampZeroOneFeaturesKHR<'_> {}
 impl ::core::default::Default for PhysicalDeviceDepthClampZeroOneFeaturesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            depth_clamp_zero_one: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceDepthClampZeroOneFeaturesKHR<'a> {
@@ -67521,13 +59436,7 @@ unsafe impl Sync for PhysicalDeviceCooperativeVectorFeaturesNV<'_> {}
 impl ::core::default::Default for PhysicalDeviceCooperativeVectorFeaturesNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            cooperative_vector: Bool32::default(),
-            cooperative_vector_training: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceCooperativeVectorFeaturesNV<'a> {
@@ -67569,17 +59478,7 @@ unsafe impl Sync for CooperativeVectorPropertiesNV<'_> {}
 impl ::core::default::Default for CooperativeVectorPropertiesNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            input_type: ComponentTypeKHR::default(),
-            input_interpretation: ComponentTypeKHR::default(),
-            matrix_interpretation: ComponentTypeKHR::default(),
-            bias_interpretation: ComponentTypeKHR::default(),
-            result_type: ComponentTypeKHR::default(),
-            transpose: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for CooperativeVectorPropertiesNV<'a> {
@@ -67636,15 +59535,7 @@ unsafe impl Sync for PhysicalDeviceCooperativeVectorPropertiesNV<'_> {}
 impl ::core::default::Default for PhysicalDeviceCooperativeVectorPropertiesNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            cooperative_vector_supported_stages: ShaderStageFlags::default(),
-            cooperative_vector_training_float16_accumulation: Bool32::default(),
-            cooperative_vector_training_float32_accumulation: Bool32::default(),
-            max_cooperative_vector_components: u32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceCooperativeVectorPropertiesNV<'a> {
@@ -67738,23 +59629,7 @@ impl fmt::Debug for ConvertCooperativeVectorMatrixInfoNV<'_> {
 impl ::core::default::Default for ConvertCooperativeVectorMatrixInfoNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            src_size: usize::default(),
-            src_data: DeviceOrHostAddressConstKHR::default(),
-            p_dst_size: ::core::ptr::null_mut(),
-            dst_data: DeviceOrHostAddressKHR::default(),
-            src_component_type: ComponentTypeKHR::default(),
-            dst_component_type: ComponentTypeKHR::default(),
-            num_rows: u32::default(),
-            num_columns: u32::default(),
-            src_layout: CooperativeVectorMatrixLayoutNV::default(),
-            src_stride: usize::default(),
-            dst_layout: CooperativeVectorMatrixLayoutNV::default(),
-            dst_stride: usize::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ConvertCooperativeVectorMatrixInfoNV<'a> {
@@ -67851,25 +59726,7 @@ unsafe impl Sync for PhysicalDeviceTileShadingFeaturesQCOM<'_> {}
 impl ::core::default::Default for PhysicalDeviceTileShadingFeaturesQCOM<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            tile_shading: Bool32::default(),
-            tile_shading_fragment_stage: Bool32::default(),
-            tile_shading_color_attachments: Bool32::default(),
-            tile_shading_depth_attachments: Bool32::default(),
-            tile_shading_stencil_attachments: Bool32::default(),
-            tile_shading_input_attachments: Bool32::default(),
-            tile_shading_sampled_attachments: Bool32::default(),
-            tile_shading_per_tile_draw: Bool32::default(),
-            tile_shading_per_tile_dispatch: Bool32::default(),
-            tile_shading_dispatch_tile: Bool32::default(),
-            tile_shading_apron: Bool32::default(),
-            tile_shading_anisotropic_apron: Bool32::default(),
-            tile_shading_atomic_ops: Bool32::default(),
-            tile_shading_image_processing: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceTileShadingFeaturesQCOM<'a> {
@@ -67974,15 +59831,7 @@ unsafe impl Sync for PhysicalDeviceTileShadingPropertiesQCOM<'_> {}
 impl ::core::default::Default for PhysicalDeviceTileShadingPropertiesQCOM<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            max_apron_size: u32::default(),
-            prefer_non_coherent: Bool32::default(),
-            tile_granularity: Extent2D::default(),
-            max_tile_shading_rate: Extent2D::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceTileShadingPropertiesQCOM<'a> {
@@ -68029,13 +59878,7 @@ unsafe impl Sync for RenderPassTileShadingCreateInfoQCOM<'_> {}
 impl ::core::default::Default for RenderPassTileShadingCreateInfoQCOM<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            flags: TileShadingRenderPassFlagsQCOM::default(),
-            tile_apron_size: Extent2D::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for RenderPassTileShadingCreateInfoQCOM<'a> {
@@ -68072,11 +59915,7 @@ unsafe impl Sync for PerTileBeginInfoQCOM<'_> {}
 impl ::core::default::Default for PerTileBeginInfoQCOM<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PerTileBeginInfoQCOM<'a> {
@@ -68098,11 +59937,7 @@ unsafe impl Sync for PerTileEndInfoQCOM<'_> {}
 impl ::core::default::Default for PerTileEndInfoQCOM<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PerTileEndInfoQCOM<'a> {
@@ -68124,11 +59959,7 @@ unsafe impl Sync for DispatchTileInfoQCOM<'_> {}
 impl ::core::default::Default for DispatchTileInfoQCOM<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DispatchTileInfoQCOM<'a> {
@@ -68151,12 +59982,7 @@ unsafe impl Sync for PhysicalDeviceFragmentDensityMapLayeredPropertiesVALVE<'_> 
 impl ::core::default::Default for PhysicalDeviceFragmentDensityMapLayeredPropertiesVALVE<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            max_fragment_density_map_layers: u32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceFragmentDensityMapLayeredPropertiesVALVE<'a> {
@@ -68190,12 +60016,7 @@ unsafe impl Sync for PhysicalDeviceFragmentDensityMapLayeredFeaturesVALVE<'_> {}
 impl ::core::default::Default for PhysicalDeviceFragmentDensityMapLayeredFeaturesVALVE<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            fragment_density_map_layered: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceFragmentDensityMapLayeredFeaturesVALVE<'a> {
@@ -68233,12 +60054,7 @@ unsafe impl Sync for PipelineFragmentDensityMapLayeredCreateInfoVALVE<'_> {}
 impl ::core::default::Default for PipelineFragmentDensityMapLayeredCreateInfoVALVE<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            max_fragment_density_map_layers: u32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PipelineFragmentDensityMapLayeredCreateInfoVALVE<'a> {
@@ -68273,13 +60089,7 @@ unsafe impl Sync for SetPresentConfigNV<'_> {}
 impl ::core::default::Default for SetPresentConfigNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            num_frames_per_batch: u32::default(),
-            present_config_feedback: u32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for SetPresentConfigNV<'a> {
@@ -68314,12 +60124,7 @@ unsafe impl Sync for PhysicalDevicePresentMeteringFeaturesNV<'_> {}
 impl ::core::default::Default for PhysicalDevicePresentMeteringFeaturesNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            present_metering: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDevicePresentMeteringFeaturesNV<'a> {
@@ -68351,12 +60156,7 @@ unsafe impl Sync for ExternalComputeQueueDeviceCreateInfoNV<'_> {}
 impl ::core::default::Default for ExternalComputeQueueDeviceCreateInfoNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            reserved_external_queues: u32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ExternalComputeQueueDeviceCreateInfoNV<'a> {
@@ -68387,12 +60187,7 @@ unsafe impl Sync for ExternalComputeQueueCreateInfoNV<'_> {}
 impl ::core::default::Default for ExternalComputeQueueCreateInfoNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            preferred_queue: Queue::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ExternalComputeQueueCreateInfoNV<'a> {
@@ -68421,12 +60216,7 @@ unsafe impl Sync for ExternalComputeQueueDataParamsNV<'_> {}
 impl ::core::default::Default for ExternalComputeQueueDataParamsNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            device_index: u32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ExternalComputeQueueDataParamsNV<'a> {
@@ -68456,13 +60246,7 @@ unsafe impl Sync for PhysicalDeviceExternalComputeQueuePropertiesNV<'_> {}
 impl ::core::default::Default for PhysicalDeviceExternalComputeQueuePropertiesNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            external_data_size: u32::default(),
-            max_external_queues: u32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceExternalComputeQueuePropertiesNV<'a> {
@@ -68506,12 +60290,7 @@ unsafe impl Sync for PhysicalDeviceShaderUniformBufferUnsizedArrayFeaturesEXT<'_
 impl ::core::default::Default for PhysicalDeviceShaderUniformBufferUnsizedArrayFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            shader_uniform_buffer_unsized_array: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a>
@@ -68557,15 +60336,7 @@ unsafe impl Sync for PhysicalDeviceShaderMixedFloatDotProductFeaturesVALVE<'_> {
 impl ::core::default::Default for PhysicalDeviceShaderMixedFloatDotProductFeaturesVALVE<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            shader_mixed_float_dot_product_float16_acc_float32: Bool32::default(),
-            shader_mixed_float_dot_product_float16_acc_float16: Bool32::default(),
-            shader_mixed_float_dot_product_b_float16_acc: Bool32::default(),
-            shader_mixed_float_dot_product_float8_acc_float32: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderMixedFloatDotProductFeaturesVALVE<'a> {
@@ -68634,12 +60405,7 @@ unsafe impl Sync for PhysicalDevicePrimitiveRestartIndexFeaturesEXT<'_> {}
 impl ::core::default::Default for PhysicalDevicePrimitiveRestartIndexFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            primitive_restart_index: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDevicePrimitiveRestartIndexFeaturesEXT<'a> {
@@ -68674,12 +60440,7 @@ unsafe impl Sync for PhysicalDeviceFormatPackFeaturesARM<'_> {}
 impl ::core::default::Default for PhysicalDeviceFormatPackFeaturesARM<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            format_pack: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceFormatPackFeaturesARM<'a> {
@@ -68710,12 +60471,7 @@ unsafe impl Sync for PhysicalDeviceThrottleHintFeaturesSEC<'_> {}
 impl ::core::default::Default for PhysicalDeviceThrottleHintFeaturesSEC<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            throttle_hint: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceThrottleHintFeaturesSEC<'a> {
@@ -68746,12 +60502,7 @@ unsafe impl Sync for ThrottleHintSubmitInfoSEC<'_> {}
 impl ::core::default::Default for ThrottleHintSubmitInfoSEC<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            throttle_hint: ThrottleHintTypeSEC::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ThrottleHintSubmitInfoSEC<'a> {
@@ -68786,17 +60537,7 @@ unsafe impl Sync for TensorDescriptionARM<'_> {}
 impl ::core::default::Default for TensorDescriptionARM<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            tiling: TensorTilingARM::default(),
-            format: Format::default(),
-            dimension_count: u32::default(),
-            p_dimensions: ::core::ptr::null(),
-            p_strides: ::core::ptr::null(),
-            usage: TensorUsageFlagsARM::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for TensorDescriptionARM<'a> {
@@ -68853,16 +60594,7 @@ unsafe impl Sync for TensorCreateInfoARM<'_> {}
 impl ::core::default::Default for TensorCreateInfoARM<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            flags: TensorCreateFlagsARM::default(),
-            p_description: ::core::ptr::null(),
-            sharing_mode: SharingMode::default(),
-            queue_family_index_count: u32::default(),
-            p_queue_family_indices: ::core::ptr::null(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for TensorCreateInfoARM<'a> {
@@ -68909,14 +60641,7 @@ unsafe impl Sync for TensorViewCreateInfoARM<'_> {}
 impl ::core::default::Default for TensorViewCreateInfoARM<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            flags: TensorViewCreateFlagsARM::default(),
-            tensor: TensorARM::default(),
-            format: Format::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for TensorViewCreateInfoARM<'a> {
@@ -68955,12 +60680,7 @@ unsafe impl Sync for TensorMemoryRequirementsInfoARM<'_> {}
 impl ::core::default::Default for TensorMemoryRequirementsInfoARM<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            tensor: TensorARM::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for TensorMemoryRequirementsInfoARM<'a> {
@@ -68991,14 +60711,7 @@ unsafe impl Sync for BindTensorMemoryInfoARM<'_> {}
 impl ::core::default::Default for BindTensorMemoryInfoARM<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            tensor: TensorARM::default(),
-            memory: DeviceMemory::default(),
-            memory_offset: DeviceSize::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for BindTensorMemoryInfoARM<'a> {
@@ -69038,13 +60751,7 @@ unsafe impl Sync for WriteDescriptorSetTensorARM<'_> {}
 impl ::core::default::Default for WriteDescriptorSetTensorARM<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            tensor_view_count: u32::default(),
-            p_tensor_views: ::core::ptr::null(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for WriteDescriptorSetTensorARM<'a> {
@@ -69076,13 +60783,7 @@ unsafe impl Sync for TensorFormatPropertiesARM<'_> {}
 impl ::core::default::Default for TensorFormatPropertiesARM<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            optimal_tiling_tensor_features: FormatFeatureFlags2::default(),
-            linear_tiling_tensor_features: FormatFeatureFlags2::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for TensorFormatPropertiesARM<'a> {
@@ -69135,24 +60836,7 @@ unsafe impl Sync for PhysicalDeviceTensorPropertiesARM<'_> {}
 impl ::core::default::Default for PhysicalDeviceTensorPropertiesARM<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            max_tensor_dimension_count: u32::default(),
-            max_tensor_elements: u64::default(),
-            max_per_dimension_tensor_elements: u64::default(),
-            max_tensor_stride: i64::default(),
-            max_tensor_size: u64::default(),
-            max_tensor_shader_access_array_length: u32::default(),
-            max_tensor_shader_access_size: u32::default(),
-            max_descriptor_set_storage_tensors: u32::default(),
-            max_per_stage_descriptor_set_storage_tensors: u32::default(),
-            max_descriptor_set_update_after_bind_storage_tensors: u32::default(),
-            max_per_stage_descriptor_update_after_bind_storage_tensors: u32::default(),
-            shader_storage_tensor_array_non_uniform_indexing_native: Bool32::default(),
-            shader_tensor_supported_stages: ShaderStageFlags::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceTensorPropertiesARM<'a> {
@@ -69276,18 +60960,7 @@ unsafe impl Sync for TensorMemoryBarrierARM<'_> {}
 impl ::core::default::Default for TensorMemoryBarrierARM<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            src_stage_mask: PipelineStageFlags2::default(),
-            src_access_mask: AccessFlags2::default(),
-            dst_stage_mask: PipelineStageFlags2::default(),
-            dst_access_mask: AccessFlags2::default(),
-            src_queue_family_index: u32::default(),
-            dst_queue_family_index: u32::default(),
-            tensor: TensorARM::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for TensorMemoryBarrierARM<'a> {
@@ -69348,13 +61021,7 @@ unsafe impl Sync for TensorDependencyInfoARM<'_> {}
 impl ::core::default::Default for TensorDependencyInfoARM<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            tensor_memory_barrier_count: u32::default(),
-            p_tensor_memory_barriers: ::core::ptr::null(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for TensorDependencyInfoARM<'a> {
@@ -69393,17 +61060,7 @@ unsafe impl Sync for PhysicalDeviceTensorFeaturesARM<'_> {}
 impl ::core::default::Default for PhysicalDeviceTensorFeaturesARM<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            tensor_non_packed: Bool32::default(),
-            shader_tensor_access: Bool32::default(),
-            shader_storage_tensor_array_dynamic_indexing: Bool32::default(),
-            shader_storage_tensor_array_non_uniform_indexing: Bool32::default(),
-            descriptor_binding_storage_tensor_update_after_bind: Bool32::default(),
-            tensors: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceTensorFeaturesARM<'a> {
@@ -69471,12 +61128,7 @@ unsafe impl Sync for DeviceTensorMemoryRequirementsARM<'_> {}
 impl ::core::default::Default for DeviceTensorMemoryRequirementsARM<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            p_create_info: ::core::ptr::null(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DeviceTensorMemoryRequirementsARM<'a> {
@@ -69508,15 +61160,7 @@ unsafe impl Sync for CopyTensorInfoARM<'_> {}
 impl ::core::default::Default for CopyTensorInfoARM<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            src_tensor: TensorARM::default(),
-            dst_tensor: TensorARM::default(),
-            region_count: u32::default(),
-            p_regions: ::core::ptr::null(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for CopyTensorInfoARM<'a> {
@@ -69559,15 +61203,7 @@ unsafe impl Sync for TensorCopyARM<'_> {}
 impl ::core::default::Default for TensorCopyARM<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            dimension_count: u32::default(),
-            p_src_offset: ::core::ptr::null(),
-            p_dst_offset: ::core::ptr::null(),
-            p_extent: ::core::ptr::null(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for TensorCopyARM<'a> {
@@ -69609,12 +61245,7 @@ unsafe impl Sync for MemoryDedicatedAllocateInfoTensorARM<'_> {}
 impl ::core::default::Default for MemoryDedicatedAllocateInfoTensorARM<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            tensor: TensorARM::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for MemoryDedicatedAllocateInfoTensorARM<'a> {
@@ -69646,14 +61277,7 @@ unsafe impl Sync for PhysicalDeviceDescriptorBufferTensorPropertiesARM<'_> {}
 impl ::core::default::Default for PhysicalDeviceDescriptorBufferTensorPropertiesARM<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            tensor_capture_replay_descriptor_data_size: usize::default(),
-            tensor_view_capture_replay_descriptor_data_size: usize::default(),
-            tensor_descriptor_size: usize::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceDescriptorBufferTensorPropertiesARM<'a> {
@@ -69705,12 +61329,7 @@ unsafe impl Sync for PhysicalDeviceDescriptorBufferTensorFeaturesARM<'_> {}
 impl ::core::default::Default for PhysicalDeviceDescriptorBufferTensorFeaturesARM<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            descriptor_buffer_tensor_descriptors: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceDescriptorBufferTensorFeaturesARM<'a> {
@@ -69748,12 +61367,7 @@ unsafe impl Sync for TensorCaptureDescriptorDataInfoARM<'_> {}
 impl ::core::default::Default for TensorCaptureDescriptorDataInfoARM<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            tensor: TensorARM::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for TensorCaptureDescriptorDataInfoARM<'a> {
@@ -69782,12 +61396,7 @@ unsafe impl Sync for TensorViewCaptureDescriptorDataInfoARM<'_> {}
 impl ::core::default::Default for TensorViewCaptureDescriptorDataInfoARM<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            tensor_view: TensorViewARM::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for TensorViewCaptureDescriptorDataInfoARM<'a> {
@@ -69817,12 +61426,7 @@ unsafe impl Sync for DescriptorGetTensorInfoARM<'_> {}
 impl ::core::default::Default for DescriptorGetTensorInfoARM<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            tensor_view: TensorViewARM::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DescriptorGetTensorInfoARM<'a> {
@@ -69853,13 +61457,7 @@ unsafe impl Sync for FrameBoundaryTensorsARM<'_> {}
 impl ::core::default::Default for FrameBoundaryTensorsARM<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            tensor_count: u32::default(),
-            p_tensors: ::core::ptr::null(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for FrameBoundaryTensorsARM<'a> {
@@ -69895,14 +61493,7 @@ unsafe impl Sync for PhysicalDeviceExternalTensorInfoARM<'_> {}
 impl ::core::default::Default for PhysicalDeviceExternalTensorInfoARM<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            flags: TensorCreateFlagsARM::default(),
-            p_description: ::core::ptr::null(),
-            handle_type: ExternalMemoryHandleTypeFlags::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceExternalTensorInfoARM<'a> {
@@ -69941,12 +61532,7 @@ unsafe impl Sync for ExternalTensorPropertiesARM<'_> {}
 impl ::core::default::Default for ExternalTensorPropertiesARM<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            external_memory_properties: ExternalMemoryProperties::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ExternalTensorPropertiesARM<'a> {
@@ -69978,12 +61564,7 @@ unsafe impl Sync for ExternalMemoryTensorCreateInfoARM<'_> {}
 impl ::core::default::Default for ExternalMemoryTensorCreateInfoARM<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            handle_types: ExternalMemoryHandleTypeFlags::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ExternalMemoryTensorCreateInfoARM<'a> {
@@ -70014,13 +61595,7 @@ unsafe impl Sync for PhysicalDeviceShaderFloat8FeaturesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceShaderFloat8FeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            shader_float8: Bool32::default(),
-            shader_float8_cooperative_matrix: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderFloat8FeaturesEXT<'a> {
@@ -70060,13 +61635,7 @@ unsafe impl Sync for SurfaceCreateInfoOHOS<'_> {}
 impl ::core::default::Default for SurfaceCreateInfoOHOS<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            flags: SurfaceCreateFlagsOHOS::default(),
-            window: ::core::ptr::null_mut(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for SurfaceCreateInfoOHOS<'a> {
@@ -70104,16 +61673,7 @@ unsafe impl Sync for PhysicalDeviceDataGraphFeaturesARM<'_> {}
 impl ::core::default::Default for PhysicalDeviceDataGraphFeaturesARM<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            data_graph: Bool32::default(),
-            data_graph_update_after_bind: Bool32::default(),
-            data_graph_specialization_constants: Bool32::default(),
-            data_graph_descriptor_buffer: Bool32::default(),
-            data_graph_shader_module: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceDataGraphFeaturesARM<'a> {
@@ -70169,14 +61729,7 @@ unsafe impl Sync for DataGraphPipelineConstantTensorSemiStructuredSparsityInfoAR
 impl ::core::default::Default for DataGraphPipelineConstantTensorSemiStructuredSparsityInfoARM<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            dimension: u32::default(),
-            zero_count: u32::default(),
-            group_size: u32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a>
@@ -70223,13 +61776,7 @@ unsafe impl Sync for DataGraphPipelineConstantARM<'_> {}
 impl ::core::default::Default for DataGraphPipelineConstantARM<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            id: u32::default(),
-            p_constant_data: ::core::ptr::null(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DataGraphPipelineConstantARM<'a> {
@@ -70265,14 +61812,7 @@ unsafe impl Sync for DataGraphPipelineResourceInfoARM<'_> {}
 impl ::core::default::Default for DataGraphPipelineResourceInfoARM<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            descriptor_set: u32::default(),
-            binding: u32::default(),
-            array_element: u32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DataGraphPipelineResourceInfoARM<'a> {
@@ -70311,12 +61851,7 @@ unsafe impl Sync for DataGraphPipelineResourceInfoImageLayoutARM<'_> {}
 impl ::core::default::Default for DataGraphPipelineResourceInfoImageLayoutARM<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            layout: ImageLayout::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DataGraphPipelineResourceInfoImageLayoutARM<'a> {
@@ -70350,12 +61885,7 @@ unsafe impl Sync for DataGraphPipelineCompilerControlCreateInfoARM<'_> {}
 impl ::core::default::Default for DataGraphPipelineCompilerControlCreateInfoARM<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            p_vendor_options: ::core::ptr::null(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DataGraphPipelineCompilerControlCreateInfoARM<'a> {
@@ -70400,15 +61930,7 @@ unsafe impl Sync for DataGraphPipelineCreateInfoARM<'_> {}
 impl ::core::default::Default for DataGraphPipelineCreateInfoARM<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            flags: PipelineCreateFlags2::default(),
-            layout: PipelineLayout::default(),
-            resource_info_count: u32::default(),
-            p_resource_infos: ::core::ptr::null(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DataGraphPipelineCreateInfoARM<'a> {
@@ -70455,16 +61977,7 @@ unsafe impl Sync for DataGraphPipelineShaderModuleCreateInfoARM<'_> {}
 impl ::core::default::Default for DataGraphPipelineShaderModuleCreateInfoARM<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            module: ShaderModule::default(),
-            p_name: ::core::ptr::null(),
-            p_specialization_info: ::core::ptr::null(),
-            constant_count: u32::default(),
-            p_constants: ::core::ptr::null(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DataGraphPipelineShaderModuleCreateInfoARM<'a> {
@@ -70523,13 +62036,7 @@ unsafe impl Sync for DataGraphPipelineSessionCreateInfoARM<'_> {}
 impl ::core::default::Default for DataGraphPipelineSessionCreateInfoARM<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            flags: DataGraphPipelineSessionCreateFlagsARM::default(),
-            data_graph_pipeline: Pipeline::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DataGraphPipelineSessionCreateInfoARM<'a> {
@@ -70564,12 +62071,7 @@ unsafe impl Sync for DataGraphPipelineSessionBindPointRequirementsInfoARM<'_> {}
 impl ::core::default::Default for DataGraphPipelineSessionBindPointRequirementsInfoARM<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            session: DataGraphPipelineSessionARM::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DataGraphPipelineSessionBindPointRequirementsInfoARM<'a> {
@@ -70601,14 +62103,7 @@ unsafe impl Sync for DataGraphPipelineSessionBindPointRequirementARM<'_> {}
 impl ::core::default::Default for DataGraphPipelineSessionBindPointRequirementARM<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            bind_point: DataGraphPipelineSessionBindPointARM::default(),
-            bind_point_type: DataGraphPipelineSessionBindPointTypeARM::default(),
-            num_objects: u32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DataGraphPipelineSessionBindPointRequirementARM<'a> {
@@ -70653,14 +62148,7 @@ unsafe impl Sync for DataGraphPipelineSessionMemoryRequirementsInfoARM<'_> {}
 impl ::core::default::Default for DataGraphPipelineSessionMemoryRequirementsInfoARM<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            session: DataGraphPipelineSessionARM::default(),
-            bind_point: DataGraphPipelineSessionBindPointARM::default(),
-            object_index: u32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DataGraphPipelineSessionMemoryRequirementsInfoARM<'a> {
@@ -70704,16 +62192,7 @@ unsafe impl Sync for BindDataGraphPipelineSessionMemoryInfoARM<'_> {}
 impl ::core::default::Default for BindDataGraphPipelineSessionMemoryInfoARM<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            session: DataGraphPipelineSessionARM::default(),
-            bind_point: DataGraphPipelineSessionBindPointARM::default(),
-            object_index: u32::default(),
-            memory: DeviceMemory::default(),
-            memory_offset: DeviceSize::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for BindDataGraphPipelineSessionMemoryInfoARM<'a> {
@@ -70763,12 +62242,7 @@ unsafe impl Sync for DataGraphPipelineInfoARM<'_> {}
 impl ::core::default::Default for DataGraphPipelineInfoARM<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            data_graph_pipeline: Pipeline::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DataGraphPipelineInfoARM<'a> {
@@ -70800,15 +62274,7 @@ unsafe impl Sync for DataGraphPipelinePropertyQueryResultARM<'_> {}
 impl ::core::default::Default for DataGraphPipelinePropertyQueryResultARM<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            property: DataGraphPipelinePropertyARM::default(),
-            is_text: Bool32::default(),
-            data_size: usize::default(),
-            p_data: ::core::ptr::null_mut(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DataGraphPipelinePropertyQueryResultARM<'a> {
@@ -70850,13 +62316,7 @@ unsafe impl Sync for DataGraphPipelineIdentifierCreateInfoARM<'_> {}
 impl ::core::default::Default for DataGraphPipelineIdentifierCreateInfoARM<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            identifier_size: u32::default(),
-            p_identifier: ::core::ptr::null(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DataGraphPipelineIdentifierCreateInfoARM<'a> {
@@ -70891,12 +62351,7 @@ unsafe impl Sync for DataGraphPipelineDispatchInfoARM<'_> {}
 impl ::core::default::Default for DataGraphPipelineDispatchInfoARM<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            flags: DataGraphPipelineDispatchFlagsARM::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DataGraphPipelineDispatchInfoARM<'a> {
@@ -70952,11 +62407,7 @@ impl fmt::Debug for PhysicalDeviceDataGraphOperationSupportARM {
 impl ::core::default::Default for PhysicalDeviceDataGraphOperationSupportARM {
     #[inline]
     fn default() -> Self {
-        Self {
-            operation_type: PhysicalDeviceDataGraphOperationTypeARM::default(),
-            name: unsafe { ::core::mem::zeroed() },
-            version: u32::default(),
-        }
+        unsafe { ::core::mem::zeroed() }
     }
 }
 impl PhysicalDeviceDataGraphOperationSupportARM {
@@ -70999,13 +62450,7 @@ unsafe impl Sync for QueueFamilyDataGraphPropertiesARM<'_> {}
 impl ::core::default::Default for QueueFamilyDataGraphPropertiesARM<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            engine: PhysicalDeviceDataGraphProcessingEngineARM::default(),
-            operation: PhysicalDeviceDataGraphOperationSupportARM::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for QueueFamilyDataGraphPropertiesARM<'a> {
@@ -71040,13 +62485,7 @@ unsafe impl Sync for PhysicalDeviceQueueFamilyDataGraphProcessingEngineInfoARM<'
 impl ::core::default::Default for PhysicalDeviceQueueFamilyDataGraphProcessingEngineInfoARM<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            queue_family_index: u32::default(),
-            engine_type: PhysicalDeviceDataGraphProcessingEngineTypeARM::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a>
@@ -71087,13 +62526,7 @@ unsafe impl Sync for QueueFamilyDataGraphProcessingEnginePropertiesARM<'_> {}
 impl ::core::default::Default for QueueFamilyDataGraphProcessingEnginePropertiesARM<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            foreign_semaphore_handle_types: ExternalSemaphoreHandleTypeFlags::default(),
-            foreign_memory_handle_types: ExternalMemoryHandleTypeFlags::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for QueueFamilyDataGraphProcessingEnginePropertiesARM<'a> {
@@ -71135,13 +62568,7 @@ unsafe impl Sync for DataGraphProcessingEngineCreateInfoARM<'_> {}
 impl ::core::default::Default for DataGraphProcessingEngineCreateInfoARM<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            processing_engine_count: u32::default(),
-            p_processing_engines: ::core::ptr::null_mut(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DataGraphProcessingEngineCreateInfoARM<'a> {
@@ -71181,12 +62608,7 @@ unsafe impl Sync for PhysicalDevicePipelineCacheIncrementalModeFeaturesSEC<'_> {
 impl ::core::default::Default for PhysicalDevicePipelineCacheIncrementalModeFeaturesSEC<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            pipeline_cache_incremental_mode: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDevicePipelineCacheIncrementalModeFeaturesSEC<'a> {
@@ -71227,12 +62649,7 @@ unsafe impl Sync for DataGraphPipelineBuiltinModelCreateInfoQCOM<'_> {}
 impl ::core::default::Default for DataGraphPipelineBuiltinModelCreateInfoQCOM<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            p_operation: ::core::ptr::null(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DataGraphPipelineBuiltinModelCreateInfoQCOM<'a> {
@@ -71266,12 +62683,7 @@ unsafe impl Sync for PhysicalDeviceDataGraphModelFeaturesQCOM<'_> {}
 impl ::core::default::Default for PhysicalDeviceDataGraphModelFeaturesQCOM<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            data_graph_model: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceDataGraphModelFeaturesQCOM<'a> {
@@ -71303,12 +62715,7 @@ unsafe impl Sync for PhysicalDeviceShaderUntypedPointersFeaturesKHR<'_> {}
 impl ::core::default::Default for PhysicalDeviceShaderUntypedPointersFeaturesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            shader_untyped_pointers: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderUntypedPointersFeaturesKHR<'a> {
@@ -71343,12 +62750,7 @@ unsafe impl Sync for PhysicalDeviceVideoEncodeRgbConversionFeaturesVALVE<'_> {}
 impl ::core::default::Default for PhysicalDeviceVideoEncodeRgbConversionFeaturesVALVE<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            video_encode_rgb_conversion: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceVideoEncodeRgbConversionFeaturesVALVE<'a> {
@@ -71389,15 +62791,7 @@ unsafe impl Sync for VideoEncodeRgbConversionCapabilitiesVALVE<'_> {}
 impl ::core::default::Default for VideoEncodeRgbConversionCapabilitiesVALVE<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            rgb_models: VideoEncodeRgbModelConversionFlagsVALVE::default(),
-            rgb_ranges: VideoEncodeRgbRangeCompressionFlagsVALVE::default(),
-            x_chroma_offsets: VideoEncodeRgbChromaOffsetFlagsVALVE::default(),
-            y_chroma_offsets: VideoEncodeRgbChromaOffsetFlagsVALVE::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeRgbConversionCapabilitiesVALVE<'a> {
@@ -71449,12 +62843,7 @@ unsafe impl Sync for VideoEncodeProfileRgbConversionInfoVALVE<'_> {}
 impl ::core::default::Default for VideoEncodeProfileRgbConversionInfoVALVE<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            perform_encode_rgb_conversion: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeProfileRgbConversionInfoVALVE<'a> {
@@ -71488,15 +62877,7 @@ unsafe impl Sync for VideoEncodeSessionRgbConversionCreateInfoVALVE<'_> {}
 impl ::core::default::Default for VideoEncodeSessionRgbConversionCreateInfoVALVE<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            rgb_model: VideoEncodeRgbModelConversionFlagsVALVE::default(),
-            rgb_range: VideoEncodeRgbRangeCompressionFlagsVALVE::default(),
-            x_chroma_offset: VideoEncodeRgbChromaOffsetFlagsVALVE::default(),
-            y_chroma_offset: VideoEncodeRgbChromaOffsetFlagsVALVE::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for VideoEncodeSessionRgbConversionCreateInfoVALVE<'a> {
@@ -71551,12 +62932,7 @@ unsafe impl Sync for PhysicalDeviceShader64BitIndexingFeaturesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceShader64BitIndexingFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            shader64_bit_indexing: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShader64BitIndexingFeaturesEXT<'a> {
@@ -71591,12 +62967,7 @@ unsafe impl Sync for NativeBufferUsageOHOS<'_> {}
 impl ::core::default::Default for NativeBufferUsageOHOS<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            ohos_native_buffer_usage: u64::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for NativeBufferUsageOHOS<'a> {
@@ -71627,13 +62998,7 @@ unsafe impl Sync for NativeBufferPropertiesOHOS<'_> {}
 impl ::core::default::Default for NativeBufferPropertiesOHOS<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            allocation_size: DeviceSize::default(),
-            memory_type_bits: u32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for NativeBufferPropertiesOHOS<'a> {
@@ -71674,19 +63039,7 @@ unsafe impl Sync for NativeBufferFormatPropertiesOHOS<'_> {}
 impl ::core::default::Default for NativeBufferFormatPropertiesOHOS<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            format: Format::default(),
-            external_format: u64::default(),
-            format_features: FormatFeatureFlags::default(),
-            sampler_ycbcr_conversion_components: ComponentMapping::default(),
-            suggested_ycbcr_model: SamplerYcbcrModelConversion::default(),
-            suggested_ycbcr_range: SamplerYcbcrRange::default(),
-            suggested_x_chroma_offset: ChromaLocation::default(),
-            suggested_y_chroma_offset: ChromaLocation::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for NativeBufferFormatPropertiesOHOS<'a> {
@@ -71757,12 +63110,7 @@ unsafe impl Sync for ImportNativeBufferInfoOHOS<'_> {}
 impl ::core::default::Default for ImportNativeBufferInfoOHOS<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            buffer: ::core::ptr::null_mut(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ImportNativeBufferInfoOHOS<'a> {
@@ -71792,12 +63140,7 @@ unsafe impl Sync for MemoryGetNativeBufferInfoOHOS<'_> {}
 impl ::core::default::Default for MemoryGetNativeBufferInfoOHOS<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            memory: DeviceMemory::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for MemoryGetNativeBufferInfoOHOS<'a> {
@@ -71826,12 +63169,7 @@ unsafe impl Sync for ExternalFormatOHOS<'_> {}
 impl ::core::default::Default for ExternalFormatOHOS<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            external_format: u64::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ExternalFormatOHOS<'a> {
@@ -71866,13 +63204,7 @@ unsafe impl Sync for PerfHintInfoQCOM<'_> {}
 impl ::core::default::Default for PerfHintInfoQCOM<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            ty: PerfHintTypeQCOM::default(),
-            scale: u32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PerfHintInfoQCOM<'a> {
@@ -71906,12 +63238,7 @@ unsafe impl Sync for PhysicalDeviceQueuePerfHintFeaturesQCOM<'_> {}
 impl ::core::default::Default for PhysicalDeviceQueuePerfHintFeaturesQCOM<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            queue_perf_hint: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceQueuePerfHintFeaturesQCOM<'a> {
@@ -71943,12 +63270,7 @@ unsafe impl Sync for PhysicalDeviceQueuePerfHintPropertiesQCOM<'_> {}
 impl ::core::default::Default for PhysicalDeviceQueuePerfHintPropertiesQCOM<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            supported_queues: QueueFlags::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceQueuePerfHintPropertiesQCOM<'a> {
@@ -71982,12 +63304,7 @@ unsafe impl Sync for PhysicalDevicePerformanceCountersByRegionFeaturesARM<'_> {}
 impl ::core::default::Default for PhysicalDevicePerformanceCountersByRegionFeaturesARM<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            performance_counters_by_region: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDevicePerformanceCountersByRegionFeaturesARM<'a> {
@@ -72029,16 +63346,7 @@ unsafe impl Sync for PhysicalDevicePerformanceCountersByRegionPropertiesARM<'_> 
 impl ::core::default::Default for PhysicalDevicePerformanceCountersByRegionPropertiesARM<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            max_per_region_performance_counters: u32::default(),
-            performance_counter_region_size: Extent2D::default(),
-            row_stride_alignment: u32::default(),
-            region_alignment: u32::default(),
-            identity_transform_order: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDevicePerformanceCountersByRegionPropertiesARM<'a> {
@@ -72098,12 +63406,7 @@ unsafe impl Sync for PerformanceCounterARM<'_> {}
 impl ::core::default::Default for PerformanceCounterARM<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            counter_id: u32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PerformanceCounterARM<'a> {
@@ -72143,13 +63446,7 @@ impl fmt::Debug for PerformanceCounterDescriptionARM<'_> {
 impl ::core::default::Default for PerformanceCounterDescriptionARM<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            flags: PerformanceCounterDescriptionFlagsARM::default(),
-            name: unsafe { ::core::mem::zeroed() },
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PerformanceCounterDescriptionARM<'a> {
@@ -72190,16 +63487,7 @@ unsafe impl Sync for RenderPassPerformanceCountersByRegionBeginInfoARM<'_> {}
 impl ::core::default::Default for RenderPassPerformanceCountersByRegionBeginInfoARM<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            counter_address_count: u32::default(),
-            p_counter_addresses: ::core::ptr::null(),
-            serialize_regions: Bool32::default(),
-            counter_index_count: u32::default(),
-            p_counter_indices: ::core::ptr::null_mut(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for RenderPassPerformanceCountersByRegionBeginInfoARM<'a> {
@@ -72247,13 +63535,7 @@ unsafe impl Sync for ComputeOccupancyPriorityParametersNV<'_> {}
 impl ::core::default::Default for ComputeOccupancyPriorityParametersNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            occupancy_priority: f32::default(),
-            occupancy_throttling: f32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ComputeOccupancyPriorityParametersNV<'a> {
@@ -72287,12 +63569,7 @@ unsafe impl Sync for PhysicalDeviceComputeOccupancyPriorityFeaturesNV<'_> {}
 impl ::core::default::Default for PhysicalDeviceComputeOccupancyPriorityFeaturesNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            compute_occupancy_priority: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceComputeOccupancyPriorityFeaturesNV<'a> {
@@ -72327,12 +63604,7 @@ unsafe impl Sync for PhysicalDeviceShaderLongVectorFeaturesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceShaderLongVectorFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            long_vector: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderLongVectorFeaturesEXT<'a> {
@@ -72364,12 +63636,7 @@ unsafe impl Sync for PhysicalDeviceShaderLongVectorPropertiesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceShaderLongVectorPropertiesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            max_vector_components: u32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderLongVectorPropertiesEXT<'a> {
@@ -72403,12 +63670,7 @@ unsafe impl Sync for PhysicalDeviceTextureCompressionASTC3DFeaturesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceTextureCompressionASTC3DFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            texture_compression_astc_3d: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceTextureCompressionASTC3DFeaturesEXT<'a> {
@@ -72446,12 +63708,7 @@ unsafe impl Sync for PhysicalDeviceShaderSubgroupPartitionedFeaturesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceShaderSubgroupPartitionedFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            shader_subgroup_partitioned: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderSubgroupPartitionedFeaturesEXT<'a> {
@@ -72488,11 +63745,7 @@ unsafe impl Sync for HostAddressRangeEXT<'_> {}
 impl ::core::default::Default for HostAddressRangeEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            address: ::core::ptr::null_mut(),
-            size: usize::default(),
-            _marker: PhantomData,
-        }
+        unsafe { ::core::mem::zeroed() }
     }
 }
 impl<'a> HostAddressRangeEXT<'a> {
@@ -72518,11 +63771,7 @@ unsafe impl Sync for HostAddressRangeConstEXT<'_> {}
 impl ::core::default::Default for HostAddressRangeConstEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            address: ::core::ptr::null(),
-            size: usize::default(),
-            _marker: PhantomData,
-        }
+        unsafe { ::core::mem::zeroed() }
     }
 }
 impl<'a> HostAddressRangeConstEXT<'a> {
@@ -72550,13 +63799,7 @@ unsafe impl Sync for TexelBufferDescriptorInfoEXT<'_> {}
 impl ::core::default::Default for TexelBufferDescriptorInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            format: Format::default(),
-            address_range: DeviceAddressRangeEXT::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for TexelBufferDescriptorInfoEXT<'a> {
@@ -72591,13 +63834,7 @@ unsafe impl Sync for ImageDescriptorInfoEXT<'_> {}
 impl ::core::default::Default for ImageDescriptorInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            p_view: ::core::ptr::null(),
-            layout: ImageLayout::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ImageDescriptorInfoEXT<'a> {
@@ -72657,13 +63894,7 @@ impl fmt::Debug for ResourceDescriptorInfoEXT<'_> {
 impl ::core::default::Default for ResourceDescriptorInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            ty: DescriptorType::default(),
-            data: ResourceDescriptorDataEXT::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ResourceDescriptorInfoEXT<'a> {
@@ -72699,14 +63930,7 @@ unsafe impl Sync for BindHeapInfoEXT<'_> {}
 impl ::core::default::Default for BindHeapInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            heap_range: DeviceAddressRangeEXT::default(),
-            reserved_range_offset: DeviceSize::default(),
-            reserved_range_size: DeviceSize::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for BindHeapInfoEXT<'a> {
@@ -72746,13 +63970,7 @@ unsafe impl Sync for PushDataInfoEXT<'_> {}
 impl ::core::default::Default for PushDataInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            offset: u32::default(),
-            data: HostAddressRangeConstEXT::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PushDataInfoEXT<'a> {
@@ -72788,14 +64006,7 @@ unsafe impl Sync for DescriptorMappingSourceConstantOffsetEXT<'_> {}
 impl ::core::default::Default for DescriptorMappingSourceConstantOffsetEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            heap_offset: u32::default(),
-            heap_array_stride: u32::default(),
-            p_embedded_sampler: ::core::ptr::null(),
-            sampler_heap_offset: u32::default(),
-            sampler_heap_array_stride: u32::default(),
-            _marker: PhantomData,
-        }
+        unsafe { ::core::mem::zeroed() }
     }
 }
 impl<'a> DescriptorMappingSourceConstantOffsetEXT<'a> {
@@ -72848,19 +64059,7 @@ unsafe impl Sync for DescriptorMappingSourcePushIndexEXT<'_> {}
 impl ::core::default::Default for DescriptorMappingSourcePushIndexEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            heap_offset: u32::default(),
-            push_offset: u32::default(),
-            heap_index_stride: u32::default(),
-            heap_array_stride: u32::default(),
-            p_embedded_sampler: ::core::ptr::null(),
-            use_combined_image_sampler_index: Bool32::default(),
-            sampler_heap_offset: u32::default(),
-            sampler_push_offset: u32::default(),
-            sampler_heap_index_stride: u32::default(),
-            sampler_heap_array_stride: u32::default(),
-            _marker: PhantomData,
-        }
+        unsafe { ::core::mem::zeroed() }
     }
 }
 impl<'a> DescriptorMappingSourcePushIndexEXT<'a> {
@@ -72943,21 +64142,7 @@ unsafe impl Sync for DescriptorMappingSourceIndirectIndexEXT<'_> {}
 impl ::core::default::Default for DescriptorMappingSourceIndirectIndexEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            heap_offset: u32::default(),
-            push_offset: u32::default(),
-            address_offset: u32::default(),
-            heap_index_stride: u32::default(),
-            heap_array_stride: u32::default(),
-            p_embedded_sampler: ::core::ptr::null(),
-            use_combined_image_sampler_index: Bool32::default(),
-            sampler_heap_offset: u32::default(),
-            sampler_push_offset: u32::default(),
-            sampler_address_offset: u32::default(),
-            sampler_heap_index_stride: u32::default(),
-            sampler_heap_array_stride: u32::default(),
-            _marker: PhantomData,
-        }
+        unsafe { ::core::mem::zeroed() }
     }
 }
 impl<'a> DescriptorMappingSourceIndirectIndexEXT<'a> {
@@ -73048,19 +64233,7 @@ unsafe impl Sync for DescriptorMappingSourceIndirectIndexArrayEXT<'_> {}
 impl ::core::default::Default for DescriptorMappingSourceIndirectIndexArrayEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            heap_offset: u32::default(),
-            push_offset: u32::default(),
-            address_offset: u32::default(),
-            heap_index_stride: u32::default(),
-            p_embedded_sampler: ::core::ptr::null(),
-            use_combined_image_sampler_index: Bool32::default(),
-            sampler_heap_offset: u32::default(),
-            sampler_push_offset: u32::default(),
-            sampler_address_offset: u32::default(),
-            sampler_heap_index_stride: u32::default(),
-            _marker: PhantomData,
-        }
+        unsafe { ::core::mem::zeroed() }
     }
 }
 impl<'a> DescriptorMappingSourceIndirectIndexArrayEXT<'a> {
@@ -73162,19 +64335,7 @@ unsafe impl Sync for DescriptorMappingSourceShaderRecordIndexEXT<'_> {}
 impl ::core::default::Default for DescriptorMappingSourceShaderRecordIndexEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            heap_offset: u32::default(),
-            shader_record_offset: u32::default(),
-            heap_index_stride: u32::default(),
-            heap_array_stride: u32::default(),
-            p_embedded_sampler: ::core::ptr::null(),
-            use_combined_image_sampler_index: Bool32::default(),
-            sampler_heap_offset: u32::default(),
-            sampler_shader_record_offset: u32::default(),
-            sampler_heap_index_stride: u32::default(),
-            sampler_heap_array_stride: u32::default(),
-            _marker: PhantomData,
-        }
+        unsafe { ::core::mem::zeroed() }
     }
 }
 impl<'a> DescriptorMappingSourceShaderRecordIndexEXT<'a> {
@@ -73310,17 +64471,7 @@ impl fmt::Debug for DescriptorSetAndBindingMappingEXT<'_> {
 impl ::core::default::Default for DescriptorSetAndBindingMappingEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            descriptor_set: u32::default(),
-            first_binding: u32::default(),
-            binding_count: u32::default(),
-            resource_mask: SpirvResourceTypeFlagsEXT::default(),
-            source: DescriptorMappingSourceEXT::default(),
-            source_data: DescriptorMappingSourceDataEXT::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DescriptorSetAndBindingMappingEXT<'a> {
@@ -73375,13 +64526,7 @@ unsafe impl Sync for ShaderDescriptorSetAndBindingMappingInfoEXT<'_> {}
 impl ::core::default::Default for ShaderDescriptorSetAndBindingMappingInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            mapping_count: u32::default(),
-            p_mappings: ::core::ptr::null(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ShaderDescriptorSetAndBindingMappingInfoEXT<'a> {
@@ -73417,12 +64562,7 @@ unsafe impl Sync for SamplerCustomBorderColorIndexCreateInfoEXT<'_> {}
 impl ::core::default::Default for SamplerCustomBorderColorIndexCreateInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            index: u32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for SamplerCustomBorderColorIndexCreateInfoEXT<'a> {
@@ -73453,12 +64593,7 @@ unsafe impl Sync for OpaqueCaptureDataCreateInfoEXT<'_> {}
 impl ::core::default::Default for OpaqueCaptureDataCreateInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            p_data: ::core::ptr::null(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for OpaqueCaptureDataCreateInfoEXT<'a> {
@@ -73490,13 +64625,7 @@ unsafe impl Sync for IndirectCommandsLayoutPushDataTokenNV<'_> {}
 impl ::core::default::Default for IndirectCommandsLayoutPushDataTokenNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            push_data_offset: u32::default(),
-            push_data_size: u32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for IndirectCommandsLayoutPushDataTokenNV<'a> {
@@ -73535,12 +64664,7 @@ unsafe impl Sync for SubsampledImageFormatPropertiesEXT<'_> {}
 impl ::core::default::Default for SubsampledImageFormatPropertiesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            subsampled_image_descriptor_count: u32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for SubsampledImageFormatPropertiesEXT<'a> {
@@ -73573,12 +64697,7 @@ unsafe impl Sync for PhysicalDeviceShaderSplitBarrierFeaturesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceShaderSplitBarrierFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            shader_split_barrier: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderSplitBarrierFeaturesEXT<'a> {
@@ -73613,12 +64732,7 @@ unsafe impl Sync for PhysicalDeviceShaderSplitBarrierPropertiesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceShaderSplitBarrierPropertiesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            split_barrier_reserved_shared_memory: u32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderSplitBarrierPropertiesEXT<'a> {
@@ -73656,13 +64770,7 @@ unsafe impl Sync for PhysicalDeviceDescriptorHeapFeaturesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceDescriptorHeapFeaturesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            descriptor_heap: Bool32::default(),
-            descriptor_heap_capture_replay: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceDescriptorHeapFeaturesEXT<'a> {
@@ -73717,30 +64825,7 @@ unsafe impl Sync for PhysicalDeviceDescriptorHeapPropertiesEXT<'_> {}
 impl ::core::default::Default for PhysicalDeviceDescriptorHeapPropertiesEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            sampler_heap_alignment: DeviceSize::default(),
-            resource_heap_alignment: DeviceSize::default(),
-            max_sampler_heap_size: DeviceSize::default(),
-            max_resource_heap_size: DeviceSize::default(),
-            min_sampler_heap_reserved_range: DeviceSize::default(),
-            min_sampler_heap_reserved_range_with_embedded: DeviceSize::default(),
-            min_resource_heap_reserved_range: DeviceSize::default(),
-            sampler_descriptor_size: DeviceSize::default(),
-            image_descriptor_size: DeviceSize::default(),
-            buffer_descriptor_size: DeviceSize::default(),
-            sampler_descriptor_alignment: DeviceSize::default(),
-            image_descriptor_alignment: DeviceSize::default(),
-            buffer_descriptor_alignment: DeviceSize::default(),
-            max_push_data_size: DeviceSize::default(),
-            image_capture_replay_opaque_data_size: usize::default(),
-            max_descriptor_heap_embedded_samplers: u32::default(),
-            sampler_ycbcr_conversion_count: u32::default(),
-            sparse_descriptor_heaps: Bool32::default(),
-            protected_descriptor_heaps: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceDescriptorHeapPropertiesEXT<'a> {
@@ -73884,13 +64969,7 @@ unsafe impl Sync for CommandBufferInheritanceDescriptorHeapInfoEXT<'_> {}
 impl ::core::default::Default for CommandBufferInheritanceDescriptorHeapInfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            p_sampler_heap_bind_info: ::core::ptr::null(),
-            p_resource_heap_bind_info: ::core::ptr::null(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for CommandBufferInheritanceDescriptorHeapInfoEXT<'a> {
@@ -73937,14 +65016,7 @@ unsafe impl Sync for PhysicalDeviceDescriptorHeapTensorPropertiesARM<'_> {}
 impl ::core::default::Default for PhysicalDeviceDescriptorHeapTensorPropertiesARM<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            tensor_descriptor_size: DeviceSize::default(),
-            tensor_descriptor_alignment: DeviceSize::default(),
-            tensor_capture_replay_opaque_data_size: usize::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceDescriptorHeapTensorPropertiesARM<'a> {
@@ -73991,12 +65063,7 @@ unsafe impl Sync for PhysicalDeviceShaderInstrumentationFeaturesARM<'_> {}
 impl ::core::default::Default for PhysicalDeviceShaderInstrumentationFeaturesARM<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            shader_instrumentation: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderInstrumentationFeaturesARM<'a> {
@@ -74032,13 +65099,7 @@ unsafe impl Sync for PhysicalDeviceShaderInstrumentationPropertiesARM<'_> {}
 impl ::core::default::Default for PhysicalDeviceShaderInstrumentationPropertiesARM<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            num_metrics: u32::default(),
-            per_basic_block_granularity: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderInstrumentationPropertiesARM<'a> {
@@ -74076,11 +65137,7 @@ unsafe impl Sync for ShaderInstrumentationCreateInfoARM<'_> {}
 impl ::core::default::Default for ShaderInstrumentationCreateInfoARM<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ShaderInstrumentationCreateInfoARM<'a> {
@@ -74114,13 +65171,7 @@ impl fmt::Debug for ShaderInstrumentationMetricDescriptionARM<'_> {
 impl ::core::default::Default for ShaderInstrumentationMetricDescriptionARM<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            name: unsafe { ::core::mem::zeroed() },
-            description: unsafe { ::core::mem::zeroed() },
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ShaderInstrumentationMetricDescriptionARM<'a> {
@@ -74221,15 +65272,7 @@ unsafe impl Sync for DeviceMemoryCopyKHR<'_> {}
 impl ::core::default::Default for DeviceMemoryCopyKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            src_range: DeviceAddressRangeKHR::default(),
-            src_flags: AddressCommandFlagsKHR::default(),
-            dst_range: DeviceAddressRangeKHR::default(),
-            dst_flags: AddressCommandFlagsKHR::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DeviceMemoryCopyKHR<'a> {
@@ -74274,13 +65317,7 @@ unsafe impl Sync for CopyDeviceMemoryInfoKHR<'_> {}
 impl ::core::default::Default for CopyDeviceMemoryInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            region_count: u32::default(),
-            p_regions: ::core::ptr::null(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for CopyDeviceMemoryInfoKHR<'a> {
@@ -74317,19 +65354,7 @@ unsafe impl Sync for DeviceMemoryImageCopyKHR<'_> {}
 impl ::core::default::Default for DeviceMemoryImageCopyKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            address_range: DeviceAddressRangeKHR::default(),
-            address_flags: AddressCommandFlagsKHR::default(),
-            address_row_length: u32::default(),
-            address_image_height: u32::default(),
-            image_subresource: ImageSubresourceLayers::default(),
-            image_layout: ImageLayout::default(),
-            image_offset: Offset3D::default(),
-            image_extent: Extent3D::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DeviceMemoryImageCopyKHR<'a> {
@@ -74395,14 +65420,7 @@ unsafe impl Sync for CopyDeviceMemoryImageInfoKHR<'_> {}
 impl ::core::default::Default for CopyDeviceMemoryImageInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            image: Image::default(),
-            region_count: u32::default(),
-            p_regions: ::core::ptr::null(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for CopyDeviceMemoryImageInfoKHR<'a> {
@@ -74438,13 +65456,7 @@ unsafe impl Sync for MemoryRangeBarriersInfoKHR<'_> {}
 impl ::core::default::Default for MemoryRangeBarriersInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            memory_range_barrier_count: u32::default(),
-            p_memory_range_barriers: ::core::ptr::null(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for MemoryRangeBarriersInfoKHR<'a> {
@@ -74485,19 +65497,7 @@ unsafe impl Sync for MemoryRangeBarrierKHR<'_> {}
 impl ::core::default::Default for MemoryRangeBarrierKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            src_stage_mask: PipelineStageFlags2::default(),
-            src_access_mask: AccessFlags2::default(),
-            dst_stage_mask: PipelineStageFlags2::default(),
-            dst_access_mask: AccessFlags2::default(),
-            src_queue_family_index: u32::default(),
-            dst_queue_family_index: u32::default(),
-            address_range: DeviceAddressRangeKHR::default(),
-            address_flags: AddressCommandFlagsKHR::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for MemoryRangeBarrierKHR<'a> {
@@ -74561,12 +65561,7 @@ unsafe impl Sync for PhysicalDeviceDeviceAddressCommandsFeaturesKHR<'_> {}
 impl ::core::default::Default for PhysicalDeviceDeviceAddressCommandsFeaturesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            device_address_commands: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceDeviceAddressCommandsFeaturesKHR<'a> {
@@ -74603,14 +65598,7 @@ unsafe impl Sync for ConditionalRenderingBeginInfo2EXT<'_> {}
 impl ::core::default::Default for ConditionalRenderingBeginInfo2EXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            address_range: DeviceAddressRangeKHR::default(),
-            address_flags: AddressCommandFlagsKHR::default(),
-            flags: ConditionalRenderingFlagsEXT::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for ConditionalRenderingBeginInfo2EXT<'a> {
@@ -74652,15 +65640,7 @@ unsafe impl Sync for AccelerationStructureCreateInfo2KHR<'_> {}
 impl ::core::default::Default for AccelerationStructureCreateInfo2KHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            create_flags: AccelerationStructureCreateFlagsKHR::default(),
-            address_range: DeviceAddressRangeKHR::default(),
-            address_flags: AddressCommandFlagsKHR::default(),
-            ty: AccelerationStructureTypeKHR::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for AccelerationStructureCreateInfo2KHR<'a> {
@@ -74706,14 +65686,7 @@ unsafe impl Sync for BindIndexBuffer3InfoKHR<'_> {}
 impl ::core::default::Default for BindIndexBuffer3InfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            address_range: DeviceAddressRangeKHR::default(),
-            address_flags: AddressCommandFlagsKHR::default(),
-            index_type: IndexType::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for BindIndexBuffer3InfoKHR<'a> {
@@ -74754,14 +65727,7 @@ unsafe impl Sync for BindVertexBuffer3InfoKHR<'_> {}
 impl ::core::default::Default for BindVertexBuffer3InfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            set_stride: Bool32::default(),
-            address_range: StridedDeviceAddressRangeKHR::default(),
-            address_flags: AddressCommandFlagsKHR::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for BindVertexBuffer3InfoKHR<'a> {
@@ -74802,14 +65768,7 @@ unsafe impl Sync for DrawIndirect2InfoKHR<'_> {}
 impl ::core::default::Default for DrawIndirect2InfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            address_range: StridedDeviceAddressRangeKHR::default(),
-            address_flags: AddressCommandFlagsKHR::default(),
-            draw_count: u32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DrawIndirect2InfoKHR<'a> {
@@ -74852,16 +65811,7 @@ unsafe impl Sync for DrawIndirectCount2InfoKHR<'_> {}
 impl ::core::default::Default for DrawIndirectCount2InfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            address_range: StridedDeviceAddressRangeKHR::default(),
-            address_flags: AddressCommandFlagsKHR::default(),
-            count_address_range: DeviceAddressRangeKHR::default(),
-            count_address_flags: AddressCommandFlagsKHR::default(),
-            max_draw_count: u32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DrawIndirectCount2InfoKHR<'a> {
@@ -74911,13 +65861,7 @@ unsafe impl Sync for DispatchIndirect2InfoKHR<'_> {}
 impl ::core::default::Default for DispatchIndirect2InfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            address_range: DeviceAddressRangeKHR::default(),
-            address_flags: AddressCommandFlagsKHR::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DispatchIndirect2InfoKHR<'a> {
@@ -74952,13 +65896,7 @@ unsafe impl Sync for BindTransformFeedbackBuffer2InfoEXT<'_> {}
 impl ::core::default::Default for BindTransformFeedbackBuffer2InfoEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            address_range: DeviceAddressRangeKHR::default(),
-            address_flags: AddressCommandFlagsKHR::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for BindTransformFeedbackBuffer2InfoEXT<'a> {
@@ -74995,15 +65933,7 @@ unsafe impl Sync for MemoryMarkerInfoAMD<'_> {}
 impl ::core::default::Default for MemoryMarkerInfoAMD<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            stage: PipelineStageFlags2KHR::default(),
-            dst_range: DeviceAddressRangeKHR::default(),
-            dst_flags: AddressCommandFlagsKHR::default(),
-            marker: u32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for MemoryMarkerInfoAMD<'a> {
@@ -75047,12 +65977,7 @@ unsafe impl Sync for PhysicalDeviceShaderConstantDataFeaturesKHR<'_> {}
 impl ::core::default::Default for PhysicalDeviceShaderConstantDataFeaturesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            shader_constant_data: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderConstantDataFeaturesKHR<'a> {
@@ -75087,12 +66012,7 @@ unsafe impl Sync for PhysicalDeviceShaderAbortFeaturesKHR<'_> {}
 impl ::core::default::Default for PhysicalDeviceShaderAbortFeaturesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            shader_abort: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderAbortFeaturesKHR<'a> {
@@ -75123,12 +66043,7 @@ unsafe impl Sync for PhysicalDeviceShaderAbortPropertiesKHR<'_> {}
 impl ::core::default::Default for PhysicalDeviceShaderAbortPropertiesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            max_shader_abort_message_size: u64::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderAbortPropertiesKHR<'a> {
@@ -75160,13 +66075,7 @@ unsafe impl Sync for DeviceFaultShaderAbortMessageInfoKHR<'_> {}
 impl ::core::default::Default for DeviceFaultShaderAbortMessageInfoKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            message_data_size: u64::default(),
-            p_message_data: ::core::ptr::null_mut(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DeviceFaultShaderAbortMessageInfoKHR<'a> {
@@ -75201,10 +66110,7 @@ impl fmt::Debug for DataGraphTOSANameQualityARM {
 impl ::core::default::Default for DataGraphTOSANameQualityARM {
     #[inline]
     fn default() -> Self {
-        Self {
-            name: unsafe { ::core::mem::zeroed() },
-            quality_flags: DataGraphTOSAQualityFlagsARM::default(),
-        }
+        unsafe { ::core::mem::zeroed() }
     }
 }
 impl DataGraphTOSANameQualityARM {
@@ -75242,16 +66148,7 @@ unsafe impl Sync for QueueFamilyDataGraphTOSAPropertiesARM<'_> {}
 impl ::core::default::Default for QueueFamilyDataGraphTOSAPropertiesARM<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            profile_count: u32::default(),
-            p_profiles: ::core::ptr::null(),
-            extension_count: u32::default(),
-            p_extensions: ::core::ptr::null(),
-            level: DataGraphTOSALevelARM::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for QueueFamilyDataGraphTOSAPropertiesARM<'a> {
@@ -75295,14 +66192,7 @@ unsafe impl Sync for DataGraphPipelineSingleNodeConnectionARM<'_> {}
 impl ::core::default::Default for DataGraphPipelineSingleNodeConnectionARM<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            set: u32::default(),
-            binding: u32::default(),
-            connection: DataGraphPipelineNodeConnectionTypeARM::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DataGraphPipelineSingleNodeConnectionARM<'a> {
@@ -75342,12 +66232,7 @@ unsafe impl Sync for PhysicalDeviceDataGraphOpticalFlowFeaturesARM<'_> {}
 impl ::core::default::Default for PhysicalDeviceDataGraphOpticalFlowFeaturesARM<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            data_graph_optical_flow: Bool32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceDataGraphOpticalFlowFeaturesARM<'a> {
@@ -75389,19 +66274,7 @@ unsafe impl Sync for QueueFamilyDataGraphOpticalFlowPropertiesARM<'_> {}
 impl ::core::default::Default for QueueFamilyDataGraphOpticalFlowPropertiesARM<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            supported_output_grid_sizes: DataGraphOpticalFlowGridSizeFlagsARM::default(),
-            supported_hint_grid_sizes: DataGraphOpticalFlowGridSizeFlagsARM::default(),
-            hint_supported: Bool32::default(),
-            cost_supported: Bool32::default(),
-            min_width: u32::default(),
-            min_height: u32::default(),
-            max_width: u32::default(),
-            max_height: u32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for QueueFamilyDataGraphOpticalFlowPropertiesARM<'a> {
@@ -75472,12 +66345,7 @@ unsafe impl Sync for DataGraphOpticalFlowImageFormatInfoARM<'_> {}
 impl ::core::default::Default for DataGraphOpticalFlowImageFormatInfoARM<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            usage: DataGraphOpticalFlowImageUsageFlagsARM::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DataGraphOpticalFlowImageFormatInfoARM<'a> {
@@ -75512,12 +66380,7 @@ unsafe impl Sync for DataGraphOpticalFlowImageFormatPropertiesARM<'_> {}
 impl ::core::default::Default for DataGraphOpticalFlowImageFormatPropertiesARM<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            format: Format::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DataGraphOpticalFlowImageFormatPropertiesARM<'a> {
@@ -75549,14 +66412,7 @@ unsafe impl Sync for DataGraphPipelineSingleNodeCreateInfoARM<'_> {}
 impl ::core::default::Default for DataGraphPipelineSingleNodeCreateInfoARM<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            node_type: DataGraphPipelineNodeTypeARM::default(),
-            connection_count: u32::default(),
-            p_connections: ::core::ptr::null(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DataGraphPipelineSingleNodeCreateInfoARM<'a> {
@@ -75607,20 +66463,7 @@ unsafe impl Sync for DataGraphPipelineOpticalFlowCreateInfoARM<'_> {}
 impl ::core::default::Default for DataGraphPipelineOpticalFlowCreateInfoARM<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            width: u32::default(),
-            height: u32::default(),
-            image_format: Format::default(),
-            flow_vector_format: Format::default(),
-            cost_format: Format::default(),
-            output_grid_size: DataGraphOpticalFlowGridSizeFlagsARM::default(),
-            hint_grid_size: DataGraphOpticalFlowGridSizeFlagsARM::default(),
-            performance_level: DataGraphOpticalFlowPerformanceLevelARM::default(),
-            flags: DataGraphOpticalFlowCreateFlagsARM::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DataGraphPipelineOpticalFlowCreateInfoARM<'a> {
@@ -75701,13 +66544,7 @@ unsafe impl Sync for DataGraphPipelineOpticalFlowDispatchInfoARM<'_> {}
 impl ::core::default::Default for DataGraphPipelineOpticalFlowDispatchInfoARM<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            flags: DataGraphOpticalFlowExecuteFlagsARM::default(),
-            mean_flow_l1_norm_hint: u32::default(),
-            _marker: PhantomData,
-        }
+        Self::init_tagged_structure()
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for DataGraphPipelineOpticalFlowDispatchInfoARM<'a> {

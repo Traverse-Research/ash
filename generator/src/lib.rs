@@ -1886,24 +1886,15 @@ fn derive_default(
     has_lifetime: bool,
     provisional: &Option<TokenStream>,
 ) -> Option<TokenStream> {
+    if struct_.name == "VkBaseInStructure" || struct_.name == "VkBaseOutStructure" {
+        // TODO: These don't really have a valid initializer, since they'll
+        // end up as vk::StructureType::APPLICATION_INFO (0).
+        // TODO: Returning None just triggers derive(Default)
+        return None;
+    }
     let name = name_to_tokens(&struct_.name);
     let is_structure_type = |field: &vkxml::Field| field.basetype == "VkStructureType";
 
-    // These are also pointers, and therefor also don't implement Default. The spec
-    // also doesn't mark them as pointers
-    let handles = [
-        "LPCWSTR",
-        "HANDLE",
-        "HINSTANCE",
-        "HWND",
-        "HMONITOR",
-        "IOSurfaceRef",
-        "MTLBuffer_id",
-        "MTLCommandQueue_id",
-        "MTLDevice_id",
-        "MTLSharedEvent_id",
-        "MTLTexture_id",
-    ];
     let contains_ptr = members
         .iter()
         .any(|member| member.vkxml_field.reference.is_some());
@@ -1913,48 +1904,26 @@ fn derive_default(
     let contains_static_array = members
         .iter()
         .any(|member| is_static_array(member.vkxml_field));
-    let contains_deprecated = members.iter().any(|member| member.deprecated.is_some());
-    let allow_deprecated = contains_deprecated.then(|| quote!(#[allow(deprecated)]));
     if !(contains_ptr || contains_structure_type || contains_static_array) {
         return None;
     };
-    let default_fields = members.iter().map(|member| {
-        let param_ident = member.vkxml_field.param_ident();
-        if is_structure_type(member.vkxml_field) {
-            if member.vkxml_field.type_enums.is_some() {
-                quote!(#param_ident: Self::STRUCTURE_TYPE)
-            } else {
-                quote!(#param_ident: unsafe { ::core::mem::zeroed() })
-            }
-        } else if member.vkxml_field.reference.is_some() {
-            if member.vkxml_field.is_const {
-                quote!(#param_ident: ::core::ptr::null())
-            } else {
-                quote!(#param_ident: ::core::ptr::null_mut())
-            }
-        } else if is_static_array(member.vkxml_field)
-            || handles.contains(&member.vkxml_field.basetype.as_str())
-        {
-            quote!(#param_ident: unsafe { ::core::mem::zeroed() })
-        } else {
-            let ty = member.vkxml_field.type_tokens(false, None);
-            quote!(#param_ident: #ty::default())
-        }
-    });
     let lifetime = has_lifetime.then(|| quote!(<'_>));
-    let marker = has_lifetime.then(|| quote!(_marker: PhantomData,));
+
+    let initializer = if contains_structure_type {
+        quote!(Self::init_tagged_structure())
+    } else {
+        quote! {
+            // SAFETY: All Vulkan structures support zero-initialization
+            unsafe { ::core::mem::zeroed() }
+        }
+    };
+
     Some(quote! {
         #provisional
         impl ::core::default::Default for #name #lifetime {
             #[inline]
             fn default() -> Self {
-                #allow_deprecated
-                Self {
-                    #(
-                        #default_fields,
-                    )*
-                    #marker
-                }
+                #initializer
             }
         }
     })
